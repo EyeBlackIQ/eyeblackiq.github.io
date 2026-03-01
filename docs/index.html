@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EyeBlackIQ — NCAA Baseball Prediction Model</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo-block">
+      <span class="logo-eb">EB</span>
+      <div class="logo-text">
+        <span class="logo-name">EyeBlackIQ</span>
+        <span class="logo-tag">NCAA Baseball Prediction Model</span>
+      </div>
+    </div>
+    <nav>
+      <a href="index.html" class="nav-link active">Today</a>
+      <a href="results.html" class="nav-link">Results</a>
+      <a href="methodology.html" class="nav-link">Methodology</a>
+    </nav>
+    <div class="social-links">
+      <a href="https://twitter.com/EyeBlackIQ" target="_blank" class="social-btn">𝕏 Follow</a>
+      <a href="#" target="_blank" class="social-btn telegram">Telegram</a>
+    </div>
+  </div>
+</header>
+
+<!-- SEASON RECORD BAR -->
+<div class="record-bar">
+  <div class="record-inner" id="record-bar-content">
+    <div class="record-stat">
+      <span class="stat-label">SEASON</span>
+      <span class="stat-value" id="bar-record">0-0-0</span>
+    </div>
+    <div class="record-divider"></div>
+    <div class="record-stat">
+      <span class="stat-label">NET UNITS</span>
+      <span class="stat-value" id="bar-units">+0.0u</span>
+    </div>
+    <div class="record-divider"></div>
+    <div class="record-stat">
+      <span class="stat-label">ROI</span>
+      <span class="stat-value" id="bar-roi">0.0%</span>
+    </div>
+    <div class="record-divider"></div>
+    <div class="record-stat">
+      <span class="stat-label">POD RECORD</span>
+      <span class="stat-value" id="bar-pod">0-0</span>
+    </div>
+    <div class="record-divider"></div>
+    <div class="record-stat">
+      <span class="stat-label">STREAK</span>
+      <span class="stat-value" id="bar-streak">—</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main>
+
+  <!-- DATE HEADER -->
+  <div class="date-header">
+    <div class="date-line"></div>
+    <span class="date-text" id="today-date">Loading...</span>
+    <div class="date-line"></div>
+  </div>
+
+  <!-- PICK OF THE DAY -->
+  <section class="pod-section" id="pod-section">
+    <div class="pod-label">⭐ PICK OF THE DAY</div>
+    <div class="pod-card" id="pod-card">
+      <div class="pod-loading">Loading today's card...</div>
+    </div>
+  </section>
+
+  <!-- FULL CARD -->
+  <section class="full-card-section">
+    <div class="section-header">
+      <span class="section-title">FULL CARD</span>
+      <span class="section-sub" id="pick-count"></span>
+    </div>
+    <div class="picks-grid" id="picks-grid">
+      <div class="pick-loading">Loading picks...</div>
+    </div>
+  </section>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer">
+    Market lines only. All picks posted with live lines at time of posting.<br>
+    EyeBlackIQ is for entertainment purposes only. Bet responsibly.
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="footer-logo">EyeBlackIQ</span>
+      <span class="footer-tag">The model sees what the market misses.</span>
+    </div>
+    <div class="footer-links">
+      <a href="https://twitter.com/EyeBlackIQ" target="_blank">𝕏 Twitter</a>
+      <a href="#">Telegram</a>
+      <a href="#">Discord</a>
+      <a href="results.html">Results</a>
+      <a href="methodology.html">Methodology</a>
+    </div>
+    <div class="footer-copy">© 2026 EyeBlackIQ. Data beats hype.</div>
+  </div>
+</footer>
+
+<script>
+// ─────────────────────────────────────────────
+// LOAD DATA
+// ─────────────────────────────────────────────
+
+const TIER_EMOJI = { CONVICTION: '🔥', VALUE: '📈', LEAN: '👀' };
+const TIER_CLASS = { CONVICTION: 'conviction', VALUE: 'value', LEAN: 'lean' };
+
+async function loadSlip() {
+  try {
+    const res = await fetch('data/today_slip.json?t=' + Date.now());
+    const data = await res.json();
+    renderSlip(data);
+  } catch(e) {
+    renderNoSlip();
+  }
+}
+
+async function loadRecord() {
+  try {
+    const res = await fetch('data/record.json?t=' + Date.now());
+    const data = await res.json();
+    renderRecord(data);
+  } catch(e) {
+    // silently fail — record bar stays at defaults
+  }
+}
+
+function renderRecord(r) {
+  document.getElementById('bar-record').textContent = `${r.wins}-${r.losses}-${r.pushes}`;
+  const net = r.net_units >= 0 ? `+${r.net_units.toFixed(1)}u` : `${r.net_units.toFixed(1)}u`;
+  document.getElementById('bar-units').textContent = net;
+  document.getElementById('bar-units').className = 'stat-value ' + (r.net_units >= 0 ? 'positive' : 'negative');
+  document.getElementById('bar-roi').textContent = (r.roi >= 0 ? '+' : '') + r.roi.toFixed(1) + '%';
+  document.getElementById('bar-roi').className = 'stat-value ' + (r.roi >= 0 ? 'positive' : 'negative');
+  document.getElementById('bar-pod').textContent = `${r.pod_wins}-${r.pod_losses}`;
+  document.getElementById('bar-streak').textContent = r.streak || '—';
+}
+
+function renderSlip(data) {
+  // Date
+  document.getElementById('today-date').textContent = data.date || formatDate(new Date());
+
+  // POD
+  const podCard = document.getElementById('pod-card');
+  if (data.pod) {
+    const p = data.pod;
+    podCard.innerHTML = `
+      <div class="pod-tier ${TIER_CLASS[p.tier] || ''}">
+        ${TIER_EMOJI[p.tier] || '⭐'} ${p.tier}
+      </div>
+      <div class="pod-pick">${p.pick}</div>
+      <div class="pod-teams">${p.teams}</div>
+      <div class="pod-meta">
+        <span class="pod-line">${p.line}</span>
+        <span class="pod-units">${p.units}u</span>
+      </div>
+    `;
+  } else {
+    podCard.innerHTML = `
+      <div class="pod-lean-day">No POD today — model says lean day.<br>
+      <span>Full card below. Trust the process.</span></div>
+    `;
+  }
+
+  // Full card
+  const grid = document.getElementById('picks-grid');
+  const picks = data.picks || [];
+  document.getElementById('pick-count').textContent = `${picks.length} picks`;
+
+  if (picks.length === 0) {
+    grid.innerHTML = '<div class="no-picks">No picks posted yet. Check back after 10am.</div>';
+    return;
+  }
+
+  grid.innerHTML = picks.map(p => `
+    <div class="pick-card ${TIER_CLASS[p.tier] || ''}">
+      <div class="pick-header">
+        <span class="pick-tier">${TIER_EMOJI[p.tier] || ''} ${p.tier}</span>
+        <span class="pick-units">${p.units}u</span>
+      </div>
+      <div class="pick-name">${p.pick}</div>
+      <div class="pick-teams">${p.teams}</div>
+      <div class="pick-line">${p.line}</div>
+    </div>
+  `).join('');
+}
+
+function renderNoSlip() {
+  document.getElementById('today-date').textContent = formatDate(new Date());
+  document.getElementById('pod-card').innerHTML = `
+    <div class="pod-lean-day">Today's card hasn't dropped yet.<br>
+    <span>Slip posts daily around 10am ET.</span></div>
+  `;
+  document.getElementById('picks-grid').innerHTML = `
+    <div class="no-picks">Check back soon. Follow <a href="https://twitter.com/EyeBlackIQ" target="_blank">@EyeBlackIQ</a> for alerts.</div>
+  `;
+}
+
+function formatDate(d) {
+  return d.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+// Init
+loadRecord();
+loadSlip();
+</script>
+</body>
+</html>
