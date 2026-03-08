@@ -1,227 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EyeBlackIQ — NCAA Baseball Prediction Model</title>
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="EyeBlackIQ — data-driven NCAA baseball picks">
+  <title>EyeBlackIQ  |  2026-03-08</title>
+  
+<style>
+  :root {
+    --bg:    #0D0D0D;
+    --text:  #F0EDE8;
+    --accent:#DC143C;
+    --data:  #4A90D9;
+    --gold:  #B8960C;
+    --card:  #1a1a1a;
+    --border:#2a2a2a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  header {
+    background: #0a0a0a;
+    border-bottom: 2px solid var(--accent);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  header h1 { font-size: 1.4rem; letter-spacing: .05em; color: var(--text); }
+  header .tagline { font-size: .8rem; color: #888; }
+  .tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    background: #111;
+    padding: 0 1rem;
+  }
+  .tab-btn {
+    padding: .7rem 1.2rem;
+    border: none;
+    background: transparent;
+    color: #888;
+    font-size: .9rem;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: .2s;
+  }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-panel { display: none; padding: 1.5rem; max-width: 960px; margin: 0 auto; }
+  .tab-panel.active { display: block; }
+  .pick-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin-bottom: .8rem;
+  }
+  .pick-card.wheelhouse { border-left: 4px solid var(--accent); }
+  .pick-card.filthy     { border-left: 4px solid var(--data); }
+  .pick-card.ou         { border-left: 4px solid var(--gold); }
+  .pick-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: .4rem;
+  }
+  .tier-badge {
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    padding: .2rem .6rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+  .badge-wheelhouse { background: var(--accent); color: #fff; }
+  .badge-filthy     { background: var(--data);   color: #fff; }
+  .badge-ou         { background: var(--gold);   color: #000; }
+  .pick-bet  { font-size: 1.05rem; font-weight: 600; }
+  .pick-meta { font-size: .82rem; color: #aaa; margin-top: .3rem; }
+  .pick-meta span { margin-right: 1rem; }
+  .ev-pos { color: #4caf50; }
+  .ev-neg { color: var(--accent); }
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: .8rem;
+    margin-bottom: 1.5rem;
+  }
+  .kpi-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: .8rem 1rem;
+    text-align: center;
+  }
+  .kpi-val { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+  .kpi-lbl { font-size: .78rem; color: #888; margin-top: .2rem; }
+  .no-picks {
+    text-align: center;
+    padding: 2rem;
+    color: #666;
+    font-size: 1rem;
+  }
+  .section-hdr {
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #666;
+    margin: 1rem 0 .6rem;
+  }
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: .75rem;
+    color: #444;
+    border-top: 1px solid var(--border);
+  }
+  a { color: var(--data); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style>
+
 </head>
 <body>
+  <header>
+    <div>
+      <h1>EyeBlackIQ</h1>
+      <div class="tagline">NCAA Baseball · Model v3</div>
+    </div>
+    <div style="font-size:.78rem;color:#555">Updated Mar 08, 2026 12:10 PM ET</div>
+  </header>
 
-<!-- HEADER -->
-<header>
-  <div class="header-inner">
-    <div class="logo-block">
-      <span class="logo-eb">EB</span>
-      <div class="logo-text">
-        <span class="logo-name">EyeBlackIQ</span>
-        <span class="logo-tag">NCAA Baseball Prediction Model</span>
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="tab-picks"  onclick="showTab('tab-picks')">Today's Picks</button>
+    <button class="tab-btn"        data-tab="tab-perf"   onclick="showTab('tab-perf')">Performance</button>
+    <button class="tab-btn"        data-tab="tab-more"   onclick="showTab('tab-more')">More Sports</button>
+  </div>
+
+  <div id="tab-picks" class="tab-panel active">
+    <p style="color:#888;font-size:.82rem;margin-bottom:1rem">7 Wheelhouse &nbsp;·&nbsp; 0 Filthy &nbsp;·&nbsp; 0 O/U &nbsp;|&nbsp; 31 games analyzed</p>
+    <div class="section-hdr">Wheelhouse  ·  2.0u</div>
+<div class="pick-card wheelhouse">  <div class="pick-header">    <span class="pick-bet">Tennessee ML</span>    <span class="tier-badge badge-wheelhouse">🎯 Wheelhouse</span>  </div>  <div style="font-size:.85rem;color:#aaa">Wright St Raiders @ Tennessee</div>  <div class="pick-meta"><span>ML -475</span><span>WP 90.7%</span><span class="ev-pos">EV +9.8%</span><span>2.0u</span></div></div>
+<div class="pick-card wheelhouse">  <div class="pick-header">    <span class="pick-bet">Cincinnati ML</span>    <span class="tier-badge badge-wheelhouse">🎯 Wheelhouse</span>  </div>  <div style="font-size:.85rem;color:#aaa">UC San Diego @ Cincinnati</div>  <div class="pick-meta"><span>ML -375</span><span>WP 90.1%</span><span class="ev-pos">EV +14.1%</span><span>2.0u</span></div></div>
+<div class="pick-card wheelhouse">  <div class="pick-header">    <span class="pick-bet">Southern California ML</span>    <span class="tier-badge badge-wheelhouse">🎯 Wheelhouse</span>  </div>  <div style="font-size:.85rem;color:#aaa">Illinois @ Southern California</div>  <div class="pick-meta"><span>ML -298</span><span>WP 88.3%</span><span class="ev-pos">EV +18.0%</span><span>2.0u</span></div></div>
+<div class="pick-card wheelhouse">  <div class="pick-header">    <span class="pick-bet">Nebraska ML</span>    <span class="tier-badge badge-wheelhouse">🎯 Wheelhouse</span>  </div>  <div style="font-size:.85rem;color:#aaa">Michigan St Spartans @ Nebraska</div>  <div class="pick-meta"><span>ML -270</span><span>WP 86.4%</span><span class="ev-pos">EV +18.4%</span><span>2.0u</span></div></div>
+<div class="pick-card wheelhouse">  <div class="pick-header">    <span class="pick-bet">Arizona Wildcats ML</span>    <span class="tier-badge badge-wheelhouse">🎯 Wheelhouse</span>  </div>  <div style="font-size:.85rem;color:#aaa">Fresno St Bulldogs @ Arizona Wildcats</div>  <div class="pick-meta"><span>ML -180</span><span>WP 81.3%</span><span class="ev-pos">EV +26.5%</span><span>2.0u</span></div></div>
+<div class="pick-card wheelhouse">  <div class="pick-header">    <span class="pick-bet">Oregon ML</span>    <span class="tier-badge badge-wheelhouse">🎯 Wheelhouse</span>  </div>  <div style="font-size:.85rem;color:#aaa">Oregon @ Purdue</div>  <div class="pick-meta"><span>ML -270</span><span>WP 77.9%</span><span class="ev-pos">EV +6.8%</span><span>2.0u</span></div></div>
+<div class="pick-card wheelhouse">  <div class="pick-header">    <span class="pick-bet">Troy Trojans ML</span>    <span class="tier-badge badge-wheelhouse">🎯 Wheelhouse</span>  </div>  <div style="font-size:.85rem;color:#aaa">Maryland @ Troy Trojans</div>  <div class="pick-meta"><span>ML -160</span><span>WP 76.1%</span><span class="ev-pos">EV +23.6%</span><span>2.0u</span></div></div>
+
+  </div>
+
+  <div id="tab-perf" class="tab-panel">
+    
+    <div class="kpi-row">
+      <div class="kpi-card">
+        <div class="kpi-val">10</div>
+        <div class="kpi-lbl">Graded Picks</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-val">70.0%</div>
+        <div class="kpi-lbl">Win Rate</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-val" style="color:#4caf50">+2.38u</div>
+        <div class="kpi-lbl">Season P&amp;L</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-val">7-3</div>
+        <div class="kpi-lbl">Record</div>
       </div>
     </div>
-    <nav>
-      <a href="index.html" class="nav-link active">Today</a>
-      <a href="results.html" class="nav-link">Results</a>
-      <a href="methodology.html" class="nav-link">Methodology</a>
-    </nav>
-    <div class="social-links">
-      <a href="https://twitter.com/EyeBlackIQ" target="_blank" class="social-btn">𝕏 Follow</a>
-      <a href="#" target="_blank" class="social-btn telegram">Telegram</a>
-    </div>
-  </div>
-</header>
-
-<!-- SEASON RECORD BAR -->
-<div class="record-bar">
-  <div class="record-inner" id="record-bar-content">
-    <div class="record-stat">
-      <span class="stat-label">SEASON</span>
-      <span class="stat-value" id="bar-record">0-0-0</span>
-    </div>
-    <div class="record-divider"></div>
-    <div class="record-stat">
-      <span class="stat-label">NET UNITS</span>
-      <span class="stat-value" id="bar-units">+0.0u</span>
-    </div>
-    <div class="record-divider"></div>
-    <div class="record-stat">
-      <span class="stat-label">ROI</span>
-      <span class="stat-value" id="bar-roi">0.0%</span>
-    </div>
-    <div class="record-divider"></div>
-    <div class="record-stat">
-      <span class="stat-label">POD RECORD</span>
-      <span class="stat-value" id="bar-pod">0-0</span>
-    </div>
-    <div class="record-divider"></div>
-    <div class="record-stat">
-      <span class="stat-label">STREAK</span>
-      <span class="stat-value" id="bar-streak">—</span>
-    </div>
-  </div>
-</div>
-
-<!-- MAIN -->
-<main>
-
-  <!-- DATE HEADER -->
-  <div class="date-header">
-    <div class="date-line"></div>
-    <span class="date-text" id="today-date">Loading...</span>
-    <div class="date-line"></div>
+    <p style="color:#666;font-size:.82rem">
+      Season stats through 2026-03-08 &nbsp;·&nbsp; Model v3
+      &nbsp;·&nbsp; <a href="methodology.html">Methodology</a>
+    </p>
+    
   </div>
 
-  <!-- PICK OF THE DAY -->
-  <section class="pod-section" id="pod-section">
-    <div class="pod-label">⭐ PICK OF THE DAY</div>
-    <div class="pod-card" id="pod-card">
-      <div class="pod-loading">Loading today's card...</div>
+  <div id="tab-more" class="tab-panel">
+    
+    <div style="text-align:center;padding:2rem;color:#666">
+      <p style="font-size:1.1rem;margin-bottom:.5rem">More Sports — Coming Soon</p>
+      <p style="font-size:.85rem">
+        NCAA Football &nbsp;·&nbsp; NBA &nbsp;·&nbsp; MLB<br>
+        Subscribe for early access.
+      </p>
     </div>
-  </section>
-
-  <!-- FULL CARD -->
-  <section class="full-card-section">
-    <div class="section-header">
-      <span class="section-title">FULL CARD</span>
-      <span class="section-sub" id="pick-count"></span>
-    </div>
-    <div class="picks-grid" id="picks-grid">
-      <div class="pick-loading">Loading picks...</div>
-    </div>
-  </section>
-
-  <!-- DISCLAIMER -->
-  <div class="disclaimer">
-    Market lines only. All picks posted with live lines at time of posting.<br>
-    EyeBlackIQ is for entertainment purposes only. Bet responsibly.
+    
   </div>
 
-</main>
+  <footer>
+    EyeBlackIQ &nbsp;·&nbsp; Data-driven NCAA Baseball &nbsp;·&nbsp;
+    <a href="methodology.html">Methodology</a> &nbsp;·&nbsp;
+    Generated 2026-03-08T12:07:40 ET
+  </footer>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <span class="footer-logo">EyeBlackIQ</span>
-      <span class="footer-tag">The model sees what the market misses.</span>
-    </div>
-    <div class="footer-links">
-      <a href="https://twitter.com/EyeBlackIQ" target="_blank">𝕏 Twitter</a>
-      <a href="#">Telegram</a>
-      <a href="https://discord.gg/2ZVraJMU" target="_blank">Discord</a>
-      <a href="results.html">Results</a>
-      <a href="methodology.html">Methodology</a>
-    </div>
-    <div class="footer-copy">© 2026 EyeBlackIQ. Data beats hype.</div>
-  </div>
-</footer>
-
+  
 <script>
-// ─────────────────────────────────────────────
-// LOAD DATA
-// ─────────────────────────────────────────────
-
-const TIER_EMOJI = { CONVICTION: '🔥', VALUE: '📈', LEAN: '👀' };
-const TIER_CLASS = { CONVICTION: 'conviction', VALUE: 'value', LEAN: 'lean' };
-
-async function loadSlip() {
-  try {
-    const res = await fetch('data/today_slip.json?t=' + Date.now());
-    const data = await res.json();
-    renderSlip(data);
-  } catch(e) {
-    renderNoSlip();
+  function showTab(id) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    document.querySelector('[data-tab="' + id + '"]').classList.add('active');
   }
-}
-
-async function loadRecord() {
-  try {
-    const res = await fetch('data/record.json?t=' + Date.now());
-    const data = await res.json();
-    renderRecord(data);
-  } catch(e) {
-    // silently fail — record bar stays at defaults
-  }
-}
-
-function renderRecord(r) {
-  document.getElementById('bar-record').textContent = `${r.wins}-${r.losses}-${r.pushes}`;
-  const net = r.net_units >= 0 ? `+${r.net_units.toFixed(1)}u` : `${r.net_units.toFixed(1)}u`;
-  document.getElementById('bar-units').textContent = net;
-  document.getElementById('bar-units').className = 'stat-value ' + (r.net_units >= 0 ? 'positive' : 'negative');
-  document.getElementById('bar-roi').textContent = (r.roi >= 0 ? '+' : '') + r.roi.toFixed(1) + '%';
-  document.getElementById('bar-roi').className = 'stat-value ' + (r.roi >= 0 ? 'positive' : 'negative');
-  document.getElementById('bar-pod').textContent = `${r.pod_wins}-${r.pod_losses}`;
-  document.getElementById('bar-streak').textContent = r.streak || '—';
-}
-
-function renderSlip(data) {
-  // Date
-  document.getElementById('today-date').textContent = data.date || formatDate(new Date());
-
-  // POD
-  const podCard = document.getElementById('pod-card');
-  if (data.pod) {
-    const p = data.pod;
-    podCard.innerHTML = `
-      <div class="pod-tier ${TIER_CLASS[p.tier] || ''}">
-        ${TIER_EMOJI[p.tier] || '⭐'} ${p.tier}
-      </div>
-      <div class="pod-pick">${p.pick}</div>
-      <div class="pod-teams">${p.teams}</div>
-      <div class="pod-meta">
-        <span class="pod-line">${p.line}</span>
-        <span class="pod-units">${p.units}u</span>
-      </div>
-    `;
-  } else {
-    podCard.innerHTML = `
-      <div class="pod-lean-day">No POD today — model says lean day.<br>
-      <span>Full card below. Trust the process.</span></div>
-    `;
-  }
-
-  // Full card
-  const grid = document.getElementById('picks-grid');
-  const picks = data.picks || [];
-  document.getElementById('pick-count').textContent = `${picks.length} picks`;
-
-  if (picks.length === 0) {
-    grid.innerHTML = '<div class="no-picks">No picks posted yet. Check back after 10am.</div>';
-    return;
-  }
-
-  grid.innerHTML = picks.map(p => `
-    <div class="pick-card ${TIER_CLASS[p.tier] || ''}">
-      <div class="pick-header">
-        <span class="pick-tier">${TIER_EMOJI[p.tier] || ''} ${p.tier}</span>
-        <span class="pick-units">${p.units}u</span>
-      </div>
-      <div class="pick-name">${p.pick}</div>
-      <div class="pick-teams">${p.teams}</div>
-      <div class="pick-line">${p.line}</div>
-    </div>
-  `).join('');
-}
-
-function renderNoSlip() {
-  document.getElementById('today-date').textContent = formatDate(new Date());
-  document.getElementById('pod-card').innerHTML = `
-    <div class="pod-lean-day">Today's card hasn't dropped yet.<br>
-    <span>Slip posts daily around 10am ET.</span></div>
-  `;
-  document.getElementById('picks-grid').innerHTML = `
-    <div class="no-picks">Check back soon. Follow <a href="https://twitter.com/EyeBlackIQ" target="_blank">@EyeBlackIQ</a> for alerts.</div>
-  `;
-}
-
-function formatDate(d) {
-  return d.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-}
-
-// Init
-loadRecord();
-loadSlip();
 </script>
+
 </body>
 </html>
