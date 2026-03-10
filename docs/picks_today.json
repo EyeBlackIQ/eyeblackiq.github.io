@@ -1,6 +1,6 @@
 {
   "date": "2026-03-10",
-  "generated_at": "2026-03-10T14:46:48",
+  "generated_at": "2026-03-10T14:51:53",
   "model_version": "v3",
   "wheelhouse": [
     {
@@ -152,6 +152,16 @@
       "units": 1.0
     },
     {
+      "away": "Florida St Seminoles",
+      "home": "Florida",
+      "bet": "UNDER 13.0",
+      "gap": -1.92,
+      "sp_status": "confirmed",
+      "pred_total": 11.08,
+      "ou_line": 13.0,
+      "units": 1.0
+    },
+    {
       "away": "Kansas",
       "home": "Texas Christian",
       "bet": "OVER 10.0",
@@ -165,9 +175,9 @@
       "away": "Mississippi St Bulldogs",
       "home": "Tulane",
       "bet": "UNDER 13.0",
-      "gap": -1.96,
+      "gap": -1.64,
       "sp_status": "confirmed",
-      "pred_total": 11.04,
+      "pred_total": 11.36,
       "ou_line": 13.0,
       "units": 1.0
     }
