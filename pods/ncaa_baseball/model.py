@@ -443,28 +443,30 @@ def load_games_from_cache(date_str: str) -> list:
     logger.info("Using hardcoded NCAA slate (cache not available)")
 
     slates = {
-        # Mar 21 — series games (SEC/Big 12/Pac-12 weekend series)
-        # NOTE: Update SP names/ERAs each morning once lineups are confirmed
+        # Mar 21 — Game 2 of weekend series (SPs confirmed from team sites)
         "2026-03-21": [
-            {"away": "Northwestern",   "home": "Oregon",           "mkt_away": +315,   "mkt_home": -470,    "sp_era_away": 5.10, "sp_era_home": 3.80, "sp_starts_away": 4, "sp_starts_home": 6, "sp_away": "TBD", "sp_home": "TBD", "game_time": "3:00 PM ET"},
-            {"away": "Minnesota",      "home": "Indiana",          "mkt_away": -125,   "mkt_home": +105,    "sp_era_away": 4.20, "sp_era_home": 4.85, "sp_starts_away": 5, "sp_starts_home": 4, "sp_away": "TBD", "sp_home": "TBD", "game_time": "3:00 PM ET"},
-            {"away": "Maryland",       "home": "Georgia Southern", "mkt_away": None,   "mkt_home": None,    "sp_era_away": 4.50, "sp_era_home": 4.70, "sp_starts_away": 3, "sp_starts_home": 3, "sp_away": "TBD", "sp_home": "TBD", "game_time": "3:00 PM ET"},
-            {"away": "Washington",     "home": "USC",              "mkt_away": +400,   "mkt_home": -600,    "sp_era_away": 5.40, "sp_era_home": 3.60, "sp_starts_away": 3, "sp_starts_home": 7, "sp_away": "TBD", "sp_home": "TBD", "game_time": "3:00 PM ET"},
-            {"away": "BYU",            "home": "West Virginia",    "mkt_away": +1400,  "mkt_home": -10000,  "sp_era_away": 4.80, "sp_era_home": 4.10, "sp_starts_away": 2, "sp_starts_home": 5, "sp_away": "TBD", "sp_home": "TBD", "game_time": "3:05 PM ET"},
-            {"away": "Oklahoma",       "home": "LSU",              "mkt_away": +110,   "mkt_home": -145,    "sp_era_away": 4.30, "sp_era_home": 3.95, "sp_starts_away": 5, "sp_starts_home": 6, "sp_away": "TBD", "sp_home": "TBD", "game_time": "6:30 PM ET"},
-            {"away": "Florida",        "home": "Alabama",          "mkt_away": -185,   "mkt_home": +140,    "sp_era_away": 3.70, "sp_era_home": 4.60, "sp_starts_away": 7, "sp_starts_home": 5, "sp_away": "TBD", "sp_home": "TBD", "game_time": "6:00 PM ET"},
-            {"away": "Texas",          "home": "Auburn",           "mkt_away": -135,   "mkt_home": +105,    "sp_era_away": 3.55, "sp_era_home": 4.25, "sp_starts_away": 6, "sp_starts_home": 5, "sp_away": "TBD", "sp_home": "TBD", "game_time": "6:00 PM ET"},
+            # Big Ten
+            {"away": "Northwestern", "home": "Oregon",    "mkt_away": +350,   "mkt_home": -500,   "sp_era_away": 5.10, "sp_era_home": 3.90, "sp_starts_away": 5, "sp_starts_home": 6, "sp_away": "TBD",           "sp_home": "TBD",                   "game_time": "5:05 PM ET"},
+            {"away": "Minnesota",    "home": "Indiana",   "mkt_away": -125,   "mkt_home": +105,   "sp_era_away": 2.05, "sp_era_home": 2.95, "sp_starts_away": 5, "sp_starts_home": 4, "sp_away": "Isaac Morton",  "sp_home": "Brayton Thomas",        "game_time": "2:00 PM ET"},
+            {"away": "Maryland",     "home": "UCLA",      "mkt_away": +350,   "mkt_home": -500,   "sp_era_away": 4.50, "sp_era_home": 2.80, "sp_starts_away": 4, "sp_starts_home": 6, "sp_away": "TBD",           "sp_home": "TBD",                   "game_time": "5:00 PM ET"},
+            {"away": "Washington",   "home": "USC",       "mkt_away": +400,   "mkt_home": -600,   "sp_era_away": 5.40, "sp_era_home": 0.27, "sp_starts_away": 3, "sp_starts_home": 7, "sp_away": "TBD",           "sp_home": "Grant Govel",           "game_time": "10:00 PM ET"},
+            # Big 12
+            {"away": "BYU",          "home": "West Virginia", "mkt_away": +1400, "mkt_home": -10000, "sp_era_away": 6.30, "sp_era_home": 0.72, "sp_starts_away": 4, "sp_starts_home": 5, "sp_away": "Waylan Crane", "sp_home": "Maxx Yehl",            "game_time": "1:00 PM ET"},
+            # SEC
+            {"away": "Oklahoma",     "home": "LSU",       "mkt_away": +110,   "mkt_home": -145,   "sp_era_away": 4.71, "sp_era_home": 3.12, "sp_starts_away": 5, "sp_starts_home": 6, "sp_away": "Cord Rager",    "sp_home": "William Schmidt",       "game_time": "3:00 PM ET"},
+            {"away": "Florida",      "home": "Alabama",   "mkt_away": -185,   "mkt_home": +140,   "sp_era_away": 3.70, "sp_era_home": 4.20, "sp_starts_away": 6, "sp_starts_home": 5, "sp_away": "Aidan King",     "sp_home": "Zane Adams",            "game_time": "3:00 PM ET"},
+            {"away": "Texas",        "home": "Auburn",    "mkt_away": -135,   "mkt_home": +105,   "sp_era_away": 3.06, "sp_era_home": 2.76, "sp_starts_away": 5, "sp_starts_home": 5, "sp_away": "Luke Harrison",  "sp_home": "Jackson Sanders",       "game_time": "6:00 PM ET"},
         ],
-        # Mar 20 — same series (Game 1 of 3-game weekend sets)
+        # Mar 20 — Game 1 results: Oregon 20-6, Indiana 8-6, UCLA 12-2, USC 5-0, WVU 12-10, OU 4-2, ALA 6-0, AUB 4-3(WO)
         "2026-03-20": [
-            {"away": "Northwestern",   "home": "Oregon",           "mkt_away": +315,   "mkt_home": -470,    "sp_era_away": 5.10, "sp_era_home": 3.80, "sp_starts_away": 4, "sp_starts_home": 6, "sp_away": "TBD", "sp_home": "TBD", "game_time": "3:00 PM ET"},
-            {"away": "Minnesota",      "home": "Indiana",          "mkt_away": -125,   "mkt_home": +105,    "sp_era_away": 4.20, "sp_era_home": 4.85, "sp_starts_away": 5, "sp_starts_home": 4, "sp_away": "TBD", "sp_home": "TBD", "game_time": "3:00 PM ET"},
-            {"away": "Maryland",       "home": "Georgia Southern", "mkt_away": None,   "mkt_home": None,    "sp_era_away": 4.50, "sp_era_home": 4.70, "sp_starts_away": 3, "sp_starts_home": 3, "sp_away": "TBD", "sp_home": "TBD", "game_time": "3:00 PM ET"},
-            {"away": "Washington",     "home": "USC",              "mkt_away": +400,   "mkt_home": -600,    "sp_era_away": 5.40, "sp_era_home": 3.60, "sp_starts_away": 3, "sp_starts_home": 7, "sp_away": "TBD", "sp_home": "TBD", "game_time": "3:00 PM ET"},
-            {"away": "BYU",            "home": "West Virginia",    "mkt_away": +1400,  "mkt_home": -10000,  "sp_era_away": 4.80, "sp_era_home": 4.10, "sp_starts_away": 2, "sp_starts_home": 5, "sp_away": "TBD", "sp_home": "TBD", "game_time": "3:05 PM ET"},
-            {"away": "Oklahoma",       "home": "LSU",              "mkt_away": +110,   "mkt_home": -145,    "sp_era_away": 4.30, "sp_era_home": 3.95, "sp_starts_away": 5, "sp_starts_home": 6, "sp_away": "TBD", "sp_home": "TBD", "game_time": "6:30 PM ET"},
-            {"away": "Florida",        "home": "Alabama",          "mkt_away": -185,   "mkt_home": +140,    "sp_era_away": 3.70, "sp_era_home": 4.60, "sp_starts_away": 7, "sp_starts_home": 5, "sp_away": "TBD", "sp_home": "TBD", "game_time": "6:00 PM ET"},
-            {"away": "Texas",          "home": "Auburn",           "mkt_away": -135,   "mkt_home": +105,    "sp_era_away": 3.55, "sp_era_home": 4.25, "sp_starts_away": 6, "sp_starts_home": 5, "sp_away": "TBD", "sp_home": "TBD", "game_time": "6:00 PM ET"},
+            {"away": "Northwestern", "home": "Oregon",    "mkt_away": +315,   "mkt_home": -470,   "sp_era_away": 5.10, "sp_era_home": 3.80, "sp_starts_away": 4, "sp_starts_home": 6, "sp_away": "TBD",           "sp_home": "Will Sanford",          "game_time": "3:00 PM ET"},
+            {"away": "Minnesota",    "home": "Indiana",   "mkt_away": -125,   "mkt_home": +105,   "sp_era_away": 4.20, "sp_era_home": 4.85, "sp_starts_away": 5, "sp_starts_home": 4, "sp_away": "TBD",           "sp_home": "TBD",                   "game_time": "3:00 PM ET"},
+            {"away": "Maryland",     "home": "UCLA",      "mkt_away": +350,   "mkt_home": -500,   "sp_era_away": 4.50, "sp_era_home": 2.50, "sp_starts_away": 3, "sp_starts_home": 6, "sp_away": "TBD",           "sp_home": "TBD",                   "game_time": "3:00 PM ET"},
+            {"away": "Washington",   "home": "USC",       "mkt_away": +400,   "mkt_home": -600,   "sp_era_away": 5.40, "sp_era_home": 3.60, "sp_starts_away": 3, "sp_starts_home": 6, "sp_away": "TBD",           "sp_home": "TBD",                   "game_time": "3:00 PM ET"},
+            {"away": "BYU",          "home": "West Virginia", "mkt_away": +1400, "mkt_home": -10000, "sp_era_away": 4.80, "sp_era_home": 4.10, "sp_starts_away": 2, "sp_starts_home": 4, "sp_away": "TBD",        "sp_home": "TBD",                   "game_time": "3:05 PM ET"},
+            {"away": "Oklahoma",     "home": "LSU",       "mkt_away": +110,   "mkt_home": -145,   "sp_era_away": 4.30, "sp_era_home": 3.95, "sp_starts_away": 5, "sp_starts_home": 5, "sp_away": "TBD",           "sp_home": "TBD",                   "game_time": "6:30 PM ET"},
+            {"away": "Florida",      "home": "Alabama",   "mkt_away": -185,   "mkt_home": +140,   "sp_era_away": 3.70, "sp_era_home": 4.60, "sp_starts_away": 7, "sp_starts_home": 5, "sp_away": "TBD",           "sp_home": "TBD",                   "game_time": "6:00 PM ET"},
+            {"away": "Texas",        "home": "Auburn",    "mkt_away": -135,   "mkt_home": +105,   "sp_era_away": 3.55, "sp_era_home": 4.25, "sp_starts_away": 6, "sp_starts_home": 5, "sp_away": "TBD",           "sp_home": "TBD",                   "game_time": "6:00 PM ET"},
         ],
     }
     return slates.get(date_str, slates.get("2026-03-21", []))

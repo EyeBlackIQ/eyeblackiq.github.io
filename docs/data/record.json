@@ -1,12 +1,12 @@
 {
-  "wins": 0,
-  "losses": 0,
+  "wins": 3,
+  "losses": 1,
   "pushes": 0,
-  "net_units": 0.0,
-  "roi": 0.0,
-  "clv_pct": 0.0,
+  "net_units": 1.45,
+  "roi": 36.25,
+  "clv_pct": 0,
   "pod_wins": 0,
   "pod_losses": 0,
-  "streak": "\u2014",
+  "streak": "W1",
   "last_updated": "2026-03-21"
 }

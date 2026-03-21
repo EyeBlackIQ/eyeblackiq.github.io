@@ -1,1 +1,58 @@
-[]
+[
+  {
+    "signal_date": "2026-03-20",
+    "sport": "NCAA_BASEBALL",
+    "game": "Auburn game",
+    "side": "Auburn ML",
+    "market": "ML",
+    "odds": 105,
+    "units": 1.5,
+    "result": "WIN",
+    "units_net": 1.575,
+    "actual_val": "Auburn 4 Texas 3 WO",
+    "clv": null,
+    "graded_at": "2026-03-21T11:34:29.550124+00:00"
+  },
+  {
+    "signal_date": "2026-03-20",
+    "sport": "NCAA_BASEBALL",
+    "game": "WVU game",
+    "side": "BYU ML",
+    "market": "ML",
+    "odds": 1400,
+    "units": 2.0,
+    "result": "LOSS",
+    "units_net": -2.0,
+    "actual_val": "WVU 12 BYU 10",
+    "clv": null,
+    "graded_at": "2026-03-21T11:34:29.550124+00:00"
+  },
+  {
+    "signal_date": "2026-03-20",
+    "sport": "NCAA_BASEBALL",
+    "game": "UCLA game",
+    "side": "UCLA ML",
+    "market": "ML",
+    "odds": -500,
+    "units": 1.5,
+    "result": "WIN",
+    "units_net": 0.3,
+    "actual_val": "UCLA 12 Maryland 2",
+    "clv": null,
+    "graded_at": "2026-03-21T11:34:29.550124+00:00"
+  },
+  {
+    "signal_date": "2026-03-20",
+    "sport": "NCAA_BASEBALL",
+    "game": "Indiana game",
+    "side": "Indiana ML",
+    "market": "ML",
+    "odds": 105,
+    "units": 1.5,
+    "result": "WIN",
+    "units_net": 1.575,
+    "actual_val": "Indiana 8 Minnesota 6",
+    "clv": null,
+    "graded_at": "2026-03-21T11:34:29.550124+00:00"
+  }
+]
