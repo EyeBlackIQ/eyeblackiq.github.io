@@ -584,9 +584,13 @@ function renderFMV(items) {
     return;
   }
   tbody.innerHTML = filtered.map(p => {
-    const isFlagged = p.is_flagged || (p.units||0) === 0;
-    const flagCell  = isFlagged
-      ? `<span style="font-size:10px;padding:2px 6px;background:rgba(220,20,60,0.15);color:var(--red,#DC143C);border-radius:2px;font-family:'Barlow Condensed',sans-serif;font-weight:700;">FLAGGED</span>`
+    const isFlagged  = p.is_flagged || (p.units||0) === 0;
+    const flagStatus = p.flag_status || (isFlagged ? 'flagged_low' : 'recommended');
+    const flagLabel  = flagStatus === 'flagged_high' ? '⚡ HIGH EDGE'
+                     : flagStatus === 'flagged_low'  ? 'BELOW MIN'
+                     : '';
+    const flagCell   = isFlagged
+      ? `<span style="font-size:10px;padding:2px 6px;background:rgba(220,20,60,0.15);color:var(--red,#DC143C);border-radius:2px;font-family:'Barlow Condensed',sans-serif;font-weight:700;" title="${flagStatus}">${flagLabel || 'FLAGGED'}</span>`
       : `<span style="font-size:10px;padding:2px 6px;background:rgba(74,144,217,0.15);color:#4A90D9;border-radius:2px;font-family:'Barlow Condensed',sans-serif;font-weight:700;">REC</span>`;
     const statusBadge = resultBadge(p.status);
     const ev = p.ev_pct != null ? `${p.ev_pct >= 0 ? '+' : ''}${Number(p.ev_pct).toFixed(1)}%` : '—';

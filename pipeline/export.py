@@ -27,16 +27,30 @@ BASE_DIR  = Path(__file__).parent.parent
 DB_PATH   = BASE_DIR / "pipeline" / "db" / "eyeblackiq.db"
 DOCS_DATA = BASE_DIR / "docs" / "data"
 
-# Edge cap — reserved for future activation. Let data talk first.
-# MIN_EDGE = 0.03   (< 3% → below threshold)
-# MAX_EDGE = 0.15   (> 15% → model artifact risk; future: surface spread/RL alt instead)
-# Future layer: when ML edge > 15% on a big dog, surface spread/run-line as alternative bet.
+# Edge window — active
+# MIN_EDGE = 0.03   (< 3% → models set units=0, caught below as flagged_low)
+# MAX_EDGE_TEAM  = 0.15  (> 15% on ML/total → likely stale line or model artifact)
+# MAX_EDGE_PROP  = 0.20  (> 20% on props → props market is thinner, higher edges are real)
+# PODs bypass the cap — human-reviewed, highest conviction, always on the slip.
+MIN_EDGE     = 0.03
+MAX_EDGE_TEAM = 0.15
+MAX_EDGE_PROP = 0.20
 
 
-def edge_window(edge, units=None):
-    """Returns 'recommended' for all signals with units > 0. Cap logic dormant."""
+def edge_window(edge, units=None, bet_type=None, is_pod=False):
+    """
+    Returns 'recommended', 'flagged_low', or 'flagged_high'.
+
+    PODs always return 'recommended' — human-approved, cap does not apply.
+    Props cap: 20%. Team ML/total cap: 15%. Below 3% (units=0): flagged_low.
+    """
+    if is_pod:
+        return "recommended"
     if units is not None and units == 0:
         return "flagged_low"
+    cap = MAX_EDGE_PROP if (bet_type or "").upper() in ("PROP", "PROPS") else MAX_EDGE_TEAM
+    if edge > cap:
+        return "flagged_high"
     return "recommended"
 
 
@@ -96,7 +110,9 @@ def export_today_slip(date_str: str) -> dict:
     for row in rows:
         edge_val  = row.get("edge") or 0
         units_val = row.get("units") or 0
-        status    = edge_window(edge_val, units=units_val)
+        bet_type  = row.get("bet_type") or ""
+        is_pod    = bool(row.get("is_pod"))
+        status    = edge_window(edge_val, units=units_val, bet_type=bet_type, is_pod=is_pod)
         row["edge_status"] = status
         row["edge_pct"]    = round(edge_val * 100, 2)
 
@@ -109,7 +125,7 @@ def export_today_slip(date_str: str) -> dict:
         if status == "recommended":
             recommended.append(row)
             # Build POD summary from is_pod=1 signals
-            if row.get("is_pod"):
+            if is_pod:
                 pod_summary.append({
                     "sport":      row["sport"],
                     "pick":       row["side"],
@@ -126,7 +142,11 @@ def export_today_slip(date_str: str) -> dict:
                     "result":     "PENDING",
                 })
         else:
-            row["flag_reason"] = "Below minimum tier threshold (0 units)"
+            if status == "flagged_high":
+                cap_pct = MAX_EDGE_PROP * 100 if bet_type.upper() in ("PROP", "PROPS") else MAX_EDGE_TEAM * 100
+                row["flag_reason"] = f"Edge {row['edge_pct']:.1f}% exceeds {cap_pct:.0f}% cap — verify line before betting"
+            else:
+                row["flag_reason"] = "Below minimum tier threshold (0 units)"
             flagged.append(row)
 
     slip = {
@@ -389,14 +409,18 @@ def export_full_market_view(limit: int = 500) -> list:
         rows = [dict(r) for r in cur.fetchall()]
 
     for r in rows:
-        r["is_flagged"] = (r.get("units") or 0) == 0
-        r["tier_color"] = tier_color(r.get("tier") or "")
-        r["tier"]       = clean_tier(r.get("tier") or "")
-        edge_val        = r.get("edge") or 0
-        r["edge_pct"]   = round(edge_val * 100, 2)
-        ev_val          = r.get("ev") or 0
-        r["ev_pct"]     = round(ev_val * 100, 2)
-        # Remove raw edge/ev to avoid confusion with the formatted versions
+        edge_val      = r.get("edge") or 0
+        units_val     = r.get("units") or 0
+        bet_type      = r.get("market") or ""
+        is_pod        = bool(r.get("is_pod"))
+        fmv_status    = edge_window(edge_val, units=units_val, bet_type=bet_type, is_pod=is_pod)
+        r["is_flagged"]  = fmv_status != "recommended"
+        r["flag_status"] = fmv_status   # 'recommended' | 'flagged_low' | 'flagged_high'
+        r["tier_color"]  = tier_color(r.get("tier") or "")
+        r["tier"]        = clean_tier(r.get("tier") or "")
+        r["edge_pct"]    = round(edge_val * 100, 2)
+        ev_val           = r.get("ev") or 0
+        r["ev_pct"]      = round(ev_val * 100, 2)
         r.pop("edge", None)
         r.pop("ev", None)
     return rows
