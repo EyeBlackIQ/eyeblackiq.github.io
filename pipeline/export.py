@@ -27,14 +27,16 @@ BASE_DIR  = Path(__file__).parent.parent
 DB_PATH   = BASE_DIR / "pipeline" / "db" / "eyeblackiq.db"
 DOCS_DATA = BASE_DIR / "docs" / "data"
 
-MIN_EDGE = 0.03
-MAX_EDGE = 0.15
+# Edge cap — reserved for future activation. Let data talk first.
+# MIN_EDGE = 0.03   (< 3% → below threshold)
+# MAX_EDGE = 0.15   (> 15% → model artifact risk; future: surface spread/RL alt instead)
+# Future layer: when ML edge > 15% on a big dog, surface spread/run-line as alternative bet.
 
 
-def edge_window(edge):
-    """Returns 'recommended', 'flagged_high', or 'flagged_low'."""
-    if edge < MIN_EDGE:  return "flagged_low"
-    if edge > MAX_EDGE:  return "flagged_high"
+def edge_window(edge, units=None):
+    """Returns 'recommended' for all signals with units > 0. Cap logic dormant."""
+    if units is not None and units == 0:
+        return "flagged_low"
     return "recommended"
 
 
@@ -74,15 +76,15 @@ def export_today_slip(date_str: str) -> dict:
     flagged     = []
 
     for row in rows:
-        edge_val = row.get("edge") or 0
-        status = edge_window(edge_val)
+        edge_val  = row.get("edge") or 0
+        units_val = row.get("units") or 0
+        status    = edge_window(edge_val, units=units_val)
         row["edge_status"] = status
         row["edge_pct"]    = round(edge_val * 100, 2)
         if status == "recommended":
             recommended.append(row)
         else:
-            flag_reason = "Edge >15% — model artifact risk" if status == "flagged_high" else "Edge <3% — below threshold"
-            row["flag_reason"] = flag_reason
+            row["flag_reason"] = "Below minimum tier threshold (0 units)"
             flagged.append(row)
 
     # Build POD summary
