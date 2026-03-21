@@ -2,6 +2,25 @@
 
 ---
 
+## [v0.7.0] — 2026-03-21
+**Task ID:** CC-NHL-20260321-002 / CC-UI-20260321-004
+**Triggered by:** Master chat — Props fix sprint (classification, SOG model upgrade, UI polish)
+**Summary:** (1) Fixed isProp() classification bug — Props tab now shows ONLY bet_type ending in `_PROP`; team ML/totals/spreads can no longer bleed into Props tab. (2) Fixed edge_window() prop cap bug — `_PROP` suffix now correctly triggers 30% prop cap (was 20% team cap); 2 SNIPEs >20% edge un-stuck from flagged_high. (3) Goals/Points/Anytime/FirstGoal props removed from DB write path — no model, no edge, no noise; 318 0-edge stale records purged. (4) Player-specific Poisson lambda — NHL API skater stats endpoint (shots/gamesPlayed); positional fallback F=2.6, D=1.9; 11 player-stat matches, 32 league-avg fallback in today's run. (5) Props sub-filter row [SOG][Goals][Points][All Props] added — defaults to SOG when Props tab clicked. (6) propCard() renderer — player name, team abbreviation, sportsbook source badge (FD/DK), SOG avg/game, game-grouped display within Props tab. (7) Pick'em empty state updated to "Coming Soon". (8) DraftKings confirmed SPA-blocked (Cloudflare 403); TheRundown covers DK odds April 1.
+
+**Files Modified:**
+- `scrapers/scrape_fanduel_props.py` — FULL REWRITE v0.7.0: SOG-only; player-specific λ from NHL API; Goals/Points/Anytime removed; propCard-compatible notes format; DK documented as SPA-blocked
+- `pipeline/export.py` — Fixed edge_window() cap: `_PROP` in bet_type → 30% prop cap; added edge==0 AND not is_pod guard; fixed flagged_high cap_pct display
+- `docs/index.html` — Fixed isProp() to check bet_type.endsWith('_PROP'); added isTeamLine(); added prop_sub filter state; added prop-sub-bar HTML; added propCard() with player/team/source/SOG-avg; updated matchesTypeFilter() for prop_sub; game-grouped props render; Pick'em "Coming Soon" state; props empty state with sub-label
+- `docs/style.css` — Prop card styles: .prop-player-row, .prop-player-name, .prop-team-tag, .prop-threshold, .prop-sog-avg, .prop-src-badge (FD/DK), .prop-game-group, .prop-game-header, .prop-game-picks; prop-sub-bar style
+
+**Schema Changes:** No (DB cleanup only — 318 0-edge Goals/Points rows deleted)
+**Backtest Impact:** Not required
+**Go-Live Parameter Changes:** No
+**Tests Passed:** Yes — 43 SOG props (16 SNIPE, 17 SLOT MACHINE, 10 SCOUT); 2 >20%-edge SNIPEs now in recommended[]; 0 Goals/Points in recommended[]; all checks passed; export: 67 recommended, 1 flagged, 1 POD; 69,700 bytes
+**Pod Version:** NHL props v0.2.0 | UI v2.3.0
+
+---
+
 ## [v0.6.0] — 2026-03-21
 **Task ID:** CC-NHL-20260321-001 / CC-UI-20260321-002 / CC-UI-20260321-003
 **Triggered by:** Master chat — FanDuel props scraper + UI overhaul + Validation tab

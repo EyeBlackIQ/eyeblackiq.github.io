@@ -592,8 +592,8 @@
       "is_pod": null,
       "pick_source": "SPORTSBOOK",
       "b2b_flag": null,
-      "is_flagged": false,
-      "flag_status": "recommended",
+      "is_flagged": true,
+      "flag_status": "flagged_low",
       "tier_color": "#555555",
       "edge_pct": 0,
       "ev_pct": 0
@@ -613,8 +613,8 @@
       "is_pod": null,
       "pick_source": "SPORTSBOOK",
       "b2b_flag": null,
-      "is_flagged": false,
-      "flag_status": "recommended",
+      "is_flagged": true,
+      "flag_status": "flagged_low",
       "tier_color": "#555555",
       "edge_pct": 0,
       "ev_pct": 0
@@ -634,8 +634,8 @@
       "is_pod": null,
       "pick_source": "SPORTSBOOK",
       "b2b_flag": null,
-      "is_flagged": false,
-      "flag_status": "recommended",
+      "is_flagged": true,
+      "flag_status": "flagged_low",
       "tier_color": "#555555",
       "edge_pct": 0,
       "ev_pct": 0
@@ -1012,8 +1012,8 @@
       "is_pod": 0,
       "pick_source": "SPORTSBOOK",
       "b2b_flag": null,
-      "is_flagged": false,
-      "flag_status": "recommended",
+      "is_flagged": true,
+      "flag_status": "flagged_low",
       "tier_color": "#4A90D9",
       "edge_pct": 0,
       "ev_pct": 0

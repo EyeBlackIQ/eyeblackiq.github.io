@@ -48,7 +48,9 @@ def edge_window(edge, units=None, bet_type=None, is_pod=False):
         return "recommended"
     if units is not None and units == 0:
         return "flagged_low"
-    cap = MAX_EDGE_PROP if (bet_type or "").upper() in ("PROP", "PROPS") else MAX_EDGE_TEAM
+    if edge == 0 and not is_pod:
+        return "flagged_low"
+    cap = MAX_EDGE_PROP if '_PROP' in (bet_type or '').upper() or (bet_type or '').upper() in ("PROP", "PROPS") else MAX_EDGE_TEAM
     if edge > cap:
         return "flagged_high"
     return "recommended"
@@ -151,7 +153,7 @@ def export_today_slip(date_str: str) -> dict:
                 })
         else:
             if status == "flagged_high":
-                cap_pct = MAX_EDGE_PROP * 100 if bet_type.upper() in ("PROP", "PROPS") else MAX_EDGE_TEAM * 100
+                cap_pct = MAX_EDGE_PROP * 100 if '_PROP' in bet_type.upper() or bet_type.upper() in ("PROP", "PROPS") else MAX_EDGE_TEAM * 100
                 row["flag_reason"] = f"Edge {row['edge_pct']:.1f}% exceeds {cap_pct:.0f}% cap — verify line before betting"
             else:
                 row["flag_reason"] = "Below minimum tier threshold (0 units)"

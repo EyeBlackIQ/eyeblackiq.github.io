@@ -440,3 +440,58 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
 .vflag-b2b-under { background: #1a2a3a; color: #6ab0e0; border: 1px solid #2a4060; } /* B2B PLR — blue (under edge) */
 .vflag-edge-high { background: #2a1a00; color: #f0a030; border: 1px solid #5a3a00; } /* ⚠️ edge above cap */
 .vflag-ev-low    { background: #1a1a1a; color: #666;    border: 1px solid #333;    } /* 📉 low EV */
+
+/* ─── PROP CARDS (v0.7.0) ──────────────────── */
+.prop-sub-bar { margin-top: -1px; border-top: 1px solid #1c1c1c; background: #0d0d0d; }
+.prop-card { position: relative; }
+.prop-player-row {
+  display: flex; align-items: center; gap: 8px;
+  margin: 6px 0 2px;
+}
+.prop-player-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 18px; font-weight: 700; color: var(--text);
+  letter-spacing: 0.3px;
+}
+.prop-team-tag {
+  font-size: 10px; font-weight: 700; letter-spacing: 1px;
+  padding: 1px 6px; border-radius: 2px;
+  background: rgba(255,255,255,0.08); color: #aaa;
+}
+.prop-threshold {
+  font-size: 13px; font-weight: 600; color: #aaa;
+  margin-bottom: 6px; letter-spacing: 0.3px;
+}
+.prop-sog-avg {
+  font-size: 10px; color: #666;
+  padding: 1px 5px; background: #1a1a1a; border-radius: 2px;
+}
+.prop-future-badge {
+  font-size: 9px; font-weight: 700; letter-spacing: 1px;
+  padding: 1px 6px; background: rgba(184,150,12,0.15);
+  color: var(--gold); border: 1px solid rgba(184,150,12,0.3);
+  border-radius: 2px;
+}
+/* Sportsbook source badges */
+.prop-src-badge {
+  font-size: 9px; font-weight: 900; letter-spacing: 1px;
+  padding: 2px 6px; border-radius: 3px;
+}
+.prop-src-fd    { background: rgba(71,126,210,0.2); color: #7BA7F0; border: 1px solid rgba(71,126,210,0.4); }
+.prop-src-dk    { background: rgba(40,175,90,0.18); color: #50C878; border: 1px solid rgba(40,175,90,0.35); }
+.prop-src-other { background: #1a1a1a; color: #666; border: 1px solid #333; }
+
+/* Game grouping inside Props tab */
+.prop-game-group { margin-bottom: 24px; width: 100%; }
+.prop-game-header {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 1px;
+  color: #555; text-transform: uppercase;
+  padding: 6px 0 8px; border-bottom: 1px solid #1c1c1c;
+  margin-bottom: 12px;
+}
+.prop-game-picks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}

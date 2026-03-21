@@ -99,6 +99,17 @@
   </div>
 </div>
 
+<!-- PROP SUB-FILTER (shown only when Props tab is active) -->
+<div class="filter-bar prop-sub-bar" id="prop-sub-bar" style="display:none;">
+  <div class="filter-group">
+    <span class="filter-label">PROP TYPE</span>
+    <button class="filter-btn prop-sub-btn active" data-sub="SOG">📊 SOG</button>
+    <button class="filter-btn prop-sub-btn" data-sub="GOALS">🥅 Goals</button>
+    <button class="filter-btn prop-sub-btn" data-sub="POINTS">⭐ Points</button>
+    <button class="filter-btn prop-sub-btn" data-sub="ALL">All Props</button>
+  </div>
+</div>
+
 <!-- MAIN -->
 <main>
 
@@ -180,7 +191,7 @@
 
 <script>
 // ── Filter state ─────────────────────────────────────────────────────────────
-let filters = { sport: "ALL", tier: "ALL", pods: false, type: null };
+let filters = { sport: "ALL", tier: "ALL", pods: false, type: null, prop_sub: "SOG" };
 let slipData = null;
 let radarOpen = false;
 let fmvOpen = false;
@@ -239,11 +250,19 @@ function confBadge(label, sym) {
 // ── Source classification ─────────────────────────────────────────────────────
 // pick_source === 'SPORTSBOOK' → traditional sportsbook line (ML, total, spread, player prop)
 // pick_source === 'PICKEM'     → pick'em platform (PrizePicks, Underdog, ESPN Pick'em, etc.)
+// A pick is a PROP if its bet_type ends with '_PROP' (e.g. NHL_SOG_PROP) — not ML/TOTAL/SPREAD
+// Team lines (ML, TOTAL, SPREAD, etc.) should NEVER appear in the Props tab
+const TEAM_LINE_TYPES = new Set(['ML','MONEYLINE','TOTAL','TOTALS','SPREAD','PUCK_LINE','RUN_LINE','HANDICAP','ASIAN_HANDICAP']);
 function isPickem(pick) {
   return (pick.pick_source || 'SPORTSBOOK') === 'PICKEM';
 }
 function isProp(pick) {
-  return (pick.pick_source || 'SPORTSBOOK') === 'SPORTSBOOK';
+  const bt = (pick.bet_type || pick.market || '').toUpperCase().trim();
+  return bt.endsWith('_PROP') || bt === 'PROP' || bt === 'PROPS';
+}
+function isTeamLine(pick) {
+  const bt = (pick.bet_type || pick.market || '').toUpperCase().trim();
+  return TEAM_LINE_TYPES.has(bt);
 }
 
 // ── Visual flags (B2B / edge / EV signals) ───────────────────────────────────
@@ -352,6 +371,66 @@ function radarCard(pick) {
   </div>`;
 }
 
+// ── Prop card (player props — SOG, Goals, Points) ────────────────────────────
+// Parses notes field: "source=FanDuel | player=X | team=EDM | threshold=SOG3+ | lam=3.61 (player_stat) | ..."
+function parseNoteMap(notes) {
+  const m = {};
+  (notes || '').split('|').forEach(part => {
+    const eq = part.indexOf('=');
+    if (eq > -1) m[part.slice(0, eq).trim()] = part.slice(eq + 1).trim();
+  });
+  return m;
+}
+function propCard(pick) {
+  const nm        = parseNoteMap(pick.notes);
+  const player    = nm['player'] || pick.side || '—';
+  const team      = nm['team']   || '';
+  const threshold = nm['threshold'] || pick.market || '';
+  const lamRaw    = nm['lam']    || '';
+  const source    = nm['source'] || 'FanDuel';
+  const sourceLbl = source.includes('FanDuel') ? 'FD' : source.includes('DraftKings') ? 'DK' : source.slice(0,3).toUpperCase();
+  const sourceClass = sourceLbl === 'FD' ? 'prop-src-fd' : sourceLbl === 'DK' ? 'prop-src-dk' : 'prop-src-other';
+
+  // Parse SOG avg from lam field: "3.61 (player_stat)" → "3.6"
+  const lamMatch  = lamRaw.match(/^([\d.]+)/);
+  const sogAvgStr = lamMatch ? parseFloat(lamMatch[1]).toFixed(1) : '';
+
+  const edge    = typeof pick.edge_pct !== 'undefined' ? pick.edge_pct : (pick.edge || 0) * 100;
+  const sign    = edge >= 0 ? '+' : '';
+  const tclass  = tierClass(pick.tier || '');
+  const oddsRaw = pick.odds;
+  const oddsStr = oddsRaw > 0 ? `+${oddsRaw}` : `${oddsRaw}`;
+  const units   = pick.units || 1.0;
+  const slipDate = (slipData && slipData.date) ? slipData.date : null;
+  const isFuture = pick.signal_date && slipDate && pick.signal_date > slipDate;
+  const futureBadge = isFuture
+    ? `<span class="prop-future-badge">📅 ${pick.signal_date}</span>`
+    : '';
+  return `
+  <div class="pick-card ${tclass} prop-card">
+    <div class="pick-header">
+      <span class="pick-tier">🏒 ${pick.tier || '—'}</span>
+      <div class="pick-header-right">
+        <span class="prop-src-badge ${sourceClass}">${sourceLbl}</span>
+        <span class="pick-units">${units}u</span>
+      </div>
+    </div>
+    <div class="prop-player-row">
+      <span class="prop-player-name">${player}</span>
+      ${team ? `<span class="prop-team-tag">${team}</span>` : ''}
+      ${futureBadge}
+    </div>
+    <div class="prop-threshold">${threshold}</div>
+    <div class="pick-meta">
+      <span class="pick-odds">${oddsStr}</span>
+      <span class="pick-edge">Edge ${sign}${Number(edge).toFixed(1)}%</span>
+      ${pick.ev ? `<span class="pick-ev">EV ${pick.ev >= 0 ? '+' : ''}${(pick.ev * 100).toFixed(1)}%</span>` : ''}
+      ${sogAvgStr ? `<span class="prop-sog-avg">avg ${sogAvgStr}/gm</span>` : ''}
+    </div>
+    ${pick.game ? `<div class="pick-game">${pick.game}</div>` : ''}
+  </div>`;
+}
+
 // ── Upcoming card (future signal_date picks) ──────────────────────────────────
 function upcomingCard(pick) {
   const edge    = typeof pick.edge_pct !== 'undefined' ? pick.edge_pct : (pick.edge || 0) * 100;
@@ -389,7 +468,17 @@ function matchesPodFilter(pick) {
 }
 function matchesTypeFilter(pick) {
   if (!filters.type) return true;
-  if (filters.type === 'PROPS')  return isProp(pick);
+  if (filters.type === 'PROPS') {
+    if (!isProp(pick)) return false;
+    // Apply prop sub-filter: SOG / GOALS / POINTS / ALL
+    const sub = filters.prop_sub || 'ALL';
+    if (sub === 'ALL') return true;
+    const bt = (pick.bet_type || pick.market || '').toUpperCase();
+    if (sub === 'SOG')    return bt.includes('SOG');
+    if (sub === 'GOALS')  return bt.includes('GOAL');
+    if (sub === 'POINTS') return bt.includes('POINT');
+    return true;
+  }
   if (filters.type === 'PICKEM') return isPickem(pick);
   return true;
 }
@@ -425,12 +514,28 @@ function renderPicks() {
 
   const recEl = document.getElementById('picks-grid');
   if (recEl) {
-    if (mainPicks.length) {
-      recEl.innerHTML = mainPicks.map(pickCard).join('');
-    } else if (filters.type === 'PROPS') {
-      recEl.innerHTML = '<p class="empty-state">No sportsbook picks today matching current sport/tier filters. Sportsbook picks include ML, totals, spreads, and player props from traditional books (DraftKings, FanDuel, etc.).</p>';
+    if (filters.type === 'PROPS' && mainPicks.length) {
+      // Game-grouped prop cards
+      const byGame = {};
+      mainPicks.forEach(p => {
+        const g = p.game || 'Other';
+        if (!byGame[g]) byGame[g] = [];
+        byGame[g].push(p);
+      });
+      const html = Object.entries(byGame).map(([game, picks]) =>
+        `<div class="prop-game-group">
+           <div class="prop-game-header">🏒 ${game}</div>
+           <div class="prop-game-picks">${picks.map(propCard).join('')}</div>
+         </div>`
+      ).join('');
+      recEl.innerHTML = html;
+    } else if (filters.type === 'PROPS' && !mainPicks.length) {
+      const subLabel = filters.prop_sub && filters.prop_sub !== 'ALL' ? ` (${filters.prop_sub})` : '';
+      recEl.innerHTML = `<p class="empty-state">No player props${subLabel} today matching current filters. Run <code>scrapers/scrape_fanduel_props.py</code> to populate NHL props.</p>`;
     } else if (filters.type === 'PICKEM') {
-      recEl.innerHTML = '<p class="empty-state">No pick\'em plays today. Pick\'ems come from platforms like PrizePicks, Underdog, and ESPN Pick\'em — they\'ll appear here once a pick\'em scraper is live.</p>';
+      recEl.innerHTML = '<p class="empty-state">🚧 Coming Soon — Pick\'em plays from PrizePicks, Underdog, and ESPN Pick\'em will appear here once the scraper is live.</p>';
+    } else if (mainPicks.length) {
+      recEl.innerHTML = mainPicks.map(pickCard).join('');
     } else {
       recEl.innerHTML = '<p class="empty-state">No plays meeting threshold for current filters.</p>';
     }
@@ -503,8 +608,14 @@ function toggleFMV() {
   if (btn)  btn.textContent    = fmvOpen ? '▲ Hide' : '▼ Show';
 }
 
+// ── Prop sub-filter bar visibility ───────────────────────────────────────────
+function updatePropSubBar(show) {
+  const bar = document.getElementById('prop-sub-bar');
+  if (bar) bar.style.display = show ? 'flex' : 'none';
+}
+
 // ── Filter button handlers ────────────────────────────────────────────────────
-document.querySelectorAll('.filter-btn').forEach(btn => {
+document.querySelectorAll('.filter-btn:not(.prop-sub-btn)').forEach(btn => {
   btn.addEventListener('click', () => {
     const filterType = btn.dataset.filter;
     const val        = btn.dataset.val;
@@ -514,13 +625,38 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
     } else if (filterType === 'type') {
       const isActive = btn.classList.contains('active');
       document.querySelectorAll('.filter-btn[data-filter="type"]').forEach(b => b.classList.remove('active'));
-      if (!isActive) { btn.classList.add('active'); filters.type = val; }
-      else { filters.type = null; }
+      if (!isActive) {
+        btn.classList.add('active');
+        filters.type = val;
+        if (val === 'PROPS') {
+          // Default to SOG sub-filter on first open
+          filters.prop_sub = 'SOG';
+          document.querySelectorAll('.prop-sub-btn').forEach(b => {
+            b.classList.toggle('active', b.dataset.sub === 'SOG');
+          });
+          updatePropSubBar(true);
+        } else {
+          updatePropSubBar(false);
+        }
+      } else {
+        filters.type = null;
+        updatePropSubBar(false);
+      }
     } else {
       document.querySelectorAll(`.filter-btn[data-filter="${filterType}"]`).forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       filters[filterType] = val;
     }
+    renderPicks();
+  });
+});
+
+// ── Prop sub-filter button handlers ──────────────────────────────────────────
+document.querySelectorAll('.prop-sub-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.prop-sub-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filters.prop_sub = btn.dataset.sub;
     renderPicks();
   });
 });
