@@ -1,0 +1,160 @@
+{
+  "last_updated": "2026-03-21T15:30:44.335341+00:00",
+  "summary": {
+    "w": 6,
+    "l": 3,
+    "p": 0,
+    "units": 3.38,
+    "roi_pct": 24.1
+  },
+  "by_sport": {
+    "NCAA": {
+      "w": 1,
+      "l": 1,
+      "p": 0,
+      "units": -1.25
+    },
+    "MLB": {
+      "w": 3,
+      "l": 0,
+      "p": 0,
+      "units": 5.68
+    },
+    "NHL": {
+      "w": 1,
+      "l": 2,
+      "p": 0,
+      "units": -2.05
+    },
+    "SOCCER": {
+      "w": 1,
+      "l": 0,
+      "p": 0,
+      "units": 1.0
+    }
+  },
+  "by_tier": {
+    "WHEELHOUSE": {
+      "w": 2,
+      "l": 1,
+      "p": 0,
+      "units": -0.31
+    },
+    "FILTHY": {
+      "w": 2,
+      "l": 0,
+      "p": 0,
+      "units": 4.74
+    },
+    "SLOT_MACHINE": {
+      "w": 1,
+      "l": 2,
+      "p": 0,
+      "units": -2.05
+    },
+    "MONITOR": {
+      "w": 1,
+      "l": 0,
+      "p": 0,
+      "units": 1.0
+    }
+  },
+  "by_ev_bucket": {
+    "2-4%": {},
+    "4-7%": {},
+    "7-12%": {},
+    "12%+": {}
+  },
+  "history": [
+    {
+      "date": "2026-03-20",
+      "pick": "BYU BYU ML",
+      "sport": "NCAA",
+      "tier": "WHEELHOUSE",
+      "units": 1.5,
+      "status": "LOSS",
+      "result_value": -1.5,
+      "ev_pct": null
+    },
+    {
+      "date": "2026-03-20",
+      "pick": "USC USC ML",
+      "sport": "NCAA",
+      "tier": "WHEELHOUSE",
+      "units": 1.5,
+      "status": "WIN",
+      "result_value": 0.25,
+      "ev_pct": null
+    },
+    {
+      "date": "2026-03-20",
+      "pick": "Cristopher Sanchez u5.5 Strikeouts",
+      "sport": "MLB",
+      "tier": "FILTHY",
+      "units": 2.0,
+      "status": "WIN",
+      "result_value": 2.06,
+      "ev_pct": 14.4
+    },
+    {
+      "date": "2026-03-20",
+      "pick": "Tarik Skubal u6.5 Strikeouts",
+      "sport": "MLB",
+      "tier": "WHEELHOUSE",
+      "units": 1.5,
+      "status": "WIN",
+      "result_value": 0.94,
+      "ev_pct": 9.8
+    },
+    {
+      "date": "2026-03-20",
+      "pick": "Luis Gil o3.5 Strikeouts",
+      "sport": "MLB",
+      "tier": "FILTHY",
+      "units": 2.0,
+      "status": "WIN",
+      "result_value": 2.68,
+      "ev_pct": 37.2
+    },
+    {
+      "date": "2026-03-20",
+      "pick": "Morgan Rielly o1.5 Shots on Goal",
+      "sport": "NHL",
+      "tier": "SLOT_MACHINE",
+      "units": 1.5,
+      "status": "LOSS",
+      "result_value": -1.5,
+      "ev_pct": 9.8
+    },
+    {
+      "date": "2026-03-20",
+      "pick": "Morgan Rielly o0.5 Points",
+      "sport": "NHL",
+      "tier": "SLOT_MACHINE",
+      "units": 1.5,
+      "status": "LOSS",
+      "result_value": -1.5,
+      "ev_pct": 8.6
+    },
+    {
+      "date": "2026-03-20",
+      "pick": "Jakob Chychrun u0.5 Assists",
+      "sport": "NHL",
+      "tier": "SLOT_MACHINE",
+      "units": 1.5,
+      "status": "WIN",
+      "result_value": 0.95,
+      "ev_pct": 10.8
+    },
+    {
+      "date": "2026-03-20",
+      "pick": "Matheus Cunha o0.5 Shots on Target",
+      "sport": "SOCCER",
+      "tier": "MONITOR",
+      "units": 1.0,
+      "status": "WIN",
+      "result_value": 1.0,
+      "ev_pct": 4.7
+    }
+  ]
+}

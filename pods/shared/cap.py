@@ -21,8 +21,15 @@ logger = logging.getLogger(__name__)
 KELLY_FRACTION   = float(os.getenv("KELLY_FRACTION",   "0.25"))
 BANKROLL_MAX_PCT = float(os.getenv("BANKROLL_MAX_PCT", "0.03"))
 MIN_EDGE_PCT     = float(os.getenv("MIN_EDGE_PCT",     "0.03"))
-DAILY_MAX_BETS   = 15
+DAILY_MAX_BETS   = 15   # risk cap — not a volume cap; see VOLUME POLICY below
 MAX_UNITS        = 2.0
+
+# VOLUME POLICY: No caps on number of picks posted.
+# Post ALL plays that pass the 5-gate signal filter (EV >= 2%).
+# DAILY_MAX_BETS above is a RISK SIZING cap only — it blocks oversizing the bankroll
+# when many plays hit on the same day. It does NOT limit the number of picks published.
+# The site and Twitter post show every qualifying play. Followers size their own units.
+# This is intentional: transparency and completeness are brand values.
 
 
 def kelly_fraction(prob: float, decimal_odds: float) -> float:

@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EyeBlackIQ — Multi-Sport Prediction Model</title>
+<meta name="description" content="EyeBlackIQ: Quantitative multi-sport prediction model. ELO + ISR ratings, 5-gate filter, Quarter Kelly sizing.">
+<meta property="og:title" content="EyeBlackIQ — Today's Picks">
+<meta property="og:description" content="Data-driven multi-sport picks. ELO + ISR · 5-Gate Filter · Quarter Kelly Sizing.">
+<meta property="og:type" content="website">
 <link rel="stylesheet" href="style.css">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
@@ -25,8 +29,7 @@
       <a href="methodology.html" class="nav-link">The Playbook</a>
     </nav>
     <div class="social-links">
-      <a href="https://twitter.com/EyeBlackIQ" target="_blank" class="social-btn">𝕏 Follow</a>
-      <a href="#" target="_blank" class="social-btn telegram">Telegram</a>
+      <a href="https://x.com/EyeBlackIQ" target="_blank" class="social-btn">𝕏 Follow</a>
     </div>
   </div>
 </header>
@@ -64,18 +67,31 @@
 <!-- DATE LABEL -->
 <div class="date-bar">
   <span class="date-label" id="slip-date">Loading...</span>
-  <span class="date-sublabel">Model updated daily · All picks posted at time of signal · Bet responsibly</span>
+  <span class="date-sublabel">Model updated daily · All picks posted at time of signal · Always verify lines before acting</span>
 </div>
 
-<!-- SPORT TABS -->
-<div class="sport-tabs">
-  <button class="sport-tab active" data-sport="ALL">ALL</button>
-  <button class="sport-tab" data-sport="NCAA">⚾ NCAA</button>
-  <button class="sport-tab" data-sport="NHL">🏒 NHL</button>
-  <button class="sport-tab" data-sport="MLB">⚾ MLB</button>
-  <button class="sport-tab" data-sport="SOCCER">⚽ SOCCER</button>
-  <button class="sport-tab" data-sport="PROPS">📊 PROPS</button>
-  <button class="sport-tab" data-sport="PICKEMS">🎯 PICKEMS</button>
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-group">
+    <span class="filter-label">SPORT</span>
+    <button class="filter-btn active" data-filter="sport" data-val="ALL">All</button>
+    <button class="filter-btn" data-filter="sport" data-val="NCAA">⚾ NCAA</button>
+    <button class="filter-btn" data-filter="sport" data-val="MLB">⚾ MLB</button>
+    <button class="filter-btn" data-filter="sport" data-val="NHL">🏒 NHL</button>
+    <button class="filter-btn" data-filter="sport" data-val="SOCCER">⚽ Soccer</button>
+  </div>
+  <div class="filter-divider"></div>
+  <div class="filter-group">
+    <span class="filter-label">TIER</span>
+    <button class="filter-btn active" data-filter="tier" data-val="ALL">All Tiers</button>
+    <button class="filter-btn" data-filter="tier" data-val="T1">T1 High</button>
+    <button class="filter-btn" data-filter="tier" data-val="T2">T2 Edge</button>
+    <button class="filter-btn" data-filter="tier" data-val="T3">T3 Scout</button>
+  </div>
+  <div class="filter-divider"></div>
+  <div class="filter-group">
+    <button class="filter-btn" data-filter="pods" data-val="PODS_ONLY" id="pods-only-btn">📌 PODs Only</button>
+  </div>
 </div>
 
 <!-- MAIN -->
@@ -100,10 +116,21 @@
     </div>
   </section>
 
+  <!-- ON RADAR -->
+  <section class="radar-section" id="radar-section" style="display:none;">
+    <div class="radar-header" id="radar-toggle" onclick="toggleRadar()">
+      <span class="radar-title">On Radar</span>
+      <span class="radar-sub">EV 2–4% edge — informational only, no unit sizing</span>
+      <span class="radar-count" id="radar-count">0</span>
+      <button class="radar-toggle-btn" id="radar-btn">▼ Show</button>
+    </div>
+    <div class="radar-list" id="radar-list" style="display:none;"></div>
+  </section>
+
   <!-- DISCLAIMER -->
   <div class="disclaimer">
-    All picks shown at time of signal. Lines move — always verify before betting.<br>
-    EyeBlackIQ is for informational and entertainment purposes. Bet responsibly.
+    All picks shown at time of signal. Lines move — always verify current prices before acting.<br>
+    EyeBlackIQ is for informational and entertainment purposes only.
   </div>
 
 </main>
@@ -116,94 +143,94 @@
       <span class="footer-tag">The model sees what the market misses.</span>
     </div>
     <div class="footer-links">
-      <a href="https://twitter.com/EyeBlackIQ" target="_blank">𝕏 Twitter</a>
-      <a href="#">Telegram</a>
-      <a href="#">Discord</a>
+      <a href="https://x.com/EyeBlackIQ" target="_blank">𝕏 Twitter</a>
       <a href="results.html">Results</a>
       <a href="methodology.html">The Playbook</a>
+      <!-- Discord: deferred stub -->
     </div>
     <div class="footer-copy">© 2026 EyeBlackIQ. Data beats hype.</div>
   </div>
 </footer>
 
 <script>
-// ── Data loading ────────────────────────────────────────────────────
+// ── Filter state ─────────────────────────────────────────────────────────────
+let filters = { sport: "ALL", tier: "ALL", pods: false };
+let slipData = null;
+let radarOpen = false;
+
+// ── Data loading ─────────────────────────────────────────────────────────────
 async function loadData() {
   const [slipRes, recRes] = await Promise.all([
-    fetch('data/today_slip.json').then(r => r.json()).catch(() => ({date:'', recommended:[], flagged:[], pod:[]})),
-    fetch('data/record.json').then(r => r.json()).catch(() => ({})),
+    fetch('data/today_slip.json?t=' + Date.now()).then(r => r.json()).catch(() => ({date:'',recommended:[],flagged:[],pod:[]})),
+    fetch('data/record.json?t=' + Date.now()).then(r => r.json()).catch(() => ({})),
   ]);
   return { slip: slipRes, record: recRes };
 }
 
-// ── Record bar ──────────────────────────────────────────────────────
+// ── Record bar ────────────────────────────────────────────────────────────────
 function updateRecordBar(rec) {
   const set = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
-  set('bar-record',  `${rec.wins||0}-${rec.losses||0}-${rec.pushes||0}`);
-  const net = (rec.net_units || 0);
-  set('bar-units',   `${net >= 0 ? '+' : ''}${net.toFixed(1)}u`);
-  set('bar-roi',     `${(rec.roi||0) >= 0 ? '+' : ''}${(rec.roi||0).toFixed(1)}%`);
-  set('bar-pod',     `${rec.pod_wins||0}-${rec.pod_losses||0}`);
-  set('bar-streak',  rec.streak || '—');
+  const net = rec.net_units || 0;
+  set('bar-record', `${rec.wins||0}-${rec.losses||0}-${rec.pushes||0}`);
+  set('bar-units',  `${net >= 0 ? '+' : ''}${net.toFixed(1)}u`);
+  set('bar-roi',    `${(rec.roi||0) >= 0 ? '+' : ''}${(rec.roi||0).toFixed(1)}%`);
+  set('bar-pod',    `${rec.pod_wins||0}-${rec.pod_losses||0}`);
+  set('bar-streak', rec.streak || '—');
+  const unitsEl = document.getElementById('bar-units');
+  const roiEl   = document.getElementById('bar-roi');
+  if (unitsEl) unitsEl.className = 'stat-value ' + (net >= 0 ? 'positive' : 'negative');
+  if (roiEl)   roiEl.className   = 'stat-value ' + ((rec.roi||0) >= 0 ? 'positive' : 'negative');
 }
 
-// ── Tier colors ─────────────────────────────────────────────────────
+// ── Tier system ───────────────────────────────────────────────────────────────
 const TIER_CSS = {
-  'FILTHY':        'tier-red',
-  'SNIPE':         'tier-red',
-  'UPPER 90':      'tier-red',
-  'SCREAMER':      'tier-red',
-  'WHEELHOUSE':    'tier-blue',
-  'SLOT MACHINE':  'tier-blue',
-  'CHEEKY':        'tier-blue',
-  'FAST BREAK':    'tier-blue',
-  'SCOUT':         'tier-gold',
+  'FILTHY':'tier-red','SNIPE':'tier-red','UPPER 90':'tier-red','SCREAMER':'tier-red',
+  'WHEELHOUSE':'tier-blue','SLOT MACHINE':'tier-blue','CHEEKY':'tier-blue','FAST BREAK':'tier-blue',
+  'SCOUT':'tier-gold',
 };
 function tierClass(tier) {
   if (!tier) return 'tier-grey';
   const t = tier.toUpperCase();
-  for (const [k, v] of Object.entries(TIER_CSS)) {
-    if (t.includes(k)) return v;
-  }
+  for (const [k, v] of Object.entries(TIER_CSS)) { if (t.includes(k)) return v; }
   return 'tier-grey';
 }
-
-// ── Confidence badge ────────────────────────────────────────────────
-function confBadge(conf_label, conf_sym) {
-  if (!conf_label || conf_label === 'MED') return '';
-  const cls = conf_label === 'HIGH' ? 'conf-high' : 'conf-low';
-  return `<span class="conf-badge ${cls}">${conf_sym || conf_label}</span>`;
+function tierLevel(tier) {
+  if (!tier) return 'T3';
+  const t = tier.toUpperCase();
+  if (['FILTHY','SNIPE','UPPER 90','SCREAMER'].some(k => t.includes(k))) return 'T1';
+  if (['WHEELHOUSE','SLOT MACHINE','CHEEKY','FAST BREAK'].some(k => t.includes(k))) return 'T2';
+  return 'T3';
 }
 
-// ── Pick card ────────────────────────────────────────────────────────
+// ── Confidence badge ──────────────────────────────────────────────────────────
+function confBadge(label, sym) {
+  if (!label || label === 'MED') return '';
+  const cls = label === 'HIGH' ? 'conf-high' : 'conf-low';
+  return `<span class="conf-badge ${cls}">${sym || label}</span>`;
+}
+
+// ── Pick card ─────────────────────────────────────────────────────────────────
 function pickCard(pick) {
-  const edge  = typeof pick.edge_pct !== 'undefined' ? pick.edge_pct : (pick.edge || 0) * 100;
-  const sign  = edge >= 0 ? '+' : '';
+  const edge   = typeof pick.edge_pct !== 'undefined' ? pick.edge_pct : (pick.edge || 0) * 100;
+  const sign   = edge >= 0 ? '+' : '';
   const tclass = tierClass(pick.tier || '');
-  const odds  = pick.odds > 0 ? `+${pick.odds}` : `${pick.odds}`;
-  const units = pick.units || 1.0;
-  const isPod = pick.is_pod;
-
-  // Confidence
+  const oddsRaw = pick.odds;
+  const oddsStr = oddsRaw > 0 ? `+${oddsRaw}` : `${oddsRaw}`;
+  const units  = pick.units || 1.0;
+  const isPod  = pick.is_pod;
   const confHtml = confBadge(pick.conf_label, pick.conf_sym);
-
-  // Run line alternative
   const rlHtml = pick.rl_alt
-    ? `<div class="pick-rl-alt">⚡ Consider run line (+1.5) as alternative vehicle</div>`
+    ? `<div class="pick-rl-alt">Consider spread (+1.5) as alternative vehicle</div>`
     : '';
-
-  // Game / time
   const gameHtml = pick.game
     ? `<div class="pick-game">${pick.game}${pick.game_time ? `  <span class="pick-time">${pick.game_time}</span>` : ''}</div>`
     : '';
-
-  // POD crown
   const podTag = isPod ? `<span class="pod-crown">📌 POD</span>` : '';
-
+  const sportIcon = {NCAA:'⚾',MLB:'⚾',NHL:'🏒',SOCCER:'⚽'}[(pick.sport||'').toUpperCase()] || '📊';
   return `
   <div class="pick-card ${tclass}${isPod ? ' pod-highlight' : ''}">
     <div class="pick-header">
-      <span class="pick-tier">${pick.tier || '—'}</span>
+      <span class="pick-tier">${sportIcon} ${pick.tier || '—'}</span>
       <div class="pick-header-right">
         ${confHtml}
         <span class="pick-units">${units}u</span>
@@ -212,7 +239,7 @@ function pickCard(pick) {
     </div>
     <div class="pick-side">${pick.side || pick.pick || '—'}</div>
     <div class="pick-meta">
-      <span class="pick-odds">${odds}</span>
+      <span class="pick-odds">${oddsStr}</span>
       <span class="pick-edge">Edge ${sign}${Number(edge).toFixed(1)}%</span>
       ${pick.ev ? `<span class="pick-ev">EV ${pick.ev >= 0 ? '+' : ''}${(pick.ev * 100).toFixed(1)}%</span>` : ''}
     </div>
@@ -221,10 +248,11 @@ function pickCard(pick) {
   </div>`;
 }
 
-// ── POD card ─────────────────────────────────────────────────────────
+// ── POD card ──────────────────────────────────────────────────────────────────
 function podCard(pod) {
   if (!pod) return '';
-  const odds = pod.odds > 0 ? `+${pod.odds}` : `${pod.odds || '—'}`;
+  const oddsRaw = pod.odds;
+  const odds = oddsRaw > 0 ? `+${oddsRaw}` : `${oddsRaw || '—'}`;
   const resultHtml = (!pod.result || pod.result === 'PENDING') ? '' :
     `<span class="pod-result ${pod.result === 'WIN' ? 'result-win' : pod.result === 'LOSS' ? 'result-loss' : 'result-push'}">${pod.result}</span>`;
   const confHtml = pod.conf_sym ? `<span class="pod-conf">${pod.conf_sym}</span>` : '';
@@ -238,72 +266,107 @@ function podCard(pod) {
   </div>`;
 }
 
-// ── Tab filtering ─────────────────────────────────────────────────────
-const SPORT_FILTER = {
-  'ALL':     null,
-  'NCAA':    'NCAA',
-  'NHL':     'NHL',
-  'MLB':     'MLB',
-  'SOCCER':  'SOCCER',
-  'PROPS':   'PROPS',      // future: player prop signals
-  'PICKEMS': 'PICKEM',     // future: pickem-style signals
-};
+// ── Radar card (On Radar — EV 2-4%) ──────────────────────────────────────────
+function radarCard(pick) {
+  const edge  = typeof pick.edge_pct !== 'undefined' ? pick.edge_pct : (pick.edge || 0) * 100;
+  const oddsRaw = pick.odds;
+  const odds  = oddsRaw > 0 ? `+${oddsRaw}` : `${oddsRaw}`;
+  const sportIcon = {NCAA:'⚾',MLB:'⚾',NHL:'🏒',SOCCER:'⚽'}[(pick.sport||'').toUpperCase()] || '📊';
+  return `
+  <div class="radar-card">
+    <span class="radar-sport">${sportIcon} ${pick.sport}</span>
+    <span class="radar-side">${pick.side || pick.pick || '—'}</span>
+    <span class="radar-odds">${odds}</span>
+    <span class="radar-edge">Edge +${Number(edge).toFixed(1)}%</span>
+    <span class="radar-game">${pick.game || ''}</span>
+  </div>`;
+}
 
-let currentTab = 'ALL';
-let slipData   = null;
-
-function filterPicks(picks, sportKey) {
-  if (!sportKey) return picks;
-  return picks.filter(p => (p.sport || '').toUpperCase().includes(sportKey));
+// ── Filter + render ───────────────────────────────────────────────────────────
+function matchesSportFilter(pick) {
+  if (filters.sport === 'ALL') return true;
+  return (pick.sport || '').toUpperCase().includes(filters.sport);
+}
+function matchesTierFilter(pick) {
+  if (filters.tier === 'ALL') return true;
+  return tierLevel(pick.tier) === filters.tier;
+}
+function matchesPodFilter(pick) {
+  if (!filters.pods) return true;
+  return pick.is_pod;
+}
+function passesFilter(pick) {
+  return matchesSportFilter(pick) && matchesTierFilter(pick) && matchesPodFilter(pick);
 }
 
 function renderPicks() {
   if (!slipData) return;
-  const sportKey = SPORT_FILTER[currentTab];
-  const all  = slipData.recommended || [];
-  const rec  = filterPicks(all, sportKey);
-  const pods = filterPicks(slipData.pod || [], sportKey);
+  const allRec = slipData.recommended || [];
+  const pods   = slipData.pod || [];
 
-  // POD row
+  // POD row — always show all pods
   const podEl = document.getElementById('pod-row');
   if (podEl) {
-    podEl.innerHTML = pods.length
-      ? pods.map(podCard).join('')
+    const filtPods = filters.sport === 'ALL' ? pods : pods.filter(p => (p.sport||'').toUpperCase().includes(filters.sport));
+    podEl.innerHTML = filtPods.length
+      ? filtPods.map(podCard).join('')
       : '<p class="empty-state">No POD picks today — requires HIGH confidence + WHEELHOUSE or better</p>';
   }
 
-  // Picks grid
+  // Picks grid — apply all filters. Exclude Scout (T3) from main grid if showing on radar.
+  const mainPicks = allRec.filter(p => passesFilter(p) && tierLevel(p.tier) !== 'T3');
+  const scoutPicks = allRec.filter(p => passesFilter(p) && tierLevel(p.tier) === 'T3');
+
   const recEl = document.getElementById('picks-grid');
   if (recEl) {
-    if (currentTab === 'PROPS') {
-      recEl.innerHTML = '<p class="empty-state coming-soon">📊 Player Props coming soon — NHL SOG, MLB K props, Soccer SOT</p>';
-    } else if (currentTab === 'PICKEMS') {
-      recEl.innerHTML = '<p class="empty-state coming-soon">🎯 Pickems coming soon — Best of the best, no-spread pick format</p>';
-    } else {
-      recEl.innerHTML = rec.length
-        ? rec.map(pickCard).join('')
-        : '<p class="empty-state">No picks for this sport today</p>';
-    }
+    recEl.innerHTML = mainPicks.length
+      ? mainPicks.map(pickCard).join('')
+      : '<p class="empty-state">No plays meeting threshold for current filters.</p>';
   }
 
-  // Count
   const countEl = document.getElementById('rec-count');
-  if (countEl) {
-    countEl.textContent = currentTab === 'PROPS' || currentTab === 'PICKEMS' ? '—' : rec.length;
+  if (countEl) countEl.textContent = mainPicks.length;
+
+  // On Radar — Scout (T3) picks
+  const radarSection = document.getElementById('radar-section');
+  const radarList    = document.getElementById('radar-list');
+  const radarCount   = document.getElementById('radar-count');
+  if (scoutPicks.length > 0) {
+    radarSection.style.display = 'block';
+    if (radarCount) radarCount.textContent = scoutPicks.length;
+    if (radarList)  radarList.innerHTML = scoutPicks.map(radarCard).join('');
+  } else {
+    if (radarSection) radarSection.style.display = 'none';
   }
 }
 
-// ── Tabs ──────────────────────────────────────────────────────────────
-document.querySelectorAll('.sport-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.sport-tab').forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    currentTab = tab.dataset.sport;
+// ── Radar toggle ─────────────────────────────────────────────────────────────
+function toggleRadar() {
+  radarOpen = !radarOpen;
+  const list = document.getElementById('radar-list');
+  const btn  = document.getElementById('radar-btn');
+  if (list) list.style.display = radarOpen ? 'flex' : 'none';
+  if (btn)  btn.textContent    = radarOpen ? '▲ Hide' : '▼ Show';
+}
+
+// ── Filter button handlers ────────────────────────────────────────────────────
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const filterType = btn.dataset.filter;
+    const val        = btn.dataset.val;
+    if (filterType === 'pods') {
+      filters.pods = !filters.pods;
+      btn.classList.toggle('active', filters.pods);
+    } else {
+      document.querySelectorAll(`.filter-btn[data-filter="${filterType}"]`).forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filters[filterType] = val;
+    }
     renderPicks();
   });
 });
 
-// ── Init ──────────────────────────────────────────────────────────────
+// ── Init ──────────────────────────────────────────────────────────────────────
 loadData().then(({ slip, record }) => {
   slipData = slip;
   const dateEl = document.getElementById('slip-date');

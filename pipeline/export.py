@@ -229,7 +229,7 @@ def export_results(limit: int = 10) -> list:
         cur = conn.execute(
             """SELECT r.signal_date, r.sport, r.game, r.side, r.market,
                       r.odds, r.units, r.result, r.units_net,
-                      r.actual_val, r.line_val, r.clv, r.graded_at,
+                      r.actual_val, r.closing_line, r.clv, r.graded_at,
                       s.notes, s.tier, s.ev
                FROM results r
                LEFT JOIN signals s ON s.id = r.signal_id
@@ -245,7 +245,7 @@ def export_results(limit: int = 10) -> list:
         if r.get("result") in ("LOSS", "L"):
             parts = []
             actual = r.get("actual_val")
-            line   = r.get("line_val")
+            line   = r.get("closing_line")
             if actual is not None and line is not None:
                 try:
                     miss = float(actual) - float(line)
@@ -289,7 +289,7 @@ def run_export(date_str: str):
         f"Export complete — {slip['counts']['recommended']} recommended, "
         f"{slip['counts']['flagged']} flagged, {slip['counts']['pods']} PODs"
     )
-    return slip, record, results
+    return slip, record, picks
 
 
 if __name__ == "__main__":

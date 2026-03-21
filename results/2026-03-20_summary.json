@@ -1,0 +1,80 @@
+{
+  "date": "2026-03-20",
+  "total_official_picks": 22,
+  "total_flagged_picks": 20,
+  "total_all": 42,
+  "graded": 9,
+  "pending": 13,
+  "wlp": "6-3-0",
+  "units_net": 3.38,
+  "by_sport": {
+    "NCAA": {
+      "w": 1,
+      "l": 1,
+      "p": 0,
+      "units": -1.25
+    },
+    "MLB": {
+      "w": 3,
+      "l": 0,
+      "p": 0,
+      "units": 5.68
+    },
+    "NHL": {
+      "w": 1,
+      "l": 2,
+      "p": 0,
+      "units": -2.05
+    },
+    "SOCCER": {
+      "w": 1,
+      "l": 0,
+      "p": 0,
+      "units": 1.0
+    }
+  },
+  "pod_results": [
+    {
+      "sport": "NCAA_POD",
+      "pick": "USC USC ML",
+      "status": "WIN",
+      "units_result": 0.25
+    },
+    {
+      "sport": "MLB_POD",
+      "pick": "Luis Gil o3.5 Strikeouts",
+      "status": "WIN",
+      "units_result": 2.68
+    },
+    {
+      "sport": "NHL_POD",
+      "pick": "Darren Raddysh u2.5 Shots on Goal",
+      "status": "PENDING",
+      "units_result": null
+    },
+    {
+      "sport": "SOCCER_POD",
+      "pick": "Real Madrid Real Madrid ML",
+      "status": "PENDING",
+      "units_result": null
+    }
+  ],
+  "luis_gil_mlb_pod": "WIN \u2014 REINSTATED (K=7 vs 3.5 line, Bug #001)",
+  "pending_picks": [
+    "JJ Peterka o1.5 Shots on Goal",
+    "Rasmus Andersson o1.5 Shots on Goal",
+    "Jamie Drysdale u1.5 Shots on Goal",
+    "Alex Laferriere u2.5 Shots on Goal",
+    "Collin Graf u1.5 Shots on Goal",
+    "Victor Hedman o0.5 Points",
+    "Shea Theodore o0.5 Points",
+    "Rasmus Dahlin u0.5 Assists",
+    "Adrian Kempe u0.5 Assists",
+    "Darren Raddysh u2.5 Shots on Goal",
+    "Real Madrid Real Madrid ML",
+    "Hugo Ekitike o0.5 Shots on Target",
+    "Cole Palmer o0.5 Shots on Target"
+  ],
+  "generated_at": "2026-03-21T15:30:44.335331+00:00",
+  "grading_note": "5 NHL games from slip (UTA@VGK, BUF@SJS, TBL@VAN, PHI@LAK) not found in NHL API for 2026-03-20 \u2014 schedule mismatch in model data. Liverpool/Chelsea soccer picks are EPL 2026-03-21. Real Madrid POD is La Liga 2026-03-22."
+}

@@ -1,0 +1,167 @@
+[
+  {
+    "sport": "NCAA_BASEBALL",
+    "category": "C",
+    "source": "ESPN College Baseball Scoreboard",
+    "url_template": "https://site.api.espn.com/apis/site/v2/sports/baseball/college-baseball/scoreboard?dates={YYYYMMDD}",
+    "auth_required": false,
+    "free_tier_limit": "unlimited",
+    "sample_fields": ["events[].id","events[].name","events[].status.type.name","events[].competitions[].competitors[].team.displayName","events[].competitions[].competitors[].score"],
+    "reliability_score": 9,
+    "notes": "75 events returned for 2026-03-21. Includes scores and game status. No odds."
+  },
+  {
+    "sport": "NCAA_BASEBALL",
+    "category": "D",
+    "source": "ESPN NCAA Baseball Team Stats",
+    "url_template": "https://site.api.espn.com/apis/site/v2/sports/baseball/college-baseball/teams/{team_id}/statistics",
+    "auth_required": false,
+    "free_tier_limit": "unlimited",
+    "sample_fields": ["results[].displayName","results[].stats[].name","results[].stats[].value"],
+    "reliability_score": 8,
+    "notes": "Team-level batting/pitching stats. Requires team_id from roster endpoint."
+  },
+  {
+    "sport": "NCAA_BASEBALL",
+    "category": "E",
+    "source": "Historical CSV — ISR Rankings (Downloads)",
+    "url_template": "file:///C:/Users/loren/Downloads/2024 NCAA Division I Baseball - Iterative Strength Ratings (End of Season).csv",
+    "auth_required": false,
+    "free_tier_limit": "N/A — local file",
+    "sample_fields": ["Team","ISR_Rating","Conference","W","L"],
+    "reliability_score": 9,
+    "notes": "End-of-season ISR for 2023 and 2024. 2025 also available. Suitable for prior season initialization."
+  },
+  {
+    "sport": "MLB",
+    "category": "C",
+    "source": "MLB Stats API — Schedule + Scores",
+    "url_template": "https://statsapi.mlb.com/api/v1/schedule?sportId=1&date={YYYY-MM-DD}&hydrate=linescore",
+    "auth_required": false,
+    "free_tier_limit": "unlimited",
+    "sample_fields": ["dates[].games[].gamePk","dates[].games[].teams.home.team.name","dates[].games[].teams.away.score","dates[].games[].status.detailedState"],
+    "reliability_score": 10,
+    "notes": "Official MLB API. 15 games returned for 2026-03-21. Spring training + regular season. Gold standard for schedules and results."
+  },
+  {
+    "sport": "MLB",
+    "category": "D",
+    "source": "MLB Stats API — Player Stats",
+    "url_template": "https://statsapi.mlb.com/api/v1/people/{player_id}/stats?stats=season&group=pitching",
+    "auth_required": false,
+    "free_tier_limit": "unlimited",
+    "sample_fields": ["stats[].splits[].stat.strikeOuts","stats[].splits[].stat.era","stats[].splits[].stat.whip"],
+    "reliability_score": 10,
+    "notes": "Official player stats. Also supports group=hitting. Season/career splits available."
+  },
+  {
+    "sport": "MLB",
+    "category": "C",
+    "source": "ESPN MLB Scoreboard",
+    "url_template": "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates={YYYYMMDD}",
+    "auth_required": false,
+    "free_tier_limit": "unlimited",
+    "sample_fields": ["events[].name","events[].status.type.name","events[].competitions[].competitors[].score"],
+    "reliability_score": 9,
+    "notes": "17 events on 2026-03-20 including scores for completed games. Good for results grading."
+  },
+  {
+    "sport": "NHL",
+    "category": "C",
+    "source": "NHL Official API — Schedule",
+    "url_template": "https://api-web.nhle.com/v1/schedule/{YYYY-MM-DD}",
+    "auth_required": false,
+    "free_tier_limit": "unlimited",
+    "sample_fields": ["gameWeek[].games[].id","gameWeek[].games[].homeTeam.abbrev","gameWeek[].games[].awayTeam.abbrev","gameWeek[].games[].gameState"],
+    "reliability_score": 10,
+    "notes": "Official NHL API. 11 games on 2026-03-21. Gold standard for schedules."
+  },
+  {
+    "sport": "NHL",
+    "category": "C",
+    "source": "ESPN NHL Scoreboard",
+    "url_template": "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard?dates={YYYYMMDD}",
+    "auth_required": false,
+    "free_tier_limit": "unlimited",
+    "sample_fields": ["events[].name","events[].status.type.name","events[].competitions[].competitors[].score"],
+    "reliability_score": 9,
+    "notes": "5 events with STATUS_FINAL on 2026-03-20. Good for automated result grading."
+  },
+  {
+    "sport": "NHL",
+    "category": "D",
+    "source": "NHL Official API — Player Game Log",
+    "url_template": "https://api-web.nhle.com/v1/player/{player_id}/game-log/{season}/{game_type}",
+    "auth_required": false,
+    "free_tier_limit": "unlimited",
+    "sample_fields": ["gameLog[].gameId","gameLog[].shotsOnGoal","gameLog[].goals","gameLog[].assists","gameLog[].points"],
+    "reliability_score": 10,
+    "notes": "SOG, goals, assists per game per player. Essential for NHL prop calibration."
+  },
+  {
+    "sport": "SOCCER",
+    "category": "C",
+    "source": "ESPN Soccer Scoreboard",
+    "url_template": "https://site.api.espn.com/apis/site/v2/sports/soccer/{league_slug}/scoreboard?dates={YYYYMMDD}",
+    "auth_required": false,
+    "free_tier_limit": "unlimited",
+    "sample_fields": ["events[].name","events[].status.type.name","events[].competitions[].competitors[].score"],
+    "reliability_score": 9,
+    "notes": "league_slug: eng.1=EPL, esp.1=LaLiga, ger.1=Bundesliga, ita.1=SerieA, fra.1=Ligue1. 5 EPL events on 2026-03-21."
+  },
+  {
+    "sport": "SOCCER",
+    "category": "B",
+    "source": "Club Elo API",
+    "url_template": "http://api.clubelo.com/{ClubName}",
+    "auth_required": false,
+    "free_tier_limit": "unlimited",
+    "sample_fields": ["Club","Country","Level","Elo","From","To"],
+    "reliability_score": 9,
+    "notes": "Free CSV API. Historical Elo ratings from 1939 to present. Returns all historical rows for a club. Essential for pre-game win probability."
+  },
+  {
+    "sport": "SOCCER",
+    "category": "E",
+    "source": "football-data.co.uk CSV",
+    "url_template": "https://www.football-data.co.uk/mmz4281/{season}/{league_code}.csv",
+    "auth_required": false,
+    "free_tier_limit": "unlimited",
+    "sample_fields": ["HomeTeam","AwayTeam","FTHG","FTAG","FTR","B365H","B365D","B365A","PSH","PSD","PSA"],
+    "reliability_score": 10,
+    "notes": "Results + historical odds (Pinnacle, Bet365, etc.) back to 1993 for EPL. league_codes: E0=EPL, SP1=LaLiga, D1=Bundesliga, I1=SerieA, F1=Ligue1. Must be downloaded manually."
+  },
+  {
+    "sport": "SOCCER",
+    "category": "B",
+    "source": "OpenLigaDB — Bundesliga",
+    "url_template": "https://api.openligadb.de/getmatchdata/{league}/{season}/{matchday}",
+    "auth_required": false,
+    "free_tier_limit": "unlimited",
+    "sample_fields": ["MatchID","Team1.TeamName","Team2.TeamName","MatchResults[].PointsTeam1","Group.GroupName"],
+    "reliability_score": 7,
+    "notes": "Free public API for German Bundesliga. 9 matches returned for bl1 2025 Matchday 1. Limited to Bundesliga only."
+  },
+  {
+    "sport": "CRICKET",
+    "category": "C",
+    "source": "ESPN Cricket Scoreboard",
+    "url_template": "https://site.api.espn.com/apis/site/v2/sports/cricket/wi.1/scoreboard",
+    "auth_required": false,
+    "free_tier_limit": "unlimited",
+    "sample_fields": [],
+    "reliability_score": 4,
+    "notes": "GATE FAILED: 0 events returned. No reliable free cricket historical odds source found with reliability >= 6."
+  },
+  {
+    "sport": "HANDBALL",
+    "category": "C",
+    "source": "EHF Champions League API",
+    "url_template": "https://competitionmanager.ehf.eu/api/matches",
+    "auth_required": true,
+    "free_tier_limit": "N/A — requires paid access",
+    "sample_fields": [],
+    "reliability_score": 3,
+    "notes": "GATE FAILED: No free handball API with historical odds. EHF requires commercial license."
+  }
+]

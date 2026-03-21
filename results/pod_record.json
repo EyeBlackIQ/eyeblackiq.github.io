@@ -1,0 +1,98 @@
+{
+  "NCAA_POD": {
+    "w": 1,
+    "l": 0,
+    "p": 0,
+    "roi_pct": 16.7,
+    "units_net": 0.25,
+    "streak_wl": {
+      "type": "W",
+      "count": 1
+    },
+    "streak_units": {
+      "direction": "positive",
+      "amount": 0.25
+    },
+    "history": [
+      {
+        "date": "2026-03-20",
+        "pick": "USC USC ML",
+        "status": "WIN",
+        "units": 1.5,
+        "result_value": 0.25
+      }
+    ]
+  },
+  "MLB_POD": {
+    "w": 1,
+    "l": 0,
+    "p": 0,
+    "roi_pct": 134.0,
+    "units_net": 2.68,
+    "streak_wl": {
+      "type": "W",
+      "count": 1
+    },
+    "streak_units": {
+      "direction": "positive",
+      "amount": 2.68
+    },
+    "history": [
+      {
+        "date": "2026-03-20",
+        "pick": "Luis Gil o3.5 Strikeouts",
+        "status": "WIN",
+        "units": 2.0,
+        "result_value": 2.68
+      }
+    ]
+  },
+  "NHL_POD": {
+    "w": 0,
+    "l": 0,
+    "p": 0,
+    "roi_pct": 0.0,
+    "units_net": 0.0,
+    "streak_wl": {
+      "type": null,
+      "count": 0
+    },
+    "streak_units": {
+      "direction": null,
+      "amount": 0.0
+    },
+    "history": [
+      {
+        "date": "2026-03-20",
+        "pick": "Darren Raddysh u2.5 Shots on Goal",
+        "status": "PENDING",
+        "units": 2.0,
+        "result_value": null
+      }
+    ]
+  },
+  "SOCCER_POD": {
+    "w": 0,
+    "l": 0,
+    "p": 0,
+    "roi_pct": 0.0,
+    "units_net": 0.0,
+    "streak_wl": {
+      "type": null,
+      "count": 0
+    },
+    "streak_units": {
+      "direction": null,
+      "amount": 0.0
+    },
+    "history": [
+      {
+        "date": "2026-03-20",
+        "pick": "Real Madrid Real Madrid ML",
+        "status": "PENDING",
+        "units": 1.0,
+        "result_value": null
+      }
+    ]
+  }
+}

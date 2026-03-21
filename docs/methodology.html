@@ -50,7 +50,7 @@
       <span class="logo-eb">EB</span>
       <div class="logo-text">
         <span class="logo-name">EyeBlackIQ</span>
-        <span class="logo-tag">Multi-Sport Prediction Model</span>
+        <span class="logo-tag">ELO + ISR · 5-Gate Filter · Quarter Kelly Sizing</span>
       </div>
     </div>
     <nav>
@@ -59,8 +59,7 @@
       <a href="methodology.html" class="nav-link active">The Playbook</a>
     </nav>
     <div class="social-links">
-      <a href="https://twitter.com/EyeBlackIQ" target="_blank" class="social-btn">𝕏 Follow</a>
-      <a href="#" target="_blank" class="social-btn telegram">Telegram</a>
+      <a href="https://x.com/EyeBlackIQ" target="_blank" class="social-btn">𝕏 Follow</a>
     </div>
   </div>
 </header>
@@ -162,8 +161,8 @@
       <p>All units are sized using <strong>Quarter Kelly</strong> with a hard bankroll cap.</p>
       <ul>
         <li>Kelly fraction: <code>0.25</code> (1/4 of full Kelly)</li>
-        <li>Hard cap: <code>3%</code> of bankroll per bet</li>
-        <li>Daily maximum: <code>15 bets</code></li>
+        <li>Hard cap: <code>3%</code> of bankroll per play</li>
+        <li>Daily maximum: <code>15 plays</code></li>
         <li>1 unit = 1% of bankroll (e.g. 2.0u = 2% of bankroll)</li>
       </ul>
       <p>Units are set by tier, not raw Kelly — the tier floor ensures minimum sizing when edge is confirmed.
@@ -192,7 +191,7 @@
         <strong>Example:</strong> BYU +1400 FILTHY 2.0u LOW ●○○ (23.9% edge) vs. Auburn +105 WHEELHOUSE
         1.5u HIGH ●●● (6.2% edge). BYU's edge is nearly 4× larger. LOW confidence signals <em>that SP data
         is limited</em> — not that the edge is fabricated. Auburn's HIGH confidence reflects strong model
-        agreement and confirmed SP starts. Both are legitimate bets; stake them accordingly.
+        agreement and confirmed SP starts. Both are legitimate plays; size them accordingly.
       </p>
       <p>
         <strong>POD Rule:</strong> Pick of the Day requires HIGH confidence + WHEELHOUSE or better.
@@ -232,12 +231,12 @@
     </div>
     <div class="method-card">
       <div class="method-card-title">Go-Live Standards</div>
-      <p>No model goes live for real-money betting until all four thresholds are cleared:</p>
+      <p>No model goes live until all four thresholds are cleared:</p>
       <ul>
         <li>Backtest ROI &gt; 3%</li>
         <li>CLV (Closing Line Value) ≥ 55%</li>
         <li>Calibration within ±2% across all probability bins</li>
-        <li>Minimum 300–500 sample bets in paper trading</li>
+        <li>Minimum 300–500 sample plays in paper trading</li>
       </ul>
     </div>
     <div class="method-card">
@@ -253,6 +252,45 @@
       <p><strong>NCAA Baseball:</strong> Live signals since March 21, 2026. Tracking real-time.</p>
       <p><strong>NHL / MLB / Soccer:</strong> Data aggregation and model validation in progress.</p>
       <p><strong>Go-live target:</strong> 30 days paper trading + all 4 thresholds cleared per sport.</p>
+    </div>
+  </div>
+
+  <!-- VOLUME PHILOSOPHY -->
+  <div class="section-divider"><h2>Volume Philosophy &amp; What the Model Doesn't Do</h2></div>
+  <div class="method-grid">
+    <div class="method-card">
+      <div class="method-card-title">Volume Policy — No Caps</div>
+      <p>EyeBlackIQ posts all plays with measurable edge (EV ≥ 2%). There is no daily cap on number of plays.
+         The market doesn't limit its inefficiencies to 5 per day — neither does the model.</p>
+      <p>The <strong>tier system handles sizing</strong>: T1 plays get 2.0u, T2 get 1.5u, T3 get 1.0u.
+         Volume is managed through edge threshold, not an artificial daily quota.</p>
+      <p><strong>Kill switches</strong> handle drawdown protection automatically (25-loss streak, 7 losing days, 3-month CLV negative) — not volume caps.</p>
+    </div>
+    <div class="method-card">
+      <div class="method-card-title">What the Model Does Not Do</div>
+      <ul>
+        <li>It does not predict game scores directly — it computes win probability vs. market implied probability</li>
+        <li>It does not claim to be right every day — edge means winning over large samples, not game-by-game</li>
+        <li>It does not chase losses — kill switches trigger reduced sizing automatically</li>
+        <li>It does not post picks without data — both TBD starting pitchers blocks NCAA signal generation</li>
+        <li>It does not use subjective gut reads — every signal is fully model-derived</li>
+        <li>It does not guarantee future results — past edge calibration doesn't guarantee forward performance</li>
+      </ul>
+    </div>
+    <div class="method-card">
+      <div class="method-card-title">Three Layers of Transparency</div>
+      <ul>
+        <li><strong>Signal layer:</strong> Every pick posted with tier, edge %, EV, confidence, and line at time of signal</li>
+        <li><strong>Results layer:</strong> Every outcome recorded publicly — wins and losses, unit P&amp;L per pick</li>
+        <li><strong>Model layer:</strong> Full methodology published here — no black boxes, no cherry-picked records</li>
+      </ul>
+      <p style="margin-top:10px;">The full market view section on the Results page shows every game analyzed — not just picks with positive edge. This lets you see what the model passed on and why.</p>
+    </div>
+    <div class="method-card">
+      <div class="method-card-title">POD System — Pick of the Day</div>
+      <p>Each sport gets at most one POD per day. POD selection algorithm: highest <code>ev_pct × win_probability_gap</code> with minimum 7% EV.</p>
+      <p>POD picks require <strong>HIGH confidence (●●●)</strong> plus <strong>WHEELHOUSE tier or better</strong>. This ensures the system's flagship pick represents both strong edge AND strong model certainty.</p>
+      <p>PODs are tracked separately in the Results page. This provides a clean comparison between the high-conviction signal and the full model record.</p>
     </div>
   </div>
 
@@ -290,9 +328,7 @@
       <span class="footer-tag">The model sees what the market misses.</span>
     </div>
     <div class="footer-links">
-      <a href="https://twitter.com/EyeBlackIQ" target="_blank">𝕏 Twitter</a>
-      <a href="#">Telegram</a>
-      <a href="#">Discord</a>
+      <a href="https://x.com/EyeBlackIQ" target="_blank">𝕏 Twitter</a>
       <a href="index.html">Today's Picks</a>
       <a href="results.html">Results</a>
     </div>
