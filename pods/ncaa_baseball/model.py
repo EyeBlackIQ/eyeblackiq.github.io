@@ -681,13 +681,220 @@ def run_model(date_str: str, dry_run: bool = False) -> int:
     return signals_written
 
 
+# ── Totals model ───────────────────────────────────────────────────────────────
+def write_total_signal(conn: sqlite3.Connection, date_str: str,
+                       game: str, game_time: str, side: str, odds: int,
+                       model_p: float, nv_p: float, edge: float, ev_val: float,
+                       tier: str, units: float, notes: str) -> None:
+    """Insert one totals signal into the signals table."""
+    ts = datetime.now(timezone.utc).isoformat()
+    conn.execute(
+        """INSERT INTO signals
+           (signal_date, sport, game, game_time, bet_type, side, market,
+            odds, model_prob, no_vig_prob, edge, ev, tier, units,
+            is_pod, pod_sport,
+            gate1_pyth, gate2_edge, gate3_model_agree, gate4_line_move, gate5_etl_fresh,
+            notes, created_at)
+           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+        (date_str, SPORT, game, game_time, "TOTAL", side, "totals",
+         odds, round(model_p, 4), round(nv_p, 4),
+         round(edge, 4), round(ev_val, 4), tier, units,
+         0, SPORT,
+         "GREEN", "PASS", "PASS", "PASS", "PASS",
+         notes, ts)
+    )
+
+
+def run_totals(date_str: str, dry_run: bool = False) -> int:
+    """
+    Generate NCAA Baseball O/U totals signals for date_str.
+
+    Method:
+      1. Load same game slate as run_model()
+      2. Fetch total lines from ESPN via get_ncaa_totals_from_espn()
+      3. Compare projected total (r_home + r_away from SP ERA model) to market total
+      4. If |proj_total - market_total| > 0.8 AND edge > 3%: generate signal
+
+    Edge formula (simplified Poisson):
+      projected_total = r_home + r_away
+      diff = projected_total - market_total
+      p_over  = logistic(diff * 0.25 + 0.5)  # ~0.25 runs ≈ 10% edge shift
+      p_under = 1 - p_over
+      Compared against devigged market prob from over/under odds.
+
+    Returns number of totals signals written.
+    """
+    import sys
+    sys.path.insert(0, str(BASE_DIR))
+
+    # Pull ESPN totals
+    try:
+        from scrapers.scrape_free_odds import get_ncaa_totals_from_espn
+        espn_totals = get_ncaa_totals_from_espn(date_str)
+    except ImportError:
+        logger.warning("Could not import scrape_free_odds — no ESPN totals available")
+        espn_totals = {}
+    except Exception as e:
+        logger.warning(f"ESPN totals fetch failed: {e}")
+        espn_totals = {}
+
+    if not espn_totals:
+        logger.info(f"NCAA Baseball totals: no ESPN total lines found for {date_str} — skipping")
+        return 0
+
+    elo_map, isr_map = load_elo_isr()
+    games = load_games_from_cache(date_str)
+
+    signals_written = 0
+    conn = None
+
+    if not dry_run:
+        conn = sqlite3.connect(TGT_DB)
+        conn.execute(
+            "DELETE FROM signals WHERE signal_date=? AND sport=? AND bet_type='TOTAL'",
+            (date_str, SPORT)
+        )
+        conn.commit()
+
+    logger.info(f"NCAA Baseball totals — {date_str} — {len(games)} games, "
+                f"{len(espn_totals)} with ESPN lines")
+
+    for g in games:
+        away          = g["away"]
+        home          = g["home"]
+        sp_away_name  = g.get("sp_away", "TBD")
+        sp_home_name  = g.get("sp_home", "TBD")
+
+        # Skip if both SPs TBD (same gate as ML model)
+        if sp_away_name == "TBD" and sp_home_name == "TBD":
+            continue
+
+        game_str  = f"{away} @ {home}"
+        game_time = g.get("game_time", "TBD")
+
+        # Check ESPN for a total line (try both orderings)
+        total_data = espn_totals.get(game_str) or espn_totals.get(f"{home} @ {away}")
+        if total_data is None:
+            # Fuzzy match: try partial name matching
+            for k, v in espn_totals.items():
+                if any(word in k for word in away.split()[:2]) and \
+                   any(word in k for word in home.split()[:2]):
+                    total_data = v
+                    break
+
+        if total_data is None:
+            logger.debug(f"  No ESPN total for {game_str}")
+            continue
+
+        market_total = total_data.get("total")
+        if market_total is None:
+            continue
+
+        over_odds  = total_data.get("over_odds",  -110) or -110
+        under_odds = total_data.get("under_odds", -110) or -110
+
+        # Project total from SP ERA model
+        proj = project_game(
+            away, home,
+            g["sp_era_away"], g["sp_era_home"],
+            g.get("sp_starts_away", 3), g.get("sp_starts_home", 3),
+            elo_map, isr_map,
+            sp_names={"sp_away": sp_away_name, "sp_home": sp_home_name},
+        )
+        proj_total = proj["proj_total"]
+        diff       = proj_total - market_total
+
+        # Only consider if difference exceeds threshold (0.8 runs)
+        if abs(diff) < 0.8:
+            logger.debug(
+                f"  {game_str}: proj={proj_total} vs line={market_total} "
+                f"diff={diff:+.1f} — within threshold, skip"
+            )
+            continue
+
+        # Model probability using logistic-style mapping
+        # Each 0.25 run difference ≈ ~10% probability shift
+        import math
+        raw_logit = diff * 0.25
+        p_over    = max(0.05, min(0.95, 1 / (1 + math.exp(-raw_logit * 4))))
+        p_under   = 1 - p_over
+
+        # Devig market
+        def _imp(o):
+            return 100 / (o + 100) if o > 0 else abs(o) / (abs(o) + 100)
+        imp_o, imp_u = _imp(over_odds), _imp(under_odds)
+        total_imp = imp_o + imp_u
+        nv_over   = imp_o / total_imp
+        nv_under  = imp_u / total_imp
+
+        logger.info(
+            f"  {game_str}  proj={proj_total}  line={market_total}  "
+            f"diff={diff:+.1f}  p_over={p_over:.3f}  nv_over={nv_over:.3f}  "
+            f"p_under={p_under:.3f}  nv_under={nv_under:.3f}"
+        )
+
+        for side_label, model_p, nv_p, odds in [
+            (f"Over {market_total}",  p_over,  nv_over,  over_odds),
+            (f"Under {market_total}", p_under, nv_under, under_odds),
+        ]:
+            edge_val = model_p - nv_p
+            if edge_val < MIN_EDGE:
+                continue
+
+            edge_pct = edge_val * 100
+            tier_name, units = ncaa_tier(edge_pct)
+            if units == 0.0:
+                logger.info(f"    {side_label}: edge {edge_pct:.1f}% -> BALK")
+                continue
+
+            dec_odds = american_to_decimal(odds)
+            ev_val   = ev_calc(dec_odds, model_p)
+
+            sp_flag = "" if (sp_away_name != "TBD" and sp_home_name != "TBD") else " [SP?]"
+            notes = (
+                f"proj_total={proj_total}  line={market_total}  diff={diff:+.1f}  "
+                f"r_away={proj['r_away']:.2f}  r_home={proj['r_home']:.2f}  "
+                f"SP_away={sp_away_name} (ERA {g['sp_era_away']:.2f})  "
+                f"SP_home={sp_home_name} (ERA {g['sp_era_home']:.2f}){sp_flag}  "
+                f"Conf={proj['conf_label']} {proj['conf_sym']}"
+            )
+
+            logger.info(
+                f"    TOTAL SIGNAL: {side_label} {odds:+d}  "
+                f"Edge {edge_pct:.1f}%  {tier_name}  {units}u  EV={ev_val:.3f}"
+            )
+
+            if not dry_run and conn is not None:
+                write_total_signal(
+                    conn, date_str, game_str, game_time,
+                    side_label, odds, model_p, nv_p,
+                    edge_val, ev_val, tier_name, units, notes
+                )
+                signals_written += 1
+
+    if not dry_run and conn is not None:
+        conn.commit()
+        conn.close()
+        logger.info(f"NCAA Baseball totals: wrote {signals_written} signals to DB")
+    else:
+        logger.info(f"NCAA Baseball totals [DRY-RUN]: {signals_written} signals projected")
+
+    return signals_written
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="NCAA Baseball signal generator")
     parser.add_argument("--date",    default=datetime.now().strftime("%Y-%m-%d"),
                         help="Date to run model for (YYYY-MM-DD)")
     parser.add_argument("--dry-run", action="store_true",
                         help="Project games and log signals without writing to DB")
+    parser.add_argument("--totals",  action="store_true",
+                        help="Also run totals model (requires ESPN total lines)")
     args = parser.parse_args()
 
-    n = run_model(args.date, args.dry_run)
-    print(f"NCAA Baseball signals: {n}")
+    n_ml = run_model(args.date, args.dry_run)
+    print(f"NCAA Baseball ML signals: {n_ml}")
+
+    if args.totals:
+        n_tot = run_totals(args.date, args.dry_run)
+        print(f"NCAA Baseball totals signals: {n_tot}")

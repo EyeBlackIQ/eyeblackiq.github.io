@@ -269,8 +269,14 @@ function pickCard(pick) {
   const rlHtml  = pick.rl_alt
     ? `<div class="pick-rl-alt">Consider spread (+1.5) as alternative vehicle</div>`
     : '';
+  // Show future-game date badge for forward-looking picks (handball, soccer next-day, etc.)
+  const slipDate = (slipData && slipData.date) ? slipData.date : null;
+  const isFuture = pick.signal_date && slipDate && pick.signal_date > slipDate;
+  const futureBadge = isFuture
+    ? `<span style="display:inline-block;font-size:9px;padding:1px 6px;background:rgba(184,150,12,0.2);color:var(--gold,#B8960C);border:1px solid rgba(184,150,12,0.4);border-radius:2px;margin-right:6px;font-weight:700;letter-spacing:1px;">📅 ${pick.signal_date}</span>`
+    : '';
   const gameHtml = pick.game
-    ? `<div class="pick-game">${pick.game}${pick.game_time ? `  <span class="pick-time">${pick.game_time}</span>` : ''}</div>`
+    ? `<div class="pick-game">${futureBadge}${pick.game}${pick.game_time ? `  <span class="pick-time">${pick.game_time}</span>` : ''}</div>`
     : '';
   const podTag    = isPod ? `<span class="pod-crown">📌 POD</span>` : '';
   const propTag   = isProp(pick) ? '' : '';   // sportsbook tag removed — it's the default; only tag pick'ems

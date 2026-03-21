@@ -86,6 +86,8 @@ def export_today_slip(date_str: str) -> dict:
     """
     with get_conn() as conn:
         conn.row_factory = sqlite3.Row
+        # Include today's signals + upcoming signals (future game dates, created within 7 days)
+        # This supports forward-looking picks (handball/cricket future games, soccer next-day games)
         cur = conn.execute(
             """SELECT id, sport, game, game_time, bet_type, side, market,
                       odds, model_prob, no_vig_prob, edge, ev, tier, units,
@@ -93,11 +95,15 @@ def export_today_slip(date_str: str) -> dict:
                       gate1_pyth, gate2_edge, gate3_model_agree,
                       gate4_line_move, gate5_etl_fresh,
                       COALESCE(pick_source, 'SPORTSBOOK') as pick_source,
-                      b2b_flag
+                      b2b_flag, signal_date
                FROM signals
-               WHERE signal_date = ?
-               ORDER BY is_pod DESC, units DESC, edge DESC""",
-            (date_str,)
+               WHERE (
+                   signal_date = ?
+                   OR (signal_date > ? AND created_at >= datetime(?, '-7 days')
+                       AND id NOT IN (SELECT signal_id FROM results WHERE result NOT IN ('PENDING','VOID')))
+               )
+               ORDER BY signal_date ASC, is_pod DESC, units DESC, edge DESC""",
+            (date_str, date_str, date_str)
         )
         rows = [dict(r) for r in cur.fetchall()]
 

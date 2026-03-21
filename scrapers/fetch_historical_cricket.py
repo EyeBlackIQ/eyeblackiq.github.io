@@ -103,6 +103,72 @@ ELO_DEFAULT = 1500
 ELO_K       = 20
 ELO_K_EARLY = 32
 
+# ── Franchise / National team separation ─────────────────────────────────────
+# All known IPL franchise team names (historical + current).
+# FRANCHISE teams compete only in IPL bracket.
+# NATIONAL teams compete in ICC / bilateral internationals.
+FRANCHISE_TEAMS: set = {
+    "Mumbai Indians",
+    "Chennai Super Kings",
+    "Royal Challengers Bangalore",
+    "Royal Challengers Bengaluru",   # renamed 2024
+    "Kolkata Knight Riders",
+    "Delhi Capitals",
+    "Delhi Daredevils",              # pre-2019 name
+    "Rajasthan Royals",
+    "Sunrisers Hyderabad",
+    "Punjab Kings",
+    "Kings XI Punjab",               # pre-2021 name
+    "Gujarat Titans",
+    "Lucknow Super Giants",
+    "Kochi Tuskers Kerala",          # 2011 defunct
+    "Rising Pune Supergiant",        # 2016-17 defunct
+    "Rising Pune Supergiants",
+    "Pune Warriors",                 # 2011-13 defunct
+    "Deccan Chargers",               # 2008-12 defunct
+}
+
+# League names that are exclusively IPL franchise competitions
+IPL_LEAGUE_KEYWORDS = {"IPL", "INDIAN PREMIER LEAGUE"}
+
+# League names that are exclusively international (national teams) competitions
+INTERNATIONAL_LEAGUE_KEYWORDS = {
+    "T20 INTERNATIONAL",
+    "T20 WORLD CUP",
+    "WORLD T20",
+    "ICC",
+    "BILATERAL",
+    "INTERNATIONAL",
+}
+
+
+def get_team_type(team_name: str) -> str:
+    """
+    Classify a team as 'FRANCHISE' (IPL club) or 'NATIONAL' (country team).
+    Checks exact membership in FRANCHISE_TEAMS set.
+    """
+    return "FRANCHISE" if team_name in FRANCHISE_TEAMS else "NATIONAL"
+
+
+def is_ipl_match(league_name: str, home_team: str, away_team: str) -> bool:
+    """
+    Return True if this match is an IPL franchise match.
+    Criteria: league_name contains 'IPL' OR both teams are franchises.
+    """
+    league_upper = (league_name or "").upper()
+    if any(kw in league_upper for kw in IPL_LEAGUE_KEYWORDS):
+        return True
+    # Fallback: both teams are known franchises
+    return (home_team in FRANCHISE_TEAMS) and (away_team in FRANCHISE_TEAMS)
+
+
+def is_international_match(league_name: str, home_team: str, away_team: str) -> bool:
+    """
+    Return True if this match is an international (national team) match.
+    A match is international if NEITHER team is a franchise.
+    """
+    return (home_team not in FRANCHISE_TEAMS) and (away_team not in FRANCHISE_TEAMS)
+
 # T20 format defaults
 T20_LG_AVG   = 165.0
 T20_LG_STD   = 22.0
@@ -169,6 +235,7 @@ def ensure_tables():
         league_id                   INTEGER DEFAULT 0,
         format                      TEXT NOT NULL DEFAULT 'T20',
         team_name                   TEXT NOT NULL,
+        team_type                   TEXT NOT NULL DEFAULT 'NATIONAL',
         games_played                INTEGER DEFAULT 0,
         wins                        INTEGER DEFAULT 0,
         losses                      INTEGER DEFAULT 0,
@@ -429,15 +496,36 @@ def fetch_apisports_cricket(league_id: int, season: int, format_str: str = "T20"
 # ── ELO computation ────────────────────────────────────────────────────────────
 def compute_elo_from_matches(format_str: str = "T20") -> dict:
     """
-    Chronological ELO rating computation for cricket teams.
-    Handles draws (rare in T20/ODI) as 0.5/0.5.
+    DEPRECATED wrapper — use compute_separated_elos() for the canonical split.
+    Returns a merged dict (franchise_elo | national_elo) for backward compatibility.
     """
-    HFA = 35  # Cricket home advantage (weaker than handball, venue-dependent)
+    result = compute_separated_elos(format_str)
+    merged = {}
+    merged.update(result["national"])
+    merged.update(result["franchise"])
+    return merged
+
+
+def compute_separated_elos(format_str: str = "T20") -> dict:
+    """
+    Compute ELO ratings with strict FRANCHISE vs NATIONAL separation.
+
+    - IPL matches (both teams are FRANCHISE) → update franchise ELO pool only.
+    - International matches (both teams are NATIONAL) → update national ELO pool only.
+    - Mixed matches (one franchise, one national — should not exist) → skipped.
+
+    Returns:
+        {
+          "franchise": {team_name: elo_float, ...},   # IPL club ELOs
+          "national":  {team_name: elo_float, ...},   # Country ELOs
+        }
+    """
+    HFA = 35  # Cricket home advantage
 
     try:
         with get_conn() as conn:
             rows = conn.execute(
-                """SELECT date, home_team, away_team, winner, result
+                """SELECT date, league_name, home_team, away_team, winner, result
                    FROM cricket_matches
                    WHERE format = ? AND status IN ('FT','FINISHED','COMPLETE')
                      AND home_team IS NOT NULL AND away_team IS NOT NULL
@@ -445,22 +533,48 @@ def compute_elo_from_matches(format_str: str = "T20") -> dict:
                 (format_str,)
             ).fetchall()
     except sqlite3.OperationalError:
-        return {}
+        return {"franchise": {}, "national": {}}
 
-    elo       = {}
-    game_count = {}
+    franchise_elo  = {}
+    national_elo   = {}
+    franchise_gc   = {}   # game count per team for K-factor selection
+    national_gc    = {}
+
+    ipl_count = 0
+    intl_count = 0
+    skipped    = 0
 
     for row in rows:
-        ht = row["home_team"]
-        at = row["away_team"]
-        winner = row.get("winner") or ""
+        ht     = row["home_team"]
+        at     = row["away_team"]
+        winner = row["winner"]  if row["winner"]  is not None else ""
+        league = row["league_name"] if row["league_name"] is not None else ""
 
-        elo.setdefault(ht, ELO_DEFAULT)
-        elo.setdefault(at, ELO_DEFAULT)
-        game_count.setdefault(ht, 0)
-        game_count.setdefault(at, 0)
+        ht_is_franchise = ht in FRANCHISE_TEAMS
+        at_is_franchise = at in FRANCHISE_TEAMS
 
-        e_h = 1 / (1 + 10 ** (-((elo[ht] + HFA) - elo[at]) / 400))
+        # Route the match to the correct ELO pool
+        if ht_is_franchise and at_is_franchise:
+            # IPL franchise match
+            elo_pool = franchise_elo
+            gc_pool  = franchise_gc
+            ipl_count += 1
+        elif (not ht_is_franchise) and (not at_is_franchise):
+            # National/international match
+            elo_pool = national_elo
+            gc_pool  = national_gc
+            intl_count += 1
+        else:
+            # Mixed — skip (logically shouldn't happen with clean data)
+            skipped += 1
+            continue
+
+        elo_pool.setdefault(ht, ELO_DEFAULT)
+        elo_pool.setdefault(at, ELO_DEFAULT)
+        gc_pool.setdefault(ht, 0)
+        gc_pool.setdefault(at, 0)
+
+        e_h = 1 / (1 + 10 ** (-((elo_pool[ht] + HFA) - elo_pool[at]) / 400))
         e_a = 1 - e_h
 
         if winner == ht:
@@ -468,18 +582,23 @@ def compute_elo_from_matches(format_str: str = "T20") -> dict:
         elif winner == at:
             s_h, s_a = 0.0, 1.0
         else:
-            s_h, s_a = 0.5, 0.5  # no result / tie
+            s_h, s_a = 0.5, 0.5  # no result / tie / superover
 
-        k_h = ELO_K_EARLY if game_count[ht] < 20 else ELO_K
-        k_a = ELO_K_EARLY if game_count[at] < 20 else ELO_K
+        k_h = ELO_K_EARLY if gc_pool[ht] < 20 else ELO_K
+        k_a = ELO_K_EARLY if gc_pool[at] < 20 else ELO_K
 
-        elo[ht] = elo[ht] + k_h * (s_h - e_h)
-        elo[at] = elo[at] + k_a * (s_a - e_a)
-        game_count[ht] += 1
-        game_count[at] += 1
+        elo_pool[ht] = elo_pool[ht] + k_h * (s_h - e_h)
+        elo_pool[at] = elo_pool[at] + k_a * (s_a - e_a)
+        gc_pool[ht] += 1
+        gc_pool[at] += 1
 
-    logger.info(f"[ELO/CRICKET/{format_str}] Computed {len(elo)} team ratings.")
-    return elo
+    logger.info(
+        f"[ELO/CRICKET/{format_str}] Separated ELO computation complete — "
+        f"IPL={ipl_count} matches ({len(franchise_elo)} franchises), "
+        f"International={intl_count} matches ({len(national_elo)} national teams), "
+        f"Skipped={skipped}"
+    )
+    return {"franchise": franchise_elo, "national": national_elo}
 
 
 def compute_venue_stats(format_str: str = "T20") -> int:
@@ -589,8 +708,8 @@ def compute_team_stats(format_str: str = "T20") -> int:
         lid     = row["league_id"] or 0
         ht, at  = row["home_team"], row["away_team"]
         hs, as_ = row["home_score"], row["away_score"]
-        winner  = row.get("winner") or ""
-        toss_w  = row.get("toss_winner") or ""
+        winner  = row["winner"]  or "" if row["winner"]  is not None else ""
+        toss_w  = row["toss_winner"] or "" if row["toss_winner"] is not None else ""
 
         for team, scored, conceded, bats_first in [
             (ht, hs, as_, True),
@@ -622,11 +741,21 @@ def compute_team_stats(format_str: str = "T20") -> int:
             if conceded is not None:
                 s["runs_conceded"].append(conceded)
 
-    elo_map = compute_elo_from_matches(format_str)
+    # Use separated ELO pools — franchise teams get their IPL ELO,
+    # national teams get their international ELO.
+    elo_pools = compute_separated_elos(format_str)
+    franchise_elo_map = elo_pools["franchise"]
+    national_elo_map  = elo_pools["national"]
     now = datetime.now(timezone.utc).isoformat()
 
     upserted = 0
     with get_conn() as conn:
+        # Ensure team_type column exists (idempotent migration)
+        existing_cols = [r[1] for r in conn.execute("PRAGMA table_info(cricket_team_stats)").fetchall()]
+        if "team_type" not in existing_cols:
+            conn.execute("ALTER TABLE cricket_team_stats ADD COLUMN team_type TEXT DEFAULT 'NATIONAL'")
+            conn.commit()
+
         for (season, lid, team), s in stats.items():
             gp = s["gp"]
             if gp == 0:
@@ -638,14 +767,22 @@ def compute_team_stats(format_str: str = "T20") -> int:
             wp_bat2  = s["bat_second_wins"] / s["bat_second_gp"] if s["bat_second_gp"] else 0.5
             toss_pct = s["toss_wins"] / s["toss_gp"]             if s["toss_gp"]        else 0.5
 
+            # Determine team_type and select the correct ELO pool
+            t_type = get_team_type(team)
+            if t_type == "FRANCHISE":
+                team_elo = franchise_elo_map.get(team, ELO_DEFAULT)
+            else:
+                team_elo = national_elo_map.get(team, ELO_DEFAULT)
+
             conn.execute(
                 """INSERT INTO cricket_team_stats
-                   (season, league_id, format, team_name, games_played, wins, losses,
+                   (season, league_id, format, team_name, team_type, games_played, wins, losses,
                     avg_score_batting_first, avg_score_batting_second, avg_runs_conceded,
                     win_pct_batting_first, win_pct_batting_second, toss_win_pct,
                     elo_rating, last_updated)
-                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
                    ON CONFLICT(season, league_id, format, team_name) DO UPDATE SET
+                     team_type=excluded.team_type,
                      games_played=excluded.games_played,
                      wins=excluded.wins, losses=excluded.losses,
                      avg_score_batting_first=excluded.avg_score_batting_first,
@@ -656,10 +793,10 @@ def compute_team_stats(format_str: str = "T20") -> int:
                      toss_win_pct=excluded.toss_win_pct,
                      elo_rating=excluded.elo_rating,
                      last_updated=excluded.last_updated""",
-                (season, lid, format_str, team, gp, s["wins"], s["losses"],
+                (season, lid, format_str, team, t_type, gp, s["wins"], s["losses"],
                  round(avg_bat1, 1), round(avg_bat2, 1), round(avg_conc, 1),
                  round(wp_bat1, 3), round(wp_bat2, 3), round(toss_pct, 3),
-                 elo_map.get(team, ELO_DEFAULT), now)
+                 round(team_elo, 1), now)
             )
             upserted += 1
         conn.commit()
@@ -752,11 +889,150 @@ def run_fetch(
 
     if elo_map:
         top10 = sorted(elo_map.items(), key=lambda x: x[1], reverse=True)[:10]
-        logger.info("  TOP 10 ELO RATINGS:")
-        for team, elo in top10:
-            logger.info(f"    {team:35s} {elo:.0f}")
+        logger.info("  TOP 10 ELO RATINGS (merged):")
+        for team, elo_val in top10:
+            t_type = get_team_type(team)
+            logger.info(f"    [{t_type:9s}] {team:35s} {elo_val:.0f}")
+
+    # Log separated top ELOs for visibility
+    elo_pools = compute_separated_elos(format_str)
+    top5_nat = sorted(elo_pools["national"].items(),  key=lambda x: x[1], reverse=True)[:5]
+    top5_fra = sorted(elo_pools["franchise"].items(), key=lambda x: x[1], reverse=True)[:5]
+    if top5_nat:
+        logger.info("  TOP 5 NATIONAL ELOs:")
+        for team, val in top5_nat:
+            logger.info(f"    {team:35s} {val:.0f}")
+    if top5_fra:
+        logger.info("  TOP 5 FRANCHISE (IPL) ELOs:")
+        for team, val in top5_fra:
+            logger.info(f"    {team:35s} {val:.0f}")
 
     return summary
+
+
+# ── Walk-forward backtest (franchise vs national) ─────────────────────────────
+def run_backtest_separated(format_str: str = "T20") -> dict:
+    """
+    Walk-forward Brier score backtest using SEPARATED ELO pools.
+    Runs separately for:
+      - ICC T20 WC / International matches  → national ELO
+      - IPL matches                          → franchise ELO
+
+    Walk-forward protocol:
+      For each match (ordered by date), predict using ELO built from ALL PRIOR
+      matches (no lookahead). Then update ELO after prediction.
+
+    Returns dict with Brier scores and calibration bins for both pools.
+    """
+    HFA = 35
+
+    try:
+        with get_conn() as conn:
+            rows = conn.execute(
+                """SELECT date, league_name, home_team, away_team, winner
+                   FROM cricket_matches
+                   WHERE format = ? AND status IN ('FT','FINISHED','COMPLETE')
+                     AND home_team IS NOT NULL AND away_team IS NOT NULL
+                     AND winner IS NOT NULL AND winner != ''
+                   ORDER BY date ASC""",
+                (format_str,)
+            ).fetchall()
+    except sqlite3.OperationalError:
+        return {"error": "cricket_matches table not found"}
+
+    # Separate match rows by type
+    ipl_rows   = []
+    intl_rows  = []
+    for row in rows:
+        ht = row["home_team"]
+        at = row["away_team"]
+        if (ht in FRANCHISE_TEAMS) and (at in FRANCHISE_TEAMS):
+            ipl_rows.append(row)
+        elif (ht not in FRANCHISE_TEAMS) and (at not in FRANCHISE_TEAMS):
+            intl_rows.append(row)
+        # mixed: skip
+
+    def _walk_forward_brier(match_rows: list, label: str) -> dict:
+        """Walk-forward ELO + Brier score over a list of match rows."""
+        elo       = {}
+        gc        = {}
+        brier_sum = 0.0
+        n_bets    = 0
+
+        # Calibration bins: [0-10%, 10-20%, ... 90-100%]
+        bins_pred = [[] for _ in range(10)]
+        bins_act  = [[] for _ in range(10)]
+
+        for row in match_rows:
+            ht     = row["home_team"]
+            at     = row["away_team"]
+            winner = row["winner"]
+
+            elo.setdefault(ht, ELO_DEFAULT)
+            elo.setdefault(at, ELO_DEFAULT)
+            gc.setdefault(ht, 0)
+            gc.setdefault(at, 0)
+
+            # Predict BEFORE updating ELO (walk-forward — no lookahead)
+            e_h = 1 / (1 + 10 ** (-((elo[ht] + HFA) - elo[at]) / 400))
+            actual_h = 1.0 if winner == ht else 0.0
+
+            # Brier score: (p - outcome)^2
+            brier_sum += (e_h - actual_h) ** 2
+            n_bets    += 1
+
+            # Calibration bin assignment
+            bin_idx = min(int(e_h * 10), 9)
+            bins_pred[bin_idx].append(e_h)
+            bins_act[bin_idx].append(actual_h)
+
+            # Update ELO AFTER prediction
+            k_h = ELO_K_EARLY if gc[ht] < 20 else ELO_K
+            k_a = ELO_K_EARLY if gc[at] < 20 else ELO_K
+            e_a = 1 - e_h
+            s_h = actual_h
+            s_a = 1 - actual_h
+            elo[ht] += k_h * (s_h - e_h)
+            elo[at] += k_a * (s_a - e_a)
+            gc[ht]  += 1
+            gc[at]  += 1
+
+        brier = brier_sum / n_bets if n_bets > 0 else None
+
+        # Build calibration table
+        cal_table = []
+        for i in range(10):
+            if bins_pred[i]:
+                avg_pred   = sum(bins_pred[i]) / len(bins_pred[i])
+                avg_actual = sum(bins_act[i])  / len(bins_act[i])
+                cal_table.append({
+                    "bin":        f"{i*10}-{(i+1)*10}%",
+                    "n":          len(bins_pred[i]),
+                    "avg_pred":   round(avg_pred * 100, 1),
+                    "avg_actual": round(avg_actual * 100, 1),
+                    "error_pp":   round((avg_pred - avg_actual) * 100, 1),
+                })
+
+        return {
+            "label":       label,
+            "n_matches":   n_bets,
+            "brier_score": round(brier, 5) if brier is not None else None,
+            "calibration": cal_table,
+        }
+
+    ipl_result  = _walk_forward_brier(ipl_rows,  "IPL_FRANCHISE")
+    intl_result = _walk_forward_brier(intl_rows, "INTERNATIONAL")
+
+    logger.info(
+        f"[BACKTEST/CRICKET/{format_str}] "
+        f"IPL Brier={ipl_result['brier_score']} (n={ipl_result['n_matches']}) | "
+        f"INTL Brier={intl_result['brier_score']} (n={intl_result['n_matches']})"
+    )
+    return {
+        "format":        format_str,
+        "ipl_franchise": ipl_result,
+        "international": intl_result,
+    }
 
 
 # ── CLI ───────────────────────────────────────────────────────────────────────
@@ -767,10 +1043,12 @@ if __name__ == "__main__":
                         choices=["cricsheet","apisports","kaggle"],
                         help="Data sources (default: cricsheet + apisports)")
     parser.add_argument("--seasons",  type=int, nargs="+", default=DEFAULT_SEASONS)
-    parser.add_argument("--elo-only", action="store_true",
+    parser.add_argument("--elo-only",  action="store_true",
                         help="Only recompute ELO/team stats from existing DB data")
-    parser.add_argument("--status",   action="store_true",
+    parser.add_argument("--status",    action="store_true",
                         help="Print DB status and exit")
+    parser.add_argument("--backtest",  action="store_true",
+                        help="Run walk-forward Brier score backtest (franchise vs national)")
     args = parser.parse_args()
 
     if args.status:
@@ -786,6 +1064,22 @@ if __name__ == "__main__":
         print(f"  Venue stats  : {n_v} venues")
         print(f"  Team stats   : {n_t} team-seasons")
         print(f"  APISPORTS_KEY: {'SET' if APISPORTS_KEY else 'MISSING'}")
+    elif args.backtest:
+        result = run_backtest_separated(args.format)
+        print(f"\n{'='*65}")
+        print(f"  CRICKET ELO BACKTEST — {result['format']} — Walk-Forward")
+        print(f"{'='*65}")
+        for pool_key in ["ipl_franchise", "international"]:
+            p = result[pool_key]
+            print(f"\n  [{p['label']}] n={p['n_matches']}  Brier={p['brier_score']}")
+            print(f"  {'Bin':12s} {'N':>6} {'Pred%':>8} {'Actual%':>8} {'Error':>7}")
+            print(f"  {'-'*48}")
+            for row in p["calibration"]:
+                flag = " *** OVERCONFIDENT" if row["error_pp"] > 3 else (
+                       " *   underconfident" if row["error_pp"] < -3 else "")
+                print(f"  {row['bin']:12s} {row['n']:>6} {row['avg_pred']:>7.1f}% "
+                      f"{row['avg_actual']:>7.1f}%  {row['error_pp']:>+6.1f}pp{flag}")
+        print(f"{'='*65}\n")
     else:
         result = run_fetch(
             format_str = args.format,

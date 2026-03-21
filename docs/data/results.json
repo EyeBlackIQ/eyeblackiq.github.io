@@ -36,13 +36,13 @@
       "closing_line": null,
       "clv": null,
       "graded_at": "2026-03-21T12:26:08.678662+00:00",
-      "notes": "BOU 2-2 MUN. Cunha rated 8/10. Won penalty.",
-      "tier": "SCOUT",
-      "ev": 0.068,
-      "is_pod": 0,
-      "pod_sport": "SOCCER",
-      "edge": 0.068,
-      "tier_color": "#B8960C"
+      "notes": null,
+      "tier": "",
+      "ev": null,
+      "is_pod": null,
+      "pod_sport": null,
+      "edge": null,
+      "tier_color": "#555555"
     },
     {
       "signal_date": "2026-03-20",
@@ -58,13 +58,13 @@
       "closing_line": null,
       "clv": null,
       "graded_at": "2026-03-21T12:26:08.678662+00:00",
-      "notes": "EVE 0-2 CHE. Palmer goal + sub ~60'.",
-      "tier": "CHEEKY",
-      "ev": 0.085,
-      "is_pod": 0,
-      "pod_sport": "SOCCER",
-      "edge": 0.085,
-      "tier_color": "#4A90D9"
+      "notes": null,
+      "tier": "",
+      "ev": null,
+      "is_pod": null,
+      "pod_sport": null,
+      "edge": null,
+      "tier_color": "#555555"
     },
     {
       "signal_date": "2026-03-20",
@@ -80,13 +80,13 @@
       "closing_line": null,
       "clv": null,
       "graded_at": "2026-03-21T12:26:08.678662+00:00",
-      "notes": "LIV 2-0 BHA. Ekitike brace. 7 total shots.",
-      "tier": "CHEEKY",
-      "ev": 0.087,
-      "is_pod": 0,
-      "pod_sport": "SOCCER",
-      "edge": 0.087,
-      "tier_color": "#4A90D9"
+      "notes": null,
+      "tier": "",
+      "ev": null,
+      "is_pod": null,
+      "pod_sport": null,
+      "edge": null,
+      "tier_color": "#555555"
     },
     {
       "signal_date": "2026-03-20",
@@ -553,21 +553,6 @@
       "game_time": "10:00 PM ET",
       "edge_pct": 18.5,
       "ev_pct": 36.7
-    },
-    {
-      "date": "2026-03-20",
-      "sport": "SOCCER",
-      "pick": "Real Madrid ML",
-      "line": -193,
-      "units": 1.0,
-      "result": "PENDING",
-      "net_units": 0.0,
-      "actual_val": null,
-      "tier": "SCOUT",
-      "game": "Real Madrid vs Atletico",
-      "game_time": "Sun Mar 22",
-      "edge_pct": 3.7,
-      "ev_pct": -15.1
     }
   ],
   "full_market_view": [
@@ -602,16 +587,16 @@
       "status": "WIN",
       "units_net": 1.0,
       "actual_val": "1+ SOT (confirmed + won pen)",
-      "tier": "SCOUT",
-      "notes": "BOU 2-2 MUN. Cunha rated 8/10. Won penalty.",
-      "is_pod": 0,
+      "tier": "",
+      "notes": null,
+      "is_pod": null,
       "pick_source": "SPORTSBOOK",
       "b2b_flag": null,
       "is_flagged": false,
       "flag_status": "recommended",
-      "tier_color": "#B8960C",
-      "edge_pct": 6.8,
-      "ev_pct": 6.8
+      "tier_color": "#555555",
+      "edge_pct": 0,
+      "ev_pct": 0
     },
     {
       "date": "2026-03-20",
@@ -623,16 +608,16 @@
       "status": "WIN",
       "units_net": 1.5,
       "actual_val": "1+ SOT (scored 21')",
-      "tier": "CHEEKY",
-      "notes": "EVE 0-2 CHE. Palmer goal + sub ~60'.",
-      "is_pod": 0,
+      "tier": "",
+      "notes": null,
+      "is_pod": null,
       "pick_source": "SPORTSBOOK",
       "b2b_flag": null,
       "is_flagged": false,
       "flag_status": "recommended",
-      "tier_color": "#4A90D9",
-      "edge_pct": 8.5,
-      "ev_pct": 8.5
+      "tier_color": "#555555",
+      "edge_pct": 0,
+      "ev_pct": 0
     },
     {
       "date": "2026-03-20",
@@ -644,16 +629,16 @@
       "status": "WIN",
       "units_net": 1.5,
       "actual_val": "2+ SOT (brace: 0:46+header)",
-      "tier": "CHEEKY",
-      "notes": "LIV 2-0 BHA. Ekitike brace. 7 total shots.",
-      "is_pod": 0,
+      "tier": "",
+      "notes": null,
+      "is_pod": null,
       "pick_source": "SPORTSBOOK",
       "b2b_flag": null,
       "is_flagged": false,
       "flag_status": "recommended",
-      "tier_color": "#4A90D9",
-      "edge_pct": 8.7,
-      "ev_pct": 8.7
+      "tier_color": "#555555",
+      "edge_pct": 0,
+      "ev_pct": 0
     },
     {
       "date": "2026-03-20",
