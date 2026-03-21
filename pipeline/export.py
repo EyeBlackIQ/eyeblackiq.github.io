@@ -85,6 +85,10 @@ def export_today_slip(date_str: str) -> dict:
         )
         rows = [dict(r) for r in cur.fetchall()]
 
+    # Strip silently-tracked signals (NHL PTS/AST) — stored in DB for calibration
+    # but should never appear on the public bet slip
+    rows = [r for r in rows if "[SILENT]" not in (r.get("notes") or "")]
+
     recommended = []
     flagged     = []
     pod_summary = []
@@ -219,20 +223,46 @@ def export_record() -> dict:
 
 
 def export_results(limit: int = 10) -> list:
-    """Returns last N graded results."""
+    """Returns last N graded results, including loss analysis data."""
     with get_conn() as conn:
         conn.row_factory = sqlite3.Row
         cur = conn.execute(
             """SELECT r.signal_date, r.sport, r.game, r.side, r.market,
                       r.odds, r.units, r.result, r.units_net,
-                      r.actual_val, r.clv, r.graded_at
+                      r.actual_val, r.line_val, r.clv, r.graded_at,
+                      s.notes, s.tier, s.ev
                FROM results r
+               LEFT JOIN signals s ON s.id = r.signal_id
                WHERE r.result IN ('WIN','LOSS','PUSH','VOID')
                ORDER BY r.signal_date DESC, r.id DESC
                LIMIT ?""",
             (limit,)
         )
-        return [dict(r) for r in cur.fetchall()]
+        rows = [dict(r) for r in cur.fetchall()]
+
+    # Build loss_analysis text server-side for any LOSS row that has data
+    for r in rows:
+        if r.get("result") in ("LOSS", "L"):
+            parts = []
+            actual = r.get("actual_val")
+            line   = r.get("line_val")
+            if actual is not None and line is not None:
+                try:
+                    miss = float(actual) - float(line)
+                    direction = f"over by {abs(miss):.1f}" if miss > 0 else f"short by {abs(miss):.1f}"
+                    parts.append(f"Miss margin: {direction} (needed {line}, got {actual})")
+                except (TypeError, ValueError):
+                    pass
+            if r.get("clv") is not None:
+                clv_pct = r["clv"] * 100
+                parts.append(f"CLV: {'+' if clv_pct >= 0 else ''}{clv_pct:.1f}%")
+            if r.get("notes"):
+                # Strip internal model notes to surface only meaningful context
+                note = (r["notes"] or "").split("  Conf=")[0]  # trim confidence suffix
+                if note:
+                    parts.append(note)
+            r["loss_analysis"] = "  ·  ".join(parts) if parts else None
+    return rows
 
 
 def write_json(path: Path, data):
@@ -249,11 +279,11 @@ def run_export(date_str: str):
 
     slip    = export_today_slip(date_str)
     record  = export_record()
-    results = export_results(10)
+    picks   = export_results(50)   # expanded limit for full results page
 
     write_json(DOCS_DATA / "today_slip.json", slip)
     write_json(DOCS_DATA / "record.json",     record)
-    write_json(DOCS_DATA / "results.json",    results)
+    write_json(DOCS_DATA / "results.json",    {"picks": picks, "daily_summaries": [], "pod_picks": []})
 
     logger.info(
         f"Export complete — {slip['counts']['recommended']} recommended, "

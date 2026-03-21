@@ -5,7 +5,7 @@ NHL player props signal generator.
 Reads from nhl_prop_results (betting.db) and writes qualifying signals
 to eyeblackiq.db signals table.
 
-Markets: player_shots_on_goal, player_points, player_assists
+Markets: player_shots_on_goal (daily slip) | player_points, player_assists (silent DB tracking)
 Model: Negative Binomial distribution (SOG), Poisson (points/assists)
 
 Confidence levels (●●● / ●●○ / ●○○):
@@ -39,6 +39,13 @@ BASE_DIR = Path(__file__).parent.parent.parent
 SRC_DB   = Path("C:/Users/loren/OneDrive/Desktop/quant-betting/soccer/.claude/worktrees/admiring-allen/db/betting.db")
 TGT_DB   = BASE_DIR / "pipeline" / "db" / "eyeblackiq.db"
 SPORT    = "NHL"
+
+# ── Slip vs Silent tracking ─────────────────────────────────────────────────────
+# SOG only surfaces on the daily bet slip.
+# PTS and AST are written to the DB silently for calibration — not shown to users
+# until those markets have proven edge over a larger sample.
+SLIP_MARKETS   = {"player_shots_on_goal"}
+SILENT_MARKETS = {"player_points", "player_assists"}
 
 # ── Tier ───────────────────────────────────────────────────────────────────────
 def nhl_tier(edge_pct):
@@ -108,14 +115,20 @@ def load_props(date_str: str) -> list:
         return [dict(r) for r in cur.fetchall()]
 
 # ── Write signal ───────────────────────────────────────────────────────────────
-def write_signal(conn, date_str, row, tier, units, conf_label, conf_sym, ev_val, game_str, gtime):
+def write_signal(conn, date_str, row, tier, units, conf_label, conf_sym, ev_val, game_str, gtime,
+                 on_slip: bool = True):
+    """Write one signal row to the DB.
+    on_slip=True  → shows on daily bet slip (SOG only)
+    on_slip=False → appended with [SILENT]; tracked in DB but hidden from export/display
+    """
     ts = datetime.now(timezone.utc).isoformat()
     mkt_short = fmt_market(row["market"])
     side_str  = f"{row['player_name']} {row['side']} {row['line']} {mkt_short}"
     b2b_flag  = " [B2B]" if row["b2b"] else ""
+    silent_flag = "  [SILENT]" if not on_slip else ""
     notes = (
         f"mu={row['mu_model']:.2f}  P={row['p_model']:.3f}  "
-        f"Conf={conf_label} {conf_sym}{b2b_flag}"
+        f"Conf={conf_label} {conf_sym}{b2b_flag}{silent_flag}"
     )
     conn.execute(
         """INSERT INTO signals
@@ -141,7 +154,8 @@ def run_model(date_str: str, dry_run: bool = False) -> int:
 
     logger.info(f"NHL model -- {date_str} -- {len(props)} qualified props from source DB")
 
-    signals_written = 0
+    signals_written = 0   # slip signals (SOG) written to DB
+    silent_written  = 0   # PTS/AST written silently
     conn = None
     if not dry_run:
         conn = sqlite3.connect(TGT_DB)
@@ -166,29 +180,51 @@ def run_model(date_str: str, dry_run: bool = False) -> int:
         gtime      = game_time(away, home)
         mkt_short  = fmt_market(row["market"])
         b2b_tag    = " [B2B]" if b2b else ""
+        on_slip    = row["market"] in SLIP_MARKETS
 
-        logger.info(
-            f"  + {row['player_name']}{b2b_tag}  "
-            f"{row['side']} {row['line']} {mkt_short}  "
-            f"{int(row['price']):+d}  "
-            f"Edge {edge_pct:.1f}%  {tier_name}  {units}u  "
-            f"Conf {conf_sym}  |  {game_str}"
-        )
+        if on_slip:
+            logger.info(
+                f"  + {row['player_name']}{b2b_tag}  "
+                f"{row['side']} {row['line']} {mkt_short}  "
+                f"{int(row['price']):+d}  "
+                f"Edge {edge_pct:.1f}%  {tier_name}  {units}u  "
+                f"Conf {conf_sym}  |  {game_str}"
+            )
+        else:
+            # Silent track: debug-level only — not logged to console at INFO
+            logger.debug(
+                f"  [SILENT] {row['player_name']}{b2b_tag}  "
+                f"{row['side']} {row['line']} {mkt_short}  "
+                f"{int(row['price']):+d}  Edge {edge_pct:.1f}%  |  {game_str}"
+            )
 
         if not dry_run:
             write_signal(conn, date_str, row, tier_name, units,
-                         conf_label, conf_sym, ev_val, game_str, gtime)
-            signals_written += 1
+                         conf_label, conf_sym, ev_val, game_str, gtime,
+                         on_slip=on_slip)
+            if on_slip:
+                signals_written += 1
+            else:
+                silent_written += 1
 
     if not dry_run and conn:
         conn.commit()
         conn.close()
-        logger.info(f"NHL: wrote {signals_written} signals to DB")
+        logger.info(
+            f"NHL: wrote {signals_written} slip signals (SOG), "
+            f"{silent_written} silently tracked (PTS/AST)"
+        )
 
     if dry_run:
-        qualifying = sum(1 for r in props if nhl_tier(r["edge"] * 100)[1] > 0)
-        logger.info(f"[DRY-RUN] Would write {qualifying} signals (skipped {len(props) - qualifying} below tier threshold)")
-        signals_written = qualifying
+        slip_q   = sum(1 for r in props if nhl_tier(r["edge"] * 100)[1] > 0
+                       and r["market"] in SLIP_MARKETS)
+        silent_q = sum(1 for r in props if nhl_tier(r["edge"] * 100)[1] > 0
+                       and r["market"] in SILENT_MARKETS)
+        logger.info(
+            f"[DRY-RUN] Slip signals: {slip_q} (SOG) | "
+            f"Silent: {silent_q} (PTS/AST — DB only, not on slip)"
+        )
+        signals_written = slip_q
 
     return signals_written
 

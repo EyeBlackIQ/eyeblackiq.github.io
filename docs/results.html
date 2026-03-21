@@ -5,6 +5,47 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Results — EyeBlackIQ</title>
 <link rel="stylesheet" href="style.css">
+<style>
+/* ── Loss Analysis UX ─────────────────────────────────────────── */
+.loss-toggle {
+  display: inline-block;
+  cursor: pointer;
+  font-size: 11px;
+  color: #555;
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 3px;
+  padding: 2px 7px;
+  margin-left: 6px;
+  user-select: none;
+  transition: color 0.15s, border-color 0.15s;
+}
+.loss-toggle:hover { color: #DC143C; border-color: #DC143C; }
+.loss-analysis-row { display: none; }
+.loss-analysis-row.open { display: table-row; }
+.loss-analysis-cell {
+  background: #0d0d0d;
+  border-top: 1px solid #1a1a1a;
+  padding: 14px 20px;
+  font-size: 12px;
+  color: #888;
+  line-height: 1.8;
+}
+.loss-analysis-cell .la-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #DC143C;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-right: 6px;
+}
+.loss-analysis-cell .la-miss {
+  color: #e8c060;
+  font-weight: 600;
+}
+.loss-analysis-cell .la-context { color: #666; }
+</style>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -21,7 +62,7 @@
     <nav>
       <a href="index.html" class="nav-link">Today</a>
       <a href="results.html" class="nav-link active">Results</a>
-      <a href="methodology.html" class="nav-link">Methodology</a>
+      <a href="methodology.html" class="nav-link">The Playbook</a>
     </nav>
     <div class="social-links">
       <a href="https://twitter.com/EyeBlackIQ" target="_blank" class="social-btn">𝕏 Follow</a>
@@ -159,7 +200,7 @@
       <a href="#">Telegram</a>
       <a href="#">Discord</a>
       <a href="index.html">Today's Card</a>
-      <a href="methodology.html">Methodology</a>
+      <a href="methodology.html">The Playbook</a>
     </div>
     <div class="footer-copy">© 2026 EyeBlackIQ. Data beats hype.</div>
   </div>
@@ -199,25 +240,81 @@ async function loadResults() {
   }
 }
 
+let _laOpenId = null;
+
+function toggleLossAnalysis(id) {
+  const row = document.getElementById('la-' + id);
+  if (!row) return;
+  const isOpen = row.classList.contains('open');
+  // Close any open one
+  if (_laOpenId !== null) {
+    const prev = document.getElementById('la-' + _laOpenId);
+    if (prev) prev.classList.remove('open');
+    const prevBtn = document.getElementById('la-btn-' + _laOpenId);
+    if (prevBtn) prevBtn.textContent = '▼ Analysis';
+  }
+  if (!isOpen) {
+    row.classList.add('open');
+    const btn = document.getElementById('la-btn-' + id);
+    if (btn) btn.textContent = '▲ Close';
+    _laOpenId = id;
+  } else {
+    _laOpenId = null;
+  }
+}
+
+function buildLossAnalysis(p) {
+  // Use the loss_analysis field if present, otherwise derive from available data
+  if (p.loss_analysis) return p.loss_analysis;
+  // Fallback: construct from score + actual_val if available
+  const parts = [];
+  if (p.actual_val != null && p.line != null) {
+    const line = parseFloat(p.line);
+    const actual = parseFloat(p.actual_val);
+    if (!isNaN(line) && !isNaN(actual)) {
+      const miss = (actual - line).toFixed(1);
+      const dir = actual > line ? `over by ${Math.abs(miss)}` : `short by ${Math.abs(miss)}`;
+      parts.push(`<span class="la-miss">Miss margin: ${dir} (needed ${line}, got ${actual})</span>`);
+    }
+  }
+  if (p.score) parts.push(`<span class="la-context">Final: ${p.score}</span>`);
+  if (p.clv != null) parts.push(`<span class="la-context">CLV: ${p.clv > 0 ? '+' : ''}${(p.clv * 100).toFixed(1)}%</span>`);
+  if (p.notes) parts.push(`<span class="la-context">${p.notes}</span>`);
+  return parts.length ? parts.join('  ·  ') : 'No additional data available for this loss.';
+}
+
 function renderDaily(picks) {
   if (!picks.length) {
     document.getElementById('daily-tbody').innerHTML =
       '<tr><td colspan="9" style="color:var(--text-dim);text-align:center;padding:32px;">No results posted yet.</td></tr>';
     return;
   }
-  document.getElementById('daily-tbody').innerHTML = [...picks].reverse().map(p => `
+  document.getElementById('daily-tbody').innerHTML = [...picks].reverse().map((p, i) => {
+    const isLoss = (p.result === 'L' || p.result === 'LOSS');
+    const resultCell = p.result === 'W' || p.result === 'WIN'  ? '✅ W'
+                     : p.result === 'L' || p.result === 'LOSS' ? `❌ L <span class="loss-toggle" id="la-btn-${i}" onclick="toggleLossAnalysis(${i})">▼ Analysis</span>`
+                     : p.result === 'P' || p.result === 'PUSH' ? '➡️ P'
+                     : p.result || '—';
+    const mainRow = `
     <tr>
       <td>${p.date}</td>
-      <td><span class="tier-badge ${TIER_CLASS[p.tier] || ''}">${p.tier}</span></td>
-      <td style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px;">${p.pick}</td>
-      <td style="color:var(--text-dim);font-size:13px;">${p.teams}</td>
-      <td style="color:var(--blue);">${p.line}</td>
+      <td><span class="tier-badge ${TIER_CLASS[p.tier] || ''}">${p.tier || '—'}</span></td>
+      <td style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1px;">${p.pick || p.side || '—'}</td>
+      <td style="color:var(--text-dim);font-size:13px;">${p.teams || p.game || '—'}</td>
+      <td style="color:var(--blue);">${p.line || p.odds || '—'}</td>
       <td>${p.units}u</td>
-      <td class="result-${(p.result||'').toLowerCase()}">${p.result === 'W' ? '✅ W' : p.result === 'L' ? '❌ L' : p.result === 'P' ? '➡️ P' : p.result || '—'}</td>
+      <td class="result-${(p.result||'').toLowerCase()}">${resultCell}</td>
       <td style="color:var(--text-dim);font-size:13px;">${p.score || '—'}</td>
       <td>${p.net_units != null ? netStr(p.net_units) : '—'}</td>
-    </tr>
-  `).join('');
+    </tr>`;
+    const analysisRow = isLoss ? `
+    <tr class="loss-analysis-row" id="la-${i}">
+      <td colspan="9" class="loss-analysis-cell">
+        <span class="la-label">Loss Analysis</span>${buildLossAnalysis(p)}
+      </td>
+    </tr>` : '';
+    return mainRow + analysisRow;
+  }).join('');
 }
 
 function renderRunning(summaries) {
