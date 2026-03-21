@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Model Validation — EyeBlackIQ</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+.method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1100px; margin: 0 auto 40px; padding: 0 20px; }
+@media(max-width: 700px) { .method-grid { grid-template-columns: 1fr; } }
+.method-card { background: #111; border: 1px solid #1c1c1c; border-radius: 10px; padding: 22px 24px; }
+.method-card-title { font-family: 'Barlow Condensed', sans-serif; font-size: 17px; font-weight: 700; color: #DC143C; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
+.method-card p { font-size: 14px; color: #aaa; line-height: 1.7; margin-bottom: 10px; }
+.method-card p:last-child { margin-bottom: 0; }
+.method-card code { background: #1a1a1a; color: #6ab0e8; padding: 2px 6px; border-radius: 3px; font-size: 12px; }
+.method-card ul { list-style: none; padding: 0; }
+.method-card li { font-size: 13px; color: #999; padding: 5px 0; border-bottom: 1px solid #1a1a1a; }
+.method-card li:last-child { border-bottom: none; }
+.method-card li::before { content: '→ '; color: #DC143C; }
+.method-hero { text-align: center; padding: 40px 20px 30px; max-width: 800px; margin: 0 auto; }
+.method-hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: 42px; color: #f0ede8; letter-spacing: 2px; margin-bottom: 12px; }
+.method-hero .subtitle { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 600; color: #DC143C; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; }
+.method-hero p { font-size: 15px; color: #888; line-height: 1.8; }
+.tier-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.tier-table th { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 1px; padding: 6px 8px; text-align: left; border-bottom: 1px solid #1c1c1c; }
+.tier-table td { padding: 8px 8px; font-size: 13px; border-bottom: 1px solid #161616; color: #aaa; }
+.tier-table tr:last-child td { border-bottom: none; }
+.t-label { font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.5px; }
+.t-value { color: #f0ede8; font-weight: 600; }
+.t-value-green { color: #3cb371; font-weight: 700; }
+.t-value-blue { color: #6ab0e8; font-weight: 700; }
+.t-value-gold { color: #e5c000; font-weight: 700; }
+.section-divider { max-width: 1100px; margin: 0 auto 30px; padding: 0 20px; }
+.section-divider h2 { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 700; color: #f0ede8; letter-spacing: 1px; margin-bottom: 6px; border-bottom: 1px solid #1c1c1c; padding-bottom: 10px; }
+
+/* Status badges */
+.status-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 4px; font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 14px; }
+.status-complete { background: rgba(60,179,113,0.12); color: #3cb371; border: 1px solid rgba(60,179,113,0.3); }
+.status-paper { background: rgba(229,192,0,0.10); color: #e5c000; border: 1px solid rgba(229,192,0,0.3); }
+
+/* Metric rows inside validation cards */
+.metric-table { width: 100%; border-collapse: collapse; margin: 10px 0 14px; }
+.metric-table td { padding: 6px 0; font-size: 13px; border-bottom: 1px solid #161616; vertical-align: top; }
+.metric-table tr:last-child td { border-bottom: none; }
+.metric-table .m-label { color: #555; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; font-size: 11px; width: 52%; padding-right: 12px; }
+.metric-table .m-value { color: #f0ede8; font-weight: 600; font-size: 13px; }
+.metric-table .m-value-green { color: #3cb371; font-weight: 700; font-size: 13px; }
+.metric-table .m-value-yellow { color: #e5c000; font-weight: 700; font-size: 13px; }
+.metric-table .m-value-blue { color: #6ab0e8; font-weight: 700; font-size: 13px; }
+
+/* Note block inside cards */
+.val-note { background: #0d0d0d; border-left: 2px solid #DC143C; border-radius: 0 6px 6px 0; padding: 10px 14px; margin-top: 12px; }
+.val-note p { font-size: 12px; color: #666; line-height: 1.7; margin: 0; }
+.val-note p strong { color: #888; }
+
+/* Protocol checklist */
+.protocol-list { list-style: none; padding: 0; margin: 0; }
+.protocol-list li { font-size: 13px; color: #999; padding: 7px 0 7px 28px; border-bottom: 1px solid #161616; position: relative; }
+.protocol-list li:last-child { border-bottom: none; }
+.protocol-list li::before { content: '✓'; position: absolute; left: 0; color: #3cb371; font-weight: 700; font-size: 13px; }
+
+/* Data sources small card */
+.source-list { list-style: none; padding: 0; margin: 0; }
+.source-list li { font-size: 13px; color: #999; padding: 6px 0; border-bottom: 1px solid #161616; }
+.source-list li:last-child { border-bottom: none; }
+.source-list li::before { content: ''; }
+.source-list .src-name { color: #f0ede8; font-weight: 600; }
+.source-list .src-sep { color: #333; margin: 0 6px; }
+.source-list .src-desc { color: #666; }
+
+/* Span full grid width */
+.span-2 { grid-column: span 2; }
+@media(max-width: 700px) { .span-2 { grid-column: span 1; } }
+
+/* Go-live thresholds row */
+.threshold-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 14px; }
+@media(max-width: 700px) { .threshold-row { grid-template-columns: 1fr 1fr; } }
+.threshold-pill { background: #0d0d0d; border: 1px solid #1c1c1c; border-radius: 6px; padding: 12px 14px; text-align: center; }
+.threshold-pill .tp-val { font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: #DC143C; letter-spacing: 1px; line-height: 1; margin-bottom: 4px; }
+.threshold-pill .tp-label { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.5px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-block">
+      <span class="logo-eb">EB</span>
+      <div class="logo-text">
+        <span class="logo-name">EyeBlackIQ</span>
+        <span class="logo-tag">ELO + ISR · 5-Gate Filter · Quarter Kelly Sizing</span>
+      </div>
+    </div>
+    <nav>
+      <a href="index.html" class="nav-link">Today</a>
+      <a href="results.html" class="nav-link">Results</a>
+      <a href="methodology.html" class="nav-link">The Playbook</a>
+      <a href="validation.html" class="nav-link active">Validation</a>
+    </nav>
+    <div class="social-links">
+      <a href="https://x.com/EyeBlackIQ" target="_blank" class="social-btn">𝕏 Follow</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <div class="method-hero">
+    <h1>Model Validation</h1>
+    <div class="subtitle">Out-of-sample. Walk-forward. No excuses.</div>
+    <p>
+      Walk-forward means the model trains only on historical data prior to the prediction date —
+      no future information leaks in. All backtest results shown below are out-of-sample.
+      Go-live requires four independent thresholds: ROI &gt; 3%, CLV ≥ 55%, calibration ±2%,
+      and ≥ 300 paper trade plays.
+    </p>
+  </div>
+
+  <!-- GO-LIVE THRESHOLDS SUMMARY -->
+  <div class="method-grid" style="margin-bottom: 20px;">
+    <div class="method-card span-2">
+      <div class="method-card-title">Go-Live Requirements — All Four Required, No Exceptions</div>
+      <div class="threshold-row">
+        <div class="threshold-pill">
+          <div class="tp-val">&gt;3%</div>
+          <div class="tp-label">Backtest ROI</div>
+        </div>
+        <div class="threshold-pill">
+          <div class="tp-val">≥55%</div>
+          <div class="tp-label">CLV Rate</div>
+        </div>
+        <div class="threshold-pill">
+          <div class="tp-val">±2%</div>
+          <div class="tp-label">Calibration</div>
+        </div>
+        <div class="threshold-pill">
+          <div class="tp-val">300+</div>
+          <div class="tp-label">Paper Trade Plays</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BACKTEST RESULTS -->
+  <div class="section-divider"><h2>Backtest Results by Sport</h2></div>
+  <div class="method-grid">
+
+    <!-- HANDBALL -->
+    <div class="method-card">
+      <div class="status-badge status-complete">✅ Backtest Complete</div>
+      <div class="method-card-title">🤾 Handball — Efficiency-Flow Model v1.1.0</div>
+      <table class="metric-table">
+        <tr>
+          <td class="m-label">Brier Score</td>
+          <td class="m-value-green">0.1936 <span style="color:#555; font-weight:400; font-size:11px;">(22.6% above random baseline of 0.25)</span></td>
+        </tr>
+        <tr>
+          <td class="m-label">Directional Accuracy</td>
+          <td class="m-value-green">70.3%</td>
+        </tr>
+        <tr>
+          <td class="m-label">Simulated ROI</td>
+          <td class="m-value-green">+39%</td>
+        </tr>
+        <tr>
+          <td class="m-label">Sample Size</td>
+          <td class="m-value">973 matches</td>
+        </tr>
+        <tr>
+          <td class="m-label">Competitions</td>
+          <td class="m-value">EHF CL + Bundesliga</td>
+        </tr>
+        <tr>
+          <td class="m-label">Data Period</td>
+          <td class="m-value">2019–2025</td>
+        </tr>
+        <tr>
+          <td class="m-label">Teams Covered</td>
+          <td class="m-value">48 teams, 6 seasons</td>
+        </tr>
+      </table>
+      <div class="val-note">
+        <p>Platt scaling calibration infrastructure added (v1.1.0). <strong>PLATT_ENABLED=False</strong> pending additional data — overconfidence identified at low-probability end (0–30%), underconfidence at high end (90%+). Live signals are issued without shrinkage until calibration refit threshold (500+ predictions) is reached.</p>
+      </div>
+    </div>
+
+    <!-- CRICKET -->
+    <div class="method-card">
+      <div class="status-badge status-complete">✅ Backtest Complete</div>
+      <div class="method-card-title">🏏 Cricket International — Resource-Value Model v0.1.0</div>
+      <table class="metric-table">
+        <tr>
+          <td class="m-label">Brier Score (National)</td>
+          <td class="m-value-green">0.2330 <span style="color:#555; font-weight:400; font-size:11px;">post-ELO separation</span></td>
+        </tr>
+        <tr>
+          <td class="m-label">Brier Score (Franchise/IPL)</td>
+          <td class="m-value-blue">0.2552 <span style="color:#555; font-weight:400; font-size:11px;">post-ELO separation</span></td>
+        </tr>
+        <tr>
+          <td class="m-label">National Sample</td>
+          <td class="m-value">3,111 matches, 107 countries</td>
+        </tr>
+        <tr>
+          <td class="m-label">Franchise Sample</td>
+          <td class="m-value">1,117 matches (IPL), 18 teams</td>
+        </tr>
+        <tr>
+          <td class="m-label">Data Period</td>
+          <td class="m-value">2008–2025</td>
+        </tr>
+      </table>
+      <div class="val-note">
+        <p>ELO pools separated in v0.5.1 — franchise teams (IPL) and national teams (ICC) now maintain independent ELO ratings. Prior conflation was suppressing predictive accuracy for international matches.</p>
+      </div>
+    </div>
+
+    <!-- NHL -->
+    <div class="method-card">
+      <div class="status-badge status-paper">🟡 Paper Trading Active</div>
+      <div class="method-card-title">🏒 NHL — Team ML + Pythagorean Model</div>
+      <table class="metric-table">
+        <tr>
+          <td class="m-label">Model</td>
+          <td class="m-value">Pythagorean Win% (exp = 2.0) + ELO blend</td>
+        </tr>
+        <tr>
+          <td class="m-label">ELO Source</td>
+          <td class="m-value">ESPN standings API</td>
+        </tr>
+        <tr>
+          <td class="m-label">Odds Source</td>
+          <td class="m-value">ESPN Core API + FanDuel player props</td>
+        </tr>
+        <tr>
+          <td class="m-label">Signals Issued (Mar 21)</td>
+          <td class="m-value-yellow">12 team ML/totals · 369 player prop lines</td>
+        </tr>
+        <tr>
+          <td class="m-label">Pythagorean RMSE</td>
+          <td class="m-value" style="color:#555;">In calibration (paper trade phase)</td>
+        </tr>
+      </table>
+      <div class="val-note">
+        <p>NHL team model uses Pythagorean expected win% derived from Goals For / Goals Against. ELO initialized from ESPN power rankings. Three confirmed <strong>SNIPE (T1)</strong> totals on Mar 21 with 14–23% edge: DAL@MIN Over 5.5, NYI@MTL Over 5.5, BOS@DET Over 5.5.</p>
+      </div>
+    </div>
+
+    <!-- NCAA BASEBALL -->
+    <div class="method-card">
+      <div class="status-badge status-paper">🟡 Paper Trading Active</div>
+      <div class="method-card-title">⚾ NCAA Baseball — ELO + ISR Model</div>
+      <table class="metric-table">
+        <tr>
+          <td class="m-label">ELO Source</td>
+          <td class="m-value">Warren Nolan (warrennolan.com) — weekly</td>
+        </tr>
+        <tr>
+          <td class="m-label">ISR Source</td>
+          <td class="m-value">Boyd's World (boydsbets.com) — weekly</td>
+        </tr>
+        <tr>
+          <td class="m-label">ELO / ISR Blend</td>
+          <td class="m-value">60% ELO + 40% ISR</td>
+        </tr>
+        <tr>
+          <td class="m-label">SP ERA Adjustment</td>
+          <td class="m-value">±3–4pp per dominant vs. shaky SP matchup</td>
+        </tr>
+        <tr>
+          <td class="m-label">Live Signals Since</td>
+          <td class="m-value-yellow">March 21, 2026</td>
+        </tr>
+        <tr>
+          <td class="m-label">Signals Issued (Mar 21)</td>
+          <td class="m-value">7 plays — 3 T1 FILTHY · 2 T2 WHEELHOUSE · 2 T3 SCOUT</td>
+        </tr>
+      </table>
+      <div class="val-note">
+        <p>Closing line value (CLV) tracking begins from first live signal date. 30-day paper trade window in progress. <strong>Go-live target: April 20, 2026</strong> (pending all 4 thresholds).</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PROTOCOL -->
+  <div class="section-divider"><h2>Walk-Forward Backtest Protocol</h2></div>
+  <div class="method-grid">
+    <div class="method-card span-2">
+      <div class="method-card-title">Methodology Transparency — How Every Backtest Is Run</div>
+      <ul class="protocol-list">
+        <li>All backtests use walk-forward splits — model trained on data prior to prediction date only. Zero lookahead contamination.</li>
+        <li>10¢ slippage applied to every simulated entry.</li>
+        <li>Minimum 3 seasons required before trusting any team ML backtest result.</li>
+        <li>Calibration bins must be within ±2% across all probability ranges (0–10%, 10–20%, … 90–100%).</li>
+        <li>Closing line (no-vig) = CLV benchmark. Pinnacle closing line is the gold standard reference.</li>
+        <li>Paper trading minimum: 30 days before real money on any new model.</li>
+        <li>All results logged publicly in the Results tab — wins and losses, no cherry-picking.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- DATA SOURCES -->
+  <div class="section-divider"><h2>Data Sources Used in Validation</h2></div>
+  <div class="method-grid">
+    <div class="method-card span-2">
+      <div class="method-card-title">Primary Data Sources by Sport</div>
+      <ul class="source-list">
+        <li>
+          <span class="src-name">Boyd's World</span><span class="src-sep">—</span>
+          <span class="src-desc">boydsbets.com · ISR ratings, NCAA Baseball, updated weekly</span>
+        </li>
+        <li>
+          <span class="src-name">Warren Nolan</span><span class="src-sep">—</span>
+          <span class="src-desc">warrennolan.com · ELO ratings, NCAA Baseball, updated weekly</span>
+        </li>
+        <li>
+          <span class="src-name">Cricsheet</span><span class="src-sep">—</span>
+          <span class="src-desc">cricsheet.org · T20 ball-by-ball data, Cricket international + IPL</span>
+        </li>
+        <li>
+          <span class="src-name">API Sports</span><span class="src-sep">—</span>
+          <span class="src-desc">EHF / Bundesliga handball fixtures · ICC / IPL cricket fixtures and results</span>
+        </li>
+        <li>
+          <span class="src-name">MoneyPuck</span><span class="src-sep">—</span>
+          <span class="src-desc">moneypuck.com · NHL shot quality, xG data, 2007–present</span>
+        </li>
+        <li>
+          <span class="src-name">football-data.co.uk</span><span class="src-sep">—</span>
+          <span class="src-desc">Soccer results and odds, 6 top leagues, 1993–present</span>
+        </li>
+        <li>
+          <span class="src-name">Club Elo</span><span class="src-sep">—</span>
+          <span class="src-desc">clubelo.com · Soccer ELO ratings, 1939–present</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="footer-logo">EyeBlackIQ</span>
+      <span class="footer-tag">The model sees what the market misses.</span>
+    </div>
+    <div class="footer-links">
+      <a href="https://x.com/EyeBlackIQ" target="_blank">𝕏 Twitter</a>
+      <a href="index.html">Today's Picks</a>
+      <a href="results.html">Results</a>
+    </div>
+    <div class="footer-copy">© 2026 EyeBlackIQ. Data beats hype.</div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -185,27 +185,137 @@ main { max-width: 1000px; margin: 0 auto; padding: 32px 20px 80px; }
 .conf-high  { background: rgba(26,107,60,0.25); color: #3cb371; border: 1px solid rgba(60,179,113,0.4); }
 .conf-low   { background: rgba(80,80,80,0.2);   color: #888;    border: 1px solid #333; }
 
-/* ─── ON RADAR SECTION ──────────────────────── */
-.radar-section { border-top: 1px solid #1a1a1a; margin-top: 24px; padding-top: 12px; }
+/* ─── ON RADAR / FMV SECTION ─────────────────── */
+.radar-section {
+  border: 1px solid #252525;
+  border-left: 3px solid #4A90D9;
+  background: #0e0e0e;
+  border-radius: 6px;
+  margin-top: 20px;
+  padding: 0;
+  overflow: hidden;
+}
+.radar-section.fmv-section-style {
+  border-left-color: #B8960C;
+}
 .radar-header {
-  display: flex; align-items: center; gap: 12px; cursor: pointer; padding: 8px 0; flex-wrap: wrap;
+  display: flex; align-items: center; gap: 12px; cursor: pointer;
+  padding: 12px 16px; flex-wrap: wrap;
+  background: #111; border-bottom: 1px solid #1c1c1c;
+  transition: background 0.15s;
 }
-.radar-title     { color: #666; font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
-.radar-sub       { color: #444; font-size: 11px; flex: 1; }
-.radar-count     { background: #333; color: #888; border-radius: 10px; padding: 1px 7px; font-size: 11px; font-weight: 700; }
-.radar-toggle-btn{ background: none; border: 1px solid #333; color: #555; border-radius: 4px; padding: 3px 10px; cursor: pointer; font-size: 11px; }
-.radar-toggle-btn:hover { border-color: #555; color: #888; }
-.radar-list { display: flex; flex-direction: column; gap: 5px; padding-top: 8px; }
+.radar-header:hover { background: #141414; }
+.radar-title {
+  color: #4A90D9;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 2px;
+}
+.fmv-section-style .radar-title { color: #B8960C; }
+.radar-sub       { color: #555; font-size: 11px; flex: 1; }
+.radar-count {
+  background: rgba(74,144,217,0.15);
+  color: #4A90D9;
+  border: 1px solid rgba(74,144,217,0.3);
+  border-radius: 10px; padding: 2px 8px;
+  font-size: 11px; font-weight: 700;
+}
+.fmv-section-style .radar-count {
+  background: rgba(184,150,12,0.15);
+  color: #B8960C;
+  border-color: rgba(184,150,12,0.3);
+}
+.radar-toggle-btn {
+  background: rgba(74,144,217,0.1);
+  border: 1px solid rgba(74,144,217,0.3);
+  color: #4A90D9;
+  border-radius: 4px; padding: 4px 12px;
+  cursor: pointer; font-size: 11px; font-weight: 700;
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 0.5px;
+  transition: all 0.15s;
+}
+.radar-toggle-btn:hover {
+  background: rgba(74,144,217,0.2);
+  border-color: rgba(74,144,217,0.5);
+}
+.fmv-section-style .radar-toggle-btn {
+  background: rgba(184,150,12,0.1);
+  border-color: rgba(184,150,12,0.3);
+  color: #B8960C;
+}
+.fmv-section-style .radar-toggle-btn:hover {
+  background: rgba(184,150,12,0.2);
+  border-color: rgba(184,150,12,0.5);
+}
+.radar-list { display: flex; flex-direction: column; gap: 4px; padding: 10px 14px 14px; }
 .radar-card {
-  background: #111; border: 1px solid #222; border-radius: 5px;
-  padding: 7px 12px; font-size: 12px; color: #666;
+  background: #131313; border: 1px solid #1e1e1e; border-radius: 5px;
+  padding: 8px 12px; font-size: 12px; color: #888;
   display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  transition: border-color 0.15s;
 }
-.radar-sport { color: #555; font-weight: 700; font-size: 11px; }
-.radar-side  { color: #888; font-weight: 600; flex: 1; }
-.radar-odds  { color: #4A90D9; font-family: 'Barlow Condensed', sans-serif; }
-.radar-edge  { color: #4a7a4a; font-size: 11px; }
-.radar-game  { width: 100%; color: #444; font-size: 10px; }
+.radar-card:hover { border-color: #2a2a2a; }
+.radar-sport { color: #4A90D9; font-weight: 700; font-size: 11px; }
+.radar-side  { color: #aaa; font-weight: 600; flex: 1; }
+.radar-odds  { color: #4A90D9; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; }
+.radar-edge  { color: #3cb371; font-size: 11px; font-weight: 700; }
+.radar-time  { color: #555; font-size: 10px; font-style: italic; }
+.radar-game  { width: 100%; color: #555; font-size: 10px; }
+
+/* ─── UPCOMING PICKS SECTION ─────────────────── */
+.upcoming-section {
+  border: 1px solid #252525;
+  border-left: 3px solid #B8960C;
+  background: #0e0e0e;
+  border-radius: 6px;
+  margin-top: 20px;
+  overflow: hidden;
+}
+.upcoming-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px;
+  background: #111; border-bottom: 1px solid #1c1c1c;
+}
+.upcoming-title {
+  color: #B8960C;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 16px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 2px;
+}
+.upcoming-sub { color: #555; font-size: 11px; flex: 1; }
+.upcoming-count {
+  background: rgba(184,150,12,0.15);
+  color: #B8960C;
+  border: 1px solid rgba(184,150,12,0.3);
+  border-radius: 10px; padding: 2px 8px;
+  font-size: 11px; font-weight: 700;
+}
+.upcoming-grid { padding: 12px 14px 14px; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
+.upcoming-card {
+  background: #131313; border: 1px solid #252525;
+  border-top: 2px solid rgba(184,150,12,0.4);
+  border-radius: 6px; padding: 12px 14px;
+}
+.upcoming-date-badge {
+  display: inline-block; font-size: 9px; padding: 2px 7px;
+  background: rgba(184,150,12,0.15); color: #B8960C;
+  border: 1px solid rgba(184,150,12,0.35);
+  border-radius: 3px; font-weight: 700; letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.upcoming-sport {
+  font-size: 11px; font-weight: 700;
+  color: #555; font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.upcoming-side { color: #ddd; font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+.upcoming-meta { display: flex; gap: 10px; font-size: 11px; color: #666; flex-wrap: wrap; }
+.upcoming-meta .u-odds { color: #4A90D9; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; }
+.upcoming-meta .u-edge { color: #3cb371; font-weight: 700; }
+.upcoming-meta .u-tier { color: #888; }
+.upcoming-game { color: #555; font-size: 10px; margin-top: 4px; }
 
 /* ─── EMPTY STATES ──────────────────────────── */
 .empty-state { color: #444; font-style: italic; padding: 20px 0; }

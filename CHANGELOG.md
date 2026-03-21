@@ -2,6 +2,27 @@
 
 ---
 
+## [v0.6.0] — 2026-03-21
+**Task ID:** CC-NHL-20260321-001 / CC-UI-20260321-002 / CC-UI-20260321-003
+**Triggered by:** Master chat — FanDuel props scraper + UI overhaul + Validation tab
+**Summary:** (1) FanDuel public API scraper for NHL player props — 369 signals (SOG 2+/3+/4+/5+, Goals, Points, Anytime Scorer) written to DB for Mar 21; (2) UI overhaul — Upcoming Picks section separated from Today's Picks, On Radar/FMV sections elevated with colored borders and auto-expand; (3) Validation tab created with backtesting results for all sports; (4) Playbook updated — Cricket/Handball sections added, Boyd's World (ISR) and Warren Nolan (ELO) cited as sources; (5) Nav updated across all 4 pages.
+
+**Files Modified:**
+- `scrapers/scrape_fanduel_props.py` — NEW FILE: FanDuel NHL public API scraper; parses SOG/Goals/Points/Anytime markets; writes to DB using correct signals schema; 369 props parsed Mar 21
+- `docs/index.html` — Validation nav link; Upcoming Picks section (future signal_date); On Radar redesign (blue border, auto-expand); Full Market View redesign (gold border); sport icon map confirmed; footer updated
+- `docs/results.html` — Validation nav link added; footer updated
+- `docs/methodology.html` — Cricket + Handball sections added; Free Odds Pipeline section; Boyd's World + Warren Nolan citations; Pick'em Markets updated to source-based; Current Status updated
+- `docs/validation.html` — NEW FILE: Backtest results for Handball (Brier 0.1936), Cricket International (Brier 0.2330), NHL Team ML (paper trading), NCAA Baseball (paper trading); walk-forward methodology; data sources
+- `docs/style.css` — On Radar/FMV sections redesigned (bordered, colored); Upcoming Picks section added; radar/FMV count badges colored
+
+**Schema Changes:** No
+**Backtest Impact:** Not required
+**Go-Live Parameter Changes:** No
+**Tests Passed:** Yes — FanDuel scraper: 369 signals written; export: 75 recommended, 319 flagged; all pages load clean
+**Pod Version:** NHL props v0.1.0 | UI v2.2.0
+
+---
+
 ## [v0.5.1] — 2026-03-21
 **Task ID:** CC-CRICKET-20260321-002 / CC-HANDBALL-20260321-002 / CC-HANDBALL-20260321-003
 **Triggered by:** Master chat — Cricket ELO fix + Handball upcoming signals + Calibration

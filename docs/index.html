@@ -27,6 +27,7 @@
       <a href="index.html" class="nav-link active">Today</a>
       <a href="results.html" class="nav-link">Results</a>
       <a href="methodology.html" class="nav-link">The Playbook</a>
+      <a href="validation.html" class="nav-link">Validation</a>
     </nav>
     <div class="social-links">
       <a href="https://x.com/EyeBlackIQ" target="_blank" class="social-btn">𝕏 Follow</a>
@@ -120,22 +121,32 @@
     </div>
   </section>
 
-  <!-- ON RADAR -->
+  <!-- UPCOMING PICKS (forward-looking signals: future signal_date) -->
+  <section class="upcoming-section" id="upcoming-section" style="display:none;">
+    <div class="upcoming-header">
+      <span class="upcoming-title">📅 Upcoming — On The Board</span>
+      <span class="upcoming-sub">Future-dated model signals — locks posted early, verify line before acting</span>
+      <span class="upcoming-count" id="upcoming-count">0</span>
+    </div>
+    <div class="upcoming-grid" id="upcoming-grid"></div>
+  </section>
+
+  <!-- ON RADAR (T3/Scout picks — just below threshold for main grid) -->
   <section class="radar-section" id="radar-section" style="display:none;">
     <div class="radar-header" id="radar-toggle" onclick="toggleRadar()">
-      <span class="radar-title">On Radar</span>
-      <span class="radar-sub">EV 2–4% edge — informational only, no unit sizing</span>
+      <span class="radar-title">🔍 On Radar</span>
+      <span class="radar-sub">T3 Scout picks — 3–5% edge, informational, 1.0u if you like the spot</span>
       <span class="radar-count" id="radar-count">0</span>
       <button class="radar-toggle-btn" id="radar-btn">▼ Show</button>
     </div>
     <div class="radar-list" id="radar-list" style="display:none;"></div>
   </section>
 
-  <!-- FULL MARKET VIEW -->
-  <section class="radar-section" id="fmv-section" style="display:none;">
+  <!-- FULL MARKET VIEW (all model outputs including below-threshold) -->
+  <section class="radar-section fmv-section-style" id="fmv-section" style="display:none;">
     <div class="radar-header" id="fmv-toggle" onclick="toggleFMV()">
-      <span class="radar-title">Full Market View</span>
-      <span class="radar-sub">All model outputs today — informational, no unit sizing</span>
+      <span class="radar-title">📊 Full Market View</span>
+      <span class="radar-sub">Every game the model touched today — includes passed picks &amp; low-edge outputs</span>
       <span class="radar-count" id="fmv-count">0</span>
       <button class="radar-toggle-btn" id="fmv-btn">▼ Show</button>
     </div>
@@ -161,7 +172,7 @@
       <a href="https://x.com/EyeBlackIQ" target="_blank">𝕏 Twitter</a>
       <a href="results.html">Results</a>
       <a href="methodology.html">The Playbook</a>
-      <!-- Discord: deferred stub -->
+      <a href="validation.html">Validation</a>
     </div>
     <div class="footer-copy">© 2026 EyeBlackIQ. Data beats hype.</div>
   </div>
@@ -323,19 +334,43 @@ function podCard(pod) {
   </div>`;
 }
 
-// ── Radar card (On Radar — EV 2-4%) ──────────────────────────────────────────
+// ── Radar card (On Radar — T3 Scout picks) ───────────────────────────────────
 function radarCard(pick) {
   const edge  = typeof pick.edge_pct !== 'undefined' ? pick.edge_pct : (pick.edge || 0) * 100;
   const oddsRaw = pick.odds;
   const odds  = oddsRaw > 0 ? `+${oddsRaw}` : `${oddsRaw}`;
   const sportIcon = {NCAA:'⚾',MLB:'⚾',NHL:'🏒',SOCCER:'⚽',CRICKET:'🏏',HANDBALL:'🤾'}[(pick.sport||'').toUpperCase()] || '📊';
+  const timeStr = pick.game_time ? `<span class="radar-time"> · ${pick.game_time}</span>` : '';
   return `
   <div class="radar-card">
     <span class="radar-sport">${sportIcon} ${pick.sport}</span>
     <span class="radar-side">${pick.side || pick.pick || '—'}</span>
     <span class="radar-odds">${odds}</span>
-    <span class="radar-edge">Edge +${Number(edge).toFixed(1)}%</span>
+    <span class="radar-edge">+${Number(edge).toFixed(1)}%</span>
+    ${timeStr}
     <span class="radar-game">${pick.game || ''}</span>
+  </div>`;
+}
+
+// ── Upcoming card (future signal_date picks) ──────────────────────────────────
+function upcomingCard(pick) {
+  const edge    = typeof pick.edge_pct !== 'undefined' ? pick.edge_pct : (pick.edge || 0) * 100;
+  const oddsRaw = pick.odds;
+  const odds    = oddsRaw > 0 ? `+${oddsRaw}` : `${oddsRaw}`;
+  const sportIcon = {NCAA:'⚾',MLB:'⚾',NHL:'🏒',SOCCER:'⚽',CRICKET:'🏏',HANDBALL:'🤾'}[(pick.sport||'').toUpperCase()] || '📊';
+  const gameTime  = pick.game_time ? `<span>⏰ ${pick.game_time}</span>` : '';
+  return `
+  <div class="upcoming-card">
+    <div class="upcoming-date-badge">📅 ${pick.signal_date}</div>
+    <div class="upcoming-sport">${sportIcon} ${pick.sport} · ${pick.bet_type || pick.market || ''}</div>
+    <div class="upcoming-side">${pick.side || pick.pick || '—'}</div>
+    <div class="upcoming-meta">
+      <span class="u-odds">${odds}</span>
+      <span class="u-edge">+${Number(edge).toFixed(1)}% edge</span>
+      <span class="u-tier">${pick.tier || '—'} · ${pick.units||1}u</span>
+      ${gameTime}
+    </div>
+    <div class="upcoming-game">${pick.game || ''}</div>
   </div>`;
 }
 
@@ -364,8 +399,13 @@ function passesFilter(pick) {
 
 function renderPicks() {
   if (!slipData) return;
-  const allRec = slipData.recommended || [];
-  const pods   = slipData.pod || [];
+  const allRec  = slipData.recommended || [];
+  const pods    = slipData.pod || [];
+  const today   = slipData.date || '';
+
+  // Split today vs upcoming (future signal_date)
+  const todayPicks    = allRec.filter(p => !p.signal_date || p.signal_date === today);
+  const upcomingPicks = allRec.filter(p => p.signal_date && p.signal_date > today);
 
   // POD row — always show all pods
   const podEl = document.getElementById('pod-row');
@@ -376,12 +416,12 @@ function renderPicks() {
       : '<p class="empty-state">No POD picks today — requires HIGH confidence + WHEELHOUSE or better</p>';
   }
 
-  // Picks grid — apply all filters.
-  // When Props or Pick'ems type filter is active, include T3/Scout in main grid so they're visible.
-  // Otherwise T3 picks go to the On Radar section.
+  // Picks grid — apply all filters to TODAY's picks only
+  // When Props or Pick'ems type filter active, include T3/Scout in main grid
+  // Otherwise T3 picks go to On Radar section
   const showAllTiers = (filters.type === 'PROPS' || filters.type === 'PICKEM');
-  const mainPicks  = allRec.filter(p => passesFilter(p) && (showAllTiers || tierLevel(p.tier) !== 'T3'));
-  const scoutPicks = allRec.filter(p => passesFilter(p) && !showAllTiers && tierLevel(p.tier) === 'T3');
+  const mainPicks  = todayPicks.filter(p => passesFilter(p) && (showAllTiers || tierLevel(p.tier) !== 'T3'));
+  const scoutPicks = todayPicks.filter(p => passesFilter(p) && !showAllTiers && tierLevel(p.tier) === 'T3');
 
   const recEl = document.getElementById('picks-grid');
   if (recEl) {
@@ -399,7 +439,20 @@ function renderPicks() {
   const countEl = document.getElementById('rec-count');
   if (countEl) countEl.textContent = mainPicks.length;
 
-  // On Radar — Scout (T3) picks
+  // Upcoming section — future-dated picks (filtered by sport if active)
+  const upcomingSection = document.getElementById('upcoming-section');
+  const upcomingGrid    = document.getElementById('upcoming-grid');
+  const upcomingCount   = document.getElementById('upcoming-count');
+  const filtUpcoming = upcomingPicks.filter(p => matchesSportFilter(p));
+  if (filtUpcoming.length > 0) {
+    upcomingSection.style.display = 'block';
+    if (upcomingCount) upcomingCount.textContent = filtUpcoming.length;
+    if (upcomingGrid)  upcomingGrid.innerHTML = filtUpcoming.map(upcomingCard).join('');
+  } else {
+    if (upcomingSection) upcomingSection.style.display = 'none';
+  }
+
+  // On Radar — Scout (T3) picks — auto-expand if there are items
   const radarSection = document.getElementById('radar-section');
   const radarList    = document.getElementById('radar-list');
   const radarCount   = document.getElementById('radar-count');
@@ -407,15 +460,22 @@ function renderPicks() {
     radarSection.style.display = 'block';
     if (radarCount) radarCount.textContent = scoutPicks.length;
     if (radarList)  radarList.innerHTML = scoutPicks.map(radarCard).join('');
+    // Auto-expand On Radar if not yet interacted with
+    if (!radarOpen && scoutPicks.length > 0) {
+      radarOpen = true;
+      if (radarList) radarList.style.display = 'flex';
+      const btn = document.getElementById('radar-btn');
+      if (btn) btn.textContent = '▲ Hide';
+    }
   } else {
     if (radarSection) radarSection.style.display = 'none';
   }
 
-  // Full Market View — flagged picks (units=0)
+  // Full Market View — flagged picks (below threshold or above cap)
   const fmvSection = document.getElementById('fmv-section');
   const fmvList    = document.getElementById('fmv-list');
   const fmvCount   = document.getElementById('fmv-count');
-  const flagged    = slipData.flagged || [];
+  const flagged    = (slipData.flagged || []).filter(p => matchesSportFilter(p));
   if (flagged.length > 0) {
     fmvSection.style.display = 'block';
     if (fmvCount) fmvCount.textContent = flagged.length;

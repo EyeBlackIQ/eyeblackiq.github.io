@@ -57,6 +57,7 @@
       <a href="index.html" class="nav-link">Today</a>
       <a href="results.html" class="nav-link">Results</a>
       <a href="methodology.html" class="nav-link active">The Playbook</a>
+      <a href="validation.html" class="nav-link">Validation</a>
     </nav>
     <div class="social-links">
       <a href="https://x.com/EyeBlackIQ" target="_blank" class="social-btn">𝕏 Follow</a>
@@ -92,11 +93,27 @@
     <div class="method-card">
       <div class="method-card-title">🏒 NHL · ⚾ MLB · ⚽ Soccer</div>
       <p>Team ML and player prop signals for NHL (SOG on slip · PTS/AST tracked silently), MLB (pitcher Ks, F5 results),
-         and Soccer (1X2, SOT, Goals). Same quantitative rigor as NCAA baseball.</p>
+         and Soccer (1X2, SOT, Goals). Same quantitative rigor as NCAA baseball. NHL Team ML now uses ESPN Core API for live odds.</p>
       <ul>
-        <li>NHL: MoneyPuck xG data + NHL API stats</li>
+        <li>NHL: MoneyPuck xG data + NHL API stats + ESPN Core API (live odds)</li>
         <li>MLB: Statcast / pybaseball (Spring Training calibration through 3/26)</li>
         <li>Soccer: Club Elo API + Understat xG + football-data.co.uk</li>
+      </ul>
+    </div>
+    <div class="method-card">
+      <div class="method-card-title">🏏 Cricket</div>
+      <p>Resource-Value model. Par Score (venue-adjusted expected score), Venue Z-Factor (ground-specific scoring deviation), ZIP wickets model (innings survival probability), T20 middle-order compression, ELO + Par blend 55/45. Separate ELO pools for franchise (IPL) vs national (ICC) teams.</p>
+      <ul>
+        <li>Cricsheet T20/IPL parser (cricsheet.org)</li>
+        <li>API Sports cricket fixtures</li>
+      </ul>
+    </div>
+    <div class="method-card">
+      <div class="method-card-title">🤾 Handball</div>
+      <p>Efficiency-Flow model. Possession-based Strength of Schedule (SOS), Adjusted Expected Goals (adj_xG = raw_xG × league_avg_def / opp_def), Poisson goal distribution, ELO + Poisson blend 55/45, Usage redistribution for injury absences, Platt scaling calibration infrastructure.</p>
+      <ul>
+        <li>API Sports EHF/Bundesliga</li>
+        <li>ESPN sports API</li>
       </ul>
     </div>
   </div>
@@ -250,7 +267,10 @@
       <div class="method-card-title">Current Status</div>
       <p><strong>Phase:</strong> Active paper trading — calibrating models and tracking CLV.</p>
       <p><strong>NCAA Baseball:</strong> Live signals since March 21, 2026. Tracking real-time.</p>
-      <p><strong>NHL / MLB / Soccer:</strong> Data aggregation and model validation in progress.</p>
+      <p><strong>NHL:</strong> Active signals via ESPN Core API + FanDuel player props. ELO+Pythagorean blend.</p>
+      <p><strong>Cricket:</strong> Data phase complete (4,390 T20 matches loaded). Signals in forward-looking mode.</p>
+      <p><strong>Handball:</strong> Data phase complete (973 matches). Forward picks posted for EHF CL QF (Apr 2, Apr 9).</p>
+      <p><strong>Soccer:</strong> Active signals via Club Elo + Understat xG.</p>
       <p><strong>Go-live target:</strong> 30 days paper trading + all 4 thresholds cleared per sport.</p>
     </div>
   </div>
@@ -302,6 +322,8 @@
       <ul>
         <li>ELO ratings — updated weekly (Mar 21 as of today)</li>
         <li>ISR ratings — updated weekly (Mar 21 as of today)</li>
+        <li>ISR ratings from Boyd's World (boydsbets.com)</li>
+        <li>ELO ratings from Warren Nolan (warrennolan.com)</li>
         <li>Conference ISR — context and matchup annotation</li>
         <li>SP ERA data — scraped daily from ESPN / Warren Nolan</li>
         <li>Market odds — TheRundown API (Pinnacle included)</li>
@@ -311,6 +333,7 @@
       <div class="method-card-title">NHL / MLB / Soccer</div>
       <ul>
         <li>NHL: MoneyPuck CSV (xG, 2007+) · NHL official API</li>
+        <li>NHL props: FanDuel public sportsbook API · ESPN Core API (free, no key)</li>
         <li>MLB: pybaseball / Baseball Savant · Statcast</li>
         <li>Soccer: Club Elo API · Understat xG · football-data.co.uk</li>
         <li>Live odds: TheRundown API free (20K calls/day, Pinnacle + 15 books)</li>
@@ -318,8 +341,16 @@
       </ul>
     </div>
     <div class="method-card">
-      <div class="method-card-title">API Sports Data (New)</div>
-      <p>EyeBlackIQ now integrates API Sports for expanded sport coverage. API Sports provides
+      <div class="method-card-title">Cricket &amp; Handball</div>
+      <ul>
+        <li>Cricket: Cricsheet T20/IPL parser (cricsheet.org) · API Sports cricket API · ICC/IPL fixtures</li>
+        <li>Handball: API Sports handball API (EHF CL, Bundesliga) · ESPN sports API · EHF official calendar</li>
+      </ul>
+      <p>Base URLs: <code>v1.cricket.api-sports.io</code> / <code>v1.handball.api-sports.io</code></p>
+    </div>
+    <div class="method-card">
+      <div class="method-card-title">API Sports Data</div>
+      <p>EyeBlackIQ integrates API Sports for expanded sport coverage. API Sports provides
          official fixture data, results, and odds across cricket, handball, soccer, MLB, and NHL.</p>
       <ul>
         <li>Cricket: IPL, ICC T20 World Cup, ICC ODI World Cup fixtures and scores</li>
@@ -327,7 +358,19 @@
         <li>Soccer: Supplemental to football-data.co.uk for live fixture tracking</li>
         <li>MLB / NHL: Supplemental odds data when official APIs lack market lines</li>
       </ul>
-      <p>Base URLs: <code>v1.cricket.api-sports.io</code> / <code>v1.handball.api-sports.io</code></p>
+    </div>
+  </div>
+
+  <!-- FREE ODDS PIPELINE -->
+  <div class="section-divider"><h2>Free Odds Pipeline</h2></div>
+  <div class="method-grid">
+    <div class="method-card" style="grid-column: span 2;">
+      <div class="method-card-title">Zero-Credit Odds Engine — ESPN + FanDuel Public API</div>
+      <p>When primary paid APIs (OddsAPI, TheRundown) are unavailable, EyeBlackIQ uses a cascade of free public endpoints. ESPN Core API provides ML, spread, and O/U for NHL, MLB, soccer leagues, and NCAA baseball. FanDuel's public sportsbook endpoint provides player prop markets (SOG, Goals, Points, Anytime Goal Scorer) for NHL with no API key. This ensures model continuity regardless of credit cycles.</p>
+      <ul>
+        <li>ESPN Core API: <code>https://sports.core.api.espn.com/v2/sports/hockey/leagues/nhl/events/{id}/competitions/{id}/odds</code></li>
+        <li>FanDuel Public: <code>https://sbapi.nj.sportsbook.fanduel.com/api/content-managed-page?page=CUSTOM&amp;customPageId=nhl&amp;_ak=FhMFpcPWXMeyZxOx&amp;includeMarkets=true</code></li>
+      </ul>
     </div>
   </div>
 
@@ -335,11 +378,8 @@
   <div class="section-divider"><h2>Pick'em Markets</h2></div>
   <div class="method-grid">
     <div class="method-card" style="grid-column: span 2;">
-      <div class="method-card-title">Near-50/50 Games — How They're Flagged and Why</div>
-      <p>Picks with odds between <code>-120</code> and <code>+120</code> are labeled <strong>Pick'em</strong>
-         throughout the site. These represent games where the market sees a near-50/50 split in win probability.</p>
-      <p>Pick'ems are not inherently more or less valuable than other picks. However, they serve a distinct
-         informational purpose:</p>
+      <div class="method-card-title">Pick'em Platforms — How They're Flagged and Why</div>
+      <p>Picks sourced from pick'em platforms — PrizePicks, Underdog Fantasy, ESPN Pick'em, DraftKings Pick'em — are labeled <strong>Pick'em</strong> throughout the site. Pick'em lines represent player props or game outcomes priced at platform-specific formats (no vig, over/under style). These are tracked separately from traditional sportsbook lines to allow independent analysis.</p>
       <ul>
         <li>When our model also shows roughly equal probability, the pick'em badge is a calibration check —
             both model and market agree, which increases confidence in the no-vig probability estimate</li>
@@ -382,6 +422,7 @@
       <a href="https://x.com/EyeBlackIQ" target="_blank">𝕏 Twitter</a>
       <a href="index.html">Today's Picks</a>
       <a href="results.html">Results</a>
+      <a href="validation.html">Validation</a>
     </div>
     <div class="footer-copy">© 2026 EyeBlackIQ. Data beats hype.</div>
   </div>
