@@ -56,6 +56,25 @@ def edge_window(edge, units=None, bet_type=None, is_pod=False):
     return "recommended"
 
 
+# ── Tab classification ────────────────────────────────────────────────────────
+_GAME_LINE_BET_TYPES = {
+    'ML','MONEYLINE','TOTAL','TOTALS','SPREAD','PUCK_LINE','RUN_LINE',
+    'HANDICAP','ASIAN_HANDICAP','OVER','UNDER',
+}
+
+def classify_tab(bet_type: str, pick_source: str) -> str:
+    """Return 'GAME', 'PROPS', or 'PICKEM' for a signal."""
+    src = (pick_source or 'SPORTSBOOK').upper()
+    if src == 'PICKEM':
+        return 'PICKEM'
+    bt = (bet_type or '').upper()
+    if bt in _GAME_LINE_BET_TYPES:
+        return 'GAME'
+    if bt.endswith('_PROP') or bt in ('PROP', 'PROPS'):
+        return 'PROPS'
+    return 'GAME'
+
+
 def get_conn():
     return sqlite3.connect(DB_PATH)
 
@@ -125,6 +144,7 @@ def export_today_slip(date_str: str) -> dict:
         status    = edge_window(edge_val, units=units_val, bet_type=bet_type, is_pod=is_pod)
         row["edge_status"] = status
         row["edge_pct"]    = round(edge_val * 100, 2)
+        row["tab"]         = classify_tab(row.get("bet_type"), row.get("pick_source"))
 
         # Parse confidence and RL alt from notes
         conf_label, conf_sym = parse_conf_from_notes(row.get("notes", ""))
@@ -152,6 +172,7 @@ def export_today_slip(date_str: str) -> dict:
                     "result":      "PENDING",
                     "bet_type":    row.get("bet_type") or "",
                     "pick_source": row.get("pick_source") or "SPORTSBOOK",
+                    "tab":         classify_tab(row.get("bet_type"), row.get("pick_source")),
                 })
         else:
             if status == "flagged_high":

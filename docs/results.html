@@ -135,9 +135,10 @@ tr[style*="opacity:0.5"] td { color: var(--text-dim,#888) !important; }
     </div>
     <nav>
       <a href="index.html" class="nav-link">Today</a>
+      <a href="pod.html"   class="nav-link">📌 PODs</a>
       <a href="results.html" class="nav-link active">Results</a>
-      <a href="methodology.html" class="nav-link">The Playbook</a>
-      <a href="validation.html" class="nav-link">Validation</a>
+      <a href="methodology.html" class="nav-link">Playbook</a>
+      <a href="validation.html"  class="nav-link">Validation</a>
     </nav>
     <div class="social-links">
       <a href="https://x.com/EyeBlackIQ" target="_blank" class="social-btn">𝕏 Follow</a>
@@ -219,7 +220,8 @@ tr[style*="opacity:0.5"] td { color: var(--text-dim,#888) !important; }
       <button class="rf-btn" data-rf="sport" data-rv="CRICKET">🏏 Cricket</button>
       <button class="rf-btn" data-rf="sport" data-rv="HANDBALL">🤾 Handball</button>
       <span class="filter-label" style="margin-left:8px;">TYPE</span>
-      <button class="rf-btn" data-rf="type" data-rv="PROPS">⚡ Props</button>
+      <button class="rf-btn" data-rf="type" data-rv="PROPS">⚡ Player Props</button>
+      <button class="rf-btn" data-rf="type" data-rv="GAME">🏟 Game Picks</button>
       <button class="rf-btn" data-rf="type" data-rv="PICKEM">Pick'ems</button>
       <button class="rf-btn" data-rf="type" data-rv="POD">📌 PODs</button>
     </div>
@@ -406,6 +408,12 @@ function isProp(pick) {
   const bt = (pick.bet_type || pick.market || '').toUpperCase().trim();
   return bt.endsWith('_PROP') || bt === 'PROP' || bt === 'PROPS';
 }
+function isGameLine(pick) {
+  if (!pick || typeof pick === 'number' || typeof pick === 'string') return false;
+  const bt = (pick.bet_type || pick.market || '').toUpperCase().trim();
+  const GAME_LINES = new Set(['ML','MONEYLINE','TOTAL','TOTALS','SPREAD','PUCK_LINE','RUN_LINE','HANDICAP','ASIAN_HANDICAP']);
+  return GAME_LINES.has(bt);
+}
 
 function oddsStr(odds) {
   if (odds == null) return '—';
@@ -484,6 +492,7 @@ function renderDaily(picks) {
   const filtered = picks.filter(p => {
     if (rFilters.sport !== 'ALL' && !(p.sport || '').toUpperCase().includes(rFilters.sport)) return false;
     if (rFilters.type === 'PROPS'  && !isProp(p)) return false;
+    if (rFilters.type === 'GAME'   && !isGameLine(p)) return false;
     if (rFilters.type === 'PICKEM' && !isPickem(p)) return false;
     if (rFilters.type === 'POD'    && !p.is_pod) return false;
     return true;

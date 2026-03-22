@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EyeBlackIQ — Multi-Sport Prediction Model</title>
+<title>EyeBlackIQ — Today's Picks</title>
 <meta name="description" content="EyeBlackIQ: Quantitative multi-sport prediction model. ELO + ISR ratings, 5-gate filter, Quarter Kelly sizing.">
 <meta property="og:title" content="EyeBlackIQ — Today's Picks">
 <meta property="og:description" content="Data-driven multi-sport picks. ELO + ISR · 5-Gate Filter · Quarter Kelly Sizing.">
@@ -25,9 +25,10 @@
     </div>
     <nav>
       <a href="index.html" class="nav-link active">Today</a>
+      <a href="pod.html"   class="nav-link">📌 PODs</a>
       <a href="results.html" class="nav-link">Results</a>
-      <a href="methodology.html" class="nav-link">The Playbook</a>
-      <a href="validation.html" class="nav-link">Validation</a>
+      <a href="methodology.html" class="nav-link">Playbook</a>
+      <a href="validation.html"  class="nav-link">Validation</a>
     </nav>
     <div class="social-links">
       <a href="https://x.com/EyeBlackIQ" target="_blank" class="social-btn">𝕏 Follow</a>
@@ -38,55 +39,55 @@
 <!-- SEASON RECORD BAR -->
 <div class="record-bar">
   <div class="record-inner" id="record-bar-content">
-    <div class="record-stat">
-      <span class="stat-label">SEASON</span>
-      <span class="stat-value" id="bar-record">0-0-0</span>
-    </div>
+    <div class="record-stat"><span class="stat-label">SEASON</span><span class="stat-value" id="bar-record">0-0-0</span></div>
     <div class="record-divider"></div>
-    <div class="record-stat">
-      <span class="stat-label">NET UNITS</span>
-      <span class="stat-value" id="bar-units">+0.0u</span>
-    </div>
+    <div class="record-stat"><span class="stat-label">NET UNITS</span><span class="stat-value" id="bar-units">+0.0u</span></div>
     <div class="record-divider"></div>
-    <div class="record-stat">
-      <span class="stat-label">ROI</span>
-      <span class="stat-value" id="bar-roi">0.0%</span>
-    </div>
+    <div class="record-stat"><span class="stat-label">ROI</span><span class="stat-value" id="bar-roi">0.0%</span></div>
     <div class="record-divider"></div>
-    <div class="record-stat">
-      <span class="stat-label">POD RECORD</span>
-      <span class="stat-value" id="bar-pod">0-0</span>
-    </div>
+    <div class="record-stat"><span class="stat-label">POD</span><span class="stat-value" id="bar-pod">0-0</span></div>
     <div class="record-divider"></div>
-    <div class="record-stat">
-      <span class="stat-label">STREAK</span>
-      <span class="stat-value" id="bar-streak">—</span>
-    </div>
+    <div class="record-stat"><span class="stat-label">STREAK</span><span class="stat-value" id="bar-streak">—</span></div>
     <div class="record-divider"></div>
-    <div class="record-stat">
-      <span class="stat-label">DAY STREAK</span>
-      <span class="stat-value" id="bar-day-streak">—</span>
-    </div>
+    <div class="record-stat"><span class="stat-label">DAY STK</span><span class="stat-value" id="bar-day-streak">—</span></div>
     <div class="record-divider"></div>
-    <div class="record-stat">
-      <span class="stat-label">POD STREAK</span>
-      <span class="stat-value" id="bar-pod-streak">—</span>
-    </div>
+    <div class="record-stat"><span class="stat-label">POD STK</span><span class="stat-value" id="bar-pod-streak">—</span></div>
   </div>
 </div>
 
-<!-- DATE LABEL -->
+<!-- DATE + MODEL STATUS -->
 <div class="date-bar">
   <span class="date-label" id="slip-date">Loading...</span>
   <span class="date-sublabel">Model updated daily · All picks posted at time of signal · Always verify lines before acting</span>
 </div>
 
-<!-- FILTER BAR -->
-<div class="filter-bar">
+<!-- PRIMARY TAB BAR: Game Picks | Props | Pick'em -->
+<div class="primary-tab-bar">
+  <div class="primary-tab-inner">
+    <button class="primary-tab active" data-tab="GAME" id="tab-game">
+      <span class="ptab-icon">🏟</span>
+      <span class="ptab-label">Game Picks</span>
+      <span class="ptab-sub">ML · Spread · Totals</span>
+    </button>
+    <button class="primary-tab" data-tab="PROPS" id="tab-props">
+      <span class="ptab-icon">⚡</span>
+      <span class="ptab-label">Player Props</span>
+      <span class="ptab-sub">FanDuel · DraftKings · BetMGM</span>
+    </button>
+    <button class="primary-tab" data-tab="PICKEM" id="tab-pickem">
+      <span class="ptab-icon">🎯</span>
+      <span class="ptab-label">Pick'em</span>
+      <span class="ptab-sub">PrizePicks · Underdog · ESPN</span>
+    </button>
+  </div>
+</div>
+
+<!-- SECONDARY FILTER BAR: Sport + Tier -->
+<div class="filter-bar" id="filter-bar">
   <div class="filter-group">
     <span class="filter-label">SPORT</span>
     <button class="filter-btn active" data-filter="sport" data-val="ALL">All</button>
-    <button class="filter-btn" data-filter="sport" data-val="NCAA">⚾ NCAA</button>
+    <button class="filter-btn" data-filter="sport" data-val="NCAA_BASEBALL">⚾ NCAA</button>
     <button class="filter-btn" data-filter="sport" data-val="MLB">⚾ MLB</button>
     <button class="filter-btn" data-filter="sport" data-val="NHL">🏒 NHL</button>
     <button class="filter-btn" data-filter="sport" data-val="SOCCER">⚽ Soccer</button>
@@ -97,44 +98,43 @@
   <div class="filter-group">
     <span class="filter-label">TIER</span>
     <button class="filter-btn active" data-filter="tier" data-val="ALL">All Tiers</button>
-    <button class="filter-btn" data-filter="tier" data-val="T1">T1 High</button>
-    <button class="filter-btn" data-filter="tier" data-val="T2">T2 Edge</button>
-    <button class="filter-btn" data-filter="tier" data-val="T3">T3 Scout</button>
+    <button class="filter-btn" data-filter="tier" data-val="T1">🔴 T1</button>
+    <button class="filter-btn" data-filter="tier" data-val="T2">🔵 T2</button>
+    <button class="filter-btn" data-filter="tier" data-val="T3">🟡 T3</button>
   </div>
   <div class="filter-divider"></div>
   <div class="filter-group">
-    <button class="filter-btn" data-filter="type" data-val="PROPS" id="props-only-btn">⚡ Props</button>
-    <button class="filter-btn" data-filter="type" data-val="PICKEM" id="pickem-btn">Pick'ems</button>
     <button class="filter-btn" data-filter="pods" data-val="PODS_ONLY" id="pods-only-btn">📌 PODs Only</button>
   </div>
 </div>
 
-<!-- PROP SUB-FILTER (shown only when Props tab is active) -->
+<!-- PROP SUB-FILTER (shown only when Props tab active) -->
 <div class="filter-bar prop-sub-bar" id="prop-sub-bar" style="display:none;">
   <div class="filter-group">
     <span class="filter-label">PROP TYPE</span>
-    <button class="filter-btn prop-sub-btn active" data-sub="SOG">📊 SOG</button>
-    <button class="filter-btn prop-sub-btn" data-sub="GOALS">🥅 Goals</button>
-    <button class="filter-btn prop-sub-btn" data-sub="POINTS">⭐ Points</button>
-    <button class="filter-btn prop-sub-btn" data-sub="ALL">All Props</button>
+    <button class="filter-btn prop-sub-btn active" data-sub="ALL">All Props</button>
+    <button class="filter-btn prop-sub-btn" data-sub="SOG">🏒 SOG</button>
+    <button class="filter-btn prop-sub-btn" data-sub="K">⚾ Strikeouts</button>
+    <button class="filter-btn prop-sub-btn" data-sub="HIT">⚾ Hits/TB</button>
+    <button class="filter-btn prop-sub-btn" data-sub="SOT">⚽ Shots</button>
   </div>
 </div>
 
 <!-- MAIN -->
 <main>
 
-  <!-- POD ROW -->
-  <section class="pods-section">
-    <h2 class="section-title">📌 Pick of the Day <span class="pod-badge">HIGH ●●●</span></h2>
+  <!-- POD ROW — context-aware per active tab -->
+  <section class="pods-section" id="pods-section">
+    <h2 class="section-title" id="pod-section-title">📌 Pick of the Day <span class="pod-badge">HIGH ●●●</span></h2>
     <div class="pod-row" id="pod-row">
       <p class="empty-state">No POD picks today — requires HIGH confidence + WHEELHOUSE or better</p>
     </div>
   </section>
 
-  <!-- TODAY'S PICKS -->
+  <!-- PICKS SECTION -->
   <section class="picks-section">
-    <h2 class="section-title">
-      Today's Picks
+    <h2 class="section-title" id="picks-section-title">
+      Today's Game Picks
       <span class="count-badge" id="rec-count">0</span>
     </h2>
     <div class="picks-grid" id="picks-grid">
@@ -142,47 +142,45 @@
     </div>
   </section>
 
-  <!-- UPCOMING PICKS (forward-looking signals: future signal_date) -->
+  <!-- UPCOMING PICKS -->
   <section class="upcoming-section" id="upcoming-section" style="display:none;">
     <div class="upcoming-header">
-      <span class="upcoming-title">📅 Upcoming — On The Board</span>
+      <span class="upcoming-title">📅 On The Board</span>
       <span class="upcoming-sub">Future-dated model signals — locks posted early, verify line before acting</span>
       <span class="upcoming-count" id="upcoming-count">0</span>
     </div>
     <div class="upcoming-grid" id="upcoming-grid"></div>
   </section>
 
-  <!-- ON RADAR (T3/Scout picks — just below threshold for main grid) -->
+  <!-- ON RADAR (T3 Scout — Game Picks tab only) -->
   <section class="radar-section" id="radar-section" style="display:none;">
     <div class="radar-header" id="radar-toggle" onclick="toggleRadar()">
       <span class="radar-title">🔍 On Radar</span>
-      <span class="radar-sub">T3 Scout picks — 3–5% edge, informational, 1.0u if you like the spot</span>
+      <span class="radar-sub">T3 Scout signals — 3–5% edge, informational</span>
       <span class="radar-count" id="radar-count">0</span>
       <button class="radar-toggle-btn" id="radar-btn">▼ Show</button>
     </div>
     <div class="radar-list" id="radar-list" style="display:none;"></div>
   </section>
 
-  <!-- FULL MARKET VIEW (all model outputs including below-threshold) -->
+  <!-- FULL MARKET VIEW -->
   <section class="radar-section fmv-section-style" id="fmv-section" style="display:none;">
     <div class="radar-header" id="fmv-toggle" onclick="toggleFMV()">
       <span class="radar-title">📊 Full Market View</span>
-      <span class="radar-sub">Every game the model touched today — includes passed picks &amp; low-edge outputs</span>
+      <span class="radar-sub">All model outputs — includes below-threshold signals</span>
       <span class="radar-count" id="fmv-count">0</span>
       <button class="radar-toggle-btn" id="fmv-btn">▼ Show</button>
     </div>
     <div class="radar-list" id="fmv-list" style="display:none;"></div>
   </section>
 
-  <!-- DISCLAIMER -->
   <div class="disclaimer">
-    All picks shown at time of signal. Lines move — always verify current prices before acting.<br>
+    All picks posted at time of signal. Lines move — always verify current price before acting.<br>
     EyeBlackIQ is for informational and entertainment purposes only.
   </div>
 
 </main>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
@@ -191,8 +189,9 @@
     </div>
     <div class="footer-links">
       <a href="https://x.com/EyeBlackIQ" target="_blank">𝕏 Twitter</a>
+      <a href="pod.html">PODs</a>
       <a href="results.html">Results</a>
-      <a href="methodology.html">The Playbook</a>
+      <a href="methodology.html">Playbook</a>
       <a href="validation.html">Validation</a>
     </div>
     <div class="footer-copy">© 2026 EyeBlackIQ. Data beats hype.</div>
@@ -200,552 +199,516 @@
 </footer>
 
 <script>
-// ── Filter state ─────────────────────────────────────────────────────────────
-let filters = { sport: "ALL", tier: "ALL", pods: false, type: null, prop_sub: "SOG" };
-let slipData = null;
-let radarOpen = false;
-let fmvOpen = false;
+// ── Constants ─────────────────────────────────────────────────────────────────
+const SPORT_ICONS = {
+  NCAA:'⚾', NCAA_BASEBALL:'⚾', MLB:'⚾', NHL:'🏒',
+  SOCCER:'⚽', CRICKET:'🏏', HANDBALL:'🤾',
+};
+function sportIcon(s) { return SPORT_ICONS[(s||'').toUpperCase()] || '📊'; }
 
-// ── Data loading ─────────────────────────────────────────────────────────────
+const SPORT_COLORS = {
+  NHL:'#4A90D9', MLB:'#DC143C', NCAA_BASEBALL:'#C8962C',
+  SOCCER:'#27AE60', CRICKET:'#8E44AD', HANDBALL:'#E67E22',
+};
+function sportColor(s) { return SPORT_COLORS[(s||'').toUpperCase()] || '#555'; }
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let filters   = { sport:'ALL', tier:'ALL', pods:false, prop_sub:'ALL' };
+let activeTab = 'GAME';   // 'GAME' | 'PROPS' | 'PICKEM'
+let slipData  = null;
+let radarOpen = false;
+let fmvOpen   = false;
+
+// ── Data loading ──────────────────────────────────────────────────────────────
 async function loadData() {
-  const [slipRes, recRes] = await Promise.all([
-    fetch('data/today_slip.json?t=' + Date.now()).then(r => r.json()).catch(() => ({date:'',recommended:[],flagged:[],pod:[]})),
-    fetch('data/record.json?t=' + Date.now()).then(r => r.json()).catch(() => ({})),
+  const [slip, rec] = await Promise.all([
+    fetch('data/today_slip.json?t='+Date.now()).then(r=>r.json()).catch(()=>({date:'',recommended:[],flagged:[],pod:[]})),
+    fetch('data/record.json?t='+Date.now()).then(r=>r.json()).catch(()=>({})),
   ]);
-  return { slip: slipRes, record: recRes };
+  return { slip, record: rec };
 }
 
 // ── Record bar ────────────────────────────────────────────────────────────────
 function updateRecordBar(rec) {
-  const set = (id, val) => { const el = document.getElementById(id); if(el) el.textContent = val; };
+  const set = (id, v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
   const net = rec.net_units || 0;
-  set('bar-record', `${rec.wins||0}-${rec.losses||0}-${rec.pushes||0}`);
-  set('bar-units',  `${net >= 0 ? '+' : ''}${net.toFixed(1)}u`);
-  set('bar-roi',    `${(rec.roi||0) >= 0 ? '+' : ''}${(rec.roi||0).toFixed(1)}%`);
-  set('bar-pod',    `${rec.pod_wins||0}-${rec.pod_losses||0}`);
+  set('bar-record',     `${rec.wins||0}-${rec.losses||0}-${rec.pushes||0}`);
+  set('bar-units',      `${net>=0?'+':''}${net.toFixed(1)}u`);
+  set('bar-roi',        `${(rec.roi||0)>=0?'+':''}${(rec.roi||0).toFixed(1)}%`);
+  set('bar-pod',        `${rec.pod_wins||0}-${rec.pod_losses||0}`);
   set('bar-streak',     rec.streak     || '—');
   set('bar-day-streak', rec.day_streak || '—');
   set('bar-pod-streak', rec.pod_streak || '—');
-  const unitsEl = document.getElementById('bar-units');
-  const roiEl   = document.getElementById('bar-roi');
-  if (unitsEl) unitsEl.className = 'stat-value ' + (net >= 0 ? 'positive' : 'negative');
-  if (roiEl)   roiEl.className   = 'stat-value ' + ((rec.roi||0) >= 0 ? 'positive' : 'negative');
+  const uel = document.getElementById('bar-units');
+  const rel = document.getElementById('bar-roi');
+  if(uel) uel.className = 'stat-value '+(net>=0?'positive':'negative');
+  if(rel) rel.className = 'stat-value '+((rec.roi||0)>=0?'positive':'negative');
 }
 
-// ── Tier system ───────────────────────────────────────────────────────────────
-// ── Sport icons map ───────────────────────────────────────────────────────────
-const SPORT_ICONS = {NCAA:'⚾',NCAA_BASEBALL:'⚾',MLB:'⚾',NHL:'🏒',SOCCER:'⚽',CRICKET:'🏏',HANDBALL:'🤾'};
-function sportIcon(sport) { return SPORT_ICONS[(sport||'').toUpperCase()] || '📊'; }
-
+// ── Tier helpers ──────────────────────────────────────────────────────────────
 const TIER_CSS = {
   'FILTHY':'tier-red','SNIPE':'tier-red','UPPER 90':'tier-red','SCREAMER':'tier-red',
   'WHEELHOUSE':'tier-blue','SLOT MACHINE':'tier-blue','CHEEKY':'tier-blue','FAST BREAK':'tier-blue',
   'SCOUT':'tier-gold',
 };
-function tierClass(tier) {
-  if (!tier) return 'tier-grey';
-  const t = tier.toUpperCase();
-  for (const [k, v] of Object.entries(TIER_CSS)) { if (t.includes(k)) return v; }
+function tierClass(t) {
+  if(!t) return 'tier-grey';
+  const u=t.toUpperCase();
+  for(const [k,v] of Object.entries(TIER_CSS)) if(u.includes(k)) return v;
   return 'tier-grey';
 }
-function tierLevel(tier) {
-  if (!tier) return 'T3';
-  const t = tier.toUpperCase();
-  if (['FILTHY','SNIPE','UPPER 90','SCREAMER'].some(k => t.includes(k))) return 'T1';
-  if (['WHEELHOUSE','SLOT MACHINE','CHEEKY','FAST BREAK'].some(k => t.includes(k))) return 'T2';
+function tierLevel(t) {
+  if(!t) return 'T3';
+  const u=t.toUpperCase();
+  if(['FILTHY','SNIPE','UPPER 90','SCREAMER'].some(k=>u.includes(k))) return 'T1';
+  if(['WHEELHOUSE','SLOT MACHINE','CHEEKY','FAST BREAK'].some(k=>u.includes(k))) return 'T2';
   return 'T3';
 }
 
+// ── Classification ────────────────────────────────────────────────────────────
+const GAME_LINE_TYPES = new Set(['ML','MONEYLINE','TOTAL','TOTALS','SPREAD','PUCK_LINE','RUN_LINE','HANDICAP','ASIAN_HANDICAP','OVER','UNDER']);
+function getPickTab(pick) {
+  if(pick.tab) return pick.tab;
+  const src = (pick.pick_source||'SPORTSBOOK').toUpperCase();
+  if(src==='PICKEM') return 'PICKEM';
+  const bt = (pick.bet_type||pick.market||'').toUpperCase();
+  if(GAME_LINE_TYPES.has(bt)) return 'GAME';
+  if(bt.endsWith('_PROP')||bt==='PROP'||bt==='PROPS') return 'PROPS';
+  return 'GAME';
+}
+function isProp(pick)   { return getPickTab(pick)==='PROPS'; }
+function isPickem(pick) { return getPickTab(pick)==='PICKEM'; }
+
 // ── Confidence badge ──────────────────────────────────────────────────────────
 function confBadge(label, sym) {
-  if (!label || label === 'MED') return '';
-  const cls = label === 'HIGH' ? 'conf-high' : 'conf-low';
-  return `<span class="conf-badge ${cls}">${sym || label}</span>`;
+  if(!label||label==='MED') return '';
+  const cls = label==='HIGH'?'conf-high':'conf-low';
+  return `<span class="conf-badge ${cls}">${sym||label}</span>`;
 }
 
-// ── Source classification ─────────────────────────────────────────────────────
-// pick_source === 'SPORTSBOOK' → traditional sportsbook line (ML, total, spread, player prop)
-// pick_source === 'PICKEM'     → pick'em platform (PrizePicks, Underdog, ESPN Pick'em, etc.)
-// A pick is a PROP if its bet_type ends with '_PROP' (e.g. NHL_SOG_PROP) — not ML/TOTAL/SPREAD
-// Team lines (ML, TOTAL, SPREAD, etc.) should NEVER appear in the Props tab
-const TEAM_LINE_TYPES = new Set(['ML','MONEYLINE','TOTAL','TOTALS','SPREAD','PUCK_LINE','RUN_LINE','HANDICAP','ASIAN_HANDICAP']);
-function isPickem(pick) {
-  return (pick.pick_source || 'SPORTSBOOK') === 'PICKEM';
-}
-function isProp(pick) {
-  const bt = (pick.bet_type || pick.market || '').toUpperCase().trim();
-  return bt.endsWith('_PROP') || bt === 'PROP' || bt === 'PROPS';
-}
-function isTeamLine(pick) {
-  const bt = (pick.bet_type || pick.market || '').toUpperCase().trim();
-  return TEAM_LINE_TYPES.has(bt);
-}
-
-// ── Visual flags (B2B / edge / EV signals) ───────────────────────────────────
+// ── Visual flags ──────────────────────────────────────────────────────────────
 function visualFlags(pick) {
-  const flags = [];
-  const ev = typeof pick.ev !== 'undefined' ? pick.ev * 100 : null;
-  // B2B — opponent B2B favors OVER (defense fatigued); player B2B favors UNDER (may be limited)
-  if (pick.b2b_flag === 'OPPONENT_B2B') {
-    flags.push(`<span class="vflag vflag-b2b" title="Opponent on back-to-back — fatigue edge (OVER)">🔄 B2B OPP</span>`);
-  } else if (pick.b2b_flag === 'PLAYER_B2B') {
-    flags.push(`<span class="vflag vflag-b2b-under" title="Player on back-to-back — may be limited (UNDER)">😴 B2B PLR</span>`);
-  }
-  // Outside edge threshold — shown in FMV only, not recommended
-  if (pick.edge_status === 'flagged_high') {
-    flags.push(`<span class="vflag vflag-edge-high" title="Edge above cap — line may have moved, verify before betting">⚠️ EDGE HIGH</span>`);
-  }
-  // Low/negative EV
-  if (ev !== null && ev < 2) {
-    flags.push(`<span class="vflag vflag-ev-low" title="Low expected value — informational only">📉 LOW EV</span>`);
-  }
-  return flags.length ? `<div class="visual-flags">${flags.join('')}</div>` : '';
+  const flags=[];
+  const ev = typeof pick.ev!=='undefined' ? pick.ev*100 : null;
+  if(pick.b2b_flag==='OPPONENT_B2B') flags.push(`<span class="vflag vflag-b2b" title="Opponent B2B — fatigue edge">🔄 B2B OPP</span>`);
+  else if(pick.b2b_flag==='PLAYER_B2B') flags.push(`<span class="vflag vflag-b2b-under" title="Player B2B — may be limited">😴 B2B PLR</span>`);
+  if(pick.edge_status==='flagged_high') flags.push(`<span class="vflag vflag-edge-high" title="Edge above cap">⚠️ EDGE HIGH</span>`);
+  if(ev!==null&&ev<2) flags.push(`<span class="vflag vflag-ev-low" title="Low EV">📉 LOW EV</span>`);
+  return flags.length?`<div class="visual-flags">${flags.join('')}</div>`:'';
 }
 
-// ── Pick card ─────────────────────────────────────────────────────────────────
+// ── Game pick card ────────────────────────────────────────────────────────────
 function pickCard(pick) {
-  const edge    = typeof pick.edge_pct !== 'undefined' ? pick.edge_pct : (pick.edge || 0) * 100;
-  const sign    = edge >= 0 ? '+' : '';
-  const tclass  = tierClass(pick.tier || '');
+  const edge    = typeof pick.edge_pct!=='undefined' ? pick.edge_pct : (pick.edge||0)*100;
+  const sign    = edge>=0?'+':'';
+  const tclass  = tierClass(pick.tier||'');
   const oddsRaw = pick.odds;
-  const oddsStr = oddsRaw > 0 ? `+${oddsRaw}` : `${oddsRaw}`;
-  const units   = pick.units || 1.0;
+  const oddsStr = oddsRaw>0?`+${oddsRaw}`:`${oddsRaw}`;
+  const units   = pick.units||1.0;
   const isPod   = pick.is_pod;
   const confHtml = confBadge(pick.conf_label, pick.conf_sym);
-  const rlHtml  = pick.rl_alt
-    ? `<div class="pick-rl-alt">Consider spread (+1.5) as alternative vehicle</div>`
-    : '';
-  // Show future-game date badge for forward-looking picks (handball, soccer next-day, etc.)
-  const slipDate = (slipData && slipData.date) ? slipData.date : null;
-  const isFuture = pick.signal_date && slipDate && pick.signal_date > slipDate;
-  const futureBadge = isFuture
-    ? `<span style="display:inline-block;font-size:9px;padding:1px 6px;background:rgba(184,150,12,0.2);color:var(--gold,#B8960C);border:1px solid rgba(184,150,12,0.4);border-radius:2px;margin-right:6px;font-weight:700;letter-spacing:1px;">📅 ${pick.signal_date}</span>`
-    : '';
-  const gameHtml = pick.game
-    ? `<div class="pick-game">${futureBadge}${pick.game}${pick.game_time ? `  <span class="pick-time">${pick.game_time}</span>` : ''}</div>`
-    : '';
-  const podTag    = isPod ? `<span class="pod-crown">📌 POD</span>` : '';
-  const propTag   = isProp(pick) ? '' : '';   // sportsbook tag removed — it's the default; only tag pick'ems
-  const pickemTag = isPickem(pick) ? `<span style="display:inline-block;font-size:9px;padding:1px 5px;background:#6A3DE8;color:#fff;font-weight:700;border-radius:2px;margin-left:4px;vertical-align:middle;">PICK\'EM</span>` : '';
+  const rlHtml  = pick.rl_alt?`<div class="pick-rl-alt">Consider spread (+1.5) as alt vehicle</div>`:'';
+  const slipDate = (slipData&&slipData.date)?slipData.date:null;
+  const isFuture = pick.signal_date&&slipDate&&pick.signal_date>slipDate;
+  const futureBadge = isFuture?`<span class="future-badge">📅 ${pick.signal_date}</span>`:'';
+  const gameHtml = pick.game?`<div class="pick-game">${futureBadge}${pick.game}${pick.game_time?` <span class="pick-time">${pick.game_time}</span>`:''}</div>`:'';
+  const podTag   = isPod?`<span class="pod-crown">📌 POD</span>`:'';
+  const pickemTag = isPickem(pick)?`<span class="badge-pickem">PICK'EM</span>`:'';
+  const btLabel  = getBetTypeLabel(pick.bet_type||pick.market||'');
+  const betBadge = btLabel?`<span class="badge-bet-type">${btLabel}</span>`:'';
   const flagsHtml = visualFlags(pick);
-  const sportIcon = {NCAA:'⚾',MLB:'⚾',NHL:'🏒',SOCCER:'⚽',CRICKET:'🏏',HANDBALL:'🤾'}[(pick.sport||'').toUpperCase()] || '📊';
+  const sc = sportColor(pick.sport);
   return `
-  <div class="pick-card ${tclass}${isPod ? ' pod-highlight' : ''}">
+  <div class="pick-card ${tclass}${isPod?' pod-highlight':''}" style="--sport-color:${sc}">
     <div class="pick-header">
-      <span class="pick-tier">${sportIcon} ${pick.tier || '—'}</span>
+      <span class="pick-tier">${sportIcon(pick.sport)} ${pick.tier||'—'}</span>
       <div class="pick-header-right">
-        ${confHtml}
+        ${betBadge}${confHtml}
         <span class="pick-units">${units}u</span>
         ${podTag}
       </div>
     </div>
-    <div class="pick-side">${pick.side || pick.pick || '—'}${pickemTag}</div>
+    <div class="pick-side">${pick.side||pick.pick||'—'}${pickemTag}</div>
     <div class="pick-meta">
       <span class="pick-odds">${oddsStr}</span>
       <span class="pick-edge">Edge ${sign}${Number(edge).toFixed(1)}%</span>
-      ${pick.ev ? `<span class="pick-ev">EV ${pick.ev >= 0 ? '+' : ''}${(pick.ev * 100).toFixed(1)}%</span>` : ''}
+      ${pick.ev?`<span class="pick-ev">EV ${pick.ev>=0?'+':''}${(pick.ev*100).toFixed(1)}%</span>`:''}
     </div>
-    ${gameHtml}
-    ${flagsHtml}
-    ${rlHtml}
+    ${gameHtml}${flagsHtml}${rlHtml}
   </div>`;
 }
 
-// ── POD card ──────────────────────────────────────────────────────────────────
-function podCard(pod) {
-  if (!pod) return '';
-  const oddsRaw = pod.odds;
-  const odds = oddsRaw > 0 ? `+${oddsRaw}` : `${oddsRaw || '—'}`;
-  const resultHtml = (!pod.result || pod.result === 'PENDING') ? '' :
-    `<span class="pod-result ${pod.result === 'WIN' ? 'result-win' : pod.result === 'LOSS' ? 'result-loss' : 'result-push'}">${pod.result}</span>`;
-  const confHtml = pod.conf_sym ? `<span class="pod-conf">${pod.conf_sym}</span>` : '';
-  return `
-  <div class="pod-card">
-    <div class="pod-label">📌 POD · ${pod.sport}</div>
-    <div class="pod-pick">${pod.pick}</div>
-    <div class="pod-meta">${odds} · ${pod.units}u · Edge +${Number(pod.edge||0).toFixed(1)}% ${confHtml}</div>
-    <div class="pod-game">${pod.game || ''} ${pod.game_time ? `<span class="pick-time">${pod.game_time}</span>` : ''}</div>
-    ${resultHtml}
-  </div>`;
+function getBetTypeLabel(bt) {
+  const u=(bt||'').toUpperCase();
+  if(u==='ML'||u==='MONEYLINE') return 'ML';
+  if(u==='TOTAL'||u==='TOTALS') return 'Total';
+  if(u==='SPREAD'||u==='PUCK_LINE'||u==='RUN_LINE') return 'Spread';
+  if(u==='HANDICAP'||u==='ASIAN_HANDICAP') return 'Hcap';
+  return '';
 }
 
-// ── Radar card (On Radar — T3 Scout picks) ───────────────────────────────────
-function radarCard(pick) {
-  const edge  = typeof pick.edge_pct !== 'undefined' ? pick.edge_pct : (pick.edge || 0) * 100;
-  const oddsRaw = pick.odds;
-  const odds  = oddsRaw > 0 ? `+${oddsRaw}` : `${oddsRaw}`;
-  const sportIcon = {NCAA:'⚾',MLB:'⚾',NHL:'🏒',SOCCER:'⚽',CRICKET:'🏏',HANDBALL:'🤾'}[(pick.sport||'').toUpperCase()] || '📊';
-  const timeStr = pick.game_time ? `<span class="radar-time"> · ${pick.game_time}</span>` : '';
-  return `
-  <div class="radar-card">
-    <span class="radar-sport">${sportIcon} ${pick.sport}</span>
-    <span class="radar-side">${pick.side || pick.pick || '—'}</span>
-    <span class="radar-odds">${odds}</span>
-    <span class="radar-edge">+${Number(edge).toFixed(1)}%</span>
-    ${timeStr}
-    <span class="radar-game">${pick.game || ''}</span>
-  </div>`;
-}
-
-// ── Prop card (player props — SOG, Goals, Points) ────────────────────────────
-// Parses notes field: "source=FanDuel | player=X | team=EDM | threshold=SOG3+ | lam=3.61 (player_stat) | ..."
+// ── Prop card ─────────────────────────────────────────────────────────────────
 function parseNoteMap(notes) {
-  const m = {};
-  (notes || '').split('|').forEach(part => {
-    const eq = part.indexOf('=');
-    if (eq > -1) m[part.slice(0, eq).trim()] = part.slice(eq + 1).trim();
-  });
+  const m={};
+  (notes||'').split('|').forEach(part=>{const eq=part.indexOf('=');if(eq>-1)m[part.slice(0,eq).trim()]=part.slice(eq+1).trim();});
   return m;
 }
 function propCard(pick) {
-  const nm        = parseNoteMap(pick.notes);
-  const player    = nm['player'] || pick.side || '—';
-  const team      = nm['team']   || '';
-  const threshold = nm['threshold'] || pick.market || '';
-  const lamRaw    = nm['lam']    || '';
-  const source    = nm['source'] || 'FanDuel';
-  const sourceLbl = source.includes('FanDuel') ? 'FD' : source.includes('DraftKings') ? 'DK' : source.slice(0,3).toUpperCase();
-  const sourceClass = sourceLbl === 'FD' ? 'prop-src-fd' : sourceLbl === 'DK' ? 'prop-src-dk' : 'prop-src-other';
-
-  // Parse SOG avg from lam field: "3.61 (player_stat)" → "3.6"
+  const nm  = parseNoteMap(pick.notes);
+  const player    = nm['player']||pick.side||'—';
+  const team      = nm['team']||'';
+  const threshold = nm['threshold']||pick.market||'';
+  const lamRaw    = nm['lam']||'';
+  const source    = nm['source']||'FanDuel';
+  const sourceLbl = source.includes('FanDuel')?'FD':source.includes('DraftKings')?'DK':source.includes('PrizePicks')?'PP':source.includes('Underdog')?'UD':source.slice(0,3).toUpperCase();
+  const srcClass  = {FD:'prop-src-fd',DK:'prop-src-dk',PP:'prop-src-pp',UD:'prop-src-ud'}[sourceLbl]||'prop-src-other';
   const lamMatch  = lamRaw.match(/^([\d.]+)/);
-  const sogAvgStr = lamMatch ? parseFloat(lamMatch[1]).toFixed(1) : '';
-
-  const edge    = typeof pick.edge_pct !== 'undefined' ? pick.edge_pct : (pick.edge || 0) * 100;
-  const sign    = edge >= 0 ? '+' : '';
-  const tclass  = tierClass(pick.tier || '');
+  const avgStr    = lamMatch?parseFloat(lamMatch[1]).toFixed(1):'';
+  const edge = typeof pick.edge_pct!=='undefined'?pick.edge_pct:(pick.edge||0)*100;
+  const sign = edge>=0?'+':'';
+  const tclass = tierClass(pick.tier||'');
   const oddsRaw = pick.odds;
-  const oddsStr = oddsRaw > 0 ? `+${oddsRaw}` : `${oddsRaw}`;
-  const units   = pick.units || 1.0;
-  const slipDate = (slipData && slipData.date) ? slipData.date : null;
-  const isFuture = pick.signal_date && slipDate && pick.signal_date > slipDate;
-  const futureBadge = isFuture
-    ? `<span class="prop-future-badge">📅 ${pick.signal_date}</span>`
-    : '';
+  const oddsStr = oddsRaw>0?`+${oddsRaw}`:`${oddsRaw}`;
+  const units = pick.units||1.0;
+  const sc = sportColor(pick.sport);
   return `
-  <div class="pick-card ${tclass} prop-card">
+  <div class="pick-card ${tclass} prop-card" style="--sport-color:${sc}">
     <div class="pick-header">
-      <span class="pick-tier">🏒 ${pick.tier || '—'}</span>
+      <span class="pick-tier">${sportIcon(pick.sport)} ${pick.tier||'—'}</span>
       <div class="pick-header-right">
-        <span class="prop-src-badge ${sourceClass}">${sourceLbl}</span>
+        <span class="prop-src-badge ${srcClass}">${sourceLbl}</span>
         <span class="pick-units">${units}u</span>
       </div>
     </div>
     <div class="prop-player-row">
       <span class="prop-player-name">${player}</span>
-      ${team ? `<span class="prop-team-tag">${team}</span>` : ''}
-      ${futureBadge}
+      ${team?`<span class="prop-team-tag">${team}</span>`:''}
     </div>
     <div class="prop-threshold">${threshold}</div>
     <div class="pick-meta">
       <span class="pick-odds">${oddsStr}</span>
       <span class="pick-edge">Edge ${sign}${Number(edge).toFixed(1)}%</span>
-      ${pick.ev ? `<span class="pick-ev">EV ${pick.ev >= 0 ? '+' : ''}${(pick.ev * 100).toFixed(1)}%</span>` : ''}
-      ${sogAvgStr ? `<span class="prop-sog-avg">avg ${sogAvgStr}/gm</span>` : ''}
+      ${pick.ev?`<span class="pick-ev">EV ${pick.ev>=0?'+':''}${(pick.ev*100).toFixed(1)}%</span>`:''}
+      ${avgStr?`<span class="prop-sog-avg">avg ${avgStr}/gm</span>`:''}
     </div>
-    ${pick.game ? `<div class="pick-game">${pick.game}</div>` : ''}
+    ${pick.game?`<div class="pick-game">${pick.game}</div>`:''}
   </div>`;
 }
 
-// ── Upcoming card (future signal_date picks) ──────────────────────────────────
-function upcomingCard(pick) {
-  const edge    = typeof pick.edge_pct !== 'undefined' ? pick.edge_pct : (pick.edge || 0) * 100;
+// ── Pick'em card ──────────────────────────────────────────────────────────────
+function pickemCard(pick) {
+  const edge = typeof pick.edge_pct!=='undefined'?pick.edge_pct:(pick.edge||0)*100;
   const oddsRaw = pick.odds;
-  const odds    = oddsRaw > 0 ? `+${oddsRaw}` : `${oddsRaw}`;
-  const sportIcon = {NCAA:'⚾',MLB:'⚾',NHL:'🏒',SOCCER:'⚽',CRICKET:'🏏',HANDBALL:'🤾'}[(pick.sport||'').toUpperCase()] || '📊';
-  const gameTime  = pick.game_time ? `<span>⏰ ${pick.game_time}</span>` : '';
+  const oddsStr = oddsRaw>0?`+${oddsRaw}`:(oddsRaw?`${oddsRaw}`:'EVEN');
+  const units = pick.units||1.0;
+  const src = (pick.pick_source||'').toUpperCase();
+  const srcLabel = src==='PICKEM'?'Pick\'em':src.includes('PRIZE')?'PrizePicks':src.includes('UNDER')?'Underdog':src.includes('ESPN')?'ESPN':src||'Pick\'em';
+  return `
+  <div class="pick-card pickem-card">
+    <div class="pick-header">
+      <span class="pick-tier" style="color:#8B5CF6;">${sportIcon(pick.sport)} ${pick.sport||'—'}</span>
+      <div class="pick-header-right">
+        <span class="badge-pickem-src">${srcLabel}</span>
+        <span class="pick-units">${units}u</span>
+      </div>
+    </div>
+    <div class="pick-side">${pick.side||pick.pick||'—'}</div>
+    <div class="pick-meta">
+      ${oddsRaw?`<span class="pick-odds">${oddsStr}</span>`:''}
+      ${edge>0?`<span class="pick-edge">Edge +${Number(edge).toFixed(1)}%</span>`:''}
+    </div>
+    ${pick.game?`<div class="pick-game">${pick.game}</div>`:''}
+  </div>`;
+}
+
+// ── POD card ──────────────────────────────────────────────────────────────────
+function podCard(pod) {
+  if(!pod) return '';
+  const oddsRaw = pod.odds;
+  const odds = oddsRaw>0?`+${oddsRaw}`:`${oddsRaw||'—'}`;
+  const resultHtml = (!pod.result||pod.result==='PENDING')?'':
+    `<span class="pod-result ${pod.result==='WIN'?'result-win':pod.result==='LOSS'?'result-loss':'result-push'}">${pod.result}</span>`;
+  const confHtml = pod.conf_sym?`<span class="pod-conf">${pod.conf_sym}</span>`:'';
+  const tabIcon = pod.tab==='PROPS'?'⚡':pod.tab==='PICKEM'?'🎯':'🏟';
+  return `
+  <div class="pod-card">
+    <div class="pod-label">📌 POD · ${sportIcon(pod.sport)} ${pod.sport} <span style="font-size:10px;opacity:0.6;">${tabIcon}</span></div>
+    <div class="pod-pick">${pod.pick}</div>
+    <div class="pod-meta">${odds} · ${pod.units}u · Edge +${Number(pod.edge||0).toFixed(1)}% ${confHtml}</div>
+    <div class="pod-game">${pod.game||''} ${pod.game_time?`<span class="pick-time">${pod.game_time}</span>`:''}</div>
+    ${resultHtml}
+  </div>`;
+}
+
+// ── Radar card ────────────────────────────────────────────────────────────────
+function radarCard(pick) {
+  const edge = typeof pick.edge_pct!=='undefined'?pick.edge_pct:(pick.edge||0)*100;
+  const oddsRaw = pick.odds;
+  const odds = oddsRaw>0?`+${oddsRaw}`:`${oddsRaw}`;
+  const timeStr = pick.game_time?`<span class="radar-time"> · ${pick.game_time}</span>`:'';
+  return `
+  <div class="radar-card">
+    <span class="radar-sport">${sportIcon(pick.sport)} ${pick.sport}</span>
+    <span class="radar-side">${pick.side||pick.pick||'—'}</span>
+    <span class="radar-odds">${odds}</span>
+    <span class="radar-edge">+${Number(edge).toFixed(1)}%</span>
+    ${timeStr}
+    <span class="radar-game">${pick.game||''}</span>
+  </div>`;
+}
+
+// ── Upcoming card ─────────────────────────────────────────────────────────────
+function upcomingCard(pick) {
+  const edge = typeof pick.edge_pct!=='undefined'?pick.edge_pct:(pick.edge||0)*100;
+  const oddsRaw = pick.odds;
+  const odds = oddsRaw>0?`+${oddsRaw}`:`${oddsRaw}`;
+  const gameTime = pick.game_time?`<span>⏰ ${pick.game_time}</span>`:'';
   return `
   <div class="upcoming-card">
     <div class="upcoming-date-badge">📅 ${pick.signal_date}</div>
-    <div class="upcoming-sport">${sportIcon} ${pick.sport} · ${pick.bet_type || pick.market || ''}</div>
-    <div class="upcoming-side">${pick.side || pick.pick || '—'}</div>
+    <div class="upcoming-sport">${sportIcon(pick.sport)} ${pick.sport} · ${pick.bet_type||pick.market||''}</div>
+    <div class="upcoming-side">${pick.side||pick.pick||'—'}</div>
     <div class="upcoming-meta">
       <span class="u-odds">${odds}</span>
       <span class="u-edge">+${Number(edge).toFixed(1)}% edge</span>
-      <span class="u-tier">${pick.tier || '—'} · ${pick.units||1}u</span>
+      <span class="u-tier">${pick.tier||'—'} · ${pick.units||1}u</span>
       ${gameTime}
     </div>
-    <div class="upcoming-game">${pick.game || ''}</div>
+    <div class="upcoming-game">${pick.game||''}</div>
   </div>`;
 }
 
-// ── Filter + render ───────────────────────────────────────────────────────────
-function matchesSportFilter(pick) {
-  if (filters.sport === 'ALL') return true;
-  return (pick.sport || '').toUpperCase().includes(filters.sport);
+// ── Filters ───────────────────────────────────────────────────────────────────
+function matchesSport(pick) {
+  if(filters.sport==='ALL') return true;
+  return (pick.sport||'').toUpperCase().includes(filters.sport);
 }
-function matchesTierFilter(pick) {
-  if (filters.tier === 'ALL') return true;
-  return tierLevel(pick.tier) === filters.tier;
+function matchesTier(pick) {
+  if(filters.tier==='ALL') return true;
+  return tierLevel(pick.tier)===filters.tier;
 }
-function matchesPodFilter(pick) {
-  if (!filters.pods) return true;
+function matchesPod(pick) {
+  if(!filters.pods) return true;
   return pick.is_pod;
 }
-function matchesTypeFilter(pick) {
-  if (!filters.type) return true;
-  if (filters.type === 'PROPS') {
-    if (!isProp(pick)) return false;
-    // Apply prop sub-filter: SOG / GOALS / POINTS / ALL
-    const sub = filters.prop_sub || 'ALL';
-    if (sub === 'ALL') return true;
-    const bt = (pick.bet_type || pick.market || '').toUpperCase();
-    if (sub === 'SOG')    return bt.includes('SOG');
-    if (sub === 'GOALS')  return bt.includes('GOAL');
-    if (sub === 'POINTS') return bt.includes('POINT');
-    return true;
-  }
-  if (filters.type === 'PICKEM') return isPickem(pick);
+function matchesPropSub(pick) {
+  if(filters.prop_sub==='ALL') return true;
+  const bt=(pick.bet_type||pick.market||'').toUpperCase();
+  if(filters.prop_sub==='SOG')  return bt.includes('SOG');
+  if(filters.prop_sub==='K')    return bt.includes('_K_')||bt.includes('STRIKE');
+  if(filters.prop_sub==='HIT')  return bt.includes('HIT')||bt.includes('TB')||bt.includes('TOTAL_BASE');
+  if(filters.prop_sub==='SOT')  return bt.includes('SOT')||bt.includes('SHOT');
   return true;
 }
 function passesFilter(pick) {
-  return matchesSportFilter(pick) && matchesTierFilter(pick) && matchesPodFilter(pick) && matchesTypeFilter(pick);
+  if(!matchesSport(pick)||!matchesTier(pick)||!matchesPod(pick)) return false;
+  const tab = getPickTab(pick);
+  if(tab!==activeTab) return false;
+  if(activeTab==='PROPS') return matchesPropSub(pick);
+  return true;
 }
 
+// ── Main render ───────────────────────────────────────────────────────────────
 function renderPicks() {
-  if (!slipData) return;
-  const allRec  = slipData.recommended || [];
-  const pods    = slipData.pod || [];
-  const today   = slipData.date || '';
+  if(!slipData) return;
+  const allRec  = slipData.recommended||[];
+  const pods    = slipData.pod||[];
+  const today   = slipData.date||'';
 
-  // Split today vs upcoming (future signal_date)
-  const todayPicks    = allRec.filter(p => !p.signal_date || p.signal_date === today);
-  const upcomingPicks = allRec.filter(p => p.signal_date && p.signal_date > today);
+  const todayPicks    = allRec.filter(p=>!p.signal_date||p.signal_date===today);
+  const upcomingPicks = allRec.filter(p=>p.signal_date&&p.signal_date>today);
 
-  // Sort today's picks chronologically by game_time, then by edge
-  todayPicks.sort((a, b) => {
-    const ta = a.game_time || '23:59';
-    const tb = b.game_time || '23:59';
-    const tc = ta.localeCompare(tb);
-    return tc !== 0 ? tc : (b.edge_pct || 0) - (a.edge_pct || 0);
+  // Chronological sort
+  todayPicks.sort((a,b)=>{
+    const ta=a.game_time||'23:59', tb=b.game_time||'23:59';
+    const tc=ta.localeCompare(tb);
+    return tc!==0?tc:(b.edge_pct||0)-(a.edge_pct||0);
   });
 
-  // ── POD row: filter by active tab type + sport ─────────────────────────────
-  const podEl    = document.getElementById('pod-row');
-  const podTitle = document.querySelector('.pods-section .section-title');
-  if (podEl) {
-    let filtPods = [...pods];
-    // Sport filter
-    if (filters.sport !== 'ALL') {
-      filtPods = filtPods.filter(p => (p.sport||'').toUpperCase().includes(filters.sport));
-    }
-    // Tab-type filter: show only matching pod type
-    if (filters.type === 'PROPS') {
-      filtPods = filtPods.filter(p => {
-        const bt = (p.bet_type || '').toUpperCase();
-        return bt.endsWith('_PROP') || bt === 'PROP' || bt === 'PROPS';
-      });
-      if (podTitle) podTitle.innerHTML = '⚡ Props POD <span class="pod-badge">PLAYER PROPS</span>';
-    } else if (filters.type === 'PICKEM') {
-      filtPods = filtPods.filter(p => (p.pick_source || 'SPORTSBOOK') === 'PICKEM');
-      if (podTitle) podTitle.innerHTML = 'Pick\'em POD <span class="pod-badge">PICK\'EM</span>';
-    } else {
-      if (podTitle) podTitle.innerHTML = '📌 Pick of the Day <span class="pod-badge">HIGH ●●●</span>';
-    }
+  // ── Section titles per tab ───────────────────────────────────────────────
+  const titleEl = document.getElementById('picks-section-title');
+  const podTitleEl = document.getElementById('pod-section-title');
+  const tabLabels = {
+    GAME:   ['🏟 Game Picks', '📌 Game Pick of the Day'],
+    PROPS:  ['⚡ Player Props', '⚡ Props Pick of the Day'],
+    PICKEM: ['🎯 Pick\'em Plays', '🎯 Pick\'em POD'],
+  };
+  if(titleEl) titleEl.innerHTML = `${tabLabels[activeTab][0]} <span class="count-badge" id="rec-count">0</span>`;
+  if(podTitleEl) podTitleEl.innerHTML = `${tabLabels[activeTab][1]} <span class="pod-badge">${activeTab==='GAME'?'HIGH ●●●':activeTab==='PROPS'?'PLAYER PROP':'PICK\'EM'}</span>`;
 
-    let podEmpty;
-    if (filters.type === 'PROPS')  podEmpty = 'No Props PODs today — Props POD appears when a player prop hits HIGH confidence + WHEELHOUSE';
-    else if (filters.type === 'PICKEM') podEmpty = '🚧 Coming Soon — Pick\'em PODs will appear once the Pick\'em scraper is live';
-    else podEmpty = 'No POD picks today — requires HIGH confidence + WHEELHOUSE or better';
+  // ── POD row: filtered by active tab + sport ──────────────────────────────
+  const podEl = document.getElementById('pod-row');
+  if(podEl) {
+    let fp = pods.filter(p => {
+      const ptab = p.tab || getPickTab(p);
+      if(activeTab==='PROPS'  && ptab!=='PROPS')  return false;
+      if(activeTab==='PICKEM' && ptab!=='PICKEM') return false;
+      if(activeTab==='GAME'   && ptab==='GAME')   return true;
+      if(activeTab==='GAME')   return false;
+      if(filters.sport!=='ALL' && !(p.sport||'').toUpperCase().includes(filters.sport)) return false;
+      return true;
+    });
+    if(activeTab==='GAME') fp = pods.filter(p=>{
+      const ptab=p.tab||getPickTab(p);
+      return ptab==='GAME'&&(filters.sport==='ALL'||(p.sport||'').toUpperCase().includes(filters.sport));
+    });
 
-    podEl.innerHTML = filtPods.length
-      ? filtPods.map(podCard).join('')
-      : `<p class="empty-state">${podEmpty}</p>`;
+    const emptyMsgs = {
+      GAME:   'No Game Picks POD today — requires HIGH confidence + WHEELHOUSE or better',
+      PROPS:  'No Player Props POD today',
+      PICKEM: '🚧 Coming Soon — Pick\'em POD will appear once Pick\'em scraper is live',
+    };
+    podEl.innerHTML = fp.length ? fp.map(podCard).join('') : `<p class="empty-state">${emptyMsgs[activeTab]}</p>`;
   }
 
-  // ── Section title updates per active tab ──────────────────────────────────
-  const sectionTitle = document.querySelector('.picks-section .section-title');
-  if (sectionTitle) {
-    if (filters.type === 'PROPS') {
-      sectionTitle.innerHTML = `Today's Props <span class="count-badge" id="rec-count">0</span>`;
-    } else if (filters.type === 'PICKEM') {
-      sectionTitle.innerHTML = `Today's Pick\'em Plays <span class="count-badge" id="rec-count">0</span>`;
-    } else {
-      sectionTitle.innerHTML = `Today's Picks <span class="count-badge" id="rec-count">0</span>`;
-    }
-  }
-
-  // ── Picks grid: filtered, sorted, sport-grouped ───────────────────────────
-  const showAllTiers = (filters.type === 'PROPS' || filters.type === 'PICKEM');
-  const mainPicks  = todayPicks.filter(p => passesFilter(p) && (showAllTiers || tierLevel(p.tier) !== 'T3'));
-  const scoutPicks = todayPicks.filter(p => passesFilter(p) && !showAllTiers && tierLevel(p.tier) === 'T3');
+  // ── Picks grid ────────────────────────────────────────────────────────────
+  const showAllTiers = (activeTab!=='GAME');
+  const mainPicks  = todayPicks.filter(p=>passesFilter(p)&&(showAllTiers||tierLevel(p.tier)!=='T3'));
+  const scoutPicks = todayPicks.filter(p=>passesFilter(p)&&!showAllTiers&&tierLevel(p.tier)==='T3');
 
   const recEl = document.getElementById('picks-grid');
-  if (recEl) {
-    if (filters.type === 'PROPS' && mainPicks.length) {
-      // Group props by game, sorted chronologically
-      const byGame = {};
-      mainPicks.forEach(p => { const g = p.game || 'Other'; (byGame[g] = byGame[g] || []).push(p); });
-      recEl.innerHTML = Object.entries(byGame).map(([game, picks]) =>
+  if(recEl) {
+    if(!mainPicks.length) {
+      const sportMsg = filters.sport!=='ALL'?` ${filters.sport}`:'';
+      const msgs = {
+        GAME:   `No${sportMsg} Game Picks today matching your filters. Check On Radar below.`,
+        PROPS:  `No${sportMsg} Player Props today. Run <code>scrapers/scrape_fanduel_props.py</code> to populate.`,
+        PICKEM: `🚧 Pick'em Coming Soon — PrizePicks, Underdog, and ESPN Pick'em will appear here once the scraper is live.`,
+      };
+      recEl.innerHTML = `<p class="empty-state">${msgs[activeTab]}</p>`;
+    } else if(activeTab==='PROPS') {
+      // Group props by game
+      const byGame={};
+      mainPicks.forEach(p=>{const g=p.game||'Other';(byGame[g]=byGame[g]||[]).push(p);});
+      recEl.innerHTML = Object.entries(byGame).map(([game,picks])=>
         `<div class="prop-game-group">
-           <div class="prop-game-header">${sportIcon('NHL')} ${game}</div>
+           <div class="prop-game-header">${sportIcon(picks[0].sport||'')} ${game}</div>
            <div class="prop-game-picks">${picks.map(propCard).join('')}</div>
          </div>`
       ).join('');
-    } else if (filters.type === 'PROPS') {
-      const sub = filters.prop_sub && filters.prop_sub !== 'ALL' ? ` (${filters.prop_sub})` : '';
-      const sportStr = filters.sport !== 'ALL' ? ` for ${filters.sport}` : '';
-      recEl.innerHTML = `<p class="empty-state">No player props${sub}${sportStr} today. Run <code>scrapers/scrape_fanduel_props.py</code> to populate NHL props.</p>`;
-    } else if (filters.type === 'PICKEM') {
-      recEl.innerHTML = '<p class="empty-state">🚧 Coming Soon — Pick\'em plays from PrizePicks, Underdog, and ESPN Pick\'em will appear here once the scraper is live.</p>';
-    } else if (mainPicks.length) {
-      // Group by sport with inline sport-divider headers (chronological within sport)
-      if (filters.sport === 'ALL') {
-        // Multi-sport view: show sport group headers
-        const bySport = {};
-        mainPicks.forEach(p => { const s = p.sport || 'OTHER'; (bySport[s] = bySport[s] || []).push(p); });
-        const sportOrder = Object.keys(bySport);
-        recEl.innerHTML = sportOrder.map(sp => {
-          const spPicks = bySport[sp];
-          return `<div class="sport-pick-group">
-            <div class="sport-pick-header">${sportIcon(sp)} ${sp.replace('_',' ')} <span class="sport-pick-count">${spPicks.length}</span></div>
-            ${spPicks.map(pickCard).join('')}
-          </div>`;
-        }).join('');
+    } else if(activeTab==='PICKEM') {
+      recEl.innerHTML = mainPicks.map(pickemCard).join('');
+    } else {
+      // Game picks — group by sport if All sports active
+      if(filters.sport==='ALL') {
+        const bySport={};
+        mainPicks.forEach(p=>{const s=p.sport||'OTHER';(bySport[s]=bySport[s]||[]).push(p);});
+        recEl.innerHTML = Object.entries(bySport).map(([sp,picks])=>
+          `<div class="sport-pick-group">
+             <div class="sport-pick-header" style="color:${sportColor(sp)}">${sportIcon(sp)} ${sp.replace('_',' ')} <span class="sport-pick-count">${picks.length}</span></div>
+             ${picks.map(pickCard).join('')}
+           </div>`
+        ).join('');
       } else {
-        // Single sport: just sorted cards
         recEl.innerHTML = mainPicks.map(pickCard).join('');
       }
-    } else {
-      // Empty state with context
-      const sportMsg = filters.sport !== 'ALL' ? `${filters.sport} ` : '';
-      const typeMsg  = filters.type ? ` (${filters.type})` : '';
-      recEl.innerHTML = `<p class="empty-state">No ${sportMsg}picks${typeMsg} meeting threshold today. Check <em>On Radar</em> below for T3 Scout signals.</p>`;
     }
   }
 
   const countEl = document.getElementById('rec-count');
-  if (countEl) countEl.textContent = mainPicks.length;
+  if(countEl) countEl.textContent = mainPicks.length;
 
-  // ── Upcoming section ──────────────────────────────────────────────────────
-  const upcomingSection = document.getElementById('upcoming-section');
-  const upcomingGrid    = document.getElementById('upcoming-grid');
-  const upcomingCount   = document.getElementById('upcoming-count');
-  const filtUpcoming    = upcomingPicks.filter(p => matchesSportFilter(p))
-                                       .sort((a,b) => (a.signal_date||'').localeCompare(b.signal_date||''));
-  if (filtUpcoming.length > 0) {
-    upcomingSection.style.display = 'block';
-    if (upcomingCount) upcomingCount.textContent = filtUpcoming.length;
-    if (upcomingGrid)  upcomingGrid.innerHTML = filtUpcoming.map(upcomingCard).join('');
-  } else {
-    if (upcomingSection) upcomingSection.style.display = 'none';
-  }
+  // ── Upcoming ──────────────────────────────────────────────────────────────
+  const upSec = document.getElementById('upcoming-section');
+  const upGrid = document.getElementById('upcoming-grid');
+  const upCount = document.getElementById('upcoming-count');
+  const filtUp = upcomingPicks.filter(p=>matchesSport(p)&&getPickTab(p)===activeTab)
+                              .sort((a,b)=>(a.signal_date||'').localeCompare(b.signal_date||''));
+  if(filtUp.length) {
+    upSec.style.display='block';
+    if(upCount) upCount.textContent=filtUp.length;
+    if(upGrid)  upGrid.innerHTML=filtUp.map(upcomingCard).join('');
+  } else { if(upSec) upSec.style.display='none'; }
 
-  // ── On Radar (T3 Scout) ───────────────────────────────────────────────────
-  const radarSection = document.getElementById('radar-section');
-  const radarList    = document.getElementById('radar-list');
-  const radarCount   = document.getElementById('radar-count');
-  if (scoutPicks.length > 0) {
-    radarSection.style.display = 'block';
-    if (radarCount) radarCount.textContent = scoutPicks.length;
-    if (radarList)  radarList.innerHTML = scoutPicks.map(radarCard).join('');
-    if (!radarOpen) {
-      radarOpen = true;
-      if (radarList) radarList.style.display = 'flex';
-      const btn = document.getElementById('radar-btn');
-      if (btn) btn.textContent = '▲ Hide';
-    }
-  } else {
-    if (radarSection) radarSection.style.display = 'none';
-  }
+  // ── On Radar (Game Picks only) ────────────────────────────────────────────
+  const radSec   = document.getElementById('radar-section');
+  const radList  = document.getElementById('radar-list');
+  const radCount = document.getElementById('radar-count');
+  if(activeTab==='GAME'&&scoutPicks.length) {
+    radSec.style.display='block';
+    if(radCount) radCount.textContent=scoutPicks.length;
+    if(radList)  radList.innerHTML=scoutPicks.map(radarCard).join('');
+    if(!radarOpen) { radarOpen=true; if(radList) radList.style.display='flex'; const btn=document.getElementById('radar-btn'); if(btn) btn.textContent='▲ Hide'; }
+  } else { if(radSec) radSec.style.display='none'; }
 
   // ── Full Market View ──────────────────────────────────────────────────────
-  const fmvSection = document.getElementById('fmv-section');
-  const fmvList    = document.getElementById('fmv-list');
-  const fmvCount   = document.getElementById('fmv-count');
-  const flagged    = (slipData.flagged || []).filter(p => matchesSportFilter(p));
-  if (flagged.length > 0) {
-    fmvSection.style.display = 'block';
-    if (fmvCount) fmvCount.textContent = flagged.length;
-    if (fmvList)  fmvList.innerHTML = flagged.map(radarCard).join('');
-  } else {
-    if (fmvSection) fmvSection.style.display = 'none';
-  }
+  const fmvSec   = document.getElementById('fmv-section');
+  const fmvList  = document.getElementById('fmv-list');
+  const fmvCount = document.getElementById('fmv-count');
+  const flagged  = (slipData.flagged||[]).filter(p=>matchesSport(p));
+  if(flagged.length) {
+    fmvSec.style.display='block';
+    if(fmvCount) fmvCount.textContent=flagged.length;
+    if(fmvList)  fmvList.innerHTML=flagged.map(radarCard).join('');
+  } else { if(fmvSec) fmvSec.style.display='none'; }
 }
 
-// ── Radar toggle ─────────────────────────────────────────────────────────────
-function toggleRadar() {
-  radarOpen = !radarOpen;
-  const list = document.getElementById('radar-list');
-  const btn  = document.getElementById('radar-btn');
-  if (list) list.style.display = radarOpen ? 'flex' : 'none';
-  if (btn)  btn.textContent    = radarOpen ? '▲ Hide' : '▼ Show';
-}
-
-// ── FMV toggle ────────────────────────────────────────────────────────────────
-function toggleFMV() {
-  fmvOpen = !fmvOpen;
-  const list = document.getElementById('fmv-list');
-  const btn  = document.getElementById('fmv-btn');
-  if (list) list.style.display = fmvOpen ? 'flex' : 'none';
-  if (btn)  btn.textContent    = fmvOpen ? '▲ Hide' : '▼ Show';
-}
-
-// ── Prop sub-filter bar visibility ───────────────────────────────────────────
-function updatePropSubBar(show) {
-  const bar = document.getElementById('prop-sub-bar');
-  if (bar) bar.style.display = show ? 'flex' : 'none';
-}
-
-// ── Filter button handlers ────────────────────────────────────────────────────
-document.querySelectorAll('.filter-btn:not(.prop-sub-btn)').forEach(btn => {
+// ── Tab switching ─────────────────────────────────────────────────────────────
+document.querySelectorAll('.primary-tab').forEach(btn => {
   btn.addEventListener('click', () => {
-    const filterType = btn.dataset.filter;
-    const val        = btn.dataset.val;
-    if (filterType === 'pods') {
-      filters.pods = !filters.pods;
-      btn.classList.toggle('active', filters.pods);
-    } else if (filterType === 'type') {
-      const isActive = btn.classList.contains('active');
-      document.querySelectorAll('.filter-btn[data-filter="type"]').forEach(b => b.classList.remove('active'));
-      if (!isActive) {
-        btn.classList.add('active');
-        filters.type = val;
-        if (val === 'PROPS') {
-          // Default to SOG sub-filter on first open
-          filters.prop_sub = 'SOG';
-          document.querySelectorAll('.prop-sub-btn').forEach(b => {
-            b.classList.toggle('active', b.dataset.sub === 'SOG');
-          });
-          updatePropSubBar(true);
-        } else {
-          updatePropSubBar(false);
-        }
-      } else {
-        filters.type = null;
-        updatePropSubBar(false);
-      }
-    } else {
-      document.querySelectorAll(`.filter-btn[data-filter="${filterType}"]`).forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      filters[filterType] = val;
-    }
+    document.querySelectorAll('.primary-tab').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    activeTab = btn.dataset.tab;
+    // Show/hide prop sub-filter
+    const subBar = document.getElementById('prop-sub-bar');
+    if(subBar) subBar.style.display = activeTab==='PROPS' ? 'flex' : 'none';
+    // Reset prop sub when switching away
+    if(activeTab!=='PROPS') { filters.prop_sub='ALL'; document.querySelectorAll('.prop-sub-btn').forEach(b=>{b.classList.toggle('active',b.dataset.sub==='ALL');}); }
     renderPicks();
   });
 });
 
-// ── Prop sub-filter button handlers ──────────────────────────────────────────
-document.querySelectorAll('.prop-sub-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.prop-sub-btn').forEach(b => b.classList.remove('active'));
+// ── Prop sub-filter ───────────────────────────────────────────────────────────
+document.querySelectorAll('.prop-sub-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.prop-sub-btn').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     filters.prop_sub = btn.dataset.sub;
     renderPicks();
   });
 });
 
+// ── Secondary filter buttons ──────────────────────────────────────────────────
+document.querySelectorAll('.filter-btn:not(.prop-sub-btn)').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const filterType=btn.dataset.filter, val=btn.dataset.val;
+    if(filterType==='pods') {
+      filters.pods=!filters.pods;
+      btn.classList.toggle('active',filters.pods);
+    } else {
+      document.querySelectorAll(`.filter-btn[data-filter="${filterType}"]`).forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      filters[filterType]=val;
+    }
+    renderPicks();
+  });
+});
+
+// ── Toggle helpers ────────────────────────────────────────────────────────────
+function toggleRadar() {
+  radarOpen=!radarOpen;
+  const list=document.getElementById('radar-list'), btn=document.getElementById('radar-btn');
+  if(list) list.style.display=radarOpen?'flex':'none';
+  if(btn)  btn.textContent=radarOpen?'▲ Hide':'▼ Show';
+}
+function toggleFMV() {
+  fmvOpen=!fmvOpen;
+  const list=document.getElementById('fmv-list'), btn=document.getElementById('fmv-btn');
+  if(list) list.style.display=fmvOpen?'flex':'none';
+  if(btn)  btn.textContent=fmvOpen?'▲ Hide':'▼ Show';
+}
+
 // ── Init ──────────────────────────────────────────────────────────────────────
-loadData().then(({ slip, record }) => {
-  slipData = slip;
-  const dateEl = document.getElementById('slip-date');
-  if (dateEl && slip.date) {
-    const d = new Date(slip.date + 'T12:00:00');
-    dateEl.textContent = d.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+loadData().then(({slip,record})=>{
+  slipData=slip;
+  const dateEl=document.getElementById('slip-date');
+  if(dateEl&&slip.date) {
+    const d=new Date(slip.date+'T12:00:00');
+    dateEl.textContent=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
   }
   updateRecordBar(record);
   renderPicks();
 });
 </script>
-
 </body>
 </html>

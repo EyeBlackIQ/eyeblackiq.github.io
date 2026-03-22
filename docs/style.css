@@ -512,3 +512,99 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
   font-size: 10px; background: #1c1c1c; color: #555;
   padding: 1px 6px; border-radius: 10px;
 }
+
+/* ─── PRIMARY TAB BAR (v0.9.0) ───────────────── */
+.primary-tab-bar {
+  background: #0A0A0A;
+  border-bottom: 1px solid #1c1c1c;
+  padding: 0 20px;
+}
+.primary-tab-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; gap: 0;
+}
+.primary-tab {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  gap: 2px; padding: 14px 20px 12px;
+  background: none; border: none; border-bottom: 3px solid transparent;
+  cursor: pointer; transition: all 0.2s; color: #555;
+  max-width: 280px;
+}
+.primary-tab:hover { background: rgba(255,255,255,0.02); color: #888; }
+.primary-tab.active { border-bottom-color: var(--red); color: var(--text); background: rgba(220,20,60,0.04); }
+.ptab-icon  { font-size: 22px; line-height: 1; }
+.ptab-label {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 900;
+  font-size: 15px; letter-spacing: 2px; text-transform: uppercase;
+  color: inherit;
+}
+.ptab-sub {
+  font-size: 10px; letter-spacing: 0.5px; color: #444;
+  font-family: 'Barlow', sans-serif;
+}
+.primary-tab.active .ptab-sub { color: #666; }
+.primary-tab.active .ptab-label { color: var(--text); }
+
+/* ─── PICK CARD SPORT ACCENT ─────────────────── */
+.pick-card { --sport-color: #555; }
+.pick-card.tier-red  { border-left-color: var(--red); }
+.pick-card.tier-blue { border-left-color: var(--blue); }
+.pick-card.tier-gold { border-left-color: var(--gold); }
+
+/* ─── BET TYPE BADGE ─────────────────────────── */
+.badge-bet-type {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9px; font-weight: 700; letter-spacing: 1px;
+  padding: 1px 6px; border-radius: 2px; text-transform: uppercase;
+  background: rgba(255,255,255,0.05); color: #666; border: 1px solid #2a2a2a;
+}
+
+/* ─── PICK'EM BADGES ──────────────────────────── */
+.badge-pickem {
+  display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 1px;
+  padding: 1px 5px; background: rgba(139,92,246,0.2); color: #A78BFA;
+  border: 1px solid rgba(139,92,246,0.3); border-radius: 2px; margin-left: 4px;
+  vertical-align: middle;
+}
+.badge-pickem-src {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 1px;
+  padding: 2px 7px; border-radius: 3px;
+  background: rgba(139,92,246,0.15); color: #A78BFA;
+  border: 1px solid rgba(139,92,246,0.3);
+}
+.pickem-card { border-left-color: #7C3AED !important; }
+
+/* ─── PROP SOURCE BADGES (additional) ────────── */
+.prop-src-pp { background: rgba(0,150,255,0.15); color: #5BB3FF; border: 1px solid rgba(0,150,255,0.3); }
+.prop-src-ud { background: rgba(220,80,20,0.15); color: #F08040; border: 1px solid rgba(220,80,20,0.3); }
+
+/* ─── FUTURE DATE BADGE ──────────────────────── */
+.future-badge {
+  display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 1px;
+  padding: 1px 6px; background: rgba(184,150,12,0.15); color: var(--gold);
+  border: 1px solid rgba(184,150,12,0.3); border-radius: 2px; margin-right: 6px;
+}
+
+/* ─── SPORT PICK GROUPS — updated ────────────── */
+.sport-pick-group { width: 100%; margin-bottom: 24px; }
+.sport-pick-header {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 2.5px;
+  text-transform: uppercase; padding: 6px 0 10px;
+  border-bottom: 1px solid #1c1c1c; margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.sport-pick-count {
+  font-size: 10px; background: #1c1c1c; color: #555;
+  padding: 1px 7px; border-radius: 10px; font-weight: 700;
+}
+
+/* ─── RESPONSIVE: PRIMARY TABS ───────────────── */
+@media (max-width: 600px) {
+  .primary-tab-inner { gap: 0; }
+  .ptab-sub { display: none; }
+  .primary-tab { padding: 10px 8px; }
+  .ptab-icon { font-size: 18px; }
+  .ptab-label { font-size: 12px; letter-spacing: 1px; }
+}

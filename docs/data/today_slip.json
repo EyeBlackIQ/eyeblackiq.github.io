@@ -1,6 +1,6 @@
 {
   "date": "2026-03-21",
-  "generated": "2026-03-21T23:39:08.140915+00:00",
+  "generated": "2026-03-22T00:27:45.617432+00:00",
   "recommended": [
     {
       "id": 103,
@@ -30,6 +30,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 10.62,
+      "tab": "GAME",
       "conf_label": "HIGH",
       "conf_sym": "\u25cf\u25cf\u25cf",
       "rl_alt": false
@@ -62,6 +63,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 10.11,
+      "tab": "GAME",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -94,6 +96,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 16.38,
+      "tab": "GAME",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -126,6 +129,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 4.68,
+      "tab": "GAME",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -158,6 +162,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 14.04,
+      "tab": "GAME",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -190,6 +195,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 4.36,
+      "tab": "GAME",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": true
@@ -222,6 +228,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 20.93,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -254,6 +261,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 20.29,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -286,6 +294,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 17.84,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -318,6 +327,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 17.45,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -350,6 +360,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 17.14,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -382,6 +393,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 16.63,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -414,6 +426,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 16.63,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -446,6 +459,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 16.32,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -478,6 +492,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 15.77,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -510,6 +525,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 15.13,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -542,6 +558,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 15.13,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -574,6 +591,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 13.82,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -606,6 +624,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 12.83,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -638,6 +657,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 11.59,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -670,6 +690,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 10.53,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -702,6 +723,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 8.58,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -734,6 +756,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 7.88,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -766,6 +789,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 6.7,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -798,6 +822,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 6.25,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -830,6 +855,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 5.75,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -862,6 +888,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 5.3,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -894,6 +921,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 4.83,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -926,6 +954,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 4.63,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -958,6 +987,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 3.53,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -990,6 +1020,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 3.19,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1022,6 +1053,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 12.83,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1054,6 +1086,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 11.59,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1086,6 +1119,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 9.65,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1118,6 +1152,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 7.77,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1150,6 +1185,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 6.39,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1182,6 +1218,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 18.59,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1214,6 +1251,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 18.0,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1246,6 +1284,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 6.85,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1278,6 +1317,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 5.67,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1310,6 +1350,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 5.35,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1342,6 +1383,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 5.29,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1374,6 +1416,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 4.72,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1406,6 +1449,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 4.22,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1438,6 +1482,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 3.98,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1470,6 +1515,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 3.61,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1502,6 +1548,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 5.05,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1534,6 +1581,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 4.46,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1566,6 +1614,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 3.01,
+      "tab": "PROPS",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1598,6 +1647,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 10.8,
+      "tab": "GAME",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1630,6 +1680,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 4.11,
+      "tab": "GAME",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1662,6 +1713,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 11.12,
+      "tab": "GAME",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1694,6 +1746,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 4.11,
+      "tab": "GAME",
       "conf_label": "HIGH",
       "conf_sym": "\u25cf\u25cf\u25cf",
       "rl_alt": false
@@ -1726,6 +1779,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 16.05,
+      "tab": "GAME",
       "conf_label": "LOW",
       "conf_sym": "\u25cf\u25cb\u25cb",
       "rl_alt": false
@@ -1758,6 +1812,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 4.26,
+      "tab": "GAME",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1790,6 +1845,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 2.16,
+      "tab": "GAME",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1822,6 +1878,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 8.59,
+      "tab": "GAME",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1854,6 +1911,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 2.87,
+      "tab": "GAME",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1886,6 +1944,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 9.0,
+      "tab": "GAME",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1918,6 +1977,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 5.4,
+      "tab": "GAME",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1950,6 +2010,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "recommended",
       "edge_pct": 6.66,
+      "tab": "GAME",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -1982,6 +2043,7 @@
       "signal_date": "2026-03-22",
       "edge_status": "recommended",
       "edge_pct": 7.4,
+      "tab": "GAME",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -2014,6 +2076,7 @@
       "signal_date": "2026-03-22",
       "edge_status": "recommended",
       "edge_pct": 2.4,
+      "tab": "GAME",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -2046,6 +2109,7 @@
       "signal_date": "2026-04-02",
       "edge_status": "recommended",
       "edge_pct": 7.0,
+      "tab": "GAME",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -2078,6 +2142,7 @@
       "signal_date": "2026-04-02",
       "edge_status": "recommended",
       "edge_pct": 7.0,
+      "tab": "GAME",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -2110,6 +2175,7 @@
       "signal_date": "2026-04-02",
       "edge_status": "recommended",
       "edge_pct": 7.0,
+      "tab": "GAME",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -2142,6 +2208,7 @@
       "signal_date": "2026-04-09",
       "edge_status": "recommended",
       "edge_pct": 7.0,
+      "tab": "GAME",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false
@@ -2176,6 +2243,7 @@
       "signal_date": "2026-03-21",
       "edge_status": "flagged_high",
       "edge_pct": 23.22,
+      "tab": "GAME",
       "conf_label": "MED",
       "conf_sym": "\u25cf\u25cf\u25cb",
       "rl_alt": false,
@@ -2198,7 +2266,8 @@
       "conf_sym": "\u25cf\u25cf\u25cf",
       "result": "PENDING",
       "bet_type": "ML",
-      "pick_source": "SPORTSBOOK"
+      "pick_source": "SPORTSBOOK",
+      "tab": "GAME"
     }
   ],
   "counts": {
