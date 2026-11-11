@@ -877,3 +877,38 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
 .cmp-metric { color: var(--text-dim); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
 .cmp-val { font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700; color: var(--text); }
 .ctx-pick { font-size: 12px; color: var(--text-dim); margin-top: 6px; padding-top: 6px; border-top: 1px solid #1c1c1c; }
+
+/* ─── DAY-1 RESULTS TAB ─────────────────────── */
+.results-section { max-width: 1200px; margin: 0 auto; padding: 20px 16px 40px; }
+.results-sub, .results-note { color: #888; font-size: 13px; margin: 6px 0 14px; font-family: 'Barlow', sans-serif; }
+.results-unit-tabs, .results-sport-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.results-chip {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; font-size: 13px; padding: 8px 12px; border-radius: 6px;
+  border: 1px solid #2a2a2a; background: #121212; color: #999; cursor: pointer;
+}
+.results-chip:hover { color: #ddd; border-color: #444; }
+.results-chip.active { background: rgba(220,20,60,0.12); border-color: var(--red); color: var(--text); }
+.results-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 14px 0; }
+.results-card { background: #121212; border: 1px solid #1c1c1c; border-radius: 10px; padding: 12px; }
+.results-card .rk { font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+.results-card .rv { font-family: 'Barlow Condensed', sans-serif; font-size: 24px; font-weight: 900; margin-top: 4px; color: var(--text); }
+.results-card .rv.positive { color: #2ecc71; }
+.results-card .rv.negative { color: #e74c3c; }
+.results-table-wrap { overflow-x: auto; border: 1px solid #1c1c1c; border-radius: 10px; }
+.results-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.results-table th {
+  background: #0A0A0A; color: #aaa; text-align: center; padding: 8px 6px;
+  font-family: 'Barlow Condensed', sans-serif; letter-spacing: 1px; text-transform: uppercase;
+  border-bottom: 1px solid #1c1c1c;
+}
+.results-table td { padding: 7px 6px; text-align: center; border-bottom: 1px solid #151515; color: #ccc; }
+.results-table td.left { text-align: left; }
+.results-table tr.pos td { background: rgba(46,204,113,0.06); }
+.results-table tr.neg td { background: rgba(231,76,60,0.06); }
+.results-table .res-win { color: #2ecc71; font-weight: 700; }
+.results-table .res-loss { color: #e74c3c; font-weight: 700; }
+.results-table .res-push, .results-table .res-void { color: #888; }
+@media (max-width: 800px) {
+  .results-cards { grid-template-columns: 1fr 1fr; }
+}

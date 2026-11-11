@@ -24,10 +24,10 @@
       </div>
     </div>
     <nav>
-      <a href="index.html" class="nav-link active">Today</a>
-      <a href="pod.html"   class="nav-link">📌 PODs</a>
-      <a href="results.html" class="nav-link">Results</a>
-      <a href="kalshi/day1_results.html" class="nav-link">Day-1</a>
+      <a href="index.html" class="nav-link active" id="nav-today">Today</a>
+      <a href="pod.html"   class="nav-link">PODs</a>
+      <a href="index.html#results" class="nav-link" id="nav-results">Results</a>
+      <a href="results.html" class="nav-link">Archive</a>
       <a href="methodology.html" class="nav-link">Playbook</a>
       <a href="validation.html"  class="nav-link">Validation</a>
     </nav>
@@ -62,9 +62,14 @@
   <span class="date-sublabel">Model updated daily · All picks posted at time of signal · Always verify lines before acting</span>
 </div>
 
-<!-- PRIMARY TAB BAR: Game Picks | Props | Pick'em | DFS | Compare -->
+<!-- PRIMARY TAB BAR: Results | Game Picks | Props | Pick'em | DFS | Compare -->
 <div class="primary-tab-bar">
   <div class="primary-tab-inner">
+    <button class="primary-tab" data-tab="RESULTS" id="tab-results">
+      <span class="ptab-icon">📊</span>
+      <span class="ptab-label">Results</span>
+      <span class="ptab-sub">Day-1 · L50 · Kelly</span>
+    </button>
     <button class="primary-tab active" data-tab="GAME" id="tab-game">
       <span class="ptab-icon">🏟</span>
       <span class="ptab-label">Game Picks</span>
@@ -288,6 +293,40 @@
     </div>
   </section>
 
+  <!-- DAY-1 RESULTS (snapshot-backed) -->
+  <section id="results-section" class="results-section" style="display:none;">
+    <div class="results-head">
+      <h2 class="section-title">Day-1 Results <span class="pod-badge" id="results-pod-badge">POD</span></h2>
+      <p class="results-sub" id="results-sub">Slip CORE only · units · SP-missing never on slip · snapshots (not live Kalshi)</p>
+    </div>
+    <div class="results-unit-tabs" id="results-unit-tabs">
+      <button type="button" class="results-chip active" data-unit="flat">Flat</button>
+      <button type="button" class="results-chip" data-unit="kelly_full">Full Kelly</button>
+      <button type="button" class="results-chip" data-unit="kelly_half">Half Kelly</button>
+      <button type="button" class="results-chip" data-unit="kelly_quarter">Quarter Kelly</button>
+    </div>
+    <div class="results-sport-tabs" id="results-sport-tabs">
+      <button type="button" class="results-chip active" data-rsport="global">Global L50</button>
+      <button type="button" class="results-chip" data-rsport="mlb">MLB L50</button>
+      <button type="button" class="results-chip" data-rsport="asia">Asia L50</button>
+      <button type="button" class="results-chip" data-rsport="ncaa" title="HELD">NCAA HELD</button>
+      <button type="button" class="results-chip" data-rsport="winter" title="HELD">Winter HELD</button>
+    </div>
+    <div class="results-cards" id="results-cards">
+      <div class="results-card"><div class="rk">Record</div><div class="rv" id="rc-record">—</div></div>
+      <div class="results-card"><div class="rk">Hit rate</div><div class="rv" id="rc-hr">—</div></div>
+      <div class="results-card"><div class="rk" id="rc-pnl-label">PnL (Flat)</div><div class="rv" id="rc-pnl">—</div></div>
+      <div class="results-card"><div class="rk">L50 window</div><div class="rv" id="rc-l50n">—</div></div>
+    </div>
+    <div class="results-note" id="results-note"></div>
+    <div class="results-table-wrap">
+      <table class="results-table" id="results-table">
+        <thead><tr><th>Date</th><th>Lg</th><th>Tier</th><th>Mkt</th><th>Bet</th><th>Odds</th><th>Result</th><th>PnL</th><th>Actual</th></tr></thead>
+        <tbody id="results-tbody"><tr><td colspan="9" class="empty-state">Loading Day-1 results...</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
   <div class="disclaimer">
     All picks posted at time of signal. Lines move — always verify current price before acting.<br>
     EyeBlackIQ is for informational and entertainment purposes only.
@@ -304,7 +343,7 @@
     <div class="footer-links">
       <a href="https://x.com/EyeBlackIQ" target="_blank">𝕏 Twitter</a>
       <a href="pod.html">PODs</a>
-      <a href="results.html">Results</a>
+      <a href="index.html#results">Results</a>
       <a href="methodology.html">Playbook</a>
       <a href="validation.html">Validation</a>
     </div>
@@ -328,7 +367,10 @@ function sportColor(s) { return SPORT_COLORS[(s||'').toUpperCase()] || '#555'; }
 
 // ── State ─────────────────────────────────────────────────────────────────────
 let filters   = { sport:'ALL', tier:'ALL', pods:false, prop_sub:'ALL' };
-let activeTab = 'GAME';   // 'GAME' | 'PROPS' | 'PICKEM' | 'DFS' | 'COMPARE'
+let activeTab = 'GAME';   // 'RESULTS' | 'GAME' | 'PROPS' | 'PICKEM' | 'DFS' | 'COMPARE'
+let day1Data = null;
+let resultsUnit = 'flat';
+let resultsSport = 'global';
 let dfsActiveSport   = 'MLB';
 let dfsActivePlatform = 'DraftKings';
 let dfsSelectedPicks = new Set();
@@ -811,6 +853,105 @@ function runComparison() {
   }
 }
 
+
+// ── Day-1 Results (snapshot JSON) ─────────────────────────────────────────────
+async function loadDay1() {
+  if (day1Data) return day1Data;
+  day1Data = await fetch('data/day1_results_latest.json?t='+Date.now()).then(r=>r.json()).catch(()=>null);
+  return day1Data;
+}
+function pnlKey(mode) {
+  if (mode === 'flat') return 'pnl_flat_u';
+  if (mode === 'kelly_full') return 'pnl_kelly_full_u';
+  if (mode === 'kelly_half') return 'pnl_kelly_half_u';
+  return 'pnl_kelly_quarter_u';
+}
+function fmtU(v) {
+  const n = Number(v||0);
+  return (n>=0?'+':'') + n.toFixed(2) + 'u';
+}
+function resultClass(res) {
+  const r = (res||'').toLowerCase();
+  if (r==='correct') return 'res-win';
+  if (r==='wrong') return 'res-loss';
+  if (r==='push') return 'res-push';
+  return 'res-void';
+}
+function rowsForSport(d, sport) {
+  if (!d) return [];
+  if (sport==='global') return d.global_l50 || [];
+  if (sport==='mlb') return (d.mlb && d.mlb.l50) || [];
+  if (sport==='asia') return (d.asia && d.asia.l50) || [];
+  return [];
+}
+function seasonForSport(d, sport) {
+  if (!d) return null;
+  if (sport==='asia') return d.asia && d.asia.slip_summary;
+  if (sport==='mlb' || sport==='global') return d.mlb && d.mlb.slip_summary;
+  return null;
+}
+function renderResults() {
+  const d = day1Data;
+  const note = document.getElementById('results-note');
+  const tbody = document.getElementById('results-tbody');
+  const badge = document.getElementById('results-pod-badge');
+  if (!d) {
+    if (tbody) tbody.innerHTML = '<tr><td colspan="9" class="empty-state">Day-1 JSON missing — publish data/day1_results_latest.json</td></tr>';
+    return;
+  }
+  if (badge) badge.textContent = d.pod_day || 'POD';
+  const tabs = d.public_tabs || {};
+  const gate = tabs[resultsSport];
+  if ((resultsSport==='ncaa' || resultsSport==='winter') && gate && gate.on===false) {
+    if (tbody) tbody.innerHTML = `<tr><td colspan="9" class="empty-state">${(gate.reason||'HELD').replace(/</g,'')}</td></tr>`;
+    document.getElementById('rc-record').textContent = 'HELD';
+    document.getElementById('rc-hr').textContent = '—';
+    document.getElementById('rc-pnl').textContent = '—';
+    document.getElementById('rc-l50n').textContent = '0';
+    if (note) note.textContent = gate.reason || 'Held until authentic SP-clean CORE.';
+    return;
+  }
+  const rows = rowsForSport(d, resultsSport);
+  const key = pnlKey(resultsUnit);
+  let w=0,l=0,p=0,v=0, pnl=0;
+  rows.forEach(r => {
+    const res=(r.result||'').toLowerCase();
+    if(res==='correct') w++; else if(res==='wrong') l++; else if(res==='push') p++; else v++;
+    pnl += Number(r[key] != null ? r[key] : r.pnl_u || 0);
+  });
+  const season = seasonForSport(d, resultsSport);
+  const set=(id,val)=>{const el=document.getElementById(id); if(el) el.textContent=val;};
+  if (resultsUnit==='flat' && season) {
+    set('rc-record', `${season.correct||0}-${season.wrong||0}` + ((season.push||0)?`-${season.push}`:''));
+    set('rc-hr', ((season.hr||0)*100).toFixed(1)+'%');
+    set('rc-pnl', fmtU(season.pnl_u));
+    document.getElementById('rc-pnl').className = 'rv ' + ((season.pnl_u||0)>=0?'positive':'negative');
+    document.getElementById('rc-pnl-label').textContent = resultsSport==='asia' ? 'Season PnL (Flat)' : 'Season PnL (Record Flat)';
+  } else {
+    set('rc-record', `${w}-${l}` + (p?`-${p}`:''));
+    const den=w+l; set('rc-hr', den?((w/den)*100).toFixed(1)+'%':'—');
+    set('rc-pnl', fmtU(pnl));
+    document.getElementById('rc-pnl').className = 'rv ' + (pnl>=0?'positive':'negative');
+    document.getElementById('rc-pnl-label').textContent = 'L50 PnL ('+resultsUnit+')';
+  }
+  set('rc-l50n', String(rows.length));
+  if (note) note.textContent = (d.units_policy||'') + ' · ' + (d.sp_policy||'') + ' · slip≠LOG';
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="9" class="empty-state">No L50 rows for this tab.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = rows.map(r => {
+    const pv = Number(r[key] != null ? r[key] : r.pnl_u || 0);
+    const cls = pv>0?'pos':(pv<0?'neg':'');
+    const bet = String(r.bet||'').replace(/</g,'');
+    return `<tr class="${cls}"><td>${r.date||''}</td><td>${r.league||''}</td><td>${r.tier||''}</td><td>${r.market||''}</td><td class="left">${bet}</td><td>${r.odds??''}</td><td class="${resultClass(r.result)}">${r.result||''}</td><td class="${cls}">${fmtU(pv)}</td><td>${r.actual??''}</td></tr>`;
+  }).join('');
+}
+async function showResultsTab() {
+  await loadDay1();
+  renderResults();
+}
+
 // ── Main render ───────────────────────────────────────────────────────────────
 function renderPicks() {
   if(!slipData) return;
@@ -824,6 +965,20 @@ function renderPicks() {
   const radSec2  = document.getElementById('radar-section');
   const fmvSec2  = document.getElementById('fmv-section');
 
+  const resSec = document.getElementById('results-section');
+  if(activeTab==='RESULTS') {
+    if(dfsSec) dfsSec.style.display='none';
+    if(cmpSec) cmpSec.style.display='none';
+    if(picksSec) picksSec.style.display='none';
+    if(podsSec)  podsSec.style.display='none';
+    if(upSec2)   upSec2.style.display='none';
+    if(radSec2)  radSec2.style.display='none';
+    if(fmvSec2)  fmvSec2.style.display='none';
+    if(resSec) resSec.style.display='block';
+    showResultsTab();
+    return;
+  }
+  if(resSec) resSec.style.display='none';
   if(activeTab==='DFS') {
     if(dfsSec) dfsSec.style.display='block';
     if(cmpSec) cmpSec.style.display='none';
@@ -996,11 +1151,27 @@ document.querySelectorAll('.primary-tab').forEach(btn => {
     if(subBar) subBar.style.display = activeTab==='PROPS' ? 'flex' : 'none';
     // Show/hide main filter bar (hide on DFS/COMPARE)
     const filterBar = document.getElementById('filter-bar');
-    if(filterBar) filterBar.style.display = (activeTab==='DFS'||activeTab==='COMPARE') ? 'none' : 'flex';
+    if(filterBar) filterBar.style.display = (activeTab==='DFS'||activeTab==='COMPARE'||activeTab==='RESULTS') ? 'none' : 'flex';
     // Reset prop sub when switching away from PROPS
     if(activeTab!=='PROPS') { filters.prop_sub='ALL'; document.querySelectorAll('.prop-sub-btn').forEach(b=>{b.classList.toggle('active',b.dataset.sub==='ALL');}); }
+    if(activeTab==='RESULTS') history.replaceState(null,'','#results');
+    else if(location.hash==='#results') history.replaceState(null,'',location.pathname);
     renderPicks();
   });
+});
+document.getElementById('results-unit-tabs')?.addEventListener('click', e => {
+  const btn = e.target.closest('[data-unit]');
+  if(!btn) return;
+  document.querySelectorAll('#results-unit-tabs .results-chip').forEach(b=>b.classList.toggle('active', b===btn));
+  resultsUnit = btn.dataset.unit;
+  renderResults();
+});
+document.getElementById('results-sport-tabs')?.addEventListener('click', e => {
+  const btn = e.target.closest('[data-rsport]');
+  if(!btn) return;
+  document.querySelectorAll('#results-sport-tabs .results-chip').forEach(b=>b.classList.toggle('active', b===btn));
+  resultsSport = btn.dataset.rsport;
+  renderResults();
 });
 
 // ── DFS sport tab buttons ─────────────────────────────────────────────────────
@@ -1070,6 +1241,15 @@ loadData().then(({slip,record})=>{
     dateEl.textContent=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
   }
   updateRecordBar(record);
+  const wantResults = (location.hash||'').toLowerCase()==='#results' || new URLSearchParams(location.search).get('tab')==='RESULTS';
+  if(wantResults) {
+    document.querySelectorAll('.primary-tab').forEach(b=>b.classList.remove('active'));
+    const rb=document.getElementById('tab-results');
+    if(rb) rb.classList.add('active');
+    activeTab='RESULTS';
+    const filterBar=document.getElementById('filter-bar');
+    if(filterBar) filterBar.style.display='none';
+  }
   renderPicks();
 });
 </script>
