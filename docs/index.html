@@ -102,7 +102,7 @@
       <button type="button" class="results-chip" data-rsport="mlb">MLB L50</button>
       <button type="button" class="results-chip" data-rsport="asia">Asia L50</button>
       <button type="button" class="results-chip" data-rsport="winter">Winter L50</button>
-      <button type="button" class="results-chip" data-rsport="ncaa" title="HELD">NCAA HELD</button>
+      <button type="button" class="results-chip" data-rsport="ncaa">NCAA L50</button>
     </div>
     <div class="results-cards" id="results-cards">
       <div class="results-card"><div class="rk">Record</div><div class="rv" id="rc-record">—</div></div>
@@ -261,8 +261,12 @@ function renderPicks() {
   const count = document.getElementById('rec-count');
   if (count) count.textContent = String(picks.length);
   if (grid) {
-    if (!picks.length) {
-      grid.innerHTML = '<p class="empty-state">No FINAL/CORE picks on the board. Publish after scrape (docs/data only — manual push).</p>';
+    if (!picks.length || slipData?.empty) {
+      const note = slipData?.speculative_note
+        ? `<p class="empty-state" style="opacity:.75;margin-top:8px;">${slipData.speculative_note}</p>`
+        : '<p class="empty-state" style="opacity:.75;margin-top:8px;">Lower-confidence signals may appear in a later version.</p>';
+      grid.innerHTML = `<p class="empty-state"><strong>No Picks Today</strong></p>${note}`;
+      if (podEl) podEl.innerHTML = '<p class="empty-state">No POD today</p>';
     } else {
       grid.innerHTML = picks.map(pickCard).join('');
     }
@@ -306,12 +310,14 @@ function rowsForSport(d, sport) {
   if (sport==='mlb') return (d.mlb && d.mlb.l50) || [];
   if (sport==='asia') return (d.asia && d.asia.l50) || [];
   if (sport==='winter') return (d.winter && d.winter.l50) || [];
+  if (sport==='ncaa') return (d.ncaa && d.ncaa.l50) || [];
   return [];
 }
 function seasonForSport(d, sport) {
   if (!d) return null;
   if (sport==='asia') return d.asia && d.asia.slip_summary;
   if (sport==='winter') return d.winter && d.winter.slip_summary;
+  if (sport==='ncaa') return d.ncaa && d.ncaa.slip_summary;
   if (sport==='mlb' || sport==='global') return d.mlb && d.mlb.slip_summary;
   return null;
 }
@@ -326,26 +332,7 @@ function renderResults() {
     return;
   }
   if (badge) badge.textContent = d.pod_day || 'POD';
-  const tabs = d.public_tabs || {};
-  const gate = tabs[resultsSport];
-  if (resultsSport==='ncaa' && gate && gate.on===false) {
-    if (tbody) tbody.innerHTML = `<tr><td colspan="9" class="empty-state">${(gate.reason||'HELD').replace(/</g,'')}</td></tr>`;
-    document.getElementById('rc-record').textContent = 'HELD';
-    document.getElementById('rc-hr').textContent = '—';
-    document.getElementById('rc-pnl').textContent = '—';
-    document.getElementById('rc-l50n').textContent = '0';
-    if (note) note.textContent = gate.reason || 'Held';
-    return;
-  }
-  if (resultsSport==='winter' && gate && gate.on===false) {
-    if (tbody) tbody.innerHTML = `<tr><td colspan="9" class="empty-state">${(gate.reason||'HELD').replace(/</g,'')}</td></tr>`;
-    document.getElementById('rc-record').textContent = 'HELD';
-    document.getElementById('rc-hr').textContent = '—';
-    document.getElementById('rc-pnl').textContent = '—';
-    document.getElementById('rc-l50n').textContent = '0';
-    if (note) note.textContent = gate.reason || 'Held';
-    return;
-  }
+  // Inactive/out-of-season leagues still show Results L50 when rows exist (MLB/Asia/NCAA).
   const rows = rowsForSport(d, resultsSport);
   const key = pnlKey(resultsUnit);
   let w=0,l=0,p=0,pnl=0;
