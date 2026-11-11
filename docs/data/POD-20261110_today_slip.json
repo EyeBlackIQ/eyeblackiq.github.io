@@ -1,0 +1,68 @@
+{
+  "date": "2026-11-10",
+  "generated": "2026-11-11T16:54:07.449879+00:00",
+  "policy": {
+    "picks": "FINAL_CORE_ONLY",
+    "edge_floor_pp": 4.0,
+    "dual_soft_floor": null,
+    "overs": true,
+    "no_git_push": true,
+    "source_file": "2026-11-10_deploy_slip.txt"
+  },
+  "recommended": [
+    {
+      "sport": "INTL_BASEBALL",
+      "league": "LMP",
+      "game": "Yaquis Obregon @ Naranjeros Hermosillo",
+      "game_time": "",
+      "bet_type": "TOTAL",
+      "side": "Under 9.5",
+      "market": "TOTAL",
+      "odds": -135,
+      "odds_decimal": 1.7407,
+      "model_prob": null,
+      "edge": 0.14550000000000002,
+      "edge_pct": 14.55,
+      "tier": "CORE",
+      "units": 1.0,
+      "is_pod": 1,
+      "signal_date": "2026-11-10",
+      "edge_status": "recommended",
+      "tab": "FINAL",
+      "pick_source": "INTL_FINAL_CORE",
+      "sp_away": "",
+      "sp_home": "",
+      "book": "BET365",
+      "conf": null,
+      "notes": "FINAL deploy slip · floor>=4pp"
+    }
+  ],
+  "pod": [
+    {
+      "sport": "INTL_BASEBALL",
+      "league": "LMP",
+      "game": "Yaquis Obregon @ Naranjeros Hermosillo",
+      "game_time": "",
+      "bet_type": "TOTAL",
+      "side": "Under 9.5",
+      "market": "TOTAL",
+      "odds": -135,
+      "odds_decimal": 1.7407,
+      "model_prob": null,
+      "edge": 0.14550000000000002,
+      "edge_pct": 14.55,
+      "tier": "CORE",
+      "units": 1.0,
+      "is_pod": 1,
+      "signal_date": "2026-11-10",
+      "edge_status": "recommended",
+      "tab": "FINAL",
+      "pick_source": "INTL_FINAL_CORE",
+      "sp_away": "",
+      "sp_home": "",
+      "book": "BET365",
+      "conf": null,
+      "notes": "FINAL deploy slip · floor>=4pp"
+    }
+  ]
+}

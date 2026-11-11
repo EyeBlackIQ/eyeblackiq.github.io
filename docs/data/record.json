@@ -1,25 +1,20 @@
 {
-  "wins": 14,
-  "losses": 8,
+  "wins": 20,
+  "losses": 14,
   "pushes": 0,
-  "net_units": 7.96,
-  "roi": 36.18,
+  "net_units": 4.91,
+  "roi": 14.45,
   "clv_pct": 0,
-  "pod_wins": 3,
-  "pod_losses": 0,
-  "streak": "W7",
-  "pod_streak": "W3",
-  "day_streak": "\u2014",
+  "pod_wins": 20,
+  "pod_losses": 14,
+  "streak": "L1",
+  "pod_streak": "L1",
+  "day_streak": "-",
   "sport_streaks": {
-    "MLB": "W3",
-    "NCAA_BASEBALL": "W2",
-    "NHL": "W3",
-    "SOCCER": "W3"
+    "INTL": "L1"
   },
-  "type_streaks": {
-    "ML": "W1",
-    "PROP": "W3",
-    "TOTAL": "W1"
-  },
-  "last_updated": "2026-03-22"
+  "type_streaks": {},
+  "last_updated": "2026-11-11",
+  "source": "grade_ledger_primary CORE/FINAL",
+  "units_policy": "flat $10 = 1u"
 }

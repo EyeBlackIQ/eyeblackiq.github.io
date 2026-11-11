@@ -101,8 +101,8 @@
       <button type="button" class="results-chip active" data-rsport="global">Global L50</button>
       <button type="button" class="results-chip" data-rsport="mlb">MLB L50</button>
       <button type="button" class="results-chip" data-rsport="asia">Asia L50</button>
+      <button type="button" class="results-chip" data-rsport="winter">Winter L50</button>
       <button type="button" class="results-chip" data-rsport="ncaa" title="HELD">NCAA HELD</button>
-      <button type="button" class="results-chip" data-rsport="winter" title="HELD">Winter HELD</button>
     </div>
     <div class="results-cards" id="results-cards">
       <div class="results-card"><div class="rk">Record</div><div class="rv" id="rc-record">—</div></div>
@@ -232,12 +232,26 @@ function podCard(pod) {
   </div>`;
 }
 
+function isFinalCore(p) {
+  const tier = String(p.tier || '').toUpperCase();
+  const tab = String(p.tab || '').toUpperCase();
+  const src = String(p.pick_source || '').toUpperCase();
+  if (tier === 'CORE' || tier === 'FINAL') return true;
+  if (tab === 'FINAL') return true;
+  if (src.includes('FINAL_CORE')) return true;
+  return false;
+}
+
 function renderPicks() {
-  const pods = slipData?.pod || [];
+  const podsRaw = slipData?.pod || [];
   const all = slipData?.recommended || [];
   const today = slipData?.date || '';
-  const picks = all.filter(p => !p.signal_date || p.signal_date === today)
+  // LOCK RECS 1A: Picks tab shows FINAL/CORE only (never LOG/PLUS/SUPPORT)
+  const picks = all
+    .filter(isFinalCore)
+    .filter(p => !p.signal_date || p.signal_date === today)
     .sort((a,b) => (b.edge_pct||0) - (a.edge_pct||0));
+  const pods = (podsRaw.length ? podsRaw : picks.filter(p => p.is_pod)).filter(isFinalCore);
 
   const podEl = document.getElementById('pod-row');
   if (podEl) {
@@ -248,7 +262,7 @@ function renderPicks() {
   if (count) count.textContent = String(picks.length);
   if (grid) {
     if (!picks.length) {
-      grid.innerHTML = '<p class="empty-state">No picks on the board for this slip date. Refresh after the next publish.</p>';
+      grid.innerHTML = '<p class="empty-state">No FINAL/CORE picks on the board. Publish after scrape (docs/data only — manual push).</p>';
     } else {
       grid.innerHTML = picks.map(pickCard).join('');
     }
@@ -291,11 +305,13 @@ function rowsForSport(d, sport) {
   if (sport==='global') return d.global_l50 || [];
   if (sport==='mlb') return (d.mlb && d.mlb.l50) || [];
   if (sport==='asia') return (d.asia && d.asia.l50) || [];
+  if (sport==='winter') return (d.winter && d.winter.l50) || [];
   return [];
 }
 function seasonForSport(d, sport) {
   if (!d) return null;
   if (sport==='asia') return d.asia && d.asia.slip_summary;
+  if (sport==='winter') return d.winter && d.winter.slip_summary;
   if (sport==='mlb' || sport==='global') return d.mlb && d.mlb.slip_summary;
   return null;
 }
@@ -312,7 +328,16 @@ function renderResults() {
   if (badge) badge.textContent = d.pod_day || 'POD';
   const tabs = d.public_tabs || {};
   const gate = tabs[resultsSport];
-  if ((resultsSport==='ncaa' || resultsSport==='winter') && gate && gate.on===false) {
+  if (resultsSport==='ncaa' && gate && gate.on===false) {
+    if (tbody) tbody.innerHTML = `<tr><td colspan="9" class="empty-state">${(gate.reason||'HELD').replace(/</g,'')}</td></tr>`;
+    document.getElementById('rc-record').textContent = 'HELD';
+    document.getElementById('rc-hr').textContent = '—';
+    document.getElementById('rc-pnl').textContent = '—';
+    document.getElementById('rc-l50n').textContent = '0';
+    if (note) note.textContent = gate.reason || 'Held';
+    return;
+  }
+  if (resultsSport==='winter' && gate && gate.on===false) {
     if (tbody) tbody.innerHTML = `<tr><td colspan="9" class="empty-state">${(gate.reason||'HELD').replace(/</g,'')}</td></tr>`;
     document.getElementById('rc-record').textContent = 'HELD';
     document.getElementById('rc-hr').textContent = '—';
