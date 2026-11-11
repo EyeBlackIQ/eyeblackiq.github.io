@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://eyeblackiq.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css?v=20261111-fair-live">
+<link rel="stylesheet" href="style.css?v=20261111-agrade">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
@@ -90,21 +90,25 @@
   <section id="results-section" class="results-section" role="tabpanel" aria-labelledby="nav-results" hidden>
     <div class="results-head">
       <h2 class="section-title">Day-1 · L50 <span class="pod-badge" id="results-pod-badge">POD</span></h2>
-      <p class="section-note" id="results-sub">Scoreboard · Flat default · Kelly optional · SP-missing never on slip</p>
+      <p class="section-note" id="results-sub">Day-1 L50 · Flat 1u · SP-missing never on slip</p>
     </div>
 
-    <div class="chip-row" id="results-unit-tabs" role="group" aria-label="Unit mode">
-      <button type="button" class="chip active" data-unit="flat">Flat</button>
-      <button type="button" class="chip" data-unit="kelly_full">Full Kelly</button>
-      <button type="button" class="chip" data-unit="kelly_half">Half Kelly</button>
-      <button type="button" class="chip" data-unit="kelly_quarter">Quarter Kelly</button>
-    </div>
     <div class="chip-row" id="results-sport-tabs" role="group" aria-label="League book">
       <button type="button" class="chip active" data-rsport="global">Global</button>
       <button type="button" class="chip" data-rsport="mlb">MLB</button>
       <button type="button" class="chip" data-rsport="asia">Asia</button>
       <button type="button" class="chip" data-rsport="winter">Winter</button>
       <button type="button" class="chip" data-rsport="ncaa">NCAA</button>
+      <button type="button" class="chip chip-advanced" id="results-advanced-toggle" aria-expanded="false" aria-controls="results-advanced">Advanced</button>
+    </div>
+    <div id="results-advanced" hidden>
+      <div class="chip-row" id="results-unit-tabs" role="group" aria-label="Unit mode">
+        <button type="button" class="chip active" data-unit="flat">Flat</button>
+        <button type="button" class="chip" data-unit="kelly_full">Full Kelly</button>
+        <button type="button" class="chip" data-unit="kelly_half">Half Kelly</button>
+        <button type="button" class="chip" data-unit="kelly_quarter">Quarter Kelly</button>
+      </div>
+      <p class="section-note">Flat is the public ledger. Kelly modes are research-only.</p>
     </div>
 
     <div class="results-cards" id="results-cards">
@@ -178,24 +182,33 @@ function fmtAm(v) {
   return n > 0 ? `+${n}` : `${n}`;
 }
 
-/** Lean stack — model / proj / hit only (prices live in Fair · Live strip) */
-function objectiveRows(p) {
-  const rows = [];
+function esc(s) {
+  return String(s ?? '').replace(/</g, '');
+}
+
+function metaStack(p) {
+  const items = [];
   const mkt = String(p.market || '').toUpperCase();
-  if (p.proj_total != null && p.line != null) {
-    const stance = String(p.side || '');
-    const short = /under/i.test(stance) ? 'Under' : (/over/i.test(stance) ? 'Over' : '');
-    rows.push({ k: 'Model', v: `${Number(p.proj_total).toFixed(1)} vs ${p.line}${short ? ' — ' + short : ''}` });
+  const hasMu = p.proj_total != null && p.line != null;
+  if (hasMu) {
+    const short = /under/i.test(String(p.side || '')) ? 'Under' : (/over/i.test(String(p.side || '')) ? 'Over' : '');
+    items.push({
+      k: 'Model',
+      v: `${Number(p.proj_total).toFixed(1)} vs ${p.line}${short ? ' — ' + short : ''}`,
+      primary: true,
+    });
   }
   if (p.proj_away != null && p.proj_home != null) {
-    rows.push({ k: 'Proj', v: `${Number(p.proj_away).toFixed(1)}-${Number(p.proj_home).toFixed(1)}` });
+    items.push({ k: 'Proj', v: `${Number(p.proj_away).toFixed(1)}–${Number(p.proj_home).toFixed(1)}`, primary: !hasMu });
   }
   const wp = p.model_wp_pct != null ? p.model_wp_pct : p.cover_pct;
   if (wp != null) {
-    rows.push({ k: mkt === 'SPREAD' ? 'Cover' : 'Hit', v: `${Number(wp).toFixed(0)}%` });
+    const label = mkt === 'SPREAD' ? 'Cover' : 'Hit';
+    // Hit is secondary when Model μ is present; primary otherwise
+    items.push({ k: label, v: `${Number(wp).toFixed(0)}%`, primary: !hasMu });
   }
-  if (p.dog_wp_note) rows.push({ k: 'Note', v: String(p.dog_wp_note) });
-  return rows;
+  if (p.dog_wp_note) items.push({ k: 'Note', v: String(p.dog_wp_note), primary: false });
+  return items;
 }
 
 function priceStrip(pick) {
@@ -205,31 +218,34 @@ function priceStrip(pick) {
   const bits = [];
   if (fair) bits.push(`<span class="price-fair"><span class="price-k">Fair</span> ${fair}</span>`);
   if (live) bits.push(`<span class="price-live"><span class="price-k">Live</span> ${live}</span>`);
-  return `<div class="pick-prices" aria-label="Fair and live odds">${bits.join('<span class="price-sep" aria-hidden="true">·</span>')}</div>`;
+  return `
+    <div class="pick-prices" aria-label="Fair model price and live odds">${bits.join('<span class="price-sep" aria-hidden="true">·</span>')}</div>
+    <div class="price-caption">Fair = model price · Live = board · verify before acting</div>`;
 }
 
 function pickCard(pick, { hero = false } = {}) {
   const isLower = String(pick.confidence || '') === 'lower';
   const league = pick.league ? String(pick.league) : '';
-  const rows = objectiveRows(pick);
+  const meta = metaStack(pick);
   const cls = [
     hero ? 'pick-card pick-card--pod' : 'pick-card',
     isLower ? 'pick-card--lower' : 'pick-card--play',
   ].join(' ');
-  const stack = rows.map(r =>
-    `<div class="obj-row"><span class="obj-k">${r.k}</span><span class="obj-v">${String(r.v).replace(/</g,'')}</span></div>`
+  const metaHtml = meta.map(r =>
+    `<span class="meta-item"><span class="meta-k">${esc(r.k)}</span><span class="meta-v${r.primary ? '' : ' meta-v--secondary'}">${esc(r.v)}</span></span>`
   ).join('');
+  const sp = [pick.sp_away, pick.sp_home].filter(Boolean).join(' vs ');
   return `
   <article class="${cls}">
     <div class="pick-header">
-      <span class="pick-kicker">${isLower ? 'Lower confidence' : 'Play'}${league ? ` · ${league}` : ''}</span>
+      <span class="pick-kicker">${isLower ? 'Lower confidence' : 'Play'}${league ? ` · ${esc(league)}` : ''}</span>
       ${hero ? '<span class="pod-crown">POD</span>' : ''}
     </div>
-    <div class="pick-side">${pick.side || '—'}</div>
+    <div class="pick-side">${esc(pick.side) || '—'}</div>
     ${priceStrip(pick)}
-    ${stack ? `<div class="obj-stack" aria-label="Model synopsis">${stack}</div>` : ''}
-    ${pick.game ? `<div class="pick-game">${pick.game}${pick.game_time ? ` <span class="pick-time">${pick.game_time}</span>` : ''}</div>` : ''}
-    ${(pick.sp_away || pick.sp_home) ? `<div class="pick-sp">SP ${pick.sp_away || '—'} vs ${pick.sp_home || '—'}</div>` : ''}
+    ${metaHtml ? `<div class="meta-row" aria-label="Model synopsis">${metaHtml}</div>` : ''}
+    ${pick.game ? `<div class="pick-game">${esc(pick.game)}${pick.game_time ? ` <span class="pick-time">${esc(pick.game_time)}</span>` : ''}</div>` : ''}
+    ${sp ? `<div class="pick-sp">SP ${esc(sp)}</div>` : ''}
   </article>`;
 }
 
@@ -533,6 +549,14 @@ document.querySelector('.logo-block')?.addEventListener('click', (e) => {
   }
 });
 
+document.getElementById('results-advanced-toggle')?.addEventListener('click', () => {
+  const panel = document.getElementById('results-advanced');
+  const btn = document.getElementById('results-advanced-toggle');
+  if (!panel || !btn) return;
+  const open = panel.hidden;
+  panel.hidden = !open;
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
 document.getElementById('results-unit-tabs')?.addEventListener('click', e => {
   const btn = e.target.closest('[data-unit]');
   if (!btn) return;
@@ -543,7 +567,7 @@ document.getElementById('results-unit-tabs')?.addEventListener('click', e => {
 document.getElementById('results-sport-tabs')?.addEventListener('click', e => {
   const btn = e.target.closest('[data-rsport]');
   if (!btn) return;
-  document.querySelectorAll('#results-sport-tabs .chip').forEach(b => b.classList.toggle('active', b === btn));
+  document.querySelectorAll('#results-sport-tabs .chip[data-rsport]').forEach(b => b.classList.toggle('active', b === btn));
   resultsSport = btn.dataset.rsport;
   renderResults();
 });

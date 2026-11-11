@@ -1,6 +1,6 @@
 {
   "date": "2026-11-11",
-  "generated": "2026-11-11T19:24:46.127386+00:00",
+  "generated": "2026-11-11T19:45:36.307450+00:00",
   "empty": false,
   "empty_message": null,
   "policy": {
@@ -37,18 +37,18 @@
       "book": "BET365",
       "book_am": -120,
       "line": 10.5,
-      "proj_total": null,
+      "proj_total": 7.7,
       "proj_away": null,
       "proj_home": null,
       "proj_split_method": null,
       "model_wp_pct": 78.0,
-      "model_wp_raw": null,
-      "sigma": null,
+      "model_wp_raw": 78.5,
+      "sigma": 3.5,
       "cover_pct": null,
       "fair_am": -365,
       "dog_wp_note": null,
       "conf": 97.1,
-      "blurb": "Hit 78%. Fair -365. Board -120."
+      "blurb": "Model 7.7 vs 10.5 - Under. Hit 78%. Fair -365. Live -120."
     },
     {
       "sport": "INTL_BASEBALL",
@@ -71,18 +71,18 @@
       "book": "BET365",
       "book_am": -120,
       "line": 9.5,
-      "proj_total": null,
+      "proj_total": 8.0,
       "proj_away": null,
       "proj_home": null,
       "proj_split_method": null,
       "model_wp_pct": 67.0,
-      "model_wp_raw": null,
-      "sigma": null,
+      "model_wp_raw": 66.8,
+      "sigma": 3.5,
       "cover_pct": null,
       "fair_am": -200,
       "dog_wp_note": null,
       "conf": 100.0,
-      "blurb": "Hit 67%. Fair -200. Board -120."
+      "blurb": "Model 8.0 vs 9.5 - Under. Hit 67%. Fair -200. Live -120."
     },
     {
       "sport": "INTL_BASEBALL",
@@ -105,18 +105,18 @@
       "book": "BET365",
       "book_am": -140,
       "line": 9.5,
-      "proj_total": null,
+      "proj_total": 8.3,
       "proj_away": null,
       "proj_home": null,
       "proj_split_method": null,
       "model_wp_pct": 63.0,
-      "model_wp_raw": null,
-      "sigma": null,
+      "model_wp_raw": 63.1,
+      "sigma": 3.5,
       "cover_pct": null,
       "fair_am": -170,
       "dog_wp_note": null,
       "conf": 88.2,
-      "blurb": "Hit 63%. Fair -170. Board -140."
+      "blurb": "Model 8.3 vs 9.5 - Under. Hit 63%. Fair -170. Live -140."
     },
     {
       "sport": "INTL_BASEBALL",
@@ -150,7 +150,7 @@
       "fair_am": -165,
       "dog_wp_note": null,
       "conf": 84.3,
-      "blurb": "Model 62%. Fair -165. Board -150."
+      "blurb": "Model 62%. Fair -165. Live -150."
     },
     {
       "sport": "INTL_BASEBALL",
@@ -184,7 +184,7 @@
       "fair_am": -155,
       "dog_wp_note": null,
       "conf": 90.6,
-      "blurb": "Model 61%. Fair -155. Board -125."
+      "blurb": "Model 61%. Fair -155. Live -125."
     }
   ],
   "pod": [
@@ -209,18 +209,18 @@
       "book": "BET365",
       "book_am": -120,
       "line": 10.5,
-      "proj_total": null,
+      "proj_total": 7.7,
       "proj_away": null,
       "proj_home": null,
       "proj_split_method": null,
       "model_wp_pct": 78.0,
-      "model_wp_raw": null,
-      "sigma": null,
+      "model_wp_raw": 78.5,
+      "sigma": 3.5,
       "cover_pct": null,
       "fair_am": -365,
       "dog_wp_note": null,
       "conf": 97.1,
-      "blurb": "Hit 78%. Fair -365. Board -120."
+      "blurb": "Model 7.7 vs 10.5 - Under. Hit 78%. Fair -365. Live -120."
     }
   ],
   "teaser": [],
