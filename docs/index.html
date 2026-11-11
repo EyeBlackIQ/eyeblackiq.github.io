@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://eyeblackiq.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css?v=20261111-agrade2">
+<link rel="stylesheet" href="style.css?v=20261111-narr">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
@@ -80,9 +80,9 @@
       </div>
     </section>
 
-    <section class="picks-section teaser-section" id="teaser-section" hidden>
+    <section class="picks-section teaser-section" id="teaser-section" hidden aria-hidden="true">
       <h2 class="section-title">Lower confidence <span class="count-badge" id="teaser-count">0</span></h2>
-      <p class="section-note">Not Plays · not POD · empty-day only</p>
+      <p class="section-note">Shown only when no Play cleared · never POD</p>
       <div class="picks-grid" id="teaser-grid"></div>
     </section>
   </section>
@@ -238,6 +238,8 @@ function pickCard(pick, { hero = false } = {}) {
     `<span class="meta-item"><span class="meta-k">${esc(r.k)}</span><span class="meta-v${r.primary ? '' : ' meta-v--secondary'}">${esc(r.v)}</span></span>`
   ).join('');
   const sp = [pick.sp_away, pick.sp_home].filter(Boolean).join(' vs ');
+  const when = pick.game_time || pick.first_pitch || '';
+  const blurb = String(pick.blurb || '').trim();
   return `
   <article class="${cls}">
     <div class="pick-header">
@@ -247,8 +249,9 @@ function pickCard(pick, { hero = false } = {}) {
     <div class="pick-side">${esc(pick.side) || '—'}</div>
     ${priceStrip(pick, { hero })}
     ${metaHtml ? `<div class="meta-row" aria-label="Model synopsis">${metaHtml}</div>` : ''}
-    ${pick.game ? `<div class="pick-game">${esc(pick.game)}${pick.game_time ? ` <span class="pick-time">${esc(pick.game_time)}</span>` : ''}</div>` : ''}
+    ${pick.game ? `<div class="pick-game">${esc(pick.game)}${when ? ` <span class="pick-time">${esc(when)}</span>` : ''}</div>` : ''}
     ${sp ? `<div class="pick-sp">SP ${esc(sp)}</div>` : ''}
+    ${blurb ? `<p class="pick-blurb">${esc(blurb)}</p>` : ''}
   </article>`;
 }
 
@@ -310,10 +313,12 @@ function renderPicks() {
   if (teaserSec && teaserGrid) {
     if (teasers.length) {
       teaserSec.hidden = false;
+      teaserSec.setAttribute('aria-hidden', 'false');
       if (teaserCount) teaserCount.textContent = String(teasers.length);
       teaserGrid.innerHTML = teasers.map(p => pickCard(p)).join('');
     } else {
       teaserSec.hidden = true;
+      teaserSec.setAttribute('aria-hidden', 'true');
       teaserGrid.innerHTML = '';
     }
   }

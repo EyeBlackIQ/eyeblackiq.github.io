@@ -1,6 +1,6 @@
 {
   "date": "2026-11-11",
-  "generated": "2026-11-11T19:45:36.307450+00:00",
+  "generated": "2026-11-11T20:01:28.591222+00:00",
   "empty": false,
   "empty_message": null,
   "policy": {
@@ -48,7 +48,7 @@
       "fair_am": -365,
       "dog_wp_note": null,
       "conf": 97.1,
-      "blurb": "Model 7.7 vs 10.5 - Under. Hit 78%. Fair -365. Live -120."
+      "blurb": "Projection 7.7 sits 2.8 under the 10.5 total - Under is the model side. Hit about 78%. Live is still soft of fair (-120 vs fair -365). Listed SPs: Josué Gómez vs Yoanner Negrín."
     },
     {
       "sport": "INTL_BASEBALL",
@@ -82,7 +82,7 @@
       "fair_am": -200,
       "dog_wp_note": null,
       "conf": 100.0,
-      "blurb": "Model 8.0 vs 9.5 - Under. Hit 67%. Fair -200. Live -120."
+      "blurb": "Projection 8.0 sits 1.5 under the 9.5 total - Under is the model side. Live is still soft of fair (-120 vs fair -200)."
     },
     {
       "sport": "INTL_BASEBALL",
@@ -116,7 +116,7 @@
       "fair_am": -170,
       "dog_wp_note": null,
       "conf": 88.2,
-      "blurb": "Model 8.3 vs 9.5 - Under. Hit 63%. Fair -170. Live -140."
+      "blurb": "Projection 8.3 sits 1.2 under the 9.5 total - Under is the model side. Live is still soft of fair (-140 vs fair -170)."
     },
     {
       "sport": "INTL_BASEBALL",
@@ -150,7 +150,7 @@
       "fair_am": -165,
       "dog_wp_note": null,
       "conf": 84.3,
-      "blurb": "Model 62%. Fair -165. Live -150."
+      "blurb": "Model gives Charros Jalisco about 62%. Live is still soft of fair (live -150 vs fair -165)."
     },
     {
       "sport": "INTL_BASEBALL",
@@ -184,7 +184,7 @@
       "fair_am": -155,
       "dog_wp_note": null,
       "conf": 90.6,
-      "blurb": "Model 61%. Fair -155. Live -125."
+      "blurb": "Model gives Algodoneros Guasave about 61%. Live is still soft of fair (live -125 vs fair -155)."
     }
   ],
   "pod": [
@@ -220,7 +220,7 @@
       "fair_am": -365,
       "dog_wp_note": null,
       "conf": 97.1,
-      "blurb": "Model 7.7 vs 10.5 - Under. Hit 78%. Fair -365. Live -120."
+      "blurb": "Projection 7.7 sits 2.8 under the 10.5 total - Under is the model side. Hit about 78%. Live is still soft of fair (-120 vs fair -365). Listed SPs: Josué Gómez vs Yoanner Negrín."
     }
   ],
   "teaser": [],
