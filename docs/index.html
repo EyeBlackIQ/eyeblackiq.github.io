@@ -4,134 +4,145 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EyeBlackIQ</title>
-<meta name="description" content="EyeBlackIQ — quantitative picks and Day-1 results.">
+<meta name="description" content="EyeBlackIQ — quantitative baseball Plays and Day-1 results. Model projection, fair price, no edge theater.">
 <meta property="og:title" content="EyeBlackIQ">
-<meta property="og:description" content="EyeBlackIQ — Picks and Results.">
+<meta property="og:description" content="Model-backed baseball Plays. Flat units. Day-1 Results.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://eyeblackiq.com/">
+<meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://eyeblackiq.com/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
+<a class="skip-link" href="#main">Skip to content</a>
+
 <header>
   <div class="header-inner">
-    <div class="logo-block">
-      <span class="logo-eb">EB</span>
+    <a class="logo-block" href="/" aria-label="EyeBlackIQ home">
+      <span class="logo-eb" aria-hidden="true">EB</span>
       <div class="logo-text">
         <span class="logo-name">EyeBlackIQ</span>
         <span class="logo-tag">Picks · Results</span>
       </div>
-    </div>
-    <nav aria-label="Primary">
-      <a href="/" class="nav-link active" id="nav-picks">Picks</a>
-      <a href="/" class="nav-link" id="nav-results">Results</a>
+    </a>
+    <nav class="primary-nav" aria-label="Primary" role="tablist">
+      <button type="button" class="nav-tab active" role="tab" aria-selected="true" id="nav-picks" data-tab="PICKS">Picks</button>
+      <button type="button" class="nav-tab" role="tab" aria-selected="false" id="nav-results" data-tab="RESULTS">Results</button>
     </nav>
     <div class="social-links">
-      <a href="https://x.com/EyeBlackIQ" target="_blank" rel="noopener" class="social-btn">𝕏 Follow</a>
+      <a href="https://x.com/EyeBlackIQ" target="_blank" rel="noopener" class="social-btn">Follow</a>
     </div>
   </div>
 </header>
 
-<div class="record-bar">
+<div class="record-bar" aria-label="Season record">
+  <div class="record-scope" id="record-scope">CORE · Flat 1u</div>
   <div class="record-inner" id="record-bar-content">
-    <div class="record-stat"><span class="stat-label">SEASON</span><span class="stat-value" id="bar-record">0-0-0</span></div>
-    <div class="record-divider"></div>
-    <div class="record-stat"><span class="stat-label">NET UNITS</span><span class="stat-value" id="bar-units">+0.0u</span></div>
-    <div class="record-divider"></div>
-    <div class="record-stat"><span class="stat-label">ROI</span><span class="stat-value" id="bar-roi">0.0%</span></div>
-    <div class="record-divider"></div>
-    <div class="record-stat"><span class="stat-label">POD</span><span class="stat-value" id="bar-pod">0-0</span></div>
-    <div class="record-divider"></div>
-    <div class="record-stat"><span class="stat-label">STREAK</span><span class="stat-value" id="bar-streak">—</span></div>
+    <div class="record-stat"><span class="stat-label">Season</span><span class="stat-value" id="bar-record">—</span></div>
+    <div class="record-divider" aria-hidden="true"></div>
+    <div class="record-stat"><span class="stat-label">Net</span><span class="stat-value" id="bar-units">—</span></div>
+    <div class="record-divider" aria-hidden="true"></div>
+    <div class="record-stat"><span class="stat-label">ROI</span><span class="stat-value" id="bar-roi">—</span></div>
+    <div class="record-divider" aria-hidden="true"></div>
+    <div class="record-stat"><span class="stat-label">POD</span><span class="stat-value" id="bar-pod">—</span></div>
+    <div class="record-divider" aria-hidden="true"></div>
+    <div class="record-stat"><span class="stat-label">Streak</span><span class="stat-value" id="bar-streak">—</span></div>
   </div>
 </div>
 
 <div class="date-bar">
-  <span class="date-label" id="slip-date">Loading...</span>
-  <span class="date-sublabel">Today’s picks · verify lines before acting · informational only</span>
+  <span class="date-label" id="slip-date">Loading…</span>
+  <span class="date-sublabel" id="slip-meta">Verify lines before acting · informational only</span>
 </div>
 
-<div class="primary-tab-bar">
-  <div class="primary-tab-inner">
-    <button type="button" class="primary-tab active" data-tab="PICKS" id="tab-picks">
-      <span class="ptab-label">Picks</span>
-      <span class="ptab-sub">Today’s card</span>
-    </button>
-    <button type="button" class="primary-tab" data-tab="RESULTS" id="tab-results">
-      <span class="ptab-label">Results</span>
-      <span class="ptab-sub">Day-1 · L50 · Kelly</span>
-    </button>
-  </div>
-</div>
+<main id="main">
 
-<main>
-
-  <section id="picks-panel">
-    <section class="pods-section" id="pods-section">
-      <h2 class="section-title">Pick of the Day <span class="pod-badge">POD</span></h2>
+  <section id="picks-panel" role="tabpanel" aria-labelledby="nav-picks">
+    <section class="pods-section" id="pods-section" aria-labelledby="pod-heading">
+      <h2 class="section-title" id="pod-heading">Pick of the Day <span class="pod-badge">POD</span></h2>
       <div class="pod-row" id="pod-row">
-        <p class="empty-state">No POD today</p>
+        <p class="empty-state">Loading…</p>
       </div>
     </section>
 
-    <section class="picks-section">
-      <h2 class="section-title">
-        Picks
+    <section class="picks-section" id="plays-section" aria-labelledby="plays-heading">
+      <h2 class="section-title" id="plays-heading">
+        Plays
         <span class="count-badge" id="rec-count">0</span>
       </h2>
       <div class="picks-grid" id="picks-grid">
-        <p class="empty-state">Loading picks...</p>
+        <p class="empty-state">Loading…</p>
       </div>
     </section>
 
-    <section class="picks-section" id="teaser-section" style="display:none;">
+    <section class="picks-section teaser-section" id="teaser-section" hidden>
       <h2 class="section-title">Lower confidence <span class="count-badge" id="teaser-count">0</span></h2>
-      <p class="results-sub">Not Plays · not POD · labeled lower confidence only</p>
+      <p class="section-note">Not Plays · not POD · empty-day only</p>
       <div class="picks-grid" id="teaser-grid"></div>
     </section>
   </section>
 
-  <section id="results-section" class="results-section" style="display:none;">
+  <section id="results-section" class="results-section" role="tabpanel" aria-labelledby="nav-results" hidden>
     <div class="results-head">
       <h2 class="section-title">Day-1 · L50 <span class="pod-badge" id="results-pod-badge">POD</span></h2>
-      <p class="results-sub" id="results-sub">Season book above · L50 table below · Flat default · SP-missing never on slip</p>
+      <p class="section-note" id="results-sub">Scoreboard · Flat default · Kelly optional · SP-missing never on slip</p>
     </div>
-    <div class="results-unit-tabs" id="results-unit-tabs">
-      <button type="button" class="results-chip active" data-unit="flat">Flat</button>
-      <button type="button" class="results-chip" data-unit="kelly_full">Full Kelly</button>
-      <button type="button" class="results-chip" data-unit="kelly_half">Half Kelly</button>
-      <button type="button" class="results-chip" data-unit="kelly_quarter">Quarter Kelly</button>
+
+    <div class="chip-row" id="results-unit-tabs" role="group" aria-label="Unit mode">
+      <button type="button" class="chip active" data-unit="flat">Flat</button>
+      <button type="button" class="chip" data-unit="kelly_full">Full Kelly</button>
+      <button type="button" class="chip" data-unit="kelly_half">Half Kelly</button>
+      <button type="button" class="chip" data-unit="kelly_quarter">Quarter Kelly</button>
     </div>
-    <div class="results-sport-tabs" id="results-sport-tabs">
-      <button type="button" class="results-chip active" data-rsport="global">Global L50</button>
-      <button type="button" class="results-chip" data-rsport="mlb">MLB L50</button>
-      <button type="button" class="results-chip" data-rsport="asia">Asia L50</button>
-      <button type="button" class="results-chip" data-rsport="winter">Winter L50</button>
-      <button type="button" class="results-chip" data-rsport="ncaa">NCAA L50</button>
+    <div class="chip-row" id="results-sport-tabs" role="group" aria-label="League book">
+      <button type="button" class="chip active" data-rsport="global">Global</button>
+      <button type="button" class="chip" data-rsport="mlb">MLB</button>
+      <button type="button" class="chip" data-rsport="asia">Asia</button>
+      <button type="button" class="chip" data-rsport="winter">Winter</button>
+      <button type="button" class="chip" data-rsport="ncaa">NCAA</button>
     </div>
+
     <div class="results-cards" id="results-cards">
       <div class="results-card"><div class="rk">Record</div><div class="rv" id="rc-record">—</div></div>
       <div class="results-card"><div class="rk">Hit rate</div><div class="rv" id="rc-hr">—</div></div>
       <div class="results-card"><div class="rk" id="rc-pnl-label">PnL (Flat)</div><div class="rv" id="rc-pnl">—</div></div>
-      <div class="results-card"><div class="rk">L50 window</div><div class="rv" id="rc-l50n">—</div></div>
+      <div class="results-card"><div class="rk">L50 n</div><div class="rv" id="rc-l50n">—</div></div>
     </div>
-    <div class="results-chart-wrap" id="results-chart-wrap" aria-label="PnL by book">
+
+    <div class="results-chart-wrap" id="results-chart-wrap" aria-label="Season PnL by book">
       <div class="results-chart-title" id="results-chart-title">Season PnL by book</div>
       <div class="results-chart" id="results-chart"></div>
     </div>
     <div class="results-note" id="results-note"></div>
     <div class="results-table-wrap">
       <table class="results-table" id="results-table">
-        <thead><tr><th>Date</th><th>Lg</th><th>Tier</th><th>Mkt</th><th>Bet</th><th>Odds</th><th>Result</th><th>PnL</th><th>Actual</th></tr></thead>
-        <tbody id="results-tbody"><tr><td colspan="9" class="empty-state">Loading Day-1…</td></tr></tbody>
+        <thead>
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Lg</th>
+            <th scope="col">Mkt</th>
+            <th scope="col">Bet</th>
+            <th scope="col">Odds</th>
+            <th scope="col">Result</th>
+            <th scope="col">PnL</th>
+            <th scope="col">Actual</th>
+          </tr>
+        </thead>
+        <tbody id="results-tbody">
+          <tr><td colspan="8" class="empty-state">Loading Day-1…</td></tr>
+        </tbody>
       </table>
     </div>
   </section>
 
-  <div class="disclaimer">
-    Lines move — always verify current price before acting.<br>
-    EyeBlackIQ is for informational and entertainment purposes only.
+  <div class="disclaimer" id="disclaimer">
+    <p>Lines move — always verify current price before acting.</p>
+    <p>EyeBlackIQ is for informational and entertainment purposes only. Not gambling advice. 18+ where required. Research product; no automated wagering on your behalf.</p>
   </div>
 </main>
 
@@ -142,9 +153,10 @@
       <span class="footer-tag">The model sees what the market misses.</span>
     </div>
     <div class="footer-links">
-      <a href="/" id="footer-picks">Picks</a>
-      <a href="/" id="footer-results">Results</a>
-      <a href="https://x.com/EyeBlackIQ" target="_blank" rel="noopener">𝕏</a>
+      <button type="button" class="footer-link" id="footer-picks">Picks</button>
+      <button type="button" class="footer-link" id="footer-results">Results</button>
+      <a href="methodology.html">How we pick</a>
+      <a href="https://x.com/EyeBlackIQ" target="_blank" rel="noopener">X</a>
     </div>
     <div class="footer-copy">© 2026 EyeBlackIQ</div>
   </div>
@@ -159,89 +171,62 @@ let activeTab = 'PICKS';
 let resultsUnit = 'flat';
 let resultsSport = 'global';
 
-const SPORT_ICONS = { NCAA:'⚾', NCAA_BASEBALL:'⚾', MLB:'⚾', NHL:'🏒', SOCCER:'⚽', CRICKET:'🏏', HANDBALL:'🤾' };
-function sportIcon(s) { return SPORT_ICONS[(s||'').toUpperCase()] || ''; }
-
-const TIER_CSS = {
-  'FILTHY':'tier-red','SNIPE':'tier-red','UPPER 90':'tier-red','SCREAMER':'tier-red',
-  'WHEELHOUSE':'tier-blue','SLOT MACHINE':'tier-blue','CHEEKY':'tier-blue','FAST BREAK':'tier-blue',
-  'SCOUT':'tier-gold',
-};
-function tierClass(t) {
-  if (!t) return 'tier-grey';
-  const u = t.toUpperCase();
-  for (const [k,v] of Object.entries(TIER_CSS)) if (u.includes(k)) return v;
-  return 'tier-grey';
-}
-
-async function loadData() {
-  const [slip, rec] = await Promise.all([
-    fetch('data/today_slip.json?t=' + Date.now()).then(r => r.ok ? r.json() : {date:'',recommended:[],pod:[]}).catch(() => ({date:'',recommended:[],pod:[]})),
-    fetch('data/record.json?t=' + Date.now()).then(r => r.ok ? r.json() : {}).catch(() => ({})),
-  ]);
-  return { slip, record: rec };
-}
-
-function updateRecordBar(rec) {
-  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
-  const net = rec.net_units || 0;
-  set('bar-record', `${rec.wins||0}-${rec.losses||0}-${rec.pushes||0}`);
-  set('bar-units', `${net>=0?'+':''}${Number(net).toFixed(1)}u`);
-  set('bar-roi', `${(rec.roi||0)>=0?'+':''}${Number(rec.roi||0).toFixed(1)}%`);
-  set('bar-pod', `${rec.pod_wins||0}-${rec.pod_losses||0}`);
-  set('bar-streak', rec.streak || '—');
-  const uel = document.getElementById('bar-units');
-  const rel = document.getElementById('bar-roi');
-  if (uel) uel.className = 'stat-value ' + (net>=0?'positive':'negative');
-  if (rel) rel.className = 'stat-value ' + ((rec.roi||0)>=0?'positive':'negative');
-}
-
 function fmtAm(v) {
   if (v == null || v === '') return null;
   const n = Number(v);
   if (Number.isNaN(n)) return null;
   return n > 0 ? `+${n}` : `${n}`;
 }
-function projectionLine(p) {
+
+function projectionBits(p) {
   const bits = [];
   if (p.proj_total != null && p.line != null) {
-    bits.push(`Model total ${Number(p.proj_total).toFixed(1)} vs ${p.line}`);
+    bits.push(`Model ${Number(p.proj_total).toFixed(1)} vs ${p.line}`);
   }
   const wp = p.model_wp_pct != null ? p.model_wp_pct : p.cover_pct;
-  const wpLabel = (String(p.market||'').toUpperCase() === 'SPREAD') ? 'Cover' : 'Model';
+  const isSpread = String(p.market || '').toUpperCase() === 'SPREAD';
   if (wp != null) {
     const fair = fmtAm(p.fair_am);
-    bits.push(fair ? `${wpLabel} ${Number(wp).toFixed(0)}% · fair ${fair}` : `${wpLabel} ${Number(wp).toFixed(0)}%`);
+    const label = isSpread ? 'Cover' : 'Hit';
+    bits.push(fair ? `${label} ${Number(wp).toFixed(0)}% · fair ${fair}` : `${label} ${Number(wp).toFixed(0)}%`);
   }
   if (p.dog_wp_note) bits.push(p.dog_wp_note);
-  return bits.join(' · ');
+  return bits;
 }
-function pickCard(pick) {
-  const isPod = !!pick.is_pod;
-  const isLower = String(pick.confidence||'') === 'lower' || String(pick.public_tier||'').toLowerCase().includes('lower');
-  const label = isLower ? 'Lower confidence' : 'Play';
-  const book = fmtAm(pick.book_am);
-  const proj = projectionLine(pick);
-  const blurb = String(pick.blurb || pick.notes || '').replace(/</g,'');
+
+function boardLine(p) {
+  const am = fmtAm(p.book_am);
+  if (!am) return '';
+  const book = p.book ? String(p.book) : 'Board';
+  return `${book} ${am}`;
+}
+
+function pickCard(pick, { hero = false } = {}) {
+  const isLower = String(pick.confidence || '') === 'lower';
+  const league = pick.league ? String(pick.league) : '';
+  const proj = projectionBits(pick);
+  const blurb = String(pick.blurb || '').replace(/</g, '');
+  const board = boardLine(pick);
+  const cls = [
+    hero ? 'pick-card pick-card--pod' : 'pick-card',
+    isLower ? 'pick-card--lower' : 'pick-card--play',
+  ].join(' ');
   return `
-  <div class="pick-card ${isLower?'tier-grey':tierClass('WHEELHOUSE')}${isPod?' pod-highlight':''}">
+  <article class="${cls}">
     <div class="pick-header">
-      <span class="pick-tier">${sportIcon(pick.sport||pick.league)} ${label}${pick.league?` · ${pick.league}`:''}</span>
-      <div class="pick-header-right">
-        ${isPod?'<span class="pod-crown">POD</span>':''}
-        ${book?`<span class="pick-units" title="Book reference">${book}</span>`:''}
-      </div>
+      <span class="pick-kicker">${isLower ? 'Lower confidence' : 'Play'}${league ? ` · ${league}` : ''}</span>
+      ${hero ? '<span class="pod-crown">POD</span>' : ''}
     </div>
-    <div class="pick-side">${pick.side||pick.pick||'—'}</div>
-    ${proj?`<div class="pick-meta"><span class="pick-edge">${proj}</span></div>`:''}
-    ${pick.game?`<div class="pick-game">${pick.game}${pick.game_time?` <span class="pick-time">${pick.game_time}</span>`:''}</div>`:''}
-    ${blurb?`<div class="pick-blurb">${blurb}</div>`:''}
-  </div>`;
+    <div class="pick-side">${pick.side || '—'}</div>
+    ${proj.length ? `<div class="pick-proj" aria-label="Model projection">${proj.map(b => `<span>${b}</span>`).join('<span class="proj-sep" aria-hidden="true">·</span>')}</div>` : ''}
+    ${pick.game ? `<div class="pick-game">${pick.game}${pick.game_time ? ` <span class="pick-time">${pick.game_time}</span>` : ''}</div>` : ''}
+    ${board ? `<div class="pick-board" title="Reference price at publish">${board}</div>` : ''}
+    ${blurb ? `<p class="pick-blurb">${blurb}</p>` : ''}
+  </article>`;
 }
-function podCard(pod) { return pickCard(pod); }
 
 function isPlay(p) {
-  if (String(p.confidence||'') === 'lower') return false;
+  if (String(p.confidence || '') === 'lower') return false;
   const tier = String(p.public_tier || p.tier || '').toUpperCase();
   const tab = String(p.tab || '').toUpperCase();
   const src = String(p.pick_source || '').toUpperCase();
@@ -253,31 +238,42 @@ function isPlay(p) {
 
 function renderPicks() {
   const today = slipData?.date || '';
-  const all = slipData?.recommended || [];
-  const picks = all
-    .filter(isPlay)
-    .filter(p => !p.signal_date || p.signal_date === today);
+  const all = (slipData?.recommended || []).filter(isPlay).filter(p => !p.signal_date || p.signal_date === today);
   const podsRaw = slipData?.pod || [];
-  const pods = (podsRaw.length ? podsRaw : picks.filter(p => p.is_pod)).filter(isPlay);
-  // Lower confidence only on empty Play days (never POD; never mixed with Plays)
-  const emptyDay = !!slipData?.empty || !picks.length;
+  const pods = (podsRaw.length ? podsRaw : all.filter(p => p.is_pod)).filter(isPlay);
+  const podKeys = new Set(pods.map(p => `${p.side}|${p.game}|${p.signal_date || ''}`));
+  // POD exclusivity: do not re-list POD under Plays
+  const rest = all.filter(p => !podKeys.has(`${p.side}|${p.game}|${p.signal_date || ''}`));
+  const emptyDay = !!slipData?.empty || (!all.length && !pods.length);
   const teasers = emptyDay
-    ? (slipData?.teaser || []).filter(p => String(p.confidence||'') === 'lower')
+    ? (slipData?.teaser || []).filter(p => String(p.confidence || '') === 'lower')
     : [];
 
   const podEl = document.getElementById('pod-row');
-  if (podEl) {
-    podEl.innerHTML = pods.length ? pods.map(podCard).join('') : '<p class="empty-state">No POD today</p>';
-  }
   const grid = document.getElementById('picks-grid');
   const count = document.getElementById('rec-count');
-  if (count) count.textContent = String(picks.length);
-  if (grid) {
+  const playsSec = document.getElementById('plays-section');
+
+  if (podEl) {
+    podEl.innerHTML = pods.length
+      ? pods.map(p => pickCard(p, { hero: true })).join('')
+      : '<p class="empty-state">No POD today</p>';
+  }
+
+  if (count) count.textContent = String(rest.length);
+  if (grid && playsSec) {
     if (emptyDay) {
-      grid.innerHTML = '<p class="empty-state"><strong>No Picks Today</strong></p>';
+      playsSec.hidden = false;
+      if (count) count.textContent = '0';
+      grid.innerHTML = '<div class="empty-panel"><strong>No Picks Today</strong><span>No Play cleared the public gate.</span></div>';
       if (podEl) podEl.innerHTML = '<p class="empty-state">No POD today</p>';
+    } else if (!rest.length) {
+      // Only POD today — hide empty Plays grid clutter
+      playsSec.hidden = true;
+      grid.innerHTML = '';
     } else {
-      grid.innerHTML = picks.map(pickCard).join('');
+      playsSec.hidden = false;
+      grid.innerHTML = rest.map(p => pickCard(p)).join('');
     }
   }
 
@@ -286,20 +282,67 @@ function renderPicks() {
   const teaserCount = document.getElementById('teaser-count');
   if (teaserSec && teaserGrid) {
     if (teasers.length) {
-      teaserSec.style.display = '';
+      teaserSec.hidden = false;
       if (teaserCount) teaserCount.textContent = String(teasers.length);
-      teaserGrid.innerHTML = teasers.map(pickCard).join('');
+      teaserGrid.innerHTML = teasers.map(p => pickCard(p)).join('');
     } else {
-      teaserSec.style.display = 'none';
+      teaserSec.hidden = true;
       teaserGrid.innerHTML = '';
     }
+  }
+}
+
+function updateRecordBar(rec) {
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  const net = rec.net_units || 0;
+  set('bar-record', `${rec.wins || 0}-${rec.losses || 0}-${rec.pushes || 0}`);
+  set('bar-units', `${net >= 0 ? '+' : ''}${Number(net).toFixed(1)}u`);
+  set('bar-roi', `${(rec.roi || 0) >= 0 ? '+' : ''}${Number(rec.roi || 0).toFixed(1)}%`);
+  set('bar-pod', `${rec.pod_wins || 0}-${rec.pod_losses || 0}`);
+  set('bar-streak', rec.streak || '—');
+  const uel = document.getElementById('bar-units');
+  const rel = document.getElementById('bar-roi');
+  if (uel) uel.className = 'stat-value ' + (net >= 0 ? 'positive' : 'negative');
+  if (rel) rel.className = 'stat-value ' + ((rec.roi || 0) >= 0 ? 'positive' : 'negative');
+  const scope = document.getElementById('record-scope');
+  if (scope) {
+    const src = rec.source || 'CORE/FINAL';
+    const units = rec.units_policy || 'Flat 1u';
+    scope.textContent = `${src} · ${units}`;
+  }
+}
+
+function updateDateBar(slip) {
+  const dateEl = document.getElementById('slip-date');
+  const metaEl = document.getElementById('slip-meta');
+  if (dateEl) {
+    if (slip.date) {
+      const d = new Date(slip.date + 'T12:00:00');
+      dateEl.textContent = d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+    } else {
+      dateEl.textContent = 'No slip date';
+    }
+  }
+  if (metaEl) {
+    let gen = '';
+    if (slip.generated) {
+      try {
+        const g = new Date(slip.generated);
+        gen = `Published ${g.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })} · `;
+      } catch (e) { /* ignore */ }
+    }
+    metaEl.textContent = `${gen}verify lines before acting · informational only`;
+  }
+  // Dynamic OG title hint for shares
+  if (slip.pod && slip.pod[0] && slip.pod[0].side) {
+    document.title = `EyeBlackIQ · POD ${slip.pod[0].side}`;
   }
 }
 
 async function loadDay1() {
   if (day1Data) return day1Data;
   const bust = 't=' + Date.now();
-  for (const url of ['data/day1_results_latest.json?'+bust, '/data/day1_results_latest.json?'+bust]) {
+  for (const url of ['data/day1_results_latest.json?' + bust]) {
     try {
       const r = await fetch(url, { cache: 'no-store' });
       if (!r.ok) continue;
@@ -317,14 +360,14 @@ function pnlKey(mode) {
   return 'pnl_kelly_quarter_u';
 }
 function fmtU(v) {
-  const n = Number(v||0);
-  return (n>=0?'+':'') + n.toFixed(2) + 'u';
+  const n = Number(v || 0);
+  return (n >= 0 ? '+' : '') + n.toFixed(2) + 'u';
 }
 function resultClass(res) {
-  const r = (res||'').toLowerCase();
-  if (r==='correct') return 'res-win';
-  if (r==='wrong') return 'res-loss';
-  if (r==='push') return 'res-push';
+  const r = (res || '').toLowerCase();
+  if (r === 'correct') return 'res-win';
+  if (r === 'wrong') return 'res-loss';
+  if (r === 'push') return 'res-push';
   return 'res-void';
 }
 function rowsForSport(d, sport) {
@@ -332,24 +375,23 @@ function rowsForSport(d, sport) {
   function blockRows(b) {
     if (!b) return [];
     if (b.l50 && b.l50.length) return b.l50;
-    // Legacy SoT: slip_rows present, l50 missing
     const raw = b.slip_rows || [];
     return raw
-      .filter(r => ['correct','wrong','push'].includes(String(r.result||'').toLowerCase()))
-      .sort((a,b) => String(b.date||'').localeCompare(String(a.date||'')))
+      .filter(r => ['correct', 'wrong', 'push'].includes(String(r.result || '').toLowerCase()))
+      .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))
       .slice(0, 50);
   }
-  if (sport==='global') {
+  if (sport === 'global') {
     if (d.global_l50 && d.global_l50.length) return d.global_l50;
     return []
       .concat(blockRows(d.mlb), blockRows(d.asia), blockRows(d.winter), blockRows(d.ncaa))
-      .sort((a,b) => String(b.date||'').localeCompare(String(a.date||'')))
+      .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))
       .slice(0, 50);
   }
-  if (sport==='mlb') return blockRows(d.mlb);
-  if (sport==='asia') return blockRows(d.asia);
-  if (sport==='winter') return blockRows(d.winter);
-  if (sport==='ncaa') return blockRows(d.ncaa);
+  if (sport === 'mlb') return blockRows(d.mlb);
+  if (sport === 'asia') return blockRows(d.asia);
+  if (sport === 'winter') return blockRows(d.winter);
+  if (sport === 'ncaa') return blockRows(d.ncaa);
   return [];
 }
 
@@ -360,26 +402,24 @@ function renderResultsChart(d) {
   const chart = d && d.chart;
   const bars = (chart && chart.bars) || [];
   if (title) title.textContent = (chart && chart.title) || 'Season PnL by book';
-  if (!bars.length) {
-    host.innerHTML = '';
-    return;
-  }
-  const maxAbs = Math.max(1, ...bars.map(b => Math.abs(Number(b.pnl_u)||0)));
+  if (!bars.length) { host.innerHTML = ''; return; }
+  const maxAbs = Math.max(1, ...bars.map(b => Math.abs(Number(b.pnl_u) || 0)));
   host.innerHTML = bars.map(b => {
-    const v = Number(b.pnl_u)||0;
+    const v = Number(b.pnl_u) || 0;
     const pct = Math.max(4, Math.round((Math.abs(v) / maxAbs) * 100));
     const cls = v >= 0 ? 'pos' : 'neg';
-    const label = String(b.label||'').replace(/</g,'');
-    const txt = (v>=0?'+':'') + v.toFixed(1) + 'u';
+    const label = String(b.label || '').replace(/</g, '');
+    const txt = (v >= 0 ? '+' : '') + v.toFixed(1) + 'u';
     return `<div class="rc-bar-row"><span class="rc-bar-label">${label}</span><div class="rc-bar-track"><div class="rc-bar-fill ${cls}" style="width:${pct}%"></div></div><span class="rc-bar-val ${cls}">${txt}</span></div>`;
   }).join('');
 }
+
 function seasonForSport(d, sport) {
   if (!d) return null;
-  if (sport==='asia') return d.asia && d.asia.slip_summary;
-  if (sport==='winter') return d.winter && d.winter.slip_summary;
-  if (sport==='ncaa') return d.ncaa && d.ncaa.slip_summary;
-  if (sport==='mlb' || sport==='global') return d.mlb && d.mlb.slip_summary;
+  if (sport === 'asia') return d.asia && d.asia.slip_summary;
+  if (sport === 'winter') return d.winter && d.winter.slip_summary;
+  if (sport === 'ncaa') return d.ncaa && d.ncaa.slip_summary;
+  if (sport === 'mlb' || sport === 'global') return d.mlb && d.mlb.slip_summary;
   return null;
 }
 
@@ -389,128 +429,107 @@ function renderResults() {
   const badge = document.getElementById('results-pod-badge');
   const note = document.getElementById('results-note');
   if (!d) {
-    if (tbody) tbody.innerHTML = '<tr><td colspan="9" class="empty-state">Day-1 JSON missing — expected data/day1_results_latest.json</td></tr>';
+    if (tbody) tbody.innerHTML = '<tr><td colspan="8" class="empty-state">Day-1 JSON missing</td></tr>';
     return;
   }
   if (badge) badge.textContent = d.pod_day || 'POD';
   renderResultsChart(d);
-  // Inactive/out-of-season leagues still show Results L50 when rows exist (MLB/Asia/NCAA).
   const rows = rowsForSport(d, resultsSport);
   const key = pnlKey(resultsUnit);
-  let w=0,l=0,p=0,pnl=0;
+  let w = 0, l = 0, p = 0, pnl = 0;
   rows.forEach(r => {
-    const res=(r.result||'').toLowerCase();
-    if (res==='correct') w++; else if (res==='wrong') l++; else if (res==='push') p++;
+    const res = (r.result || '').toLowerCase();
+    if (res === 'correct') w++; else if (res === 'wrong') l++; else if (res === 'push') p++;
     pnl += Number(r[key] != null ? r[key] : r.pnl_u || 0);
   });
   const season = seasonForSport(d, resultsSport);
-  const set = (id,val) => { const el=document.getElementById(id); if(el) el.textContent=val; };
-  if (resultsUnit==='flat' && season) {
-    set('rc-record', `${season.correct||0}-${season.wrong||0}` + ((season.push||0)?`-${season.push}`:''));
-    set('rc-hr', ((season.hr||0)*100).toFixed(1)+'%');
+  const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  if (resultsUnit === 'flat' && season) {
+    set('rc-record', `${season.correct || 0}-${season.wrong || 0}` + ((season.push || 0) ? `-${season.push}` : ''));
+    set('rc-hr', ((season.hr || 0) * 100).toFixed(1) + '%');
     set('rc-pnl', fmtU(season.pnl_u));
-    const pnlEl = document.getElementById('rc-pnl'); if (pnlEl) pnlEl.className = 'rv ' + ((season.pnl_u||0)>=0?'positive':'negative');
-    const pnlLab = document.getElementById('rc-pnl-label'); if (pnlLab) pnlLab.textContent = resultsSport==='asia' ? 'Season PnL (Flat)' : 'Season PnL (Record Flat)';
+    const pnlEl = document.getElementById('rc-pnl');
+    if (pnlEl) pnlEl.className = 'rv ' + ((season.pnl_u || 0) >= 0 ? 'positive' : 'negative');
+    const pnlLab = document.getElementById('rc-pnl-label');
+    if (pnlLab) pnlLab.textContent = 'Season PnL (Flat)';
   } else {
-    set('rc-record', `${w}-${l}` + (p?`-${p}`:''));
-    const den=w+l; set('rc-hr', den?((w/den)*100).toFixed(1)+'%':'—');
+    set('rc-record', `${w}-${l}` + (p ? `-${p}` : ''));
+    const den = w + l;
+    set('rc-hr', den ? ((w / den) * 100).toFixed(1) + '%' : '—');
     set('rc-pnl', fmtU(pnl));
-    const pnlEl2 = document.getElementById('rc-pnl'); if (pnlEl2) pnlEl2.className = 'rv ' + (pnl>=0?'positive':'negative');
-    const pnlLab2 = document.getElementById('rc-pnl-label'); if (pnlLab2) pnlLab2.textContent = 'L50 PnL ('+resultsUnit+')';
+    const pnlEl2 = document.getElementById('rc-pnl');
+    if (pnlEl2) pnlEl2.className = 'rv ' + (pnl >= 0 ? 'positive' : 'negative');
+    const pnlLab2 = document.getElementById('rc-pnl-label');
+    if (pnlLab2) pnlLab2.textContent = 'L50 PnL (' + resultsUnit.replace('_', ' ') + ')';
   }
   set('rc-l50n', String(rows.length));
   if (note) note.textContent = [d.units_policy, d.sp_policy, 'slip≠LOG'].filter(Boolean).join(' · ');
   if (!rows.length) {
-    tbody.innerHTML = '<tr><td colspan="9" class="empty-state">No L50 rows for this tab.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8" class="empty-state">No L50 rows for this tab.</td></tr>';
     return;
   }
   tbody.innerHTML = rows.map(r => {
     const pv = Number(r[key] != null ? r[key] : r.pnl_u || 0);
-    const cls = pv>0?'pos':(pv<0?'neg':'');
-    const bet = String(r.bet||'').replace(/</g,'');
-    return `<tr class="${cls}"><td>${r.date||''}</td><td>${r.league||''}</td><td>${r.tier||''}</td><td>${r.market||''}</td><td class="left">${bet}</td><td>${r.odds??''}</td><td class="${resultClass(r.result)}">${r.result||''}</td><td class="${cls}">${fmtU(pv)}</td><td>${r.actual??''}</td></tr>`;
+    const cls = pv > 0 ? 'pos' : (pv < 0 ? 'neg' : '');
+    const bet = String(r.bet || '').replace(/</g, '');
+    return `<tr class="${cls}"><td>${r.date || ''}</td><td>${r.league || ''}</td><td>${r.market || ''}</td><td class="left">${bet}</td><td>${r.odds ?? ''}</td><td class="${resultClass(r.result)}">${r.result || ''}</td><td class="${cls}">${fmtU(pv)}</td><td>${r.actual ?? ''}</td></tr>`;
   }).join('');
-}
-
-function setNavActive() {
-  const np = document.getElementById('nav-picks');
-  const nr = document.getElementById('nav-results');
-  if (np) np.classList.toggle('active', activeTab==='PICKS');
-  if (nr) nr.classList.toggle('active', activeTab==='RESULTS');
-}
-
-/** Keep address bar clean: same-origin path for both tabs (no #results brand). */
-function cleanUrl() {
-  if (location.hash) {
-    history.replaceState(null, '', location.pathname || '/');
-  }
 }
 
 function showTab(tab) {
   activeTab = tab === 'RESULTS' ? 'RESULTS' : 'PICKS';
-  document.querySelectorAll('.primary-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === activeTab));
+  document.querySelectorAll('.nav-tab').forEach(b => {
+    const on = b.dataset.tab === activeTab;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
   const picks = document.getElementById('picks-panel');
   const results = document.getElementById('results-section');
-  cleanUrl();
+  if (location.hash) history.replaceState(null, '', location.pathname || '/');
   if (activeTab === 'RESULTS') {
-    if (picks) picks.style.display = 'none';
-    if (results) results.style.display = 'block';
+    if (picks) picks.hidden = true;
+    if (results) results.hidden = false;
     loadDay1().then(renderResults).catch(() => {
       const tb = document.getElementById('results-tbody');
-      if (tb) tb.innerHTML = '<tr><td colspan="9" class="empty-state">Results load error</td></tr>';
+      if (tb) tb.innerHTML = '<tr><td colspan="8" class="empty-state">Results load error</td></tr>';
     });
   } else {
-    if (picks) picks.style.display = '';
-    if (results) results.style.display = 'none';
+    if (picks) picks.hidden = false;
+    if (results) results.hidden = true;
     renderPicks();
   }
-  setNavActive();
-  document.title = 'EyeBlackIQ';
 }
 
-document.querySelectorAll('.primary-tab').forEach(btn => {
+document.querySelectorAll('.nav-tab').forEach(btn => {
   btn.addEventListener('click', () => showTab(btn.dataset.tab));
 });
-function bindTabLink(id, tab) {
-  document.getElementById(id)?.addEventListener('click', (e) => {
-    e.preventDefault();
-    showTab(tab);
-  });
-}
-bindTabLink('nav-results', 'RESULTS');
-bindTabLink('nav-picks', 'PICKS');
-bindTabLink('footer-results', 'RESULTS');
-bindTabLink('footer-picks', 'PICKS');
+document.getElementById('footer-picks')?.addEventListener('click', () => showTab('PICKS'));
+document.getElementById('footer-results')?.addEventListener('click', () => showTab('RESULTS'));
+
 document.getElementById('results-unit-tabs')?.addEventListener('click', e => {
   const btn = e.target.closest('[data-unit]');
   if (!btn) return;
-  document.querySelectorAll('#results-unit-tabs .results-chip').forEach(b => b.classList.toggle('active', b===btn));
+  document.querySelectorAll('#results-unit-tabs .chip').forEach(b => b.classList.toggle('active', b === btn));
   resultsUnit = btn.dataset.unit;
   renderResults();
 });
 document.getElementById('results-sport-tabs')?.addEventListener('click', e => {
   const btn = e.target.closest('[data-rsport]');
   if (!btn) return;
-  document.querySelectorAll('#results-sport-tabs .results-chip').forEach(b => b.classList.toggle('active', b===btn));
+  document.querySelectorAll('#results-sport-tabs .chip').forEach(b => b.classList.toggle('active', b === btn));
   resultsSport = btn.dataset.rsport;
   renderResults();
 });
 
-loadData().then(({slip, record}) => {
+Promise.all([
+  fetch('data/today_slip.json?t=' + Date.now()).then(r => r.ok ? r.json() : { date: '', recommended: [], pod: [] }).catch(() => ({ date: '', recommended: [], pod: [] })),
+  fetch('data/record.json?t=' + Date.now()).then(r => r.ok ? r.json() : {}).catch(() => ({})),
+]).then(([slip, record]) => {
   slipData = slip;
-  const dateEl = document.getElementById('slip-date');
-  if (dateEl) {
-    if (slip.date) {
-      const d = new Date(slip.date + 'T12:00:00');
-      dateEl.textContent = d.toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric', year:'numeric'});
-    } else {
-      dateEl.textContent = 'No slip date';
-    }
-  }
+  updateDateBar(slip);
   updateRecordBar(record);
-  // Legacy #results bookmarks: open Results once, then strip hash → clean `/`
   const legacyResults = (location.hash || '').toLowerCase() === '#results';
-  cleanUrl();
+  if (location.hash) history.replaceState(null, '', location.pathname || '/');
   showTab(legacyResults ? 'RESULTS' : 'PICKS');
 });
 </script>

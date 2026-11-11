@@ -1,6 +1,6 @@
 {
   "date": "2026-11-10",
-  "generated": "2026-11-11T17:42:05.050104+00:00",
+  "generated": "2026-11-11T17:50:07.086229+00:00",
   "empty": false,
   "empty_message": null,
   "policy": {
@@ -43,7 +43,7 @@
       "fair_am": -255,
       "dog_wp_note": null,
       "conf": null,
-      "blurb": "Yaquis Obregon @ Naranjeros Hermosillo: model total 8.1 vs 9.5 — stance Under. Hit chance about 72% (fair -255). Both sides of the matchup are in the number; we only publish when the board still lags that view."
+      "blurb": "Stance Under on Yaquis Obregon @ Naranjeros Hermosillo. Both sides are in the number; we only publish when the board still lags that view."
     }
   ],
   "pod": [
@@ -74,7 +74,7 @@
       "fair_am": -255,
       "dog_wp_note": null,
       "conf": null,
-      "blurb": "Yaquis Obregon @ Naranjeros Hermosillo: model total 8.1 vs 9.5 — stance Under. Hit chance about 72% (fair -255). Both sides of the matchup are in the number; we only publish when the board still lags that view."
+      "blurb": "Stance Under on Yaquis Obregon @ Naranjeros Hermosillo. Both sides are in the number; we only publish when the board still lags that view."
     }
   ],
   "teaser": [],
