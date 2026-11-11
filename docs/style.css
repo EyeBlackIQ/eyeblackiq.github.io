@@ -153,7 +153,8 @@ main { max-width: var(--max); margin: 0 auto; padding: 10px 20px 64px; }
   background: var(--panel); border: 1px solid var(--border); border-left: 3px solid var(--border);
   padding: 16px 16px 14px; animation: rise 0.24s ease-out;
 }
-.pick-card--play { border-left-color: #3a3a3a; }
+.pick-card--play { border-left-color: #4a4a4a; }
+.picks-grid .pick-card--play .price-caption { display: none; }
 .pick-card--pod {
   border-color: rgba(212, 175, 55, 0.4); border-left: 3px solid var(--gold);
   padding: 20px 18px 16px;

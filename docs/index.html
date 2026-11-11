@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://eyeblackiq.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css?v=20261111-agrade">
+<link rel="stylesheet" href="style.css?v=20261111-agrade2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
@@ -211,16 +211,19 @@ function metaStack(p) {
   return items;
 }
 
-function priceStrip(pick) {
+function priceStrip(pick, { hero = false } = {}) {
   const fair = fmtAm(pick.fair_am);
   const live = fmtAm(pick.book_am);
   if (!fair && !live) return '';
   const bits = [];
   if (fair) bits.push(`<span class="price-fair"><span class="price-k">Fair</span> ${fair}</span>`);
   if (live) bits.push(`<span class="price-live"><span class="price-k">Live</span> ${live}</span>`);
+  const cap = hero
+    ? '<div class="price-caption">Fair = model price · Live = board · verify before acting</div>'
+    : '';
   return `
     <div class="pick-prices" aria-label="Fair model price and live odds">${bits.join('<span class="price-sep" aria-hidden="true">·</span>')}</div>
-    <div class="price-caption">Fair = model price · Live = board · verify before acting</div>`;
+    ${cap}`;
 }
 
 function pickCard(pick, { hero = false } = {}) {
@@ -228,8 +231,8 @@ function pickCard(pick, { hero = false } = {}) {
   const league = pick.league ? String(pick.league) : '';
   const meta = metaStack(pick);
   const cls = [
-    hero ? 'pick-card pick-card--pod' : 'pick-card',
-    isLower ? 'pick-card--lower' : 'pick-card--play',
+    'pick-card',
+    hero ? 'pick-card--pod' : (isLower ? 'pick-card--lower' : 'pick-card--play'),
   ].join(' ');
   const metaHtml = meta.map(r =>
     `<span class="meta-item"><span class="meta-k">${esc(r.k)}</span><span class="meta-v${r.primary ? '' : ' meta-v--secondary'}">${esc(r.v)}</span></span>`
@@ -242,7 +245,7 @@ function pickCard(pick, { hero = false } = {}) {
       ${hero ? '<span class="pod-crown">POD</span>' : ''}
     </div>
     <div class="pick-side">${esc(pick.side) || '—'}</div>
-    ${priceStrip(pick)}
+    ${priceStrip(pick, { hero })}
     ${metaHtml ? `<div class="meta-row" aria-label="Model synopsis">${metaHtml}</div>` : ''}
     ${pick.game ? `<div class="pick-game">${esc(pick.game)}${pick.game_time ? ` <span class="pick-time">${esc(pick.game_time)}</span>` : ''}</div>` : ''}
     ${sp ? `<div class="pick-sp">SP ${esc(sp)}</div>` : ''}
