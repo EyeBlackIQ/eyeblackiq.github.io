@@ -1,6 +1,6 @@
 {
   "date": "2026-11-10",
-  "generated": "2026-11-11T17:50:07.086229+00:00",
+  "generated": "2026-11-11T18:04:29.315348+00:00",
   "empty": false,
   "empty_message": null,
   "policy": {
@@ -43,7 +43,7 @@
       "fair_am": -255,
       "dog_wp_note": null,
       "conf": null,
-      "blurb": "Stance Under on Yaquis Obregon @ Naranjeros Hermosillo. Both sides are in the number; we only publish when the board still lags that view."
+      "blurb": "Fair -255 vs board -135; total sits soft."
     }
   ],
   "pod": [
@@ -74,7 +74,7 @@
       "fair_am": -255,
       "dog_wp_note": null,
       "conf": null,
-      "blurb": "Stance Under on Yaquis Obregon @ Naranjeros Hermosillo. Both sides are in the number; we only publish when the board still lags that view."
+      "blurb": "Fair -255 vs board -135; total sits soft."
     }
   ],
   "teaser": [],

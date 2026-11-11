@@ -178,7 +178,8 @@ function fmtAm(v) {
   return n > 0 ? `+${n}` : `${n}`;
 }
 
-function projectionBits(p) {
+/** W1/W2 hybrid: Fair hero + compact model strip (fair not repeated in strip). */
+function modelStrip(p) {
   const bits = [];
   if (p.proj_total != null && p.line != null) {
     bits.push(`Model ${Number(p.proj_total).toFixed(1)} vs ${p.line}`);
@@ -186,27 +187,20 @@ function projectionBits(p) {
   const wp = p.model_wp_pct != null ? p.model_wp_pct : p.cover_pct;
   const isSpread = String(p.market || '').toUpperCase() === 'SPREAD';
   if (wp != null) {
-    const fair = fmtAm(p.fair_am);
-    const label = isSpread ? 'Cover' : 'Hit';
-    bits.push(fair ? `${label} ${Number(wp).toFixed(0)}% · fair ${fair}` : `${label} ${Number(wp).toFixed(0)}%`);
+    bits.push(`${isSpread ? 'Cover' : 'Hit'} ${Number(wp).toFixed(0)}%`);
   }
   if (p.dog_wp_note) bits.push(p.dog_wp_note);
   return bits;
 }
 
-function boardLine(p) {
-  const am = fmtAm(p.book_am);
-  if (!am) return '';
-  const book = p.book ? String(p.book) : 'Board';
-  return `${book} ${am}`;
-}
-
 function pickCard(pick, { hero = false } = {}) {
   const isLower = String(pick.confidence || '') === 'lower';
   const league = pick.league ? String(pick.league) : '';
-  const proj = projectionBits(pick);
+  const fair = fmtAm(pick.fair_am);
+  const boardAm = fmtAm(pick.book_am);
+  const board = boardAm ? `${pick.book ? String(pick.book) + ' ' : 'Board '}${boardAm}` : '';
+  const strip = modelStrip(pick);
   const blurb = String(pick.blurb || '').replace(/</g, '');
-  const board = boardLine(pick);
   const cls = [
     hero ? 'pick-card pick-card--pod' : 'pick-card',
     isLower ? 'pick-card--lower' : 'pick-card--play',
@@ -218,7 +212,8 @@ function pickCard(pick, { hero = false } = {}) {
       ${hero ? '<span class="pod-crown">POD</span>' : ''}
     </div>
     <div class="pick-side">${pick.side || '—'}</div>
-    ${proj.length ? `<div class="pick-proj" aria-label="Model projection">${proj.map(b => `<span>${b}</span>`).join('<span class="proj-sep" aria-hidden="true">·</span>')}</div>` : ''}
+    ${fair ? `<div class="pick-fair" aria-label="Fair market price">Fair ${fair}</div>` : ''}
+    ${strip.length ? `<div class="pick-proj" aria-label="Model projection">${strip.map(b => `<span>${b}</span>`).join('<span class="proj-sep" aria-hidden="true">·</span>')}</div>` : ''}
     ${pick.game ? `<div class="pick-game">${pick.game}${pick.game_time ? ` <span class="pick-time">${pick.game_time}</span>` : ''}</div>` : ''}
     ${board ? `<div class="pick-board" title="Reference price at publish">${board}</div>` : ''}
     ${blurb ? `<p class="pick-blurb">${blurb}</p>` : ''}

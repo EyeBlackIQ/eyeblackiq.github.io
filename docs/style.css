@@ -156,26 +156,31 @@ main { max-width: var(--max); margin: 0 auto; padding: 12px 20px 72px; }
 }
 .pick-side {
   font-family: 'Barlow Condensed', sans-serif; font-size: 28px; font-weight: 700;
-  letter-spacing: 0.5px; line-height: 1.1; margin-bottom: 10px;
+  letter-spacing: 0.5px; line-height: 1.1; margin-bottom: 8px;
 }
 .pick-card--pod .pick-side { font-size: 34px; }
+.pick-fair {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+  font-size: 22px; letter-spacing: 0.5px; color: var(--text); margin-bottom: 6px;
+}
+.pick-card--pod .pick-fair { font-size: 26px; }
 .pick-proj {
   display: flex; flex-wrap: wrap; align-items: center; gap: 6px 0;
-  font-size: 13px; color: var(--text); margin-bottom: 8px; font-weight: 500;
+  font-size: 13px; margin-bottom: 8px; font-weight: 500;
 }
 .pick-proj span { color: var(--muted); }
 .proj-sep { margin: 0 8px; color: var(--faint) !important; }
-.pick-game { color: var(--faint); font-size: 13px; margin-bottom: 6px; }
+.pick-game { color: var(--faint); font-size: 13px; margin-bottom: 4px; }
 .pick-time { color: var(--muted); }
 .pick-board {
-  font-family: 'Barlow Condensed', sans-serif; font-size: 12px; letter-spacing: 1px;
-  color: var(--faint); text-transform: uppercase; margin-bottom: 10px;
+  font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: 1px;
+  color: var(--faint); text-transform: uppercase; margin-bottom: 8px;
 }
 .pick-blurb {
-  margin-top: 10px; padding-top: 12px; border-top: 1px solid var(--border);
-  font-size: 14px; line-height: 1.5; color: #c9c4ba;
+  margin-top: 8px; padding-top: 10px; border-top: 1px solid var(--border);
+  font-size: 14px; line-height: 1.45; color: #c9c4ba; max-width: 52ch;
 }
-.pick-card--pod .pick-blurb { font-size: 15px; line-height: 1.55; max-width: 62ch; }
+.pick-card--pod .pick-blurb { font-size: 15px; }
 
 .empty-state { color: var(--faint); font-style: italic; padding: 16px 0; }
 .empty-panel {
