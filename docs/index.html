@@ -857,7 +857,22 @@ function runComparison() {
 // ── Day-1 Results (snapshot JSON) ─────────────────────────────────────────────
 async function loadDay1() {
   if (day1Data) return day1Data;
-  day1Data = await fetch('data/day1_results_latest.json?t='+Date.now()).then(r=>r.json()).catch(()=>null);
+  // Pages serves docs/ as site root → /data/... (not /docs/data/...)
+  const bust = 't=' + Date.now();
+  const candidates = [
+    '/data/day1_results_latest.json?' + bust,
+    'data/day1_results_latest.json?' + bust,
+    './data/day1_results_latest.json?' + bust,
+  ];
+  for (const url of candidates) {
+    try {
+      const r = await fetch(url, { cache: 'no-store' });
+      if (!r.ok) continue;
+      day1Data = await r.json();
+      if (day1Data) return day1Data;
+    } catch (e) { /* try next */ }
+  }
+  day1Data = null;
   return day1Data;
 }
 function pnlKey(mode) {
@@ -896,7 +911,7 @@ function renderResults() {
   const tbody = document.getElementById('results-tbody');
   const badge = document.getElementById('results-pod-badge');
   if (!d) {
-    if (tbody) tbody.innerHTML = '<tr><td colspan="9" class="empty-state">Day-1 JSON missing — publish data/day1_results_latest.json</td></tr>';
+    if (tbody) tbody.innerHTML = '<tr><td colspan="9" class="empty-state">Day-1 JSON missing — expected /data/day1_results_latest.json on Pages</td></tr>';
     return;
   }
   if (badge) badge.textContent = d.pod_day || 'POD';
@@ -925,14 +940,14 @@ function renderResults() {
     set('rc-record', `${season.correct||0}-${season.wrong||0}` + ((season.push||0)?`-${season.push}`:''));
     set('rc-hr', ((season.hr||0)*100).toFixed(1)+'%');
     set('rc-pnl', fmtU(season.pnl_u));
-    document.getElementById('rc-pnl').className = 'rv ' + ((season.pnl_u||0)>=0?'positive':'negative');
-    document.getElementById('rc-pnl-label').textContent = resultsSport==='asia' ? 'Season PnL (Flat)' : 'Season PnL (Record Flat)';
+    const pnlEl = document.getElementById('rc-pnl'); if (pnlEl) pnlEl.className = 'rv ' + ((season.pnl_u||0)>=0?'positive':'negative');
+    const pnlLab = document.getElementById('rc-pnl-label'); if (pnlLab) pnlLab.textContent = resultsSport==='asia' ? 'Season PnL (Flat)' : 'Season PnL (Record Flat)';
   } else {
     set('rc-record', `${w}-${l}` + (p?`-${p}`:''));
     const den=w+l; set('rc-hr', den?((w/den)*100).toFixed(1)+'%':'—');
     set('rc-pnl', fmtU(pnl));
-    document.getElementById('rc-pnl').className = 'rv ' + (pnl>=0?'positive':'negative');
-    document.getElementById('rc-pnl-label').textContent = 'L50 PnL ('+resultsUnit+')';
+    const pnlEl2 = document.getElementById('rc-pnl'); if (pnlEl2) pnlEl2.className = 'rv ' + (pnl>=0?'positive':'negative');
+    const pnlLab2 = document.getElementById('rc-pnl-label'); if (pnlLab2) pnlLab2.textContent = 'L50 PnL ('+resultsUnit+')';
   }
   set('rc-l50n', String(rows.length));
   if (note) note.textContent = (d.units_policy||'') + ' · ' + (d.sp_policy||'') + ' · slip≠LOG';
@@ -975,7 +990,11 @@ function renderPicks() {
     if(radSec2)  radSec2.style.display='none';
     if(fmvSec2)  fmvSec2.style.display='none';
     if(resSec) resSec.style.display='block';
-    showResultsTab();
+    Promise.resolve(showResultsTab()).catch(err=>{
+      const tb=document.getElementById('results-tbody');
+      if(tb) tb.innerHTML = '<tr><td colspan="9" class="empty-state">Results load error — check /data/day1_results_latest.json</td></tr>';
+      console.error(err);
+    });
     return;
   }
   if(resSec) resSec.style.display='none';
