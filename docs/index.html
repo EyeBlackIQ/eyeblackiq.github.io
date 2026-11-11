@@ -24,8 +24,8 @@
       </div>
     </div>
     <nav aria-label="Primary">
-      <a href="index.html" class="nav-link active" id="nav-picks">Picks</a>
-      <a href="index.html#results" class="nav-link" id="nav-results">Results</a>
+      <a href="/" class="nav-link active" id="nav-picks">Picks</a>
+      <a href="/" class="nav-link" id="nav-results">Results</a>
     </nav>
     <div class="social-links">
       <a href="https://x.com/EyeBlackIQ" target="_blank" rel="noopener" class="social-btn">𝕏 Follow</a>
@@ -49,7 +49,7 @@
 
 <div class="date-bar">
   <span class="date-label" id="slip-date">Loading...</span>
-  <span class="date-sublabel">Verify lines before acting · informational only</span>
+  <span class="date-sublabel">Today’s picks · verify lines before acting · informational only</span>
 </div>
 
 <div class="primary-tab-bar">
@@ -132,8 +132,8 @@
       <span class="footer-tag">The model sees what the market misses.</span>
     </div>
     <div class="footer-links">
-      <a href="index.html">Picks</a>
-      <a href="index.html#results">Results</a>
+      <a href="/" id="footer-picks">Picks</a>
+      <a href="/" id="footer-results">Results</a>
       <a href="https://x.com/EyeBlackIQ" target="_blank" rel="noopener">𝕏</a>
     </div>
     <div class="footer-copy">© 2026 EyeBlackIQ</div>
@@ -365,15 +365,22 @@ function setNavActive() {
   if (nr) nr.classList.toggle('active', activeTab==='RESULTS');
 }
 
+/** Keep address bar clean: same-origin path for both tabs (no #results brand). */
+function cleanUrl() {
+  if (location.hash) {
+    history.replaceState(null, '', location.pathname || '/');
+  }
+}
+
 function showTab(tab) {
   activeTab = tab === 'RESULTS' ? 'RESULTS' : 'PICKS';
   document.querySelectorAll('.primary-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === activeTab));
   const picks = document.getElementById('picks-panel');
   const results = document.getElementById('results-section');
+  cleanUrl();
   if (activeTab === 'RESULTS') {
     if (picks) picks.style.display = 'none';
     if (results) results.style.display = 'block';
-    history.replaceState(null, '', '#results');
     loadDay1().then(renderResults).catch(() => {
       const tb = document.getElementById('results-tbody');
       if (tb) tb.innerHTML = '<tr><td colspan="9" class="empty-state">Results load error</td></tr>';
@@ -381,7 +388,6 @@ function showTab(tab) {
   } else {
     if (picks) picks.style.display = '';
     if (results) results.style.display = 'none';
-    if (location.hash === '#results') history.replaceState(null, '', location.pathname + location.search);
     renderPicks();
   }
   setNavActive();
@@ -391,14 +397,16 @@ function showTab(tab) {
 document.querySelectorAll('.primary-tab').forEach(btn => {
   btn.addEventListener('click', () => showTab(btn.dataset.tab));
 });
-document.getElementById('nav-results')?.addEventListener('click', (e) => {
-  e.preventDefault();
-  showTab('RESULTS');
-});
-document.getElementById('nav-picks')?.addEventListener('click', (e) => {
-  e.preventDefault();
-  showTab('PICKS');
-});
+function bindTabLink(id, tab) {
+  document.getElementById(id)?.addEventListener('click', (e) => {
+    e.preventDefault();
+    showTab(tab);
+  });
+}
+bindTabLink('nav-results', 'RESULTS');
+bindTabLink('nav-picks', 'PICKS');
+bindTabLink('footer-results', 'RESULTS');
+bindTabLink('footer-picks', 'PICKS');
 document.getElementById('results-unit-tabs')?.addEventListener('click', e => {
   const btn = e.target.closest('[data-unit]');
   if (!btn) return;
@@ -426,8 +434,10 @@ loadData().then(({slip, record}) => {
     }
   }
   updateRecordBar(record);
-  const wantResults = (location.hash||'').toLowerCase() === '#results';
-  showTab(wantResults ? 'RESULTS' : 'PICKS');
+  // Legacy #results bookmarks: open Results once, then strip hash → clean `/`
+  const legacyResults = (location.hash || '').toLowerCase() === '#results';
+  cleanUrl();
+  showTab(legacyResults ? 'RESULTS' : 'PICKS');
 });
 </script>
 </body>
