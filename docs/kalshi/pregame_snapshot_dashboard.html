@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"/>
+<title>Pregame Snapshot Dashboard · MLB look</title>
+<style>
+    :root { --navy:#1B365D; --green:#1F7A4C; --red:#B42318; --muted:#6B7280; }
+    body{margin:0;font-family:Calibri,Segoe UI,system-ui,sans-serif;background:#F7F8FA;color:#1A1A1A}
+    .wrap{max-width:1080px;margin:0 auto;padding:24px 18px 64px}
+    h1{color:var(--navy);font-size:26px;margin:0 0 4px}
+    h2{color:var(--navy);font-size:18px;margin:28px 0 10px;border-bottom:2px solid #1B365D;padding-bottom:4px}
+    .sub{color:var(--muted);margin:0 0 16px}
+    .tabs{display:flex;gap:8px;margin:12px 0 18px}
+    .tab{padding:8px 14px;border-radius:8px;background:#E8EEF5;color:var(--navy);font-weight:700;cursor:default;border:1px solid #D9DDE3}
+    .tab.active{background:var(--navy);color:#fff}
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+    .card{background:#fff;border:1px solid #D9DDE3;border-radius:10px;padding:12px 14px}
+    .k{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+    .v{font-size:22px;font-weight:700;margin-top:4px;color:var(--navy)}
+    .good{color:var(--green)}.bad{color:var(--red)}
+    table{width:100%;border-collapse:collapse;font-size:13px;background:#fff}
+    th{background:var(--navy);color:#fff;padding:8px;text-align:center}
+    td{padding:7px 8px;border-bottom:1px solid #D9DDE3;text-align:center}
+    tr:nth-child(even) td{background:#FAFBFC}
+    .pos{background:#E7F4EC;color:var(--green);font-weight:700}
+    .neg{background:#F9E4E2;color:var(--red);font-weight:700}
+    .pill{display:inline-block;padding:2px 8px;border-radius:999px;background:#F4EBD3;color:var(--navy);font-size:11px;margin-right:6px;font-weight:600}
+    .warn{background:#FFF7ED;border-left:4px solid #F59E0B;padding:10px 12px;margin:10px 0;border-radius:0 8px 8px 0}
+    .crit{background:#F9E4E2;border-left:4px solid #B42318;padding:10px 12px;margin:8px 0}
+    .note{color:var(--muted);font-size:12px}
+    </style></head>
+<body><div class="wrap">
+<span class="pill">3.18.59</span>
+<span class="pill">CC-KALSHI-20261111-pregame-correct</span>
+<span class="pill">Pregame ONLY</span>
+<span class="pill">NOT live_signals</span>
+<h1>MLB Pregame Book · Snapshot Dashboard</h1>
+<p class="sub">2026-10-31  ·  1u American  ·  green plus-edge only  ·  grades after all games are final<br/>PnL is green plus-edge only (model% − imp% > 0), any tier. Red/negative and unmodeled rows are ignored — not a fade ticket. Missing juice pays even. DNP props void. Split sides dropped. HR and SB are fun/longshot — not graded as stakes.</p>
+
+<div class="tabs">
+  <div class="tab active">Flat $10 (= 1u × $10)</div>
+  <div class="tab">Kelly (N/A — pack is fixed 1u; same numbers)</div>
+</div>
+
+<div class="grid">
+  <div class="card"><div class="k">Hit rate (slip)</div><div class="v good">57.0%</div></div>
+  <div class="card"><div class="k">Slip PnL (1u)</div><div class="v good">+43.52u</div></div>
+  <div class="card"><div class="k">Slip PnL flat $10</div><div class="v good">$+435.22</div></div>
+  <div class="card"><div class="k">W-L · days +/−</div><div class="v">215-162 · 33/18</div></div>
+</div>
+
+<div class="warn"><b>Slip ≠ LOG.</b> Official slip is Record green plus-edge only (215-162, +43.52u).
+LOG/full tape = Take (4675) + On Deck (792) across 56 days — <b>not</b> blended into slip HR/PnL.
+Prior ~58% blended live_signals grade was the <b>wrong universe</b>.</div>
+
+<h2>POD / daily Record (winning vs losing days)</h2>
+<table>
+<tr><th>Date</th><th>W-L</th><th>P</th><th>V</th><th>PnL 1u</th><th>Flat $10</th><th>Cum 1u</th><th>Cum $10</th><th>Win%</th></tr>
+<tr><td>2026-08-27</td><td>9-3</td><td>0</td><td>0</td><td class='pos'>+6.44u</td><td class='pos'>$+64.40</td><td>+6.44u</td><td>$+64.40</td><td>75.0</td></tr><tr><td>2026-08-28</td><td>8-7</td><td>0</td><td>0</td><td class='pos'>+0.33u</td><td class='pos'>$+3.34</td><td>+6.77u</td><td>$+67.74</td><td>53.3</td></tr><tr><td>2026-08-29</td><td>5-5</td><td>0</td><td>0</td><td class='neg'>-1.58u</td><td class='neg'>$-15.80</td><td>+5.19u</td><td>$+51.93</td><td>50.0</td></tr><tr><td>2026-08-30</td><td>4-2</td><td>0</td><td>1</td><td class='pos'>+1.24u</td><td class='pos'>$+12.45</td><td>+6.44u</td><td>$+64.38</td><td>66.7</td></tr><tr><td>2026-08-31</td><td>1-3</td><td>0</td><td>0</td><td class='neg'>-2.26u</td><td class='neg'>$-22.65</td><td>+4.17u</td><td>$+41.74</td><td>25.0</td></tr><tr><td>2026-09-01</td><td>7-5</td><td>0</td><td>0</td><td class='pos'>+1.26u</td><td class='pos'>$+12.62</td><td>+5.44u</td><td>$+54.36</td><td>58.3</td></tr><tr><td>2026-09-02</td><td>3-1</td><td>0</td><td>0</td><td class='pos'>+2.95u</td><td class='pos'>$+29.50</td><td>+8.39u</td><td>$+83.86</td><td>75.0</td></tr><tr><td>2026-09-03</td><td>13-8</td><td>0</td><td>0</td><td class='pos'>+4.39u</td><td class='pos'>$+43.95</td><td>+12.78u</td><td>$+127.81</td><td>61.9</td></tr><tr><td>2026-09-04</td><td>2-7</td><td>1</td><td>0</td><td class='neg'>-5.02u</td><td class='neg'>$-50.17</td><td>+7.76u</td><td>$+77.64</td><td>22.2</td></tr><tr><td>2026-09-05</td><td>24-22</td><td>1</td><td>4</td><td class='neg'>-0.35u</td><td class='neg'>$-3.53</td><td>+7.41u</td><td>$+74.11</td><td>52.2</td></tr><tr><td>2026-09-06</td><td>26-22</td><td>1</td><td>1</td><td class='pos'>+0.19u</td><td class='pos'>$+1.92</td><td>+7.60u</td><td>$+76.02</td><td>54.2</td></tr><tr><td>2026-09-07</td><td>8-8</td><td>0</td><td>0</td><td class='neg'>-1.58u</td><td class='neg'>$-15.84</td><td>+6.02u</td><td>$+60.18</td><td>50.0</td></tr><tr><td>2026-09-08</td><td>9-11</td><td>0</td><td>0</td><td class='neg'>-0.83u</td><td class='neg'>$-8.29</td><td>+5.19u</td><td>$+51.89</td><td>45.0</td></tr><tr><td>2026-09-09</td><td>10-9</td><td>0</td><td>3</td><td class='neg'>-0.10u</td><td class='neg'>$-0.99</td><td>+5.09u</td><td>$+50.90</td><td>52.6</td></tr><tr><td>2026-09-10</td><td>1-0</td><td>0</td><td>0</td><td class='pos'>+0.78u</td><td class='pos'>$+7.81</td><td>+5.87u</td><td>$+58.71</td><td>100.0</td></tr><tr><td>2026-09-11</td><td>12-8</td><td>0</td><td>0</td><td class='pos'>+1.76u</td><td class='pos'>$+17.63</td><td>+7.63u</td><td>$+76.34</td><td>60.0</td></tr><tr><td>2026-09-12</td><td>4-4</td><td>0</td><td>0</td><td class='pos'>+0.31u</td><td class='pos'>$+3.12</td><td>+7.95u</td><td>$+79.46</td><td>50.0</td></tr><tr><td>2026-09-14</td><td>2-4</td><td>0</td><td>0</td><td class='neg'>-2.23u</td><td class='neg'>$-22.31</td><td>+5.71u</td><td>$+57.15</td><td>33.3</td></tr><tr><td>2026-09-15</td><td>3-3</td><td>0</td><td>0</td><td class='neg'>-0.13u</td><td class='neg'>$-1.29</td><td>+5.59u</td><td>$+55.86</td><td>50.0</td></tr><tr><td>2026-09-16</td><td>3-2</td><td>0</td><td>1</td><td class='pos'>+0.59u</td><td class='pos'>$+5.92</td><td>+6.18u</td><td>$+61.78</td><td>60.0</td></tr><tr><td>2026-09-17</td><td>1-1</td><td>0</td><td>0</td><td class='neg'>-0.17u</td><td class='neg'>$-1.67</td><td>+6.01u</td><td>$+60.11</td><td>50.0</td></tr><tr><td>2026-09-18</td><td>5-0</td><td>0</td><td>0</td><td class='pos'>+5.54u</td><td class='pos'>$+55.40</td><td>+11.55u</td><td>$+115.51</td><td>100.0</td></tr><tr><td>2026-09-20</td><td>1-4</td><td>0</td><td>0</td><td class='neg'>-3.05u</td><td class='neg'>$-30.48</td><td>+8.50u</td><td>$+85.04</td><td>20.0</td></tr><tr><td>2026-09-21</td><td>1-0</td><td>0</td><td>0</td><td class='pos'>+1.00u</td><td class='pos'>$+10.00</td><td>+9.50u</td><td>$+95.04</td><td>100.0</td></tr><tr><td>2026-09-22</td><td>0-1</td><td>0</td><td>0</td><td class='neg'>-1.00u</td><td class='neg'>$-10.00</td><td>+8.50u</td><td>$+85.04</td><td>0.0</td></tr><tr><td>2026-09-23</td><td>7-2</td><td>0</td><td>0</td><td class='pos'>+4.49u</td><td class='pos'>$+44.89</td><td>+12.99u</td><td>$+129.93</td><td>77.8</td></tr><tr><td>2026-09-24</td><td>1-0</td><td>0</td><td>0</td><td class='pos'>+0.96u</td><td class='pos'>$+9.62</td><td>+13.95u</td><td>$+139.54</td><td>100.0</td></tr><tr><td>2026-09-25</td><td>2-1</td><td>0</td><td>0</td><td class='pos'>+0.88u</td><td class='pos'>$+8.83</td><td>+14.84u</td><td>$+148.38</td><td>66.7</td></tr><tr><td>2026-09-26</td><td>3-0</td><td>0</td><td>0</td><td class='pos'>+2.74u</td><td class='pos'>$+27.39</td><td>+17.58u</td><td>$+175.76</td><td>100.0</td></tr><tr><td>2026-09-27</td><td>2-0</td><td>0</td><td>0</td><td class='pos'>+2.01u</td><td class='pos'>$+20.09</td><td>+19.59u</td><td>$+195.85</td><td>100.0</td></tr><tr><td>2026-09-29</td><td>4-0</td><td>0</td><td>0</td><td class='pos'>+3.64u</td><td class='pos'>$+36.36</td><td>+23.22u</td><td>$+232.21</td><td>100.0</td></tr><tr><td>2026-09-30</td><td>1-0</td><td>0</td><td>0</td><td class='pos'>+1.15u</td><td class='pos'>$+11.50</td><td>+24.37u</td><td>$+243.71</td><td>100.0</td></tr><tr><td>2026-10-01</td><td>1-0</td><td>0</td><td>0</td><td class='pos'>+1.00u</td><td class='pos'>$+10.00</td><td>+25.37u</td><td>$+253.71</td><td>100.0</td></tr><tr><td>2026-10-03</td><td>2-1</td><td>0</td><td>0</td><td class='pos'>+1.32u</td><td class='pos'>$+13.19</td><td>+26.69u</td><td>$+266.90</td><td>66.7</td></tr><tr><td>2026-10-04</td><td>0-0</td><td>1</td><td>1</td><td class=''>+0.00u</td><td class=''>$+0.00</td><td>+26.69u</td><td>$+266.90</td><td>—</td></tr><tr><td>2026-10-05</td><td>1-0</td><td>0</td><td>0</td><td class='pos'>+0.83u</td><td class='pos'>$+8.33</td><td>+27.52u</td><td>$+275.24</td><td>100.0</td></tr><tr><td>2026-10-06</td><td>5-1</td><td>0</td><td>0</td><td class='pos'>+6.94u</td><td class='pos'>$+69.40</td><td>+34.46u</td><td>$+344.64</td><td>83.3</td></tr><tr><td>2026-10-07</td><td>3-0</td><td>0</td><td>0</td><td class='pos'>+2.81u</td><td class='pos'>$+28.12</td><td>+37.28u</td><td>$+372.75</td><td>100.0</td></tr><tr><td>2026-10-08</td><td>2-0</td><td>0</td><td>0</td><td class='pos'>+2.00u</td><td class='pos'>$+20.00</td><td>+39.28u</td><td>$+392.75</td><td>100.0</td></tr><tr><td>2026-10-10</td><td>2-1</td><td>0</td><td>1</td><td class='pos'>+1.50u</td><td class='pos'>$+15.00</td><td>+40.78u</td><td>$+407.75</td><td>66.7</td></tr><tr><td>2026-10-11</td><td>3-0</td><td>0</td><td>0</td><td class='pos'>+3.06u</td><td class='pos'>$+30.65</td><td>+43.84u</td><td>$+438.40</td><td>100.0</td></tr><tr><td>2026-10-12</td><td>2-3</td><td>0</td><td>0</td><td class='neg'>-0.73u</td><td class='neg'>$-7.30</td><td>+43.11u</td><td>$+431.10</td><td>40.0</td></tr><tr><td>2026-10-13</td><td>0-2</td><td>0</td><td>0</td><td class='neg'>-2.00u</td><td class='neg'>$-20.00</td><td>+41.11u</td><td>$+411.10</td><td>0.0</td></tr><tr><td>2026-10-14</td><td>2-4</td><td>0</td><td>0</td><td class='neg'>-1.62u</td><td class='neg'>$-16.17</td><td>+39.49u</td><td>$+394.93</td><td>33.3</td></tr><tr><td>2026-10-15</td><td>1-0</td><td>0</td><td>0</td><td class='pos'>+1.20u</td><td class='pos'>$+12.00</td><td>+40.69u</td><td>$+406.93</td><td>100.0</td></tr><tr><td>2026-10-17</td><td>0-1</td><td>0</td><td>0</td><td class='neg'>-1.00u</td><td class='neg'>$-10.00</td><td>+39.69u</td><td>$+396.93</td><td>0.0</td></tr><tr><td>2026-10-18</td><td>1-1</td><td>0</td><td>0</td><td class='pos'>+0.48u</td><td class='pos'>$+4.80</td><td>+40.17u</td><td>$+401.73</td><td>50.0</td></tr><tr><td>2026-10-19</td><td>1-2</td><td>0</td><td>0</td><td class='neg'>-1.09u</td><td class='neg'>$-10.91</td><td>+39.08u</td><td>$+390.82</td><td>33.3</td></tr><tr><td>2026-10-23</td><td>2-1</td><td>0</td><td>0</td><td class='pos'>+1.20u</td><td class='pos'>$+12.00</td><td>+40.28u</td><td>$+402.82</td><td>66.7</td></tr><tr><td>2026-10-24</td><td>1-2</td><td>0</td><td>0</td><td class='neg'>-1.00u</td><td class='neg'>$-10.00</td><td>+39.28u</td><td>$+392.82</td><td>33.3</td></tr><tr><td>2026-10-26</td><td>3-0</td><td>0</td><td>0</td><td class='pos'>+3.17u</td><td class='pos'>$+31.70</td><td>+42.45u</td><td>$+424.52</td><td>100.0</td></tr><tr><td>2026-10-27</td><td>1-0</td><td>0</td><td>0</td><td class='pos'>+1.07u</td><td class='pos'>$+10.70</td><td>+43.52u</td><td>$+435.22</td><td>100.0</td></tr>
+<tr><th>TOTAL</th><th>215-162</th><th>4</th><th>12</th>
+<th class="pos">+43.52u</th>
+<th class="pos">$+435.22</th>
+<th>+43.52u</th><th>$+435.22</th>
+<th>57.0</th></tr>
+</table>
+
+<h2>LOG / full snapshot universe (ungraded mass — counts only)</h2>
+<p class="note">LOG universe = Take + On Deck research tape. SLIP = Record green plus-edge Lineup book only. Do NOT blend LOG n into slip HR/PnL.</p>
+<table>
+<tr><th>Bucket</th><th>n</th></tr>
+<tr><td>Lineup cards (slip candidates)</td><td>283</td></tr>
+<tr><td>Take (LOG)</td><td>4675</td></tr>
+<tr><td>On Deck (LOG)</td><td>792</td></tr>
+<tr><td>Corrupt flags sample</td><td>12</td></tr>
+<tr><td>Neg-edge on Lineup</td><td>9</td></tr>
+</table>
+
+<h2>Asia / Winter intl pregame (ledger · dual-SP CORE slip vs LOG)</h2>
+<table>
+<tr><th>Book</th><th>n</th><th>HR</th><th>Flat $10</th><th>1u</th><th>ROI</th></tr>
+<tr><td>Asia pregame graded</td><td>9</td><td>0.5556</td>
+<td>$+9.67</td><td>+0.97u</td><td>0.1074</td></tr>
+<tr><td>Winter LMP/LIDOM/LVBP</td><td>86</td><td>0.5814</td>
+<td>$+64.05</td><td>+6.40u</td><td>0.0745</td></tr>
+<tr><td>CORE dual-SP slip</td><td>40</td><td>0.625</td>
+<td>$+76.22</td><td>+7.62u</td><td>0.1905</td></tr>
+<tr><td>LOG / non-CORE</td><td>55</td><td>0.5455</td>
+<td>$-2.50</td><td>-0.25u</td><td>-0.0045</td></tr>
+<tr><td>CORE but SP-missing → LOG</td><td colspan="5">0 — Labeled CORE but missing SP — excluded from CORE slip metrics → LOG</td></tr>
+</table>
+
+<h2>Website flow (EyeBlackIQ — simple)</h2>
+<ol>
+<li><b>Day N:</b> publish finalized Lineup slip (green plus-edge only).</li>
+<li><b>Day N+1:</b> grade previous day → append Record row (W-L, PnL, Cum).</li>
+<li>Hub shows <b>Hit Rate first</b>, then Cum PnL, then day table (green/red).</li>
+<li>LOG/Take never on the public HR card.</li>
+</ol>
+
+<h2>Schema align note</h2>
+<p class="note">Canonical offseason pack: <code>TODAY_snapshot.xlsx</code> sheets Record/Lineup/On Deck/HR/Parlay.
+Alternate <code>TODAY_snapshot_latest.xlsx</code> uses Record/Slip/Pass/Watch (FIRE subset) — do not mix into canonical Cum without remap.</p>
+
+<p class="note">Generated 2026-11-11T13:00:42.409491+00:00 · template for all sports scrapers</p>
+</div></body></html>

@@ -13,3 +13,16 @@ data/raw/
 venv/
 .venv/
 *.bak
+data/cricket/
+*.zip
+scrapers/cache/
+
+# secrets / local
+.env.*
+!.env.example
+*.pem
+*.key
+__pycache__/
+.pytest_cache/
+logs/
+

@@ -27,6 +27,7 @@
       <a href="index.html" class="nav-link active">Today</a>
       <a href="pod.html"   class="nav-link">📌 PODs</a>
       <a href="results.html" class="nav-link">Results</a>
+      <a href="kalshi/day1_results.html" class="nav-link">Day-1</a>
       <a href="methodology.html" class="nav-link">Playbook</a>
       <a href="validation.html"  class="nav-link">Validation</a>
     </nav>
@@ -61,7 +62,7 @@
   <span class="date-sublabel">Model updated daily · All picks posted at time of signal · Always verify lines before acting</span>
 </div>
 
-<!-- PRIMARY TAB BAR: Game Picks | Props | Pick'em -->
+<!-- PRIMARY TAB BAR: Game Picks | Props | Pick'em | DFS | Compare -->
 <div class="primary-tab-bar">
   <div class="primary-tab-inner">
     <button class="primary-tab active" data-tab="GAME" id="tab-game">
@@ -78,6 +79,16 @@
       <span class="ptab-icon">🎯</span>
       <span class="ptab-label">Pick'em</span>
       <span class="ptab-sub">PrizePicks · Underdog · ESPN</span>
+    </button>
+    <button class="primary-tab" data-tab="DFS" id="tab-dfs">
+      <span class="ptab-icon">🏆</span>
+      <span class="ptab-label">DFS</span>
+      <span class="ptab-sub">MLB · NHL · Soccer · NCAA</span>
+    </button>
+    <button class="primary-tab" data-tab="COMPARE" id="tab-compare">
+      <span class="ptab-icon">⚖️</span>
+      <span class="ptab-label">Compare</span>
+      <span class="ptab-sub">Team vs Team · All Sports</span>
     </button>
   </div>
 </div>
@@ -174,6 +185,109 @@
     <div class="radar-list" id="fmv-list" style="display:none;"></div>
   </section>
 
+  <!-- DFS SECTION -->
+  <section id="dfs-section" style="display:none;">
+    <div class="dfs-header-row">
+      <h2 class="section-title">🏆 DFS Lineup Builder</h2>
+      <div class="dfs-sport-tabs" id="dfs-sport-tabs">
+        <button class="dfs-sport-btn active" data-dfs-sport="MLB">⚾ MLB</button>
+        <button class="dfs-sport-btn" data-dfs-sport="NHL">🏒 NHL</button>
+        <button class="dfs-sport-btn" data-dfs-sport="SOCCER">⚽ Soccer</button>
+        <button class="dfs-sport-btn" data-dfs-sport="NCAA_BASEBALL">⚾ NCAA</button>
+        <button class="dfs-sport-btn" data-dfs-sport="CRICKET">🏏 Cricket</button>
+        <button class="dfs-sport-btn" data-dfs-sport="HANDBALL">🤾 Handball</button>
+      </div>
+    </div>
+
+    <!-- Platform selector -->
+    <div class="dfs-platform-row">
+      <span class="filter-label">PLATFORM</span>
+      <button class="dfs-platform-btn active" data-platform="DraftKings">DraftKings</button>
+      <button class="dfs-platform-btn" data-platform="FanDuel">FanDuel</button>
+      <button class="dfs-platform-btn" data-platform="PrizePicks">PrizePicks</button>
+      <button class="dfs-platform-btn" data-platform="Underdog">Underdog</button>
+    </div>
+
+    <!-- Combination builder -->
+    <div class="dfs-builder-section">
+      <div class="dfs-builder-header">
+        <span class="dfs-builder-title">Custom Combination Builder</span>
+        <span class="dfs-builder-sub">Select 2–6 picks to build a lineup</span>
+        <span class="dfs-selected-count" id="dfs-selected-count">0 selected</span>
+      </div>
+      <div id="dfs-picks-pool" class="dfs-picks-pool">
+        <p class="empty-state">No DFS-eligible picks today. Run the morning pipeline to populate.</p>
+      </div>
+      <div class="dfs-combo-actions">
+        <button class="dfs-combo-btn" id="dfs-build-btn" onclick="buildDFSCombo()" disabled>
+          Build Combination
+        </button>
+        <button class="dfs-clear-btn" onclick="clearDFSSelection()">Clear</button>
+      </div>
+    </div>
+
+    <!-- Suggested lineups -->
+    <div class="dfs-suggested-section">
+      <h3 class="dfs-sub-title">🤖 Model-Suggested Lineups</h3>
+      <div class="dfs-lineup-note">Ranked by combined EV · Top picks per position/slot</div>
+      <div id="dfs-lineups-grid" class="dfs-lineups-grid">
+        <p class="empty-state">Suggested lineups appear after pipeline runs with DFS-eligible signals.</p>
+      </div>
+    </div>
+
+    <!-- Built combo output -->
+    <div id="dfs-combo-output" class="dfs-combo-output" style="display:none;">
+      <h3 class="dfs-sub-title">📋 Your Combination</h3>
+      <div id="dfs-combo-list" class="dfs-combo-list"></div>
+      <div id="dfs-combo-stats" class="dfs-combo-stats"></div>
+    </div>
+  </section>
+
+  <!-- COMPARE SECTION -->
+  <section id="compare-section" style="display:none;">
+    <h2 class="section-title">⚖️ Team Comparison</h2>
+    <div class="compare-inputs">
+      <div class="compare-team-block">
+        <label class="compare-label">Team A</label>
+        <input type="text" id="compare-team-a" class="compare-input" placeholder="e.g. Tennessee, Chicago Blackhawks, Arsenal" autocomplete="off">
+        <div class="compare-autocomplete" id="compare-ac-a" style="display:none;"></div>
+      </div>
+      <div class="compare-vs-badge">VS</div>
+      <div class="compare-team-block">
+        <label class="compare-label">Team B</label>
+        <input type="text" id="compare-team-b" class="compare-input" placeholder="e.g. Arkansas, Colorado Avalanche, Chelsea" autocomplete="off">
+        <div class="compare-autocomplete" id="compare-ac-b" style="display:none;"></div>
+      </div>
+      <div class="compare-sport-block">
+        <label class="compare-label">Sport</label>
+        <select id="compare-sport" class="compare-select">
+          <option value="">Auto-detect</option>
+          <option value="NCAA_BASEBALL">NCAA Baseball</option>
+          <option value="MLB">MLB</option>
+          <option value="NHL">NHL</option>
+          <option value="SOCCER">Soccer</option>
+          <option value="CRICKET">Cricket</option>
+          <option value="HANDBALL">Handball</option>
+        </select>
+      </div>
+      <button class="compare-run-btn" onclick="runComparison()">Compare →</button>
+    </div>
+
+    <div id="compare-result" class="compare-result" style="display:none;">
+      <!-- Win probability banner -->
+      <div class="compare-prob-banner" id="compare-prob-banner"></div>
+
+      <!-- Metrics table -->
+      <div class="compare-metrics-grid" id="compare-metrics-grid"></div>
+
+      <!-- Signal context -->
+      <div class="compare-signal-ctx" id="compare-signal-ctx"></div>
+    </div>
+    <div id="compare-empty" class="empty-state" style="margin-top:24px;">
+      Enter two teams above to compare model ratings, ELO, and win probability.
+    </div>
+  </section>
+
   <div class="disclaimer">
     All picks posted at time of signal. Lines move — always verify current price before acting.<br>
     EyeBlackIQ is for informational and entertainment purposes only.
@@ -214,7 +328,10 @@ function sportColor(s) { return SPORT_COLORS[(s||'').toUpperCase()] || '#555'; }
 
 // ── State ─────────────────────────────────────────────────────────────────────
 let filters   = { sport:'ALL', tier:'ALL', pods:false, prop_sub:'ALL' };
-let activeTab = 'GAME';   // 'GAME' | 'PROPS' | 'PICKEM'
+let activeTab = 'GAME';   // 'GAME' | 'PROPS' | 'PICKEM' | 'DFS' | 'COMPARE'
+let dfsActiveSport   = 'MLB';
+let dfsActivePlatform = 'DraftKings';
+let dfsSelectedPicks = new Set();
 let slipData  = null;
 let radarOpen = false;
 let fmvOpen   = false;
@@ -297,6 +414,38 @@ function visualFlags(pick) {
   return flags.length?`<div class="visual-flags">${flags.join('')}</div>`:'';
 }
 
+// ── Live indicator ────────────────────────────────────────────────────────────
+function liveBadge(pick) {
+  if(pick.state==='in'||pick.live===true||pick.is_live===true) {
+    return `<span class="live-badge"><span class="live-dot"></span>LIVE</span>`;
+  }
+  return '';
+}
+
+// ── Gate 4 line movement flag ──────────────────────────────────────────────────
+function gate4Flag(pick) {
+  if(pick.gate4_flagged||pick.line_move_note||pick.line_move_direction) {
+    const dir = (pick.line_move_direction||'').toUpperCase();
+    const note = pick.line_move_note||`Line moved ${dir||'—'} since signal`;
+    const cls = dir==='AGAINST'?'g4-flag-against':'g4-flag-with';
+    return `<div class="gate4-flag ${cls}" title="${note}">⚑ ${note}</div>`;
+  }
+  return '';
+}
+
+// ── O/U context block ──────────────────────────────────────────────────────────
+function ouContext(pick) {
+  // Show O/U model projection if available on any pick type
+  const hasOU = pick.model_total || pick.ou_over_pct || pick.ou_under_pct;
+  if(!hasOU) return '';
+  const total = pick.market_total ? `Line: ${pick.market_total}` : '';
+  const modelLine = pick.model_total ? `Model: ${Number(pick.model_total).toFixed(1)}` : '';
+  const overPct  = pick.ou_over_pct  ? `O ${(pick.ou_over_pct*100).toFixed(0)}%`  : '';
+  const underPct = pick.ou_under_pct ? `U ${(pick.ou_under_pct*100).toFixed(0)}%` : '';
+  const parts = [total, modelLine, overPct, underPct].filter(Boolean);
+  return `<div class="ou-context">${parts.join(' · ')}</div>`;
+}
+
 // ── Game pick card ────────────────────────────────────────────────────────────
 function pickCard(pick) {
   const edge    = typeof pick.edge_pct!=='undefined' ? pick.edge_pct : (pick.edge||0)*100;
@@ -311,15 +460,19 @@ function pickCard(pick) {
   const slipDate = (slipData&&slipData.date)?slipData.date:null;
   const isFuture = pick.signal_date&&slipDate&&pick.signal_date>slipDate;
   const futureBadge = isFuture?`<span class="future-badge">📅 ${pick.signal_date}</span>`:'';
-  const gameHtml = pick.game?`<div class="pick-game">${futureBadge}${pick.game}${pick.game_time?` <span class="pick-time">${pick.game_time}</span>`:''}</div>`:'';
+  const liveHtml  = liveBadge(pick);
+  const gameHtml = pick.game?`<div class="pick-game">${futureBadge}${liveHtml}${pick.game}${pick.game_time?` <span class="pick-time">${pick.game_time}</span>`:''}</div>`
+    :(liveHtml?`<div class="pick-game">${liveHtml}</div>`:'');
   const podTag   = isPod?`<span class="pod-crown">📌 POD</span>`:'';
   const pickemTag = isPickem(pick)?`<span class="badge-pickem">PICK'EM</span>`:'';
   const btLabel  = getBetTypeLabel(pick.bet_type||pick.market||'');
   const betBadge = btLabel?`<span class="badge-bet-type">${btLabel}</span>`:'';
   const flagsHtml = visualFlags(pick);
+  const g4Html   = gate4Flag(pick);
+  const ouHtml   = ouContext(pick);
   const sc = sportColor(pick.sport);
   return `
-  <div class="pick-card ${tclass}${isPod?' pod-highlight':''}" style="--sport-color:${sc}">
+  <div class="pick-card ${tclass}${isPod?' pod-highlight':''}${pick.state==='in'?' pick-live':''}" style="--sport-color:${sc}">
     <div class="pick-header">
       <span class="pick-tier">${sportIcon(pick.sport)} ${pick.tier||'—'}</span>
       <div class="pick-header-right">
@@ -334,7 +487,7 @@ function pickCard(pick) {
       <span class="pick-edge">Edge ${sign}${Number(edge).toFixed(1)}%</span>
       ${pick.ev?`<span class="pick-ev">EV ${pick.ev>=0?'+':''}${(pick.ev*100).toFixed(1)}%</span>`:''}
     </div>
-    ${gameHtml}${flagsHtml}${rlHtml}
+    ${ouHtml}${gameHtml}${flagsHtml}${g4Html}${rlHtml}
   </div>`;
 }
 
@@ -398,24 +551,41 @@ function propCard(pick) {
 // ── Pick'em card ──────────────────────────────────────────────────────────────
 function pickemCard(pick) {
   const edge = typeof pick.edge_pct!=='undefined'?pick.edge_pct:(pick.edge||0)*100;
-  const oddsRaw = pick.odds;
-  const oddsStr = oddsRaw>0?`+${oddsRaw}`:(oddsRaw?`${oddsRaw}`:'EVEN');
   const units = pick.units||1.0;
   const src = (pick.pick_source||'').toUpperCase();
-  const srcLabel = src==='PICKEM'?'Pick\'em':src.includes('PRIZE')?'PrizePicks':src.includes('UNDER')?'Underdog':src.includes('ESPN')?'ESPN':src||'Pick\'em';
+  const srcLabel = src.includes('PRIZE')?'PrizePicks':src.includes('UNDER')?'Underdog':src.includes('ESPN')?'ESPN':src.includes('DK')||src.includes('DRAFTKINGS')?'DK Pick\'em':'Pick\'em';
+  const srcClass = srcLabel==='PrizePicks'?'prop-src-pp':srcLabel==='Underdog'?'prop-src-ud':srcLabel==='ESPN'?'prop-src-espn':'prop-src-other';
+
+  // Parse player/team from notes or structured fields
+  const nm = parseNoteMap(pick.notes);
+  const player     = nm['player']  || pick.player  || pick.side || pick.pick || '—';
+  const team       = nm['team']    || pick.team     || '';
+  const appLine    = nm['line']    || pick.app_line || nm['threshold'] || pick.market || '';
+  const modelPred  = nm['model']   || pick.model_prediction || (pick.lambda ? Number(pick.lambda).toFixed(2) : '');
+  const direction  = nm['dir']     || pick.direction || (pick.bet_type||'').toUpperCase().includes('OVER')?'OVER':(pick.bet_type||'').toUpperCase().includes('UNDER')?'UNDER':'';
+  const edgeSign   = edge>=0?'+':'';
+  const liveHtml   = liveBadge(pick);
+
   return `
   <div class="pick-card pickem-card">
     <div class="pick-header">
       <span class="pick-tier" style="color:#8B5CF6;">${sportIcon(pick.sport)} ${pick.sport||'—'}</span>
       <div class="pick-header-right">
-        <span class="badge-pickem-src">${srcLabel}</span>
+        <span class="prop-src-badge ${srcClass}">${srcLabel}</span>
         <span class="pick-units">${units}u</span>
       </div>
     </div>
-    <div class="pick-side">${pick.side||pick.pick||'—'}</div>
-    <div class="pick-meta">
-      ${oddsRaw?`<span class="pick-odds">${oddsStr}</span>`:''}
-      ${edge>0?`<span class="pick-edge">Edge +${Number(edge).toFixed(1)}%</span>`:''}
+    <!-- Player Name + Team row -->
+    <div class="pickem-player-row">
+      <span class="pickem-player-name">${player}</span>
+      ${team?`<span class="pickem-team-tag">${team}</span>`:''}
+      ${liveHtml}
+    </div>
+    <!-- Lines table: App Line | Model | Edge -->
+    <div class="pickem-lines-row">
+      ${appLine?`<div class="pickem-line-cell"><span class="pickem-line-label">App Line</span><span class="pickem-line-val">${appLine}</span></div>`:''}
+      ${modelPred?`<div class="pickem-line-cell"><span class="pickem-line-label">Model</span><span class="pickem-line-val">${modelPred}${direction?` <span class="pickem-dir ${direction.toLowerCase()}">${direction}</span>`:''}</span></div>`:''}
+      <div class="pickem-line-cell pickem-edge-cell"><span class="pickem-line-label">Edge</span><span class="pickem-line-val pickem-edge-val">${edgeSign}${Number(edge).toFixed(1)}%</span></div>
     </div>
     ${pick.game?`<div class="pick-game">${pick.game}</div>`:''}
   </div>`;
@@ -508,9 +678,181 @@ function passesFilter(pick) {
   return true;
 }
 
+// ── DFS helpers ───────────────────────────────────────────────────────────────
+function renderDFS() {
+  // Show/hide DFS section
+  document.getElementById('dfs-section').style.display = 'block';
+  // Populate DFS picks pool from today's recommended picks for active sport
+  const allRec = slipData ? slipData.recommended||[] : [];
+  const today  = slipData ? slipData.date||'' : '';
+  const todayPicks = allRec.filter(p=>(!p.signal_date||p.signal_date===today));
+  const dfsPicks = todayPicks.filter(p=>{
+    const sp = (p.sport||'').toUpperCase();
+    return dfsActiveSport==='ALL'||sp===dfsActiveSport||sp.includes(dfsActiveSport);
+  });
+  const pool = document.getElementById('dfs-picks-pool');
+  if(!pool) return;
+  if(!dfsPicks.length) {
+    pool.innerHTML = `<p class="empty-state">No ${dfsActiveSport} picks today. Run the morning pipeline to populate.</p>`;
+    return;
+  }
+  pool.innerHTML = dfsPicks.map((p,i)=>{
+    const edge = typeof p.edge_pct!=='undefined'?p.edge_pct:(p.edge||0)*100;
+    const nm = parseNoteMap(p.notes);
+    const player = nm['player']||p.player||p.side||p.pick||'—';
+    const team = nm['team']||p.team||'';
+    const sel = dfsSelectedPicks.has(i);
+    return `<div class="dfs-pick-tile${sel?' dfs-selected':''}" onclick="toggleDFSPick(${i},this)" data-idx="${i}">
+      <span class="dfs-tile-sport">${sportIcon(p.sport)}</span>
+      <div class="dfs-tile-main">
+        <span class="dfs-tile-player">${player}</span>
+        ${team?`<span class="dfs-tile-team">${team}</span>`:''}
+      </div>
+      <div class="dfs-tile-edge">+${Number(edge).toFixed(1)}%</div>
+      <div class="dfs-tile-check">${sel?'✓':''}</div>
+    </div>`;
+  }).join('');
+  updateDFSBuildBtn();
+}
+
+function toggleDFSPick(idx, el) {
+  if(dfsSelectedPicks.has(idx)) { dfsSelectedPicks.delete(idx); el.classList.remove('dfs-selected'); el.querySelector('.dfs-tile-check').textContent=''; }
+  else if(dfsSelectedPicks.size<6) { dfsSelectedPicks.add(idx); el.classList.add('dfs-selected'); el.querySelector('.dfs-tile-check').textContent='✓'; }
+  updateDFSBuildBtn();
+}
+function updateDFSBuildBtn() {
+  const cnt = dfsSelectedPicks.size;
+  const el = document.getElementById('dfs-selected-count'); if(el) el.textContent=`${cnt} selected`;
+  const btn = document.getElementById('dfs-build-btn'); if(btn) btn.disabled = cnt<2;
+}
+function clearDFSSelection() {
+  dfsSelectedPicks.clear();
+  renderDFS();
+  const out=document.getElementById('dfs-combo-output'); if(out) out.style.display='none';
+}
+function buildDFSCombo() {
+  const allRec = slipData?slipData.recommended||[]:[];
+  const today  = slipData?slipData.date||'':'';
+  const todayPicks = allRec.filter(p=>(!p.signal_date||p.signal_date===today));
+  const dfsPicks = todayPicks.filter(p=>{const sp=(p.sport||'').toUpperCase();return dfsActiveSport==='ALL'||sp===dfsActiveSport||sp.includes(dfsActiveSport);});
+  const selected = [...dfsSelectedPicks].map(i=>dfsPicks[i]).filter(Boolean);
+  if(selected.length<2) return;
+  const totalEdge = selected.reduce((s,p)=>s+(typeof p.edge_pct!=='undefined'?p.edge_pct:(p.edge||0)*100),0)/selected.length;
+  const out=document.getElementById('dfs-combo-output'); if(out) out.style.display='block';
+  const list=document.getElementById('dfs-combo-list');
+  if(list) list.innerHTML=selected.map(p=>{
+    const nm=parseNoteMap(p.notes);
+    const player=nm['player']||p.player||p.side||p.pick||'—';
+    const team=nm['team']||p.team||'';
+    const edge=typeof p.edge_pct!=='undefined'?p.edge_pct:(p.edge||0)*100;
+    return `<div class="dfs-combo-row">
+      <span class="dfs-combo-sport">${sportIcon(p.sport)}</span>
+      <span class="dfs-combo-player">${player}</span>
+      ${team?`<span class="dfs-combo-team">${team}</span>`:''}
+      <span class="dfs-combo-edge">+${Number(edge).toFixed(1)}%</span>
+    </div>`;
+  }).join('');
+  const stats=document.getElementById('dfs-combo-stats');
+  if(stats) stats.innerHTML=`<span>Avg Edge: <strong>+${totalEdge.toFixed(1)}%</strong></span> · <span>${selected.length} picks · ${dfsActivePlatform}</span>`;
+}
+
+// ── Compare helpers ────────────────────────────────────────────────────────────
+function renderCompare() {
+  document.getElementById('compare-section').style.display='block';
+}
+function runComparison() {
+  const a = (document.getElementById('compare-team-a')||{}).value||'';
+  const b = (document.getElementById('compare-team-b')||{}).value||'';
+  const sport = (document.getElementById('compare-sport')||{}).value||'';
+  if(!a.trim()||!b.trim()) { alert('Please enter both team names.'); return; }
+  const res = document.getElementById('compare-result');
+  const emp = document.getElementById('compare-empty');
+  if(res) res.style.display='block';
+  if(emp) emp.style.display='none';
+  // Try to find these teams in today's slip data
+  const allPicks = slipData?[...(slipData.recommended||[]),...(slipData.flagged||[])]:[];
+  const matchTeam = (name,picks) => picks.find(p=>{
+    const g=(p.game||'').toLowerCase(); const s=(p.side||p.pick||'').toLowerCase();
+    const n=name.toLowerCase(); return g.includes(n)||s.includes(n);
+  });
+  const pickA = matchTeam(a,allPicks);
+  const pickB = matchTeam(b,allPicks);
+  // Build probability banner
+  const banner = document.getElementById('compare-prob-banner');
+  if(banner) {
+    if(pickA&&pickB) {
+      const epA = pickA.model_p||pickA.edge_pct||0; const epB = pickB.model_p||pickB.edge_pct||0;
+      const total=epA+epB||1; const pA=epA/total; const pB=epB/total;
+      banner.innerHTML=`
+        <div class="cmp-team-a">${a} <span class="cmp-pct">${(pA*100).toFixed(0)}%</span></div>
+        <div class="cmp-bar"><div class="cmp-bar-fill" style="width:${(pA*100).toFixed(0)}%"></div></div>
+        <div class="cmp-team-b"><span class="cmp-pct">${(pB*100).toFixed(0)}%</span> ${b}</div>`;
+    } else {
+      banner.innerHTML=`<p class="empty-state" style="margin:0;">Model data for "${a}" vs "${b}" not found in today's slip. Run the pipeline first.</p>`;
+    }
+  }
+  // Metrics grid
+  const grid = document.getElementById('compare-metrics-grid');
+  if(grid) {
+    const metrics = [
+      ['Edge', pickA?(typeof pickA.edge_pct!=='undefined'?pickA.edge_pct:(pickA.edge||0)*100).toFixed(1)+'%':'—', pickB?(typeof pickB.edge_pct!=='undefined'?pickB.edge_pct:(pickB.edge||0)*100).toFixed(1)+'%':'—'],
+      ['EV', pickA&&pickA.ev?(pickA.ev*100).toFixed(1)+'%':'—', pickB&&pickB.ev?(pickB.ev*100).toFixed(1)+'%':'—'],
+      ['Tier', pickA?pickA.tier||'—':'—', pickB?pickB.tier||'—':'—'],
+      ['Odds', pickA&&pickA.odds?(pickA.odds>0?'+':'')+pickA.odds:'—', pickB&&pickB.odds?(pickB.odds>0?'+':'')+pickB.odds:'—'],
+      ['Units', pickA?pickA.units||'—':'—', pickB?pickB.units||'—':'—'],
+    ];
+    grid.innerHTML=`<table class="cmp-table"><thead><tr><th>Metric</th><th>${a}</th><th>${b}</th></tr></thead><tbody>${metrics.map(([m,va,vb])=>`<tr><td class="cmp-metric">${m}</td><td class="cmp-val">${va}</td><td class="cmp-val">${vb}</td></tr>`).join('')}</tbody></table>`;
+  }
+  // Signal context
+  const ctx = document.getElementById('compare-signal-ctx');
+  if(ctx&&(pickA||pickB)) {
+    const renderCtxPick = (label,p)=>p?`<div class="ctx-pick"><strong>${label}:</strong> ${p.side||p.pick||'—'} · ${p.game||''} · ${p.tier||''} @ ${p.odds>0?'+':''}${p.odds}</div>`:'';
+    ctx.innerHTML=renderCtxPick(a,pickA)+renderCtxPick(b,pickB);
+  }
+}
+
 // ── Main render ───────────────────────────────────────────────────────────────
 function renderPicks() {
   if(!slipData) return;
+
+  // Show/hide DFS and Compare sections
+  const dfsSec = document.getElementById('dfs-section');
+  const cmpSec = document.getElementById('compare-section');
+  const picksSec = document.querySelector('.picks-section');
+  const podsSec  = document.getElementById('pods-section');
+  const upSec2   = document.getElementById('upcoming-section');
+  const radSec2  = document.getElementById('radar-section');
+  const fmvSec2  = document.getElementById('fmv-section');
+
+  if(activeTab==='DFS') {
+    if(dfsSec) dfsSec.style.display='block';
+    if(cmpSec) cmpSec.style.display='none';
+    if(picksSec) picksSec.style.display='none';
+    if(podsSec)  podsSec.style.display='none';
+    if(upSec2)   upSec2.style.display='none';
+    if(radSec2)  radSec2.style.display='none';
+    if(fmvSec2)  fmvSec2.style.display='none';
+    renderDFS();
+    return;
+  }
+  if(activeTab==='COMPARE') {
+    if(dfsSec) dfsSec.style.display='none';
+    if(cmpSec) cmpSec.style.display='block';
+    if(picksSec) picksSec.style.display='none';
+    if(podsSec)  podsSec.style.display='none';
+    if(upSec2)   upSec2.style.display='none';
+    if(radSec2)  radSec2.style.display='none';
+    if(fmvSec2)  fmvSec2.style.display='none';
+    renderCompare();
+    return;
+  }
+
+  // Normal tabs — restore pick sections
+  if(dfsSec) dfsSec.style.display='none';
+  if(cmpSec) cmpSec.style.display='none';
+  if(picksSec) picksSec.style.display='';
+  if(podsSec)  podsSec.style.display='';
+
   const allRec  = slipData.recommended||[];
   const pods    = slipData.pod||[];
   const today   = slipData.date||'';
@@ -533,8 +875,8 @@ function renderPicks() {
     PROPS:  ['⚡ Player Props', '⚡ Props Pick of the Day'],
     PICKEM: ['🎯 Pick\'em Plays', '🎯 Pick\'em POD'],
   };
-  if(titleEl) titleEl.innerHTML = `${tabLabels[activeTab][0]} <span class="count-badge" id="rec-count">0</span>`;
-  if(podTitleEl) podTitleEl.innerHTML = `${tabLabels[activeTab][1]} <span class="pod-badge">${activeTab==='GAME'?'HIGH ●●●':activeTab==='PROPS'?'PLAYER PROP':'PICK\'EM'}</span>`;
+  if(titleEl) titleEl.innerHTML = `${(tabLabels[activeTab]||tabLabels.GAME)[0]} <span class="count-badge" id="rec-count">0</span>`;
+  if(podTitleEl) podTitleEl.innerHTML = `${(tabLabels[activeTab]||tabLabels.GAME)[1]} <span class="pod-badge">${activeTab==='GAME'?'HIGH ●●●':activeTab==='PROPS'?'PLAYER PROP':'PICK\'EM'}</span>`;
 
   // ── POD row: filtered by active tab + sport ──────────────────────────────
   const podEl = document.getElementById('pod-row');
@@ -649,13 +991,34 @@ document.querySelectorAll('.primary-tab').forEach(btn => {
     document.querySelectorAll('.primary-tab').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     activeTab = btn.dataset.tab;
-    // Show/hide prop sub-filter
+    // Show/hide prop sub-filter bar
     const subBar = document.getElementById('prop-sub-bar');
     if(subBar) subBar.style.display = activeTab==='PROPS' ? 'flex' : 'none';
-    // Reset prop sub when switching away
+    // Show/hide main filter bar (hide on DFS/COMPARE)
+    const filterBar = document.getElementById('filter-bar');
+    if(filterBar) filterBar.style.display = (activeTab==='DFS'||activeTab==='COMPARE') ? 'none' : 'flex';
+    // Reset prop sub when switching away from PROPS
     if(activeTab!=='PROPS') { filters.prop_sub='ALL'; document.querySelectorAll('.prop-sub-btn').forEach(b=>{b.classList.toggle('active',b.dataset.sub==='ALL');}); }
     renderPicks();
   });
+});
+
+// ── DFS sport tab buttons ─────────────────────────────────────────────────────
+document.addEventListener('click', e => {
+  const dfsBtn = e.target.closest('[data-dfs-sport]');
+  if(dfsBtn) {
+    document.querySelectorAll('[data-dfs-sport]').forEach(b=>b.classList.remove('active'));
+    dfsBtn.classList.add('active');
+    dfsActiveSport = dfsBtn.dataset.dfsSport;
+    dfsSelectedPicks.clear();
+    if(activeTab==='DFS') renderDFS();
+  }
+  const platBtn = e.target.closest('[data-platform]');
+  if(platBtn&&platBtn.closest('.dfs-platform-row')) {
+    document.querySelectorAll('[data-platform]').forEach(b=>b.classList.remove('active'));
+    platBtn.classList.add('active');
+    dfsActivePlatform = platBtn.dataset.platform;
+  }
 });
 
 // ── Prop sub-filter ───────────────────────────────────────────────────────────

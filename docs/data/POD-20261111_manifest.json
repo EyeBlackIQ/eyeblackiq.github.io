@@ -1,0 +1,23 @@
+{
+  "pod_day": "POD-20261111",
+  "files": [
+    "docs/data/POD-20261111_day1_results.json",
+    "docs/data/day1_results_latest.json",
+    "docs/data/POD-20261111_manifest.json",
+    "docs/kalshi/day1_results.html",
+    "docs/kalshi/index.html",
+    "docs/kalshi/pregame_snapshot_dashboard.html"
+  ],
+  "hold_phase": "HOLD \u2192 snapshot export \u2192 YES_COMMIT_DOCS \u2192 push",
+  "public_tabs_on": [
+    "mlb",
+    "asia"
+  ],
+  "public_tabs_held": [
+    "ncaa",
+    "winter"
+  ],
+  "kelly_hooks": true,
+  "scrapers_pipeline_excluded": true,
+  "yes_push_ahead": false
+}
