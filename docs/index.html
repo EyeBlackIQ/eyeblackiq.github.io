@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EyeBlackIQ — Today's Picks</title>
+<title>EyeBlackIQ</title>
 <meta name="description" content="EyeBlackIQ: Quantitative multi-sport prediction model. ELO + ISR ratings, 5-gate filter, Quarter Kelly sizing.">
-<meta property="og:title" content="EyeBlackIQ — Today's Picks">
+<meta property="og:title" content="EyeBlackIQ">
 <meta property="og:description" content="Data-driven multi-sport picks. ELO + ISR · 5-Gate Filter · Quarter Kelly Sizing.">
 <meta property="og:type" content="website">
+<link rel="canonical" href="https://eyeblackiq.com/">
 <link rel="stylesheet" href="style.css">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
@@ -25,9 +26,7 @@
     </div>
     <nav>
       <a href="index.html" class="nav-link active" id="nav-today">Today</a>
-      <a href="pod.html"   class="nav-link">PODs</a>
-      <a href="index.html#results" class="nav-link" id="nav-results">Results</a>
-      <a href="results.html" class="nav-link">Archive</a>
+      <a href="results.html" class="nav-link" id="nav-archive">Archive</a>
       <a href="methodology.html" class="nav-link">Playbook</a>
       <a href="validation.html"  class="nav-link">Validation</a>
     </nav>
@@ -293,11 +292,11 @@
     </div>
   </section>
 
-  <!-- DAY-1 RESULTS (snapshot-backed) -->
+  <!-- DAY-1 L50 (snapshot-backed) — Results is a tab, not the site brand -->
   <section id="results-section" class="results-section" style="display:none;">
     <div class="results-head">
-      <h2 class="section-title">Day-1 Results <span class="pod-badge" id="results-pod-badge">POD</span></h2>
-      <p class="results-sub" id="results-sub">Slip CORE only · units · SP-missing never on slip · snapshots (not live Kalshi)</p>
+      <h2 class="section-title">Day-1 · L50 <span class="pod-badge" id="results-pod-badge">POD</span></h2>
+      <p class="results-sub" id="results-sub">Slip CORE · Flat / Kelly · SP-missing never on slip · pregame snapshots</p>
     </div>
     <div class="results-unit-tabs" id="results-unit-tabs">
       <button type="button" class="results-chip active" data-unit="flat">Flat</button>
@@ -342,8 +341,8 @@
     </div>
     <div class="footer-links">
       <a href="https://x.com/EyeBlackIQ" target="_blank">𝕏 Twitter</a>
-      <a href="pod.html">PODs</a>
-      <a href="index.html#results">Results</a>
+      <a href="index.html">Today</a>
+      <a href="results.html">Archive</a>
       <a href="methodology.html">Playbook</a>
       <a href="validation.html">Validation</a>
     </div>
@@ -854,25 +853,32 @@ function runComparison() {
 }
 
 
-// ── Day-1 Results (snapshot JSON) ─────────────────────────────────────────────
+// ── Brand lock: site identity is EyeBlackIQ (Results is a tab only) ───────────
+function setBrandTitle() {
+  document.title = 'EyeBlackIQ';
+}
+
+// ── Day-1 L50 (snapshot JSON) ─────────────────────────────────────────────────
 async function loadDay1() {
   if (day1Data) return day1Data;
   // Pages serves docs/ as site root → /data/... (not /docs/data/...)
   const bust = 't=' + Date.now();
   const candidates = [
-    '/data/day1_results_latest.json?' + bust,
     'data/day1_results_latest.json?' + bust,
+    '/data/day1_results_latest.json?' + bust,
     './data/day1_results_latest.json?' + bust,
   ];
+  let lastErr = null;
   for (const url of candidates) {
     try {
       const r = await fetch(url, { cache: 'no-store' });
-      if (!r.ok) continue;
+      if (!r.ok) { lastErr = new Error('HTTP ' + r.status + ' ' + url); continue; }
       day1Data = await r.json();
       if (day1Data) return day1Data;
-    } catch (e) { /* try next */ }
+    } catch (e) { lastErr = e; }
   }
   day1Data = null;
+  if (lastErr) console.warn('Day-1 JSON load failed', lastErr);
   return day1Data;
 }
 function pnlKey(mode) {
@@ -1174,7 +1180,10 @@ document.querySelectorAll('.primary-tab').forEach(btn => {
     // Reset prop sub when switching away from PROPS
     if(activeTab!=='PROPS') { filters.prop_sub='ALL'; document.querySelectorAll('.prop-sub-btn').forEach(b=>{b.classList.toggle('active',b.dataset.sub==='ALL');}); }
     if(activeTab==='RESULTS') history.replaceState(null,'','#results');
-    else if(location.hash==='#results') history.replaceState(null,'',location.pathname);
+    else if(location.hash==='#results') history.replaceState(null,'',location.pathname + location.search);
+    setBrandTitle();
+    const navToday = document.getElementById('nav-today');
+    if (navToday) navToday.classList.toggle('active', activeTab !== 'RESULTS');
     renderPicks();
   });
 });
@@ -1252,6 +1261,7 @@ function toggleFMV() {
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────
+setBrandTitle();
 loadData().then(({slip,record})=>{
   slipData=slip;
   const dateEl=document.getElementById('slip-date');
@@ -1268,7 +1278,10 @@ loadData().then(({slip,record})=>{
     activeTab='RESULTS';
     const filterBar=document.getElementById('filter-bar');
     if(filterBar) filterBar.style.display='none';
+    const navToday=document.getElementById('nav-today');
+    if(navToday) navToday.classList.remove('active');
   }
+  setBrandTitle();
   renderPicks();
 });
 </script>
