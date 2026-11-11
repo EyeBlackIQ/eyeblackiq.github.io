@@ -84,12 +84,18 @@
         <p class="empty-state">Loading picks...</p>
       </div>
     </section>
+
+    <section class="picks-section" id="teaser-section" style="display:none;">
+      <h2 class="section-title">Lower confidence <span class="count-badge" id="teaser-count">0</span></h2>
+      <p class="results-sub">Not Plays · not POD · labeled lower confidence only</p>
+      <div class="picks-grid" id="teaser-grid"></div>
+    </section>
   </section>
 
   <section id="results-section" class="results-section" style="display:none;">
     <div class="results-head">
       <h2 class="section-title">Day-1 · L50 <span class="pod-badge" id="results-pod-badge">POD</span></h2>
-      <p class="results-sub" id="results-sub">Slip CORE · Flat / Kelly · SP-missing never on slip</p>
+      <p class="results-sub" id="results-sub">Season book above · L50 table below · Flat default · SP-missing never on slip</p>
     </div>
     <div class="results-unit-tabs" id="results-unit-tabs">
       <button type="button" class="results-chip active" data-unit="flat">Flat</button>
@@ -109,6 +115,10 @@
       <div class="results-card"><div class="rk">Hit rate</div><div class="rv" id="rc-hr">—</div></div>
       <div class="results-card"><div class="rk" id="rc-pnl-label">PnL (Flat)</div><div class="rv" id="rc-pnl">—</div></div>
       <div class="results-card"><div class="rk">L50 window</div><div class="rv" id="rc-l50n">—</div></div>
+    </div>
+    <div class="results-chart-wrap" id="results-chart-wrap" aria-label="PnL by book">
+      <div class="results-chart-title" id="results-chart-title">Season PnL by book</div>
+      <div class="results-chart" id="results-chart"></div>
     </div>
     <div class="results-note" id="results-note"></div>
     <div class="results-table-wrap">
@@ -186,72 +196,74 @@ function updateRecordBar(rec) {
   if (rel) rel.className = 'stat-value ' + ((rec.roi||0)>=0?'positive':'negative');
 }
 
+function fmtAm(v) {
+  if (v == null || v === '') return null;
+  const n = Number(v);
+  if (Number.isNaN(n)) return null;
+  return n > 0 ? `+${n}` : `${n}`;
+}
+function projectionLine(p) {
+  const bits = [];
+  if (p.proj_total != null && p.line != null) {
+    bits.push(`Model total ${Number(p.proj_total).toFixed(1)} vs ${p.line}`);
+  }
+  const wp = p.model_wp_pct != null ? p.model_wp_pct : p.cover_pct;
+  const wpLabel = (String(p.market||'').toUpperCase() === 'SPREAD') ? 'Cover' : 'Model';
+  if (wp != null) {
+    const fair = fmtAm(p.fair_am);
+    bits.push(fair ? `${wpLabel} ${Number(wp).toFixed(0)}% · fair ${fair}` : `${wpLabel} ${Number(wp).toFixed(0)}%`);
+  }
+  if (p.dog_wp_note) bits.push(p.dog_wp_note);
+  return bits.join(' · ');
+}
 function pickCard(pick) {
-  const edge = typeof pick.edge_pct !== 'undefined' ? pick.edge_pct : (pick.edge||0)*100;
-  const oddsRaw = pick.odds;
-  const oddsStr = oddsRaw > 0 ? `+${oddsRaw}` : `${oddsRaw ?? '—'}`;
-  const units = pick.units || 1;
   const isPod = !!pick.is_pod;
+  const isLower = String(pick.confidence||'') === 'lower' || String(pick.public_tier||'').toLowerCase().includes('lower');
+  const label = isLower ? 'Lower confidence' : 'Play';
+  const book = fmtAm(pick.book_am);
+  const proj = projectionLine(pick);
+  const blurb = String(pick.blurb || pick.notes || '').replace(/</g,'');
   return `
-  <div class="pick-card ${tierClass(pick.tier||'')}${isPod?' pod-highlight':''}">
+  <div class="pick-card ${isLower?'tier-grey':tierClass('WHEELHOUSE')}${isPod?' pod-highlight':''}">
     <div class="pick-header">
-      <span class="pick-tier">${sportIcon(pick.sport)} ${pick.tier||'—'}</span>
+      <span class="pick-tier">${sportIcon(pick.sport||pick.league)} ${label}${pick.league?` · ${pick.league}`:''}</span>
       <div class="pick-header-right">
-        <span class="pick-units">${units}u</span>
         ${isPod?'<span class="pod-crown">POD</span>':''}
+        ${book?`<span class="pick-units" title="Book reference">${book}</span>`:''}
       </div>
     </div>
     <div class="pick-side">${pick.side||pick.pick||'—'}</div>
-    <div class="pick-meta">
-      <span class="pick-odds">${oddsStr}</span>
-      <span class="pick-edge">Edge ${edge>=0?'+':''}${Number(edge).toFixed(1)}%</span>
-      ${pick.ev!=null?`<span class="pick-ev">EV ${pick.ev>=0?'+':''}${(pick.ev*100).toFixed(1)}%</span>`:''}
-    </div>
+    ${proj?`<div class="pick-meta"><span class="pick-edge">${proj}</span></div>`:''}
     ${pick.game?`<div class="pick-game">${pick.game}${pick.game_time?` <span class="pick-time">${pick.game_time}</span>`:''}</div>`:''}
+    ${blurb?`<div class="pick-blurb">${blurb}</div>`:''}
   </div>`;
 }
+function podCard(pod) { return pickCard(pod); }
 
-function podCard(pod) {
-  if (!pod) return '';
-  const oddsRaw = pod.odds;
-  const odds = oddsRaw > 0 ? `+${oddsRaw}` : `${oddsRaw ?? '—'}`;
-  const edge = typeof pod.edge_pct !== 'undefined' ? pod.edge_pct : (pod.edge||0)*100;
-  return `
-  <div class="pick-card pod-highlight ${tierClass(pod.tier||'')}">
-    <div class="pick-header">
-      <span class="pick-tier">${sportIcon(pod.sport)} ${pod.tier||'POD'}</span>
-      <span class="pod-crown">POD</span>
-    </div>
-    <div class="pick-side">${pod.side||pod.pick||'—'}</div>
-    <div class="pick-meta">
-      <span class="pick-odds">${odds}</span>
-      <span class="pick-edge">Edge ${edge>=0?'+':''}${Number(edge).toFixed(1)}%</span>
-      <span class="pick-units">${pod.units||1}u</span>
-    </div>
-    ${pod.game?`<div class="pick-game">${pod.game}</div>`:''}
-  </div>`;
-}
-
-function isFinalCore(p) {
-  const tier = String(p.tier || '').toUpperCase();
+function isPlay(p) {
+  if (String(p.confidence||'') === 'lower') return false;
+  const tier = String(p.public_tier || p.tier || '').toUpperCase();
   const tab = String(p.tab || '').toUpperCase();
   const src = String(p.pick_source || '').toUpperCase();
-  if (tier === 'CORE' || tier === 'FINAL') return true;
+  if (tier === 'PLAY' || tier === 'CORE' || tier === 'FINAL') return true;
   if (tab === 'FINAL') return true;
   if (src.includes('FINAL_CORE')) return true;
   return false;
 }
 
 function renderPicks() {
-  const podsRaw = slipData?.pod || [];
-  const all = slipData?.recommended || [];
   const today = slipData?.date || '';
-  // LOCK RECS 1A: Picks tab shows FINAL/CORE only (never LOG/PLUS/SUPPORT)
+  const all = slipData?.recommended || [];
   const picks = all
-    .filter(isFinalCore)
-    .filter(p => !p.signal_date || p.signal_date === today)
-    .sort((a,b) => (b.edge_pct||0) - (a.edge_pct||0));
-  const pods = (podsRaw.length ? podsRaw : picks.filter(p => p.is_pod)).filter(isFinalCore);
+    .filter(isPlay)
+    .filter(p => !p.signal_date || p.signal_date === today);
+  const podsRaw = slipData?.pod || [];
+  const pods = (podsRaw.length ? podsRaw : picks.filter(p => p.is_pod)).filter(isPlay);
+  // Lower confidence only on empty Play days (never POD; never mixed with Plays)
+  const emptyDay = !!slipData?.empty || !picks.length;
+  const teasers = emptyDay
+    ? (slipData?.teaser || []).filter(p => String(p.confidence||'') === 'lower')
+    : [];
 
   const podEl = document.getElementById('pod-row');
   if (podEl) {
@@ -261,14 +273,25 @@ function renderPicks() {
   const count = document.getElementById('rec-count');
   if (count) count.textContent = String(picks.length);
   if (grid) {
-    if (!picks.length || slipData?.empty) {
-      const note = slipData?.speculative_note
-        ? `<p class="empty-state" style="opacity:.75;margin-top:8px;">${slipData.speculative_note}</p>`
-        : '<p class="empty-state" style="opacity:.75;margin-top:8px;">Lower-confidence signals may appear in a later version.</p>';
-      grid.innerHTML = `<p class="empty-state"><strong>No Picks Today</strong></p>${note}`;
+    if (emptyDay) {
+      grid.innerHTML = '<p class="empty-state"><strong>No Picks Today</strong></p>';
       if (podEl) podEl.innerHTML = '<p class="empty-state">No POD today</p>';
     } else {
       grid.innerHTML = picks.map(pickCard).join('');
+    }
+  }
+
+  const teaserSec = document.getElementById('teaser-section');
+  const teaserGrid = document.getElementById('teaser-grid');
+  const teaserCount = document.getElementById('teaser-count');
+  if (teaserSec && teaserGrid) {
+    if (teasers.length) {
+      teaserSec.style.display = '';
+      if (teaserCount) teaserCount.textContent = String(teasers.length);
+      teaserGrid.innerHTML = teasers.map(pickCard).join('');
+    } else {
+      teaserSec.style.display = 'none';
+      teaserGrid.innerHTML = '';
     }
   }
 }
@@ -306,12 +329,50 @@ function resultClass(res) {
 }
 function rowsForSport(d, sport) {
   if (!d) return [];
-  if (sport==='global') return d.global_l50 || [];
-  if (sport==='mlb') return (d.mlb && d.mlb.l50) || [];
-  if (sport==='asia') return (d.asia && d.asia.l50) || [];
-  if (sport==='winter') return (d.winter && d.winter.l50) || [];
-  if (sport==='ncaa') return (d.ncaa && d.ncaa.l50) || [];
+  function blockRows(b) {
+    if (!b) return [];
+    if (b.l50 && b.l50.length) return b.l50;
+    // Legacy SoT: slip_rows present, l50 missing
+    const raw = b.slip_rows || [];
+    return raw
+      .filter(r => ['correct','wrong','push'].includes(String(r.result||'').toLowerCase()))
+      .sort((a,b) => String(b.date||'').localeCompare(String(a.date||'')))
+      .slice(0, 50);
+  }
+  if (sport==='global') {
+    if (d.global_l50 && d.global_l50.length) return d.global_l50;
+    return []
+      .concat(blockRows(d.mlb), blockRows(d.asia), blockRows(d.winter), blockRows(d.ncaa))
+      .sort((a,b) => String(b.date||'').localeCompare(String(a.date||'')))
+      .slice(0, 50);
+  }
+  if (sport==='mlb') return blockRows(d.mlb);
+  if (sport==='asia') return blockRows(d.asia);
+  if (sport==='winter') return blockRows(d.winter);
+  if (sport==='ncaa') return blockRows(d.ncaa);
   return [];
+}
+
+function renderResultsChart(d) {
+  const host = document.getElementById('results-chart');
+  const title = document.getElementById('results-chart-title');
+  if (!host) return;
+  const chart = d && d.chart;
+  const bars = (chart && chart.bars) || [];
+  if (title) title.textContent = (chart && chart.title) || 'Season PnL by book';
+  if (!bars.length) {
+    host.innerHTML = '';
+    return;
+  }
+  const maxAbs = Math.max(1, ...bars.map(b => Math.abs(Number(b.pnl_u)||0)));
+  host.innerHTML = bars.map(b => {
+    const v = Number(b.pnl_u)||0;
+    const pct = Math.max(4, Math.round((Math.abs(v) / maxAbs) * 100));
+    const cls = v >= 0 ? 'pos' : 'neg';
+    const label = String(b.label||'').replace(/</g,'');
+    const txt = (v>=0?'+':'') + v.toFixed(1) + 'u';
+    return `<div class="rc-bar-row"><span class="rc-bar-label">${label}</span><div class="rc-bar-track"><div class="rc-bar-fill ${cls}" style="width:${pct}%"></div></div><span class="rc-bar-val ${cls}">${txt}</span></div>`;
+  }).join('');
 }
 function seasonForSport(d, sport) {
   if (!d) return null;
@@ -332,6 +393,7 @@ function renderResults() {
     return;
   }
   if (badge) badge.textContent = d.pod_day || 'POD';
+  renderResultsChart(d);
   // Inactive/out-of-season leagues still show Results L50 when rows exist (MLB/Asia/NCAA).
   const rows = rowsForSport(d, resultsSport);
   const key = pnlKey(resultsUnit);

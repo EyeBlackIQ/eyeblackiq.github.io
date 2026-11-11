@@ -912,3 +912,27 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
 @media (max-width: 800px) {
   .results-cards { grid-template-columns: 1fr 1fr; }
 }
+
+/* Results PnL bar chart (lean) */
+.results-chart-wrap {
+  margin: 8px 0 16px; padding: 14px 16px; background: #121212;
+  border: 1px solid #1c1c1c; border-radius: 10px;
+}
+.results-chart-title {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase; color: #888; margin-bottom: 12px;
+}
+.rc-bar-row { display: grid; grid-template-columns: 72px 1fr 72px; gap: 10px; align-items: center; margin: 8px 0; }
+.rc-bar-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; color: #ccc; }
+.rc-bar-track { height: 12px; background: #1a1a1a; border-radius: 6px; overflow: hidden; }
+.rc-bar-fill { height: 100%; border-radius: 6px; min-width: 4px; }
+.rc-bar-fill.pos { background: linear-gradient(90deg, #1e7a45, #2ecc71); }
+.rc-bar-fill.neg { background: linear-gradient(90deg, #8b2e2e, #e74c3c); }
+.rc-bar-val { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 15px; text-align: right; }
+.rc-bar-val.pos { color: #2ecc71; }
+.rc-bar-val.neg { color: #e74c3c; }
+
+.pick-blurb {
+  margin-top: 10px; padding-top: 10px; border-top: 1px solid #1c1c1c;
+  font-family: 'Barlow', sans-serif; font-size: 13.5px; line-height: 1.45; color: #c8c4bc;
+}
