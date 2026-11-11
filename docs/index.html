@@ -178,33 +178,41 @@ function fmtAm(v) {
   return n > 0 ? `+${n}` : `${n}`;
 }
 
-/** W1/W2 hybrid: Fair hero + compact model strip (fair not repeated in strip). */
-function modelStrip(p) {
-  const bits = [];
+/** S1 objective stack — model · proj score · hit · fair · board */
+function objectiveRows(p) {
+  const rows = [];
+  const mkt = String(p.market || '').toUpperCase();
   if (p.proj_total != null && p.line != null) {
-    bits.push(`Model ${Number(p.proj_total).toFixed(1)} vs ${p.line}`);
+    const stance = String(p.side || '');
+    const short = /under/i.test(stance) ? 'Under' : (/over/i.test(stance) ? 'Over' : '');
+    rows.push({ k: 'Model', v: `${Number(p.proj_total).toFixed(1)} vs ${p.line}${short ? ' — ' + short : ''}` });
+  }
+  if (p.proj_away != null && p.proj_home != null) {
+    rows.push({ k: 'Proj', v: `${Number(p.proj_away).toFixed(1)}-${Number(p.proj_home).toFixed(1)}` });
   }
   const wp = p.model_wp_pct != null ? p.model_wp_pct : p.cover_pct;
-  const isSpread = String(p.market || '').toUpperCase() === 'SPREAD';
   if (wp != null) {
-    bits.push(`${isSpread ? 'Cover' : 'Hit'} ${Number(wp).toFixed(0)}%`);
+    rows.push({ k: mkt === 'SPREAD' ? 'Cover' : 'Hit', v: `${Number(wp).toFixed(0)}%` });
   }
-  if (p.dog_wp_note) bits.push(p.dog_wp_note);
-  return bits;
+  // Fair is the hero line above — not repeated here
+  const boardAm = fmtAm(p.book_am);
+  if (boardAm) rows.push({ k: 'Board', v: `${p.book ? p.book + ' ' : ''}${boardAm}` });
+  if (p.dog_wp_note) rows.push({ k: 'Note', v: String(p.dog_wp_note) });
+  return rows;
 }
 
 function pickCard(pick, { hero = false } = {}) {
   const isLower = String(pick.confidence || '') === 'lower';
   const league = pick.league ? String(pick.league) : '';
   const fair = fmtAm(pick.fair_am);
-  const boardAm = fmtAm(pick.book_am);
-  const board = boardAm ? `${pick.book ? String(pick.book) + ' ' : 'Board '}${boardAm}` : '';
-  const strip = modelStrip(pick);
-  const blurb = String(pick.blurb || '').replace(/</g, '');
+  const rows = objectiveRows(pick);
   const cls = [
     hero ? 'pick-card pick-card--pod' : 'pick-card',
     isLower ? 'pick-card--lower' : 'pick-card--play',
   ].join(' ');
+  const stack = rows.map(r =>
+    `<div class="obj-row"><span class="obj-k">${r.k}</span><span class="obj-v">${String(r.v).replace(/</g,'')}</span></div>`
+  ).join('');
   return `
   <article class="${cls}">
     <div class="pick-header">
@@ -213,10 +221,9 @@ function pickCard(pick, { hero = false } = {}) {
     </div>
     <div class="pick-side">${pick.side || '—'}</div>
     ${fair ? `<div class="pick-fair" aria-label="Fair market price">Fair ${fair}</div>` : ''}
-    ${strip.length ? `<div class="pick-proj" aria-label="Model projection">${strip.map(b => `<span>${b}</span>`).join('<span class="proj-sep" aria-hidden="true">·</span>')}</div>` : ''}
+    ${stack ? `<div class="obj-stack" aria-label="Model synopsis">${stack}</div>` : ''}
     ${pick.game ? `<div class="pick-game">${pick.game}${pick.game_time ? ` <span class="pick-time">${pick.game_time}</span>` : ''}</div>` : ''}
-    ${board ? `<div class="pick-board" title="Reference price at publish">${board}</div>` : ''}
-    ${blurb ? `<p class="pick-blurb">${blurb}</p>` : ''}
+    ${(pick.sp_away || pick.sp_home) ? `<div class="pick-board">SP ${pick.sp_away || '—'} vs ${pick.sp_home || '—'}</div>` : ''}
   </article>`;
 }
 
