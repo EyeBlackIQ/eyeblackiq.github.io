@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://eyeblackiq.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=20261111-fair-live">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
@@ -178,7 +178,7 @@ function fmtAm(v) {
   return n > 0 ? `+${n}` : `${n}`;
 }
 
-/** S1 objective stack — model · proj score · hit · fair · board */
+/** Lean stack — model / proj / hit only (prices live in Fair · Live strip) */
 function objectiveRows(p) {
   const rows = [];
   const mkt = String(p.market || '').toUpperCase();
@@ -194,17 +194,23 @@ function objectiveRows(p) {
   if (wp != null) {
     rows.push({ k: mkt === 'SPREAD' ? 'Cover' : 'Hit', v: `${Number(wp).toFixed(0)}%` });
   }
-  // Fair is the hero line above — not repeated here
-  const boardAm = fmtAm(p.book_am);
-  if (boardAm) rows.push({ k: 'Board', v: `${p.book ? p.book + ' ' : ''}${boardAm}` });
   if (p.dog_wp_note) rows.push({ k: 'Note', v: String(p.dog_wp_note) });
   return rows;
+}
+
+function priceStrip(pick) {
+  const fair = fmtAm(pick.fair_am);
+  const live = fmtAm(pick.book_am);
+  if (!fair && !live) return '';
+  const bits = [];
+  if (fair) bits.push(`<span class="price-fair"><span class="price-k">Fair</span> ${fair}</span>`);
+  if (live) bits.push(`<span class="price-live"><span class="price-k">Live</span> ${live}</span>`);
+  return `<div class="pick-prices" aria-label="Fair and live odds">${bits.join('<span class="price-sep" aria-hidden="true">·</span>')}</div>`;
 }
 
 function pickCard(pick, { hero = false } = {}) {
   const isLower = String(pick.confidence || '') === 'lower';
   const league = pick.league ? String(pick.league) : '';
-  const fair = fmtAm(pick.fair_am);
   const rows = objectiveRows(pick);
   const cls = [
     hero ? 'pick-card pick-card--pod' : 'pick-card',
@@ -220,10 +226,10 @@ function pickCard(pick, { hero = false } = {}) {
       ${hero ? '<span class="pod-crown">POD</span>' : ''}
     </div>
     <div class="pick-side">${pick.side || '—'}</div>
-    ${fair ? `<div class="pick-fair" aria-label="Fair market price">Fair ${fair}</div>` : ''}
+    ${priceStrip(pick)}
     ${stack ? `<div class="obj-stack" aria-label="Model synopsis">${stack}</div>` : ''}
     ${pick.game ? `<div class="pick-game">${pick.game}${pick.game_time ? ` <span class="pick-time">${pick.game_time}</span>` : ''}</div>` : ''}
-    ${(pick.sp_away || pick.sp_home) ? `<div class="pick-board">SP ${pick.sp_away || '—'} vs ${pick.sp_home || '—'}</div>` : ''}
+    ${(pick.sp_away || pick.sp_home) ? `<div class="pick-sp">SP ${pick.sp_away || '—'} vs ${pick.sp_home || '—'}</div>` : ''}
   </article>`;
 }
 
@@ -478,7 +484,17 @@ function renderResults() {
   }).join('');
 }
 
-function showTab(tab) {
+function cleanLandingUrl() {
+  // Home link always = Picks. Drop legacy #results / ?tab= so shared URLs don't reopen Results.
+  const u = new URL(location.href);
+  const dirty = u.hash || u.searchParams.has('tab');
+  if (!dirty) return;
+  u.hash = '';
+  u.searchParams.delete('tab');
+  history.replaceState(null, '', u.pathname + (u.search || '') || '/');
+}
+
+function showTab(tab, { fromUser = false } = {}) {
   activeTab = tab === 'RESULTS' ? 'RESULTS' : 'PICKS';
   document.querySelectorAll('.nav-tab').forEach(b => {
     const on = b.dataset.tab === activeTab;
@@ -487,7 +503,8 @@ function showTab(tab) {
   });
   const picks = document.getElementById('picks-panel');
   const results = document.getElementById('results-section');
-  if (location.hash) history.replaceState(null, '', location.pathname || '/');
+  if (!fromUser) cleanLandingUrl();
+  else if (location.hash || new URL(location.href).searchParams.has('tab')) cleanLandingUrl();
   if (activeTab === 'RESULTS') {
     if (picks) picks.hidden = true;
     if (results) results.hidden = false;
@@ -503,10 +520,18 @@ function showTab(tab) {
 }
 
 document.querySelectorAll('.nav-tab').forEach(btn => {
-  btn.addEventListener('click', () => showTab(btn.dataset.tab));
+  btn.addEventListener('click', () => showTab(btn.dataset.tab, { fromUser: true }));
 });
-document.getElementById('footer-picks')?.addEventListener('click', () => showTab('PICKS'));
-document.getElementById('footer-results')?.addEventListener('click', () => showTab('RESULTS'));
+document.getElementById('footer-picks')?.addEventListener('click', () => showTab('PICKS', { fromUser: true }));
+document.getElementById('footer-results')?.addEventListener('click', () => showTab('RESULTS', { fromUser: true }));
+document.querySelector('.logo-block')?.addEventListener('click', (e) => {
+  // Logo always returns to Picks (same-page SPA)
+  if (location.pathname === '/' || /index\.html$/i.test(location.pathname)) {
+    e.preventDefault();
+    showTab('PICKS', { fromUser: true });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+});
 
 document.getElementById('results-unit-tabs')?.addEventListener('click', e => {
   const btn = e.target.closest('[data-unit]');
@@ -530,9 +555,8 @@ Promise.all([
   slipData = slip;
   updateDateBar(slip);
   updateRecordBar(record);
-  const legacyResults = (location.hash || '').toLowerCase() === '#results';
-  if (location.hash) history.replaceState(null, '', location.pathname || '/');
-  showTab(legacyResults ? 'RESULTS' : 'PICKS');
+  // Cold load / shared link always opens Picks (ignore #results / ?tab=)
+  showTab('PICKS');
 });
 </script>
 </body>
