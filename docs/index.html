@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://eyeblackiq.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css?v=20261111-watch">
+<link rel="stylesheet" href="style.css?v=20261112-live">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,7 +42,7 @@
 </header>
 
 <div class="record-bar" aria-label="Season record">
-  <div class="record-scope" id="record-scope">CORE · Flat 1u</div>
+  <div class="record-scope" id="record-scope">Winter CORE · Flat 1u</div>
   <div class="record-inner" id="record-bar-content">
     <div class="record-stat"><span class="stat-label">Season</span><span class="stat-value" id="bar-record">—</span></div>
     <div class="record-divider" aria-hidden="true"></div>
@@ -65,7 +65,7 @@
 
   <section id="picks-panel" role="tabpanel" aria-labelledby="nav-picks">
     <section class="pods-section" id="pods-section" aria-labelledby="pod-heading">
-      <h2 class="section-title" id="pod-heading">Pick of the Day <span class="pod-badge">POD</span></h2>
+      <h2 class="section-title" id="pod-heading">Pick of the Day</h2>
       <div class="pod-row" id="pod-row">
         <p class="empty-state">Loading…</p>
       </div>
@@ -208,7 +208,6 @@ function metaStack(p) {
     // Hit is secondary when Model μ is present; primary otherwise
     items.push({ k: label, v: `${Number(wp).toFixed(0)}%`, primary: !hasMu });
   }
-  if (p.dog_wp_note) items.push({ k: 'Note', v: String(p.dog_wp_note), primary: false });
   return items;
 }
 
@@ -217,19 +216,21 @@ function priceStrip(pick) {
   const live = fmtAm(pick.book_am);
   if (!fair && !live) return '';
   const bits = [];
-  if (fair) bits.push(`<span class="price-fair"><span class="price-k">Fair</span> ${fair}</span>`);
+  // Live first (action price); Fair secondary / greyed
   if (live) bits.push(`<span class="price-live"><span class="price-k">Live</span> ${live}</span>`);
-  return `<div class="pick-prices" aria-label="Fair and live odds">${bits.join('<span class="price-sep" aria-hidden="true">·</span>')}</div>`;
+  if (fair) bits.push(`<span class="price-fair"><span class="price-k">Fair</span> ${fair}</span>`);
+  return `<div class="pick-prices" aria-label="Live and fair odds">${bits.join('<span class="price-sep" aria-hidden="true">·</span>')}</div>`;
 }
 
-function factsRow(pick) {
+function factsRow(pick, { skip = false } = {}) {
+  if (skip) return '';
   const facts = Array.isArray(pick.facts) ? pick.facts.filter(Boolean) : [];
   if (!facts.length) return '';
   return `<div class="pick-facts">${facts.map(f => `<span class="fact-chip">${esc(f)}</span>`).join('')}</div>`;
 }
 
 function pickCard(pick, { hero = false } = {}) {
-  const isLower = String(pick.confidence || '') === 'lower';
+  const isLower = String(pick.confidence || '') === 'lower' || String(pick.public_tier || '') === 'Watchlist';
   const league = pick.league ? String(pick.league) : '';
   const meta = metaStack(pick);
   const cls = [
@@ -242,11 +243,13 @@ function pickCard(pick, { hero = false } = {}) {
   const sp = [pick.sp_away, pick.sp_home].filter(Boolean).join(' vs ');
   const when = pick.game_time || pick.first_pitch || '';
   const blurb = String(pick.blurb || '').trim();
-  const kicker = isLower ? 'Watch' : 'Play';
+  // Play: league only. Watch: Watch · league. POD: league + crown only.
+  let kicker = league || '';
+  if (isLower) kicker = league ? `Watch · ${league}` : 'Watch';
   return `
   <article class="${cls}">
     <div class="pick-header">
-      <span class="pick-kicker">${kicker}${league ? ` · ${esc(league)}` : ''}</span>
+      <span class="pick-kicker">${esc(kicker)}</span>
       ${hero ? '<span class="pod-crown">POD</span>' : ''}
     </div>
     <div class="pick-side">${esc(pick.side) || '—'}</div>
@@ -254,7 +257,7 @@ function pickCard(pick, { hero = false } = {}) {
     ${metaHtml ? `<div class="meta-row" aria-label="Model synopsis">${metaHtml}</div>` : ''}
     ${pick.game ? `<div class="pick-game">${esc(pick.game)}${when ? ` <span class="pick-time">${esc(when)}</span>` : ''}</div>` : ''}
     ${sp ? `<div class="pick-sp">SP ${esc(sp)}</div>` : ''}
-    ${factsRow(pick)}
+    ${factsRow(pick, { skip: !!blurb })}
     ${blurb ? `<p class="pick-blurb">${esc(blurb)}</p>` : ''}
   </article>`;
 }
@@ -340,7 +343,7 @@ function updateRecordBar(rec) {
   if (rel) rel.className = 'stat-value ' + ((rec.roi || 0) >= 0 ? 'positive' : 'negative');
   const scope = document.getElementById('record-scope');
   if (scope) {
-    const src = rec.source || 'CORE/FINAL';
+    const src = rec.source || 'Winter CORE';
     const units = rec.units_policy || 'Flat 1u';
     scope.textContent = `${src} · ${units}`;
   }
@@ -589,8 +592,15 @@ Promise.all([
   slipData = slip;
   updateDateBar(slip);
   updateRecordBar(record);
-  // Cold load / shared link always opens Picks (ignore #results / ?tab=)
-  showTab('PICKS');
+  // Cold load = Picks. Methodology may set sessionStorage eb_tab=RESULTS once.
+  let boot = 'PICKS';
+  try {
+    if (sessionStorage.getItem('eb_tab') === 'RESULTS') {
+      boot = 'RESULTS';
+      sessionStorage.removeItem('eb_tab');
+    }
+  } catch (e) { /* ignore */ }
+  showTab(boot);
 });
 </script>
 </body>

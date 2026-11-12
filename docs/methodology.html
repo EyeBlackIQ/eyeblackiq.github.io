@@ -22,49 +22,49 @@
     </a>
     <nav class="primary-nav" aria-label="Primary">
       <a class="nav-tab" href="/">Picks</a>
-      <a class="nav-tab" href="/">Results</a>
+      <a class="nav-tab" href="/" onclick="try{sessionStorage.setItem('eb_tab','RESULTS')}catch(e){}">Results</a>
     </nav>
   </div>
 </header>
 
 <section class="method-hero">
   <h1>How we pick</h1>
-  <p>Public card shows Plays only. Model projection first. No edge percentage on the site. Flat units by default.</p>
+  <p>Plays are model-backed. Live price first. Flat units. Overs and Unders both eligible when the model clears.</p>
 </section>
 
 <div class="method-grid">
   <article class="method-card">
     <h2 class="method-card-title">What is a Play</h2>
     <ul>
-      <li>Final CORE only — research LOG never published as a Play</li>
-      <li>Edge floor ≥ 4 percentage points at publish (internal gate)</li>
+      <li>FINAL CORE only — research never published as a Play</li>
       <li>Model projection required (µ / WP or cover % + fair American)</li>
-      <li>Baseball leagues only on the public Global book</li>
+      <li>Over and Under both eligible when the model clears the gate</li>
+      <li>Baseball leagues only on the public book</li>
     </ul>
   </article>
   <article class="method-card">
     <h2 class="method-card-title">POD</h2>
-    <p>One Pick of the Day when Plays exist. Longer blurb (2–3 sentences). Never appears in Lower confidence. Not duplicated in the Plays list.</p>
+    <p>One Pick of the Day when Plays exist. Longer blurb. Not duplicated under Plays. Never on Watchlist.</p>
   </article>
   <article class="method-card">
-    <h2 class="method-card-title">Empty days</h2>
-    <p>No Play cleared the gate → <strong>No Picks Today</strong>. Lower confidence may appear as a separate teaser section only on empty Play days — never as POD.</p>
+    <h2 class="method-card-title">Watchlist</h2>
+    <p>Tracked PLUS signals shown under Plays whenever present — never POD, never sized as Plays. Empty Play day still shows <strong>No Picks Today</strong>.</p>
   </article>
   <article class="method-card">
     <h2 class="method-card-title">Results</h2>
     <ul>
-      <li>Day-1 L50 scoreboard by book (MLB · Asia · Winter · NCAA)</li>
-      <li>Flat is the default unit view; Full / Half / Quarter Kelly are optional toggles</li>
+      <li>Day-1 L50 by book (MLB · Asia · Winter · NCAA)</li>
+      <li>Flat default; Kelly modes are research toggles</li>
       <li>SP-missing signals never sit on the public slip</li>
     </ul>
   </article>
   <article class="method-card">
-    <h2 class="method-card-title">Dogs above a coin flip</h2>
-    <p>If an underdog Play still projects above 50% win/cover probability, that is called out explicitly on the card.</p>
+    <h2 class="method-card-title">Price on the card</h2>
+    <p>Live is the action price. Fair is the model reference beside it.</p>
   </article>
   <article class="method-card">
     <h2 class="method-card-title">Disclaimer</h2>
-    <p>Informational and entertainment only. Not gambling advice. Verify every price. 18+ where required.</p>
+    <p>Informational only. Not gambling advice. Verify every price. 18+ where required.</p>
   </article>
 </div>
 

@@ -198,9 +198,14 @@ main { max-width: var(--max); margin: 0 auto; padding: 10px 20px 64px; }
   font-size: 10px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
   color: var(--faint); margin-right: 5px;
 }
-.price-fair { color: var(--text); }
-.price-live { color: var(--muted); }
-.price-sep { color: var(--faint); font-weight: 400; font-size: 0.85em; }
+/* Live = action price (primary); Fair = reference (secondary) */
+.price-live { color: #fff; }
+.price-live .price-k { color: var(--red); }
+.price-fair {
+  color: var(--faint); font-size: 0.78em; font-weight: 600; opacity: 0.85;
+}
+.price-fair .price-k { color: var(--faint); margin-right: 4px; }
+.price-sep { color: var(--faint); font-weight: 400; font-size: 0.75em; opacity: 0.7; }
 .price-caption {
   font-size: 11px; color: var(--faint); margin-bottom: 10px; letter-spacing: 0.2px;
 }
@@ -348,7 +353,7 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
 
 @media (max-width: 760px) {
   .header-inner { height: auto; padding: 10px 14px; flex-wrap: wrap; }
-  .social-links { display: none; }
+  .social-links { display: flex; }
   .record-stat { padding: 0 8px; }
   .stat-value { font-size: 13px; }
   .pick-side { font-size: 26px; }
