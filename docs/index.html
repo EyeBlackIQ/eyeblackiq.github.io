@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://eyeblackiq.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css?v=20261112-tenths">
+<link rel="stylesheet" href="style.css?v=20261112-p012">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -131,25 +131,10 @@
       <div class="results-chart" id="results-chart"></div>
     </details>
     <div class="results-note" id="results-note"></div>
-    <div class="results-table-wrap">
-      <table class="results-table" id="results-table">
-        <thead>
-          <tr>
-            <th scope="col">Date</th>
-            <th scope="col">Lg</th>
-            <th scope="col">Mkt</th>
-            <th scope="col">Bet</th>
-            <th scope="col">Odds</th>
-            <th scope="col">Result</th>
-            <th scope="col">Score</th>
-            <th scope="col">Note</th>
-            <th scope="col" class="col-pnl">PnL</th>
-          </tr>
-        </thead>
-        <tbody id="results-tbody">
-          <tr><td colspan="9" class="empty-state">Loading Day-1…</td></tr>
-        </tbody>
-      </table>
+    <div class="results-list-wrap" id="results-list-wrap">
+      <ul class="watch-list results-list" id="results-list" role="list">
+        <li class="empty-state">Loading Day-1…</li>
+      </ul>
     </div>
   </section>
 
@@ -186,13 +171,82 @@ let resultsSport = 'global';
 
 function fmtAm(v) {
   if (v == null || v === '') return null;
+  if (typeof v === 'string') {
+    const t = v.trim();
+    if (/^[+-]\d+$/.test(t)) return t;
+    // Decimal odds → American (honest book price)
+    if (/^\d+(\.\d+)?$/.test(t) && Number(t) >= 1.01 && Number(t) < 50 && !/^\d{3,}$/.test(t)) {
+      const d = Number(t);
+      if (d >= 2) return `+${Math.round((d - 1) * 100)}`;
+      return `${Math.round(-100 / (d - 1))}`;
+    }
+  }
   const n = Number(v);
   if (Number.isNaN(n)) return null;
-  return n > 0 ? `+${n}` : `${n}`;
+  // Already American magnitude (e.g. 107, -120) — not 1.91 decimal
+  if (Math.abs(n) >= 100 || Number.isInteger(n)) return n > 0 ? `+${Math.round(n)}` : `${Math.round(n)}`;
+  if (n >= 1.01 && n < 50) {
+    if (n >= 2) return `+${Math.round((n - 1) * 100)}`;
+    return `${Math.round(-100 / (n - 1))}`;
+  }
+  return n > 0 ? `+${Math.round(n)}` : `${Math.round(n)}`;
 }
 
 function esc(s) {
   return String(s ?? '').replace(/</g, '');
+}
+
+/** 1–2 line context for collapsed list; full text stays in Specs. */
+function shortBlurb(text, max = 140) {
+  const s = String(text || '').trim();
+  if (!s) return '';
+  const cut = s.split(/(?<=[.!?])\s+/).slice(0, 2).join(' ');
+  if (cut.length <= max) return cut;
+  return cut.slice(0, max - 1).trimEnd() + '…';
+}
+
+function specsPanel(pick) {
+  const live = fmtAm(pick.book_am);
+  const fair = fmtAm(pick.fair_am);
+  const wp = pick.model_wp_pct != null ? pick.model_wp_pct : pick.cover_pct;
+  const meta = metaStack(pick);
+  const facts = Array.isArray(pick.facts) ? pick.facts.filter(Boolean) : [];
+  const sp = [pick.sp_away, pick.sp_home].filter(Boolean).join(' vs ');
+  const blurb = String(pick.blurb || '').trim();
+  const rows = [];
+  if (live || fair) {
+    rows.push(`<div class="spec-row"><span class="spec-k">Odds</span><span class="spec-v">${live ? `Live ${live}` : ''}${live && fair ? ' · ' : ''}${fair ? `Fair ${fair}` : ''}</span></div>`);
+  }
+  if (wp != null) {
+    rows.push(`<div class="spec-row"><span class="spec-k">Fair ¢</span><span class="spec-v">${Number(wp).toFixed(1)}¢ <span class="spec-hint">Kalshi-style</span></span></div>`);
+  }
+  meta.forEach(m => {
+    rows.push(`<div class="spec-row"><span class="spec-k">${esc(m.k)}</span><span class="spec-v">${esc(m.v)}</span></div>`);
+  });
+  if (sp) rows.push(`<div class="spec-row"><span class="spec-k">SP</span><span class="spec-v">${esc(sp)}</span></div>`);
+  function microLine(m, label) {
+    if (!m || m.era == null) return '';
+    const bits = [`${label} ERA ${m.era}`];
+    if (m.fip != null) bits.push(`FIP ${m.fip}`);
+    if (m.ip != null) bits.push(`${m.ip} IP`);
+    const rates = [];
+    if (m.k9 != null) rates.push(`K9 ${m.k9}`);
+    if (m.bb9 != null) rates.push(`BB9 ${m.bb9}`);
+    if (m.hr9 != null) rates.push(`HR9 ${m.hr9}`);
+    if (m.whip != null) rates.push(`WHIP ${m.whip}`);
+    if (rates.length) bits.push(rates.join(' · '));
+    return bits.join(' · ');
+  }
+  const ma = microLine(pick.sp_away_micro, pick.sp_away || 'Away');
+  const mh = microLine(pick.sp_home_micro, pick.sp_home || 'Home');
+  if (ma) rows.push(`<div class="spec-row"><span class="spec-k">Away SP</span><span class="spec-v">${esc(ma)}</span></div>`);
+  if (mh) rows.push(`<div class="spec-row"><span class="spec-k">Home SP</span><span class="spec-v">${esc(mh)}</span></div>`);
+  if (facts.length) {
+    rows.push(`<div class="spec-facts">${facts.map(f => `<span class="fact-chip">${esc(f)}</span>`).join('')}</div>`);
+  }
+  if (blurb) rows.push(`<p class="spec-blurb">${esc(blurb)}</p>`);
+  if (!rows.length) return '';
+  return `<div class="spec-body">${rows.join('')}</div>`;
 }
 
 function ouTone(side) {
@@ -292,13 +346,12 @@ function pickCard(pick, { hero = false } = {}) {
   </article>`;
 }
 
-/** Plays + Watchlist = lean list rows (POD stays hero card). */
+/** Plays + Watchlist = lean list + click-to-expand Specs (POD stays hero card). */
 function leanListItem(pick, { watch = false } = {}) {
   const live = fmtAm(pick.book_am);
   const fair = fmtAm(pick.fair_am);
   const league = pick.league ? String(pick.league) : '';
   const when = pick.game_time || pick.first_pitch || '';
-  const wp = pick.model_wp_pct != null ? pick.model_wp_pct : pick.cover_pct;
   const tone = ouTone(pick.side);
   const bits = [];
   if (league) bits.push(`<span class="watch-lg">${esc(league)}</span>`);
@@ -309,19 +362,59 @@ function leanListItem(pick, { watch = false } = {}) {
   } else if (pick.proj_total != null) {
     bits.push(`<span class="watch-proj">μ ${Number(pick.proj_total).toFixed(1)}</span>`);
   }
-  if (wp != null) bits.push(`<span class="watch-hit">Fair ${Number(wp).toFixed(1)}¢</span>`);
-  const sp = [pick.sp_away, pick.sp_home].filter(Boolean).join(' / ');
-  if (sp) bits.push(`<span class="watch-sp">SP ${esc(sp)}</span>`);
+  const ctx = shortBlurb(pick.blurb);
+  const specs = specsPanel(pick);
   return `
   <li class="watch-item${tone ? ' pick--' + tone : ''}${watch ? ' watch-item--teaser' : ''}">
     <div class="watch-main">
       <span class="watch-side">${esc(pick.side) || '—'}</span>
-      <span class="watch-odds">${live ? `<span class="watch-live">${live}</span>` : ''}${fair ? `<span class="watch-fair">fair ${fair}</span>` : ''}</span>
+      <span class="watch-odds" aria-label="American odds">${live ? `<span class="watch-live">${live}</span>` : '—'}${fair ? `<span class="watch-fair">Fair ${fair}</span>` : ''}</span>
     </div>
     ${bits.length ? `<div class="watch-sub">${bits.join('<span class="watch-dot" aria-hidden="true">·</span>')}</div>` : ''}
+    ${ctx ? `<p class="watch-ctx">${esc(ctx)}</p>` : ''}
+    ${specs ? `<details class="spec-drop"><summary>Specs</summary>${specs}</details>` : ''}
   </li>`;
 }
 function watchListItem(pick) { return leanListItem(pick, { watch: true }); }
+
+function resultsListItem(r, key) {
+  const pv = Number(r[key] != null ? r[key] : r.pnl_u || 0);
+  const cls = pv > 0 ? 'pos' : (pv < 0 ? 'neg' : '');
+  const bet = String(r.bet || '');
+  const tone = ouTone(bet);
+  const odds = fmtAm(r.odds) || (r.odds != null && r.odds !== '' ? esc(r.odds) : '—');
+  const note = String(r.note || '').trim();
+  const ctx = shortBlurb(note, 100);
+  const bits = [];
+  if (r.date) bits.push(`<span class="watch-time">${esc(r.date)}</span>`);
+  if (r.league) bits.push(`<span class="watch-lg">${esc(r.league)}</span>`);
+  if (r.market) bits.push(`<span class="watch-hit">${esc(r.market)}</span>`);
+  if (r.actual != null && r.actual !== '') bits.push(`<span class="watch-proj">${esc(r.actual)}</span>`);
+  const specRows = [];
+  specRows.push(`<div class="spec-row"><span class="spec-k">Odds</span><span class="spec-v">${odds}</span></div>`);
+  if (r.book) specRows.push(`<div class="spec-row"><span class="spec-k">Book</span><span class="spec-v">${esc(r.book)}</span></div>`);
+  if (r.actual != null && r.actual !== '') {
+    specRows.push(`<div class="spec-row"><span class="spec-k">Score</span><span class="spec-v">${esc(r.actual)}</span></div>`);
+  }
+  specRows.push(`<div class="spec-row"><span class="spec-k">PnL</span><span class="spec-v ${cls}">${fmtU(pv)}</span></div>`);
+  if (note) specRows.push(`<p class="spec-blurb">${esc(note)}</p>`);
+  return `
+  <li class="watch-item results-item ${cls}${tone ? ' pick--' + tone : ''}">
+    <div class="watch-main">
+      <span class="watch-side">${esc(bet) || '—'}</span>
+      <span class="watch-odds" aria-label="American odds">
+        <span class="watch-live">${odds}</span>
+        <span class="watch-result ${resultClass(r.result)}">${esc(r.result) || '—'}</span>
+      </span>
+    </div>
+    ${bits.length ? `<div class="watch-sub">${bits.join('<span class="watch-dot" aria-hidden="true">·</span>')}</div>` : ''}
+    ${ctx ? `<p class="watch-ctx">${esc(ctx)}</p>` : ''}
+    <details class="spec-drop">
+      <summary>Specs</summary>
+      <div class="spec-body">${specRows.join('')}</div>
+    </details>
+  </li>`;
+}
 
 function isPlay(p) {
   if (String(p.confidence || '') === 'lower') return false;
@@ -550,11 +643,11 @@ function seasonForSport(d, sport) {
 
 function renderResults() {
   const d = day1Data;
-  const tbody = document.getElementById('results-tbody');
+  const list = document.getElementById('results-list');
   const badge = document.getElementById('results-pod-badge');
   const note = document.getElementById('results-note');
   if (!d) {
-    if (tbody) tbody.innerHTML = '<tr><td colspan="8" class="empty-state">Day-1 JSON missing</td></tr>';
+    if (list) list.innerHTML = '<li class="empty-state">Day-1 JSON missing</li>';
     return;
   }
   if (badge) badge.textContent = d.pod_day || 'POD';
@@ -590,18 +683,12 @@ function renderResults() {
   }
   set('rc-l50n', String(rows.length));
   if (note) note.textContent = [d.units_policy, d.sp_policy, 'slip≠LOG'].filter(Boolean).join(' · ');
+  if (!list) return;
   if (!rows.length) {
-    tbody.innerHTML = '<tr><td colspan="9" class="empty-state">No L50 rows for this tab.</td></tr>';
+    list.innerHTML = '<li class="empty-state">No L50 rows for this tab.</li>';
     return;
   }
-  tbody.innerHTML = rows.map(r => {
-    const pv = Number(r[key] != null ? r[key] : r.pnl_u || 0);
-    const cls = pv > 0 ? 'pos' : (pv < 0 ? 'neg' : '');
-    const bet = String(r.bet || '').replace(/</g, '');
-    const note = String(r.note || '').replace(/</g, '');
-    const tone = ouTone(bet);
-    return `<tr class="${cls}${tone ? ' pick--' + tone : ''}"><td>${r.date || ''}</td><td>${r.league || ''}</td><td>${r.market || ''}</td><td class="left">${bet}</td><td>${r.odds ?? ''}</td><td class="${resultClass(r.result)}">${r.result || ''}</td><td>${r.actual ?? ''}</td><td class="left note-cell">${note}</td><td class="col-pnl ${cls}">${fmtU(pv)}</td></tr>`;
-  }).join('');
+  list.innerHTML = rows.map(r => resultsListItem(r, key)).join('');
 }
 
 function cleanLandingUrl() {
@@ -629,8 +716,8 @@ function showTab(tab, { fromUser = false } = {}) {
     if (picks) picks.hidden = true;
     if (results) results.hidden = false;
     loadDay1().then(renderResults).catch(() => {
-      const tb = document.getElementById('results-tbody');
-      if (tb) tb.innerHTML = '<tr><td colspan="8" class="empty-state">Results load error</td></tr>';
+      const el = document.getElementById('results-list');
+      if (el) el.innerHTML = '<li class="empty-state">Results load error</li>';
     });
   } else {
     if (picks) picks.hidden = false;
