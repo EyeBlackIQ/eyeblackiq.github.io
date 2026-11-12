@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://eyeblackiq.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css?v=20261112-list">
+<link rel="stylesheet" href="style.css?v=20261112-tenths">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -115,14 +115,21 @@
     <div class="results-cards" id="results-cards">
       <div class="results-card"><div class="rk">Record</div><div class="rv" id="rc-record">—</div></div>
       <div class="results-card"><div class="rk">Hit rate</div><div class="rv" id="rc-hr">—</div></div>
-      <div class="results-card"><div class="rk" id="rc-pnl-label">PnL (Flat)</div><div class="rv" id="rc-pnl">—</div></div>
       <div class="results-card"><div class="rk">L50 n</div><div class="rv" id="rc-l50n">—</div></div>
+      <details class="results-card results-card--pnl">
+        <summary><span class="rk" id="rc-pnl-label">PnL (Flat)</span> <span class="rv" id="rc-pnl">—</span></summary>
+        <p class="pnl-note">Secondary · flat $10 = 1u</p>
+      </details>
     </div>
 
-    <div class="results-chart-wrap" id="results-chart-wrap" aria-label="Season PnL by book">
-      <div class="results-chart-title" id="results-chart-title">Season PnL by book</div>
-      <div class="results-chart" id="results-chart"></div>
+    <div class="results-chart-wrap" id="results-hr-wrap" aria-label="Hit rate by book">
+      <div class="results-chart-title" id="results-hr-title">Hit rate by book</div>
+      <div class="results-chart" id="results-hr-chart"></div>
     </div>
+    <details class="results-chart-wrap results-chart-wrap--pnl" id="results-chart-wrap">
+      <summary class="results-chart-title" id="results-chart-title">Season PnL by book</summary>
+      <div class="results-chart" id="results-chart"></div>
+    </details>
     <div class="results-note" id="results-note"></div>
     <div class="results-table-wrap">
       <table class="results-table" id="results-table">
@@ -134,12 +141,13 @@
             <th scope="col">Bet</th>
             <th scope="col">Odds</th>
             <th scope="col">Result</th>
-            <th scope="col">PnL</th>
-            <th scope="col">Actual</th>
+            <th scope="col">Score</th>
+            <th scope="col">Note</th>
+            <th scope="col" class="col-pnl">PnL</th>
           </tr>
         </thead>
         <tbody id="results-tbody">
-          <tr><td colspan="8" class="empty-state">Loading Day-1…</td></tr>
+          <tr><td colspan="9" class="empty-state">Loading Day-1…</td></tr>
         </tbody>
       </table>
     </div>
@@ -187,26 +195,50 @@ function esc(s) {
   return String(s ?? '').replace(/</g, '');
 }
 
+function ouTone(side) {
+  const s = String(side || '');
+  if (/under/i.test(s)) return 'under';
+  if (/over/i.test(s)) return 'over';
+  return '';
+}
+
 function metaStack(p) {
   const items = [];
   const mkt = String(p.market || '').toUpperCase();
+  const isTotal = /TOTAL|OU/.test(mkt) || /over|under/i.test(String(p.side || ''));
+  const hasSides = p.proj_away != null && p.proj_home != null;
   const hasMu = p.proj_total != null && p.line != null;
-  if (hasMu) {
-    const short = /under/i.test(String(p.side || '')) ? 'Under' : (/over/i.test(String(p.side || '')) ? 'Over' : '');
+  const short = /under/i.test(String(p.side || '')) ? 'Under' : (/over/i.test(String(p.side || '')) ? 'Over' : '');
+  // O/U: team scores (away–home) primary; combined secondary
+  if (isTotal && hasSides) {
+    const tot = Number(p.proj_away) + Number(p.proj_home);
+    const vs = p.line != null ? ` vs ${p.line}` : '';
+    items.push({
+      k: 'Proj',
+      v: `${Number(p.proj_away).toFixed(1)}–${Number(p.proj_home).toFixed(1)} (${tot.toFixed(1)})${vs}${short ? ' — ' + short : ''}`,
+      primary: true,
+    });
+  } else if (hasMu) {
     items.push({
       k: 'Model',
       v: `${Number(p.proj_total).toFixed(1)} vs ${p.line}${short ? ' — ' + short : ''}`,
       primary: true,
     });
+  } else if (hasSides) {
+    items.push({
+      k: 'Proj',
+      v: `${Number(p.proj_away).toFixed(1)}–${Number(p.proj_home).toFixed(1)}`,
+      primary: true,
+    });
   }
-  if (p.proj_away != null && p.proj_home != null) {
-    items.push({ k: 'Proj', v: `${Number(p.proj_away).toFixed(1)}–${Number(p.proj_home).toFixed(1)}`, primary: !hasMu });
-  }
+  // Fair Price in Kalshi-style cents (tenths) — not raw Hit%
   const wp = p.model_wp_pct != null ? p.model_wp_pct : p.cover_pct;
   if (wp != null) {
-    const label = mkt === 'SPREAD' ? 'Cover' : 'Hit';
-    // Hit is secondary when Model μ is present; primary otherwise
-    items.push({ k: label, v: `${Number(wp).toFixed(0)}%`, primary: !hasMu });
+    items.push({
+      k: 'Fair',
+      v: `${Number(wp).toFixed(1)}¢`,
+      primary: !(hasMu || hasSides),
+    });
   }
   return items;
 }
@@ -216,10 +248,10 @@ function priceStrip(pick) {
   const live = fmtAm(pick.book_am);
   if (!fair && !live) return '';
   const bits = [];
-  // Live first (action price); Fair secondary / greyed
+  // Live first (action price); Fair American secondary; Kalshi note on Fair ¢ in meta
   if (live) bits.push(`<span class="price-live"><span class="price-k">Live</span> ${live}</span>`);
   if (fair) bits.push(`<span class="price-fair"><span class="price-k">Fair</span> ${fair}</span>`);
-  return `<div class="pick-prices" aria-label="Live and fair odds">${bits.join('<span class="price-sep" aria-hidden="true">·</span>')}</div>`;
+  return `<div class="pick-prices" aria-label="Live and fair odds">${bits.join('<span class="price-sep" aria-hidden="true">·</span>')}<span class="price-caption">Fair ¢ = Kalshi-style</span></div>`;
 }
 
 function factsRow(pick, { skip = false } = {}) {
@@ -232,43 +264,56 @@ function factsRow(pick, { skip = false } = {}) {
 function pickCard(pick, { hero = false } = {}) {
   const league = pick.league ? String(pick.league) : '';
   const meta = metaStack(pick);
-  const cls = hero ? 'pick-card pick-card--pod' : 'pick-row pick-row--play';
+  const tone = ouTone(pick.side);
+  const cls = hero
+    ? `pick-card pick-card--pod${tone ? ' pick--' + tone : ''}`
+    : `pick-row pick-row--play${tone ? ' pick--' + tone : ''}`;
   const metaHtml = meta.map(r =>
     `<span class="meta-item"><span class="meta-k">${esc(r.k)}</span><span class="meta-v${r.primary ? '' : ' meta-v--secondary'}">${esc(r.v)}</span></span>`
   ).join('');
   const sp = [pick.sp_away, pick.sp_home].filter(Boolean).join(' vs ');
   const when = pick.game_time || pick.first_pitch || '';
   const blurb = String(pick.blurb || '').trim();
+  const facts = Array.isArray(pick.facts) ? pick.facts.filter(Boolean).slice(0, 4) : [];
   return `
   <article class="${cls}">
     <div class="pick-header">
       <span class="pick-kicker">${esc(league)}</span>
       ${hero ? '<span class="pod-crown">POD</span>' : ''}
+      ${tone ? `<span class="ou-chip ou-chip--${tone}">${tone === 'over' ? 'Over' : 'Under'}</span>` : ''}
     </div>
     <div class="pick-side">${esc(pick.side) || '—'}</div>
     ${priceStrip(pick)}
     ${metaHtml ? `<div class="meta-row" aria-label="Model synopsis">${metaHtml}</div>` : ''}
     ${pick.game ? `<div class="pick-game">${esc(pick.game)}${when ? ` <span class="pick-time">${esc(when)}</span>` : ''}</div>` : ''}
     ${sp ? `<div class="pick-sp">SP ${esc(sp)}</div>` : ''}
-    ${factsRow(pick, { skip: !!blurb })}
+    ${!blurb && facts.length ? `<div class="pick-facts">${facts.map(f => `<span class="fact-chip">${esc(f)}</span>`).join('')}</div>` : ''}
     ${blurb ? `<p class="pick-blurb">${esc(blurb)}</p>` : ''}
   </article>`;
 }
 
-/** Watchlist = lean list rows (same data, not card grid). */
-function watchListItem(pick) {
+/** Plays + Watchlist = lean list rows (POD stays hero card). */
+function leanListItem(pick, { watch = false } = {}) {
   const live = fmtAm(pick.book_am);
   const fair = fmtAm(pick.fair_am);
   const league = pick.league ? String(pick.league) : '';
   const when = pick.game_time || pick.first_pitch || '';
-  const hit = pick.model_wp_pct != null ? pick.model_wp_pct : pick.cover_pct;
+  const wp = pick.model_wp_pct != null ? pick.model_wp_pct : pick.cover_pct;
+  const tone = ouTone(pick.side);
   const bits = [];
   if (league) bits.push(`<span class="watch-lg">${esc(league)}</span>`);
   if (pick.game) bits.push(`<span class="watch-game">${esc(pick.game)}</span>`);
   if (when) bits.push(`<span class="watch-time">${esc(when)}</span>`);
-  if (hit != null) bits.push(`<span class="watch-hit">${Number(hit).toFixed(0)}%</span>`);
+  if (pick.proj_away != null && pick.proj_home != null) {
+    bits.push(`<span class="watch-proj">${Number(pick.proj_away).toFixed(1)}–${Number(pick.proj_home).toFixed(1)}</span>`);
+  } else if (pick.proj_total != null) {
+    bits.push(`<span class="watch-proj">μ ${Number(pick.proj_total).toFixed(1)}</span>`);
+  }
+  if (wp != null) bits.push(`<span class="watch-hit">Fair ${Number(wp).toFixed(1)}¢</span>`);
+  const sp = [pick.sp_away, pick.sp_home].filter(Boolean).join(' / ');
+  if (sp) bits.push(`<span class="watch-sp">SP ${esc(sp)}</span>`);
   return `
-  <li class="watch-item">
+  <li class="watch-item${tone ? ' pick--' + tone : ''}${watch ? ' watch-item--teaser' : ''}">
     <div class="watch-main">
       <span class="watch-side">${esc(pick.side) || '—'}</span>
       <span class="watch-odds">${live ? `<span class="watch-live">${live}</span>` : ''}${fair ? `<span class="watch-fair">fair ${fair}</span>` : ''}</span>
@@ -276,6 +321,7 @@ function watchListItem(pick) {
     ${bits.length ? `<div class="watch-sub">${bits.join('<span class="watch-dot" aria-hidden="true">·</span>')}</div>` : ''}
   </li>`;
 }
+function watchListItem(pick) { return leanListItem(pick, { watch: true }); }
 
 function isPlay(p) {
   if (String(p.confidence || '') === 'lower') return false;
@@ -321,7 +367,8 @@ function renderPicks() {
       grid.innerHTML = '';
     } else {
       playsSec.hidden = false;
-      grid.innerHTML = rest.map(p => pickCard(p)).join('');
+      // List-leaner Plays (POD remains hero card above)
+      grid.innerHTML = `<ul class="watch-list watch-list--plays" role="list">${rest.map(p => leanListItem(p)).join('')}</ul>`;
     }
   }
 
@@ -468,6 +515,30 @@ function renderResultsChart(d) {
   }).join('');
 }
 
+function renderHrChart(d) {
+  const host = document.getElementById('results-hr-chart');
+  const title = document.getElementById('results-hr-title');
+  if (!host) return;
+  let bars = (d && d.hr_chart && d.hr_chart.bars) || [];
+  if (!bars.length && d) {
+    // Derive from slip_summary when hr_chart absent
+    bars = ['mlb', 'asia', 'winter', 'ncaa'].map(k => {
+      const s = (d[k] && d[k].slip_summary) || {};
+      const hr = s.hr != null ? Number(s.hr) : null;
+      return { label: k.toUpperCase() === 'NCAA' ? 'NCAA' : k.charAt(0).toUpperCase() + k.slice(1), hr, n: s.n || 0 };
+    }).filter(b => b.hr != null);
+  }
+  if (title) title.textContent = (d && d.hr_chart && d.hr_chart.title) || 'Hit rate by book';
+  if (!bars.length) { host.innerHTML = ''; return; }
+  host.innerHTML = bars.map(b => {
+    const hr = Number(b.hr || 0) * 100;
+    const pct = Math.max(4, Math.min(100, Math.round(hr)));
+    const cls = hr >= 55 ? 'pos' : (hr >= 50 ? 'mid' : 'neg');
+    const label = String(b.label || '').replace(/</g, '');
+    return `<div class="rc-bar-row"><span class="rc-bar-label">${label}</span><div class="rc-bar-track"><div class="rc-bar-fill ${cls}" style="width:${pct}%"></div></div><span class="rc-bar-val ${cls}">${hr.toFixed(1)}%</span></div>`;
+  }).join('');
+}
+
 function seasonForSport(d, sport) {
   if (!d) return null;
   if (sport === 'asia') return d.asia && d.asia.slip_summary;
@@ -487,6 +558,7 @@ function renderResults() {
     return;
   }
   if (badge) badge.textContent = d.pod_day || 'POD';
+  renderHrChart(d);
   renderResultsChart(d);
   const rows = rowsForSport(d, resultsSport);
   const key = pnlKey(resultsUnit);
@@ -519,14 +591,16 @@ function renderResults() {
   set('rc-l50n', String(rows.length));
   if (note) note.textContent = [d.units_policy, d.sp_policy, 'slip≠LOG'].filter(Boolean).join(' · ');
   if (!rows.length) {
-    tbody.innerHTML = '<tr><td colspan="8" class="empty-state">No L50 rows for this tab.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="9" class="empty-state">No L50 rows for this tab.</td></tr>';
     return;
   }
   tbody.innerHTML = rows.map(r => {
     const pv = Number(r[key] != null ? r[key] : r.pnl_u || 0);
     const cls = pv > 0 ? 'pos' : (pv < 0 ? 'neg' : '');
     const bet = String(r.bet || '').replace(/</g, '');
-    return `<tr class="${cls}"><td>${r.date || ''}</td><td>${r.league || ''}</td><td>${r.market || ''}</td><td class="left">${bet}</td><td>${r.odds ?? ''}</td><td class="${resultClass(r.result)}">${r.result || ''}</td><td class="${cls}">${fmtU(pv)}</td><td>${r.actual ?? ''}</td></tr>`;
+    const note = String(r.note || '').replace(/</g, '');
+    const tone = ouTone(bet);
+    return `<tr class="${cls}${tone ? ' pick--' + tone : ''}"><td>${r.date || ''}</td><td>${r.league || ''}</td><td>${r.market || ''}</td><td class="left">${bet}</td><td>${r.odds ?? ''}</td><td class="${resultClass(r.result)}">${r.result || ''}</td><td>${r.actual ?? ''}</td><td class="left note-cell">${note}</td><td class="col-pnl ${cls}">${fmtU(pv)}</td></tr>`;
   }).join('');
 }
 
