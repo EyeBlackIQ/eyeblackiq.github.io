@@ -15,6 +15,6 @@
   },
   "type_streaks": {},
   "last_updated": "2026-11-12",
-  "source": "Winter CORE",
-  "units_policy": "Flat 1u"
+  "source": "grade_ledger_primary CORE/FINAL",
+  "units_policy": "flat $10 = 1u"
 }

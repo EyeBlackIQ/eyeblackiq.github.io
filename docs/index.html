@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://eyeblackiq.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css?v=20261112-live">
+<link rel="stylesheet" href="style.css?v=20261112-list">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -230,26 +230,19 @@ function factsRow(pick, { skip = false } = {}) {
 }
 
 function pickCard(pick, { hero = false } = {}) {
-  const isLower = String(pick.confidence || '') === 'lower' || String(pick.public_tier || '') === 'Watchlist';
   const league = pick.league ? String(pick.league) : '';
   const meta = metaStack(pick);
-  const cls = [
-    hero ? 'pick-card pick-card--pod' : 'pick-row',
-    !hero && (isLower ? 'pick-row--watch' : 'pick-row--play'),
-  ].filter(Boolean).join(' ');
+  const cls = hero ? 'pick-card pick-card--pod' : 'pick-row pick-row--play';
   const metaHtml = meta.map(r =>
     `<span class="meta-item"><span class="meta-k">${esc(r.k)}</span><span class="meta-v${r.primary ? '' : ' meta-v--secondary'}">${esc(r.v)}</span></span>`
   ).join('');
   const sp = [pick.sp_away, pick.sp_home].filter(Boolean).join(' vs ');
   const when = pick.game_time || pick.first_pitch || '';
   const blurb = String(pick.blurb || '').trim();
-  // Play: league only. Watch: Watch · league. POD: league + crown only.
-  let kicker = league || '';
-  if (isLower) kicker = league ? `Watch · ${league}` : 'Watch';
   return `
   <article class="${cls}">
     <div class="pick-header">
-      <span class="pick-kicker">${esc(kicker)}</span>
+      <span class="pick-kicker">${esc(league)}</span>
       ${hero ? '<span class="pod-crown">POD</span>' : ''}
     </div>
     <div class="pick-side">${esc(pick.side) || '—'}</div>
@@ -260,6 +253,28 @@ function pickCard(pick, { hero = false } = {}) {
     ${factsRow(pick, { skip: !!blurb })}
     ${blurb ? `<p class="pick-blurb">${esc(blurb)}</p>` : ''}
   </article>`;
+}
+
+/** Watchlist = lean list rows (same data, not card grid). */
+function watchListItem(pick) {
+  const live = fmtAm(pick.book_am);
+  const fair = fmtAm(pick.fair_am);
+  const league = pick.league ? String(pick.league) : '';
+  const when = pick.game_time || pick.first_pitch || '';
+  const hit = pick.model_wp_pct != null ? pick.model_wp_pct : pick.cover_pct;
+  const bits = [];
+  if (league) bits.push(`<span class="watch-lg">${esc(league)}</span>`);
+  if (pick.game) bits.push(`<span class="watch-game">${esc(pick.game)}</span>`);
+  if (when) bits.push(`<span class="watch-time">${esc(when)}</span>`);
+  if (hit != null) bits.push(`<span class="watch-hit">${Number(hit).toFixed(0)}%</span>`);
+  return `
+  <li class="watch-item">
+    <div class="watch-main">
+      <span class="watch-side">${esc(pick.side) || '—'}</span>
+      <span class="watch-odds">${live ? `<span class="watch-live">${live}</span>` : ''}${fair ? `<span class="watch-fair">fair ${fair}</span>` : ''}</span>
+    </div>
+    ${bits.length ? `<div class="watch-sub">${bits.join('<span class="watch-dot" aria-hidden="true">·</span>')}</div>` : ''}
+  </li>`;
 }
 
 function isPlay(p) {
@@ -313,14 +328,16 @@ function renderPicks() {
   const teaserSec = document.getElementById('teaser-section');
   const teaserGrid = document.getElementById('teaser-grid');
   const teaserCount = document.getElementById('teaser-count');
-  // Watchlist always when tracked PLUS exists (even on Play days)
-  const watch = (slipData?.teaser || []).filter(p => String(p.confidence || '') === 'lower');
+  // Watchlist always when tracked PLUS exists (even on Play days) — list UX, not cards
+  const watch = (slipData?.teaser || []).filter(p =>
+    String(p.confidence || '') === 'lower' || String(p.public_tier || '') === 'Watchlist'
+  );
   if (teaserSec && teaserGrid) {
     if (watch.length) {
       teaserSec.hidden = false;
       teaserSec.setAttribute('aria-hidden', 'false');
       if (teaserCount) teaserCount.textContent = String(watch.length);
-      teaserGrid.innerHTML = watch.map(p => pickCard(p)).join('');
+      teaserGrid.innerHTML = `<ul class="watch-list" role="list">${watch.map(watchListItem).join('')}</ul>`;
     } else {
       teaserSec.hidden = true;
       teaserSec.setAttribute('aria-hidden', 'true');

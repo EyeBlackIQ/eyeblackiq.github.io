@@ -139,9 +139,43 @@ main { max-width: var(--max); margin: 0 auto; padding: 10px 20px 64px; }
 .pod-row { display: flex; flex-direction: column; gap: 10px; }
 .picks-section { margin-top: 6px; }
 
-/* List presentation — denser, brighter Plays */
+/* List presentation — denser Plays; Watchlist = true list */
 .picks-list { display: flex; flex-direction: column; gap: 10px; }
 .teaser-section { margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--border); }
+.picks-list--watch { gap: 0; }
+.watch-list {
+  list-style: none; margin: 0; padding: 0;
+  border: 1px solid var(--border); background: var(--surface);
+}
+.watch-item {
+  padding: 11px 14px; border-bottom: 1px solid var(--border);
+  animation: rise 0.2s ease-out;
+}
+.watch-item:last-child { border-bottom: none; }
+.watch-main {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+}
+.watch-side {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+  font-size: 18px; letter-spacing: 0.2px; color: var(--text); line-height: 1.15;
+}
+.watch-odds {
+  display: inline-flex; align-items: baseline; gap: 8px; flex-shrink: 0;
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 16px;
+}
+.watch-live { color: #fff; }
+.watch-fair { color: var(--faint); font-size: 12px; font-weight: 600; }
+.watch-sub {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px;
+  margin-top: 4px; font-size: 12px; color: var(--faint);
+}
+.watch-lg {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; color: #9a958c;
+}
+.watch-game { color: var(--muted); }
+.watch-time, .watch-hit { color: var(--faint); }
+.watch-dot { color: #3a3a3a; }
 
 /* POD hero card */
 .pick-card {
