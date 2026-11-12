@@ -139,28 +139,34 @@ main { max-width: var(--max); margin: 0 auto; padding: 10px 20px 64px; }
 .pod-row { display: flex; flex-direction: column; gap: 10px; }
 .picks-section { margin-top: 6px; }
 
-/* Wire-service list on mobile; 2-col only on wide desks */
-.picks-grid {
-  display: flex; flex-direction: column; gap: 10px;
-}
-@media (min-width: 860px) {
-  .picks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-}
-.teaser-section { margin-top: 28px; padding-top: 16px; border-top: 1px dashed var(--border); }
+/* List presentation — denser, brighter Plays */
+.picks-list { display: flex; flex-direction: column; gap: 10px; }
+.teaser-section { margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--border); }
 
-/* Cards */
+/* POD hero card */
 .pick-card {
   background: var(--panel); border: 1px solid var(--border); border-left: 3px solid var(--border);
   padding: 16px 16px 14px; animation: rise 0.24s ease-out;
 }
-.pick-card--play { border-left-color: #4a4a4a; }
-.picks-grid .pick-card--play .price-caption { display: none; }
 .pick-card--pod {
-  border-color: rgba(212, 175, 55, 0.4); border-left: 3px solid var(--gold);
+  border-color: rgba(212, 175, 55, 0.45); border-left: 3px solid var(--gold);
   padding: 20px 18px 16px;
-  background: linear-gradient(180deg, rgba(212, 175, 55, 0.04), transparent 48%), var(--panel);
+  background: linear-gradient(180deg, rgba(212, 175, 55, 0.05), transparent 48%), var(--panel);
 }
-.pick-card--lower { border-left-color: #333; opacity: 0.94; }
+
+/* Play / Watch rows */
+.pick-row {
+  background: #161616; border: 1px solid #2a2a2a; border-left: 3px solid var(--red);
+  padding: 14px 16px 12px; animation: rise 0.24s ease-out;
+}
+.pick-row--play { border-left-color: var(--red); }
+.pick-row--watch { border-left-color: #6b7280; background: #131313; }
+.pick-row .pick-side { font-size: 24px; color: var(--text); }
+.pick-row .pick-prices { font-size: 18px; }
+.pick-row .pick-kicker { color: #b0aaa0; }
+.pick-row--play .pick-kicker { color: #e8a0ad; }
+.pick-row .pick-blurb { color: #d0cbc0; }
+.pick-row .pick-game { color: #c2bdb2; }
 @keyframes rise {
   from { opacity: 0; transform: translateY(5px); }
   to { opacity: 1; transform: none; }
@@ -220,15 +226,23 @@ main { max-width: var(--max); margin: 0 auto; padding: 10px 20px 64px; }
   font-size: 12.5px; color: var(--faint); margin-top: 2px;
   font-variant-numeric: lining-nums;
 }
+.pick-facts {
+  display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 2px;
+}
+.fact-chip {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.6px; text-transform: uppercase;
+  color: #e8e2d6; background: #1f1f1f; border: 1px solid #333;
+  padding: 3px 8px;
+}
 .pick-blurb {
   margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border);
-  font-size: 13.5px; line-height: 1.5; color: #c4bfb4; max-width: 62ch;
+  font-size: 13.5px; line-height: 1.5; color: #d4cfc4; max-width: 68ch;
   font-weight: 400;
 }
 .pick-card--pod .pick-blurb {
-  font-size: 14.5px; line-height: 1.55; color: #d2cdc3; max-width: 68ch;
+  font-size: 14.5px; line-height: 1.55; color: #e6e1d6; max-width: 72ch;
 }
-.pick-card--play .pick-blurb { color: #b8b3a8; }
 
 .empty-state { color: var(--faint); font-style: italic; padding: 14px 0; }
 .empty-panel {

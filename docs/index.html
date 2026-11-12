@@ -12,7 +12,8 @@
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://eyeblackiq.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css?v=20261111-narr">
+<link rel="stylesheet" href="style.css?v=20261111-watch">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
@@ -75,15 +76,15 @@
         Plays
         <span class="count-badge" id="rec-count">0</span>
       </h2>
-      <div class="picks-grid" id="picks-grid">
+      <div class="picks-list" id="picks-grid">
         <p class="empty-state">Loading…</p>
       </div>
     </section>
 
     <section class="picks-section teaser-section" id="teaser-section" hidden aria-hidden="true">
-      <h2 class="section-title">Lower confidence <span class="count-badge" id="teaser-count">0</span></h2>
-      <p class="section-note">Shown only when no Play cleared · never POD</p>
-      <div class="picks-grid" id="teaser-grid"></div>
+      <h2 class="section-title">Watchlist <span class="count-badge" id="teaser-count">0</span></h2>
+      <p class="section-note">Tracked · not Plays · not POD</p>
+      <div class="picks-list picks-list--watch" id="teaser-grid"></div>
     </section>
   </section>
 
@@ -108,7 +109,7 @@
         <button type="button" class="chip" data-unit="kelly_half">Half Kelly</button>
         <button type="button" class="chip" data-unit="kelly_quarter">Quarter Kelly</button>
       </div>
-      <p class="section-note">Flat is the public ledger. Kelly modes are research-only.</p>
+      <p class="section-note">Kelly = research modes</p>
     </div>
 
     <div class="results-cards" id="results-cards">
@@ -211,19 +212,20 @@ function metaStack(p) {
   return items;
 }
 
-function priceStrip(pick, { hero = false } = {}) {
+function priceStrip(pick) {
   const fair = fmtAm(pick.fair_am);
   const live = fmtAm(pick.book_am);
   if (!fair && !live) return '';
   const bits = [];
   if (fair) bits.push(`<span class="price-fair"><span class="price-k">Fair</span> ${fair}</span>`);
   if (live) bits.push(`<span class="price-live"><span class="price-k">Live</span> ${live}</span>`);
-  const cap = hero
-    ? '<div class="price-caption">Fair = model price · Live = board · verify before acting</div>'
-    : '';
-  return `
-    <div class="pick-prices" aria-label="Fair model price and live odds">${bits.join('<span class="price-sep" aria-hidden="true">·</span>')}</div>
-    ${cap}`;
+  return `<div class="pick-prices" aria-label="Fair and live odds">${bits.join('<span class="price-sep" aria-hidden="true">·</span>')}</div>`;
+}
+
+function factsRow(pick) {
+  const facts = Array.isArray(pick.facts) ? pick.facts.filter(Boolean) : [];
+  if (!facts.length) return '';
+  return `<div class="pick-facts">${facts.map(f => `<span class="fact-chip">${esc(f)}</span>`).join('')}</div>`;
 }
 
 function pickCard(pick, { hero = false } = {}) {
@@ -231,26 +233,28 @@ function pickCard(pick, { hero = false } = {}) {
   const league = pick.league ? String(pick.league) : '';
   const meta = metaStack(pick);
   const cls = [
-    'pick-card',
-    hero ? 'pick-card--pod' : (isLower ? 'pick-card--lower' : 'pick-card--play'),
-  ].join(' ');
+    hero ? 'pick-card pick-card--pod' : 'pick-row',
+    !hero && (isLower ? 'pick-row--watch' : 'pick-row--play'),
+  ].filter(Boolean).join(' ');
   const metaHtml = meta.map(r =>
     `<span class="meta-item"><span class="meta-k">${esc(r.k)}</span><span class="meta-v${r.primary ? '' : ' meta-v--secondary'}">${esc(r.v)}</span></span>`
   ).join('');
   const sp = [pick.sp_away, pick.sp_home].filter(Boolean).join(' vs ');
   const when = pick.game_time || pick.first_pitch || '';
   const blurb = String(pick.blurb || '').trim();
+  const kicker = isLower ? 'Watch' : 'Play';
   return `
   <article class="${cls}">
     <div class="pick-header">
-      <span class="pick-kicker">${isLower ? 'Lower confidence' : 'Play'}${league ? ` · ${esc(league)}` : ''}</span>
+      <span class="pick-kicker">${kicker}${league ? ` · ${esc(league)}` : ''}</span>
       ${hero ? '<span class="pod-crown">POD</span>' : ''}
     </div>
     <div class="pick-side">${esc(pick.side) || '—'}</div>
-    ${priceStrip(pick, { hero })}
+    ${priceStrip(pick)}
     ${metaHtml ? `<div class="meta-row" aria-label="Model synopsis">${metaHtml}</div>` : ''}
     ${pick.game ? `<div class="pick-game">${esc(pick.game)}${when ? ` <span class="pick-time">${esc(when)}</span>` : ''}</div>` : ''}
     ${sp ? `<div class="pick-sp">SP ${esc(sp)}</div>` : ''}
+    ${factsRow(pick)}
     ${blurb ? `<p class="pick-blurb">${esc(blurb)}</p>` : ''}
   </article>`;
 }
@@ -275,9 +279,6 @@ function renderPicks() {
   // POD exclusivity: do not re-list POD under Plays
   const rest = all.filter(p => !podKeys.has(`${p.side}|${p.game}|${p.signal_date || ''}`));
   const emptyDay = !!slipData?.empty || (!all.length && !pods.length);
-  const teasers = emptyDay
-    ? (slipData?.teaser || []).filter(p => String(p.confidence || '') === 'lower')
-    : [];
 
   const podEl = document.getElementById('pod-row');
   const grid = document.getElementById('picks-grid');
@@ -295,10 +296,9 @@ function renderPicks() {
     if (emptyDay) {
       playsSec.hidden = false;
       if (count) count.textContent = '0';
-      grid.innerHTML = '<div class="empty-panel"><strong>No Picks Today</strong><span>No Play cleared the public gate.</span></div>';
+      grid.innerHTML = '<div class="empty-panel"><strong>No Picks Today</strong><span>No Play cleared.</span></div>';
       if (podEl) podEl.innerHTML = '<p class="empty-state">No POD today</p>';
     } else if (!rest.length) {
-      // Only POD today — hide empty Plays grid clutter
       playsSec.hidden = true;
       grid.innerHTML = '';
     } else {
@@ -310,12 +310,14 @@ function renderPicks() {
   const teaserSec = document.getElementById('teaser-section');
   const teaserGrid = document.getElementById('teaser-grid');
   const teaserCount = document.getElementById('teaser-count');
+  // Watchlist always when tracked PLUS exists (even on Play days)
+  const watch = (slipData?.teaser || []).filter(p => String(p.confidence || '') === 'lower');
   if (teaserSec && teaserGrid) {
-    if (teasers.length) {
+    if (watch.length) {
       teaserSec.hidden = false;
       teaserSec.setAttribute('aria-hidden', 'false');
-      if (teaserCount) teaserCount.textContent = String(teasers.length);
-      teaserGrid.innerHTML = teasers.map(p => pickCard(p)).join('');
+      if (teaserCount) teaserCount.textContent = String(watch.length);
+      teaserGrid.innerHTML = watch.map(p => pickCard(p)).join('');
     } else {
       teaserSec.hidden = true;
       teaserSec.setAttribute('aria-hidden', 'true');
