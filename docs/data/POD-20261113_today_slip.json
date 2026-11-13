@@ -1,0 +1,210 @@
+{
+  "date": "2026-11-13",
+  "generated": "2026-11-13T00:49:46.999693+00:00",
+  "empty": false,
+  "empty_message": null,
+  "policy": {
+    "picks": "PLAY_ONLY",
+    "watchlist": "PLUS_tracked",
+    "public_tier_word": "Play",
+    "edge_public": false,
+    "edge_floor_pp": 4.0,
+    "sports": "baseball_leagues_only"
+  },
+  "recommended": [
+    {
+      "bet_type": "TOTAL",
+      "sp_home_micro": {
+        "era": 2.5,
+        "ip": 30.0
+      },
+      "game_time": "01:30",
+      "book_am": -124,
+      "confidence": "play",
+      "league": "LMP",
+      "sp_home": "Luis Payán",
+      "fair_am": -225,
+      "game": "Mayos Navojoa @ Charros Jalisco",
+      "public_tier": "Play",
+      "blurb": "10.7 vs 12.5 (1.8 under) — Under, Fair 69.2¢. Away SP ERA>>FIP (unlucky — expect fewer runs). Live soft of fair (-124 / fair -225); SP Collin Wiles vs Luis Payán. Park: Charros Jalisco | SP ERA↔FIP regression | Away SP ERA>>FIP (unlucky — expect fewer runs) | Miss/wild heat (totals) | Both SPs confirmed | Staff - | Matchup efficiency | Sharp: Pinnacle.",
+      "signal_date": "2026-11-13",
+      "market": "TOTAL",
+      "sp_away": "Collin Wiles",
+      "model_wp_pct": 69.2,
+      "sp_away_micro": {
+        "era": 7.2,
+        "fip": 3.2,
+        "ip": 15.0,
+        "k9": 5.4,
+        "bb9": 3.0,
+        "hr9": 0.0,
+        "whip": 1.73
+      },
+      "side": "Under 12.5",
+      "proj_total": 10.7,
+      "facts": [
+        "Park: Charros Jalisco",
+        "SP ERA↔FIP regression",
+        "Away SP ERA>>FIP (unlucky — expect fewer runs)",
+        "Miss/wild heat (totals)",
+        "Both SPs confirmed",
+        "Staff -",
+        "Matchup efficiency",
+        "Sharp: Pinnacle",
+        "A ERA 7.2 · FIP 3.2 · 15.0 IP · K9 5.4 · BB9 3.0 · HR9 0.0 · WHIP 1.73",
+        "H ERA 2.5 · 30.0 IP",
+        "Team split pending"
+      ],
+      "line": 12.5,
+      "is_pod": 1
+    }
+  ],
+  "pod": [
+    {
+      "bet_type": "TOTAL",
+      "sp_home_micro": {
+        "era": 2.5,
+        "ip": 30.0
+      },
+      "game_time": "01:30",
+      "book_am": -124,
+      "confidence": "play",
+      "league": "LMP",
+      "sp_home": "Luis Payán",
+      "fair_am": -225,
+      "game": "Mayos Navojoa @ Charros Jalisco",
+      "public_tier": "Play",
+      "blurb": "10.7 vs 12.5 (1.8 under) — Under, Fair 69.2¢. Away SP ERA>>FIP (unlucky — expect fewer runs). Live soft of fair (-124 / fair -225); SP Collin Wiles vs Luis Payán. Park: Charros Jalisco | SP ERA↔FIP regression | Away SP ERA>>FIP (unlucky — expect fewer runs) | Miss/wild heat (totals) | Both SPs confirmed | Staff - | Matchup efficiency | Sharp: Pinnacle.",
+      "signal_date": "2026-11-13",
+      "market": "TOTAL",
+      "sp_away": "Collin Wiles",
+      "model_wp_pct": 69.2,
+      "sp_away_micro": {
+        "era": 7.2,
+        "fip": 3.2,
+        "ip": 15.0,
+        "k9": 5.4,
+        "bb9": 3.0,
+        "hr9": 0.0,
+        "whip": 1.73
+      },
+      "side": "Under 12.5",
+      "proj_total": 10.7,
+      "facts": [
+        "Park: Charros Jalisco",
+        "SP ERA↔FIP regression",
+        "Away SP ERA>>FIP (unlucky — expect fewer runs)",
+        "Miss/wild heat (totals)",
+        "Both SPs confirmed",
+        "Staff -",
+        "Matchup efficiency",
+        "Sharp: Pinnacle",
+        "A ERA 7.2 · FIP 3.2 · 15.0 IP · K9 5.4 · BB9 3.0 · HR9 0.0 · WHIP 1.73",
+        "H ERA 2.5 · 30.0 IP",
+        "Team split pending"
+      ],
+      "line": 12.5,
+      "is_pod": 1
+    }
+  ],
+  "teaser": [
+    {
+      "bet_type": "SPREAD",
+      "sp_home_micro": {
+        "era": 4.81,
+        "fip": 3.26,
+        "ip": 20.0,
+        "k9": 12.6,
+        "bb9": 0.0,
+        "hr9": 0.0,
+        "whip": 0.2
+      },
+      "book_am": 120,
+      "confidence": "lower",
+      "league": "LMP",
+      "proj_away": 6.2,
+      "fair_am": -310,
+      "game": "Algodoneros Guasave @ Jaguares Nayarit",
+      "public_tier": "Watchlist",
+      "proj_home": 3.7,
+      "blurb": "Algodoneros Guasave +1.5 Fair 75.5¢. Live soft of fair (+120 / fair -310). Home SP ERA>>FIP (unlucky — expect fewer runs) | Matchup efficiency | Books 10/10.",
+      "signal_date": "2026-11-12",
+      "market": "SPREAD",
+      "dog_wp_note": "Dog Fair 75.5¢",
+      "model_wp_pct": 75.5,
+      "sp_away_micro": {
+        "era": 5.68,
+        "fip": 5.73,
+        "ip": 12.7,
+        "k9": 6.4,
+        "bb9": 5.0,
+        "hr9": 1.42,
+        "whip": 1.74
+      },
+      "side": "Algodoneros Guasave +1.5",
+      "proj_total": 9.9,
+      "facts": [
+        "Home SP ERA>>FIP (unlucky — expect fewer runs)",
+        "Matchup efficiency",
+        "Books 10/10",
+        "Dog ticket",
+        "A ERA 5.68 · FIP 5.73 · 12.7 IP · K9 6.4 · BB9 5.0 · HR9 1.42 · WHIP 1.74",
+        "H ERA 4.81 · FIP 3.26 · 20.0 IP · K9 12.6 · BB9 0.0 · HR9 0.0 · WHIP 0.2",
+        "Dual-SP unconfirmed"
+      ],
+      "line": 1.5,
+      "is_pod": 0,
+      "cover_pct": 75.5
+    },
+    {
+      "bet_type": "TOTAL",
+      "sp_home_micro": {
+        "era": 4.81,
+        "fip": 3.26,
+        "ip": 20.0,
+        "k9": 12.6,
+        "bb9": 0.0,
+        "hr9": 0.0,
+        "whip": 0.2
+      },
+      "book_am": -200,
+      "confidence": "lower",
+      "league": "LMP",
+      "proj_away": 6.2,
+      "fair_am": -310,
+      "game": "Algodoneros Guasave @ Jaguares Nayarit",
+      "public_tier": "Watchlist",
+      "proj_home": 3.7,
+      "blurb": "6.2–3.7 (9.9) vs 7.5 (2.4 over) — Over, Fair 75.5¢. Home SP ERA>>FIP (unlucky — expect fewer runs). Live soft of fair (-200 / fair -310).",
+      "signal_date": "2026-11-12",
+      "market": "TOTAL",
+      "dog_wp_note": "Dog Fair 75.5¢",
+      "model_wp_pct": 75.5,
+      "sp_away_micro": {
+        "era": 5.68,
+        "fip": 5.73,
+        "ip": 12.7,
+        "k9": 6.4,
+        "bb9": 5.0,
+        "hr9": 1.42,
+        "whip": 1.74
+      },
+      "side": "Over 7.5",
+      "proj_total": 9.9,
+      "facts": [
+        "Park: Jaguares Nayarit",
+        "Home SP ERA>>FIP (unlucky — expect fewer runs)",
+        "Staff split",
+        "Matchup efficiency",
+        "Dog ticket",
+        "A ERA 5.68 · FIP 5.73 · 12.7 IP · K9 6.4 · BB9 5.0 · HR9 1.42 · WHIP 1.74",
+        "H ERA 4.81 · FIP 3.26 · 20.0 IP · K9 12.6 · BB9 0.0 · HR9 0.0 · WHIP 0.2",
+        "Dual-SP unconfirmed"
+      ],
+      "line": 7.5,
+      "is_pod": 0
+    }
+  ],
+  "teaser_label": "Watchlist",
+  "offsite_tracked_n": 34
+}
