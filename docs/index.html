@@ -214,11 +214,15 @@ function specsPanel(pick) {
   const sp = [pick.sp_away, pick.sp_home].filter(Boolean).join(' vs ');
   const blurb = String(pick.blurb || '').trim();
   const rows = [];
+  const whenSpec = fmtWhen(pick);
+  if (whenSpec) {
+    rows.push(`<div class="spec-row"><span class="spec-k">When</span><span class="spec-v">${esc(whenSpec)}</span></div>`);
+  }
   if (live || fair) {
     rows.push(`<div class="spec-row"><span class="spec-k">Odds</span><span class="spec-v">${live ? `Live ${live}` : ''}${live && fair ? ' · ' : ''}${fair ? `Fair ${fair}` : ''}</span></div>`);
   }
   if (wp != null) {
-    rows.push(`<div class="spec-row"><span class="spec-k">Fair ¢</span><span class="spec-v">${Number(wp).toFixed(1)}¢ <span class="spec-hint">Kalshi-style</span></span></div>`);
+    rows.push(`<div class="spec-row"><span class="spec-k">Model WP</span><span class="spec-v">${Number(wp).toFixed(1)}¢ <span class="spec-hint">Kalshi-style Fair ¢</span></span></div>`);
   }
   meta.forEach(m => {
     rows.push(`<div class="spec-row"><span class="spec-k">${esc(m.k)}</span><span class="spec-v">${esc(m.v)}</span></div>`);
@@ -258,12 +262,14 @@ function ouTone(side) {
 
 function metaStack(p) {
   const items = [];
-  const mkt = String(p.market || '').toUpperCase();
-  const isTotal = /TOTAL|OU/.test(mkt) || /over|under/i.test(String(p.side || ''));
+  const mkt = String(p.market || p.bet_type || '').toUpperCase();
+  const side = String(p.side || p.bet || '');
+  const isTotal = /TOTAL|OU|FG_TOTAL|F5_TOTAL/.test(mkt) || /^(over|under)\b/i.test(side);
   const hasSides = p.proj_away != null && p.proj_home != null;
-  const hasMu = p.proj_total != null && p.line != null;
-  const short = /under/i.test(String(p.side || '')) ? 'Under' : (/over/i.test(String(p.side || '')) ? 'Over' : '');
-  // O/U: team scores (away–home) primary; combined secondary
+  const short = /under/i.test(side) ? 'Under' : (/over/i.test(side) ? 'Over' : '');
+  const wp = p.model_wp_pct != null ? p.model_wp_pct : p.cover_pct;
+
+  // TOTAL only: proj vs line. Spreads/ML: projected score only (no µ-margin chip).
   if (isTotal && hasSides) {
     const tot = Number(p.proj_away) + Number(p.proj_home);
     const vs = p.line != null ? ` vs ${p.line}` : '';
@@ -272,7 +278,7 @@ function metaStack(p) {
       v: `${Number(p.proj_away).toFixed(1)}–${Number(p.proj_home).toFixed(1)} (${tot.toFixed(1)})${vs}${short ? ' — ' + short : ''}`,
       primary: true,
     });
-  } else if (hasMu) {
+  } else if (isTotal && p.proj_total != null && p.line != null) {
     items.push({
       k: 'Model',
       v: `${Number(p.proj_total).toFixed(1)} vs ${p.line}${short ? ' — ' + short : ''}`,
@@ -285,13 +291,12 @@ function metaStack(p) {
       primary: true,
     });
   }
-  // Fair Price in Kalshi-style cents (tenths) — not raw Hit%
-  const wp = p.model_wp_pct != null ? p.model_wp_pct : p.cover_pct;
+
   if (wp != null) {
     items.push({
-      k: 'Fair',
+      k: 'WP',
       v: `${Number(wp).toFixed(1)}¢`,
-      primary: !(hasMu || hasSides),
+      primary: !(isTotal || hasSides),
     });
   }
   return items;
@@ -315,6 +320,35 @@ function factsRow(pick, { skip = false } = {}) {
   return `<div class="pick-facts">${facts.map(f => `<span class="fact-chip">${esc(f)}</span>`).join('')}</div>`;
 }
 
+function fmtWhen(pick) {
+  // Viewer-local date/time when UTC stamp exists; else date + book HH:MM + league tz.
+  if (pick.game_time_utc) {
+    const d = new Date(pick.game_time_utc);
+    if (!Number.isNaN(d.getTime())) {
+      return d.toLocaleString(undefined, {
+        weekday: 'short', month: 'short', day: 'numeric',
+        hour: 'numeric', minute: '2-digit',
+      });
+    }
+  }
+  const gd = String(pick.signal_date || pick.game_date || '').slice(0, 10);
+  let dateBit = '';
+  if (gd) {
+    const d0 = new Date(gd + 'T12:00:00');
+    if (!Number.isNaN(d0.getTime())) {
+      dateBit = d0.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+    } else {
+      dateBit = gd;
+    }
+  }
+  const t = String(pick.game_time || pick.first_pitch || '').trim();
+  const tz = String(pick.first_pitch_tz || '').trim();
+  if (t && dateBit) return `${dateBit} · ${t}${tz ? ' ' + tz : ''}`;
+  if (t) return `${t}${tz ? ' ' + tz : ''}`;
+  if (dateBit) return dateBit;
+  return '';
+}
+
 function pickCard(pick, { hero = false } = {}) {
   const league = pick.league ? String(pick.league) : '';
   const meta = metaStack(pick);
@@ -326,7 +360,7 @@ function pickCard(pick, { hero = false } = {}) {
     `<span class="meta-item"><span class="meta-k">${esc(r.k)}</span><span class="meta-v${r.primary ? '' : ' meta-v--secondary'}">${esc(r.v)}</span></span>`
   ).join('');
   const sp = [pick.sp_away, pick.sp_home].filter(Boolean).join(' vs ');
-  const when = pick.game_time || pick.first_pitch || '';
+  const when = fmtWhen(pick);
   const blurb = String(pick.blurb || '').trim();
   const facts = Array.isArray(pick.facts) ? pick.facts.filter(Boolean).slice(0, 4) : [];
   return `
@@ -351,7 +385,7 @@ function leanListItem(pick, { watch = false } = {}) {
   const live = fmtAm(pick.book_am);
   const fair = fmtAm(pick.fair_am);
   const league = pick.league ? String(pick.league) : '';
-  const when = pick.game_time || pick.first_pitch || '';
+  const when = fmtWhen(pick);
   const tone = ouTone(pick.side);
   const bits = [];
   if (league) bits.push(`<span class="watch-lg">${esc(league)}</span>`);
@@ -361,6 +395,10 @@ function leanListItem(pick, { watch = false } = {}) {
     bits.push(`<span class="watch-proj">${Number(pick.proj_away).toFixed(1)}–${Number(pick.proj_home).toFixed(1)}</span>`);
   } else if (pick.proj_total != null) {
     bits.push(`<span class="watch-proj">μ ${Number(pick.proj_total).toFixed(1)}</span>`);
+  }
+  const leanWp = pick.model_wp_pct != null ? pick.model_wp_pct : pick.cover_pct;
+  if (leanWp != null) {
+    bits.push(`<span class="watch-wp">WP ${Number(leanWp).toFixed(1)}¢</span>`);
   }
   const ctx = shortBlurb(pick.blurb);
   const specs = specsPanel(pick);
@@ -429,7 +467,16 @@ function isPlay(p) {
 
 function renderPicks() {
   const today = slipData?.date || '';
-  const all = (slipData?.recommended || []).filter(isPlay).filter(p => !p.signal_date || p.signal_date === today);
+  const all = (slipData?.recommended || []).filter(isPlay).filter(p => {
+    if (!p.signal_date) return true;
+    // Stamp day + next calendar day (winter late slate on same deploy)
+    if (p.signal_date === today) return true;
+    try {
+      const d0 = new Date(today + 'T12:00:00Z');
+      const d1 = new Date(d0.getTime() + 86400000).toISOString().slice(0, 10);
+      return p.signal_date === d1;
+    } catch (e) { return p.signal_date === today; }
+  });
   const podsRaw = slipData?.pod || [];
   const pods = (podsRaw.length ? podsRaw : all.filter(p => p.is_pod)).filter(isPlay);
   const podKeys = new Set(pods.map(p => `${p.side}|${p.game}|${p.signal_date || ''}`));
