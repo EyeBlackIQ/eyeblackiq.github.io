@@ -1,8 +1,8 @@
 {
-  "date": "2026-11-14",
-  "generated": "2026-11-14T17:51:08.658802+00:00",
-  "empty": true,
-  "empty_message": "No Picks Today",
+  "date": "2026-11-15",
+  "generated": "2026-11-14T17:54:13.170078+00:00",
+  "empty": false,
+  "empty_message": null,
   "policy": {
     "picks": "PLAY_ONLY",
     "watchlist": "PLUS_tracked",
@@ -11,9 +11,157 @@
     "edge_floor_pp": 4.0,
     "sports": "baseball_leagues_only"
   },
-  "recommended": [],
-  "pod": [],
+  "recommended": [
+    {
+      "sp_away": "Ernesto Borges",
+      "side": "Over 8.5",
+      "fair_am": -215,
+      "is_pod": 1,
+      "proj_home": 7.3,
+      "blurb": "away–home µ 3.5–7.3 (total 10.2) vs 8.5 (1.7 over) — Over, Fair 68.1¢. Live soft of fair (-111 / fair -215); SP Ernesto Borges vs Ricardo Estrada. Park: Tomateros Culiacan | Barrel heat (totals) | Miss/wild heat (totals) | HR-prone SP | HR-suppress SP | Thin-IP SP | Both SPs confirmed | Staff split.",
+      "model_wp_pct": 68.1,
+      "market": "TOTAL",
+      "confidence": "play",
+      "game": "Venados Mazatlan @ Tomateros Culiacan",
+      "proj_total": 10.2,
+      "book_am": -111,
+      "proj_away": 3.5,
+      "public_tier": "Play",
+      "facts": [
+        "Park: Tomateros Culiacan",
+        "Barrel heat (totals)",
+        "Miss/wild heat (totals)",
+        "HR-prone SP",
+        "HR-suppress SP",
+        "Thin-IP SP",
+        "Both SPs confirmed",
+        "Staff split",
+        "A ERA 5.32 · 30.0 IP",
+        "H ERA 3.47 · FIP 3.8 · 23.3 IP · K9 5.0 · BB9 3.1 · HR9 0.39 · WHIP 1.2"
+      ],
+      "sp_away_micro": {
+        "era": 5.32,
+        "ip": 30.0
+      },
+      "line": 8.5,
+      "league": "LMP",
+      "game_time": "01:05",
+      "sp_home_micro": {
+        "era": 3.47,
+        "fip": 3.8,
+        "ip": 23.3,
+        "k9": 5.0,
+        "bb9": 3.1,
+        "hr9": 0.39,
+        "whip": 1.2
+      },
+      "signal_date": "2026-11-15",
+      "bet_type": "TOTAL",
+      "sp_home": "Ricardo Estrada"
+    },
+    {
+      "sp_away": "Valente Bellozo",
+      "side": "Over 9",
+      "fair_am": 155,
+      "is_pod": 0,
+      "proj_home": 4.4,
+      "blurb": "away–home µ 5.4–4.4 (total 8.1) vs 9 — Over, Fair 39.5¢. Away SP ERA<<FIP (lucky — expect more runs). Live firm vs fair (-106 / fair +155); SP Valente Bellozo vs Roque Gutiérrez.",
+      "model_wp_pct": 39.5,
+      "market": "TOTAL",
+      "confidence": "play",
+      "game": "Aguilas Mexicali @ Algodoneros Guasave",
+      "proj_total": 8.1,
+      "book_am": -106,
+      "proj_away": 5.4,
+      "public_tier": "Play",
+      "facts": [
+        "Park: Algodoneros Guasave",
+        "Away SP ERA<<FIP (lucky — expect more runs)",
+        "SP ERA↔FIP regression",
+        "Miss/wild heat (totals)",
+        "Thin-IP SP",
+        "Both SPs confirmed",
+        "Staff +",
+        "Matchup efficiency",
+        "A ERA 2.42 · FIP 3.32 · 26.0 IP · K9 8.7 · BB9 3.1 · HR9 0.69 · WHIP 1.0",
+        "H ERA 4.5 · FIP 2.83 · 24.0 IP · K9 10.1 · BB9 0.0 · HR9 1.12 · WHIP 1.17"
+      ],
+      "sp_away_micro": {
+        "era": 2.42,
+        "fip": 3.32,
+        "ip": 26.0,
+        "k9": 8.7,
+        "bb9": 3.1,
+        "hr9": 0.69,
+        "whip": 1.0
+      },
+      "line": 9.0,
+      "league": "LMP",
+      "game_time": "01:00",
+      "sp_home_micro": {
+        "era": 4.5,
+        "fip": 2.83,
+        "ip": 24.0,
+        "k9": 10.1,
+        "bb9": 0.0,
+        "hr9": 1.12,
+        "whip": 1.17
+      },
+      "signal_date": "2026-11-15",
+      "bet_type": "TOTAL",
+      "sp_home": "Roque Gutiérrez"
+    }
+  ],
+  "pod": [
+    {
+      "sp_away": "Ernesto Borges",
+      "side": "Over 8.5",
+      "fair_am": -215,
+      "is_pod": 1,
+      "proj_home": 7.3,
+      "blurb": "away–home µ 3.5–7.3 (total 10.2) vs 8.5 (1.7 over) — Over, Fair 68.1¢. Live soft of fair (-111 / fair -215); SP Ernesto Borges vs Ricardo Estrada. Park: Tomateros Culiacan | Barrel heat (totals) | Miss/wild heat (totals) | HR-prone SP | HR-suppress SP | Thin-IP SP | Both SPs confirmed | Staff split.",
+      "model_wp_pct": 68.1,
+      "market": "TOTAL",
+      "confidence": "play",
+      "game": "Venados Mazatlan @ Tomateros Culiacan",
+      "proj_total": 10.2,
+      "book_am": -111,
+      "proj_away": 3.5,
+      "public_tier": "Play",
+      "facts": [
+        "Park: Tomateros Culiacan",
+        "Barrel heat (totals)",
+        "Miss/wild heat (totals)",
+        "HR-prone SP",
+        "HR-suppress SP",
+        "Thin-IP SP",
+        "Both SPs confirmed",
+        "Staff split",
+        "A ERA 5.32 · 30.0 IP",
+        "H ERA 3.47 · FIP 3.8 · 23.3 IP · K9 5.0 · BB9 3.1 · HR9 0.39 · WHIP 1.2"
+      ],
+      "sp_away_micro": {
+        "era": 5.32,
+        "ip": 30.0
+      },
+      "line": 8.5,
+      "league": "LMP",
+      "game_time": "01:05",
+      "sp_home_micro": {
+        "era": 3.47,
+        "fip": 3.8,
+        "ip": 23.3,
+        "k9": 5.0,
+        "bb9": 3.1,
+        "hr9": 0.39,
+        "whip": 1.2
+      },
+      "signal_date": "2026-11-15",
+      "bet_type": "TOTAL",
+      "sp_home": "Ricardo Estrada"
+    }
+  ],
   "teaser": [],
   "teaser_label": null,
-  "offsite_tracked_n": 17
+  "offsite_tracked_n": 14
 }
