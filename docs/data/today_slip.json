@@ -1,6 +1,6 @@
 {
-  "date": "2026-11-15",
-  "generated": "2026-11-14T17:54:13.170078+00:00",
+  "date": "2026-11-14",
+  "generated": "2026-11-14T20:46:51.415805+00:00",
   "empty": false,
   "empty_message": null,
   "policy": {
@@ -8,96 +8,99 @@
     "watchlist": "PLUS_tracked",
     "public_tier_word": "Play",
     "edge_public": false,
-    "edge_floor_pp": 4.0,
+    "edge_floor_pp": 3.5,
     "sports": "baseball_leagues_only"
   },
   "recommended": [
     {
-      "sp_away": "Ernesto Borges",
-      "side": "Over 8.5",
-      "fair_am": -215,
-      "is_pod": 1,
-      "proj_home": 7.3,
-      "blurb": "away–home µ 3.5–7.3 (total 10.2) vs 8.5 (1.7 over) — Over, Fair 68.1¢. Live soft of fair (-111 / fair -215); SP Ernesto Borges vs Ricardo Estrada. Park: Tomateros Culiacan | Barrel heat (totals) | Miss/wild heat (totals) | HR-prone SP | HR-suppress SP | Thin-IP SP | Both SPs confirmed | Staff split.",
-      "model_wp_pct": 68.1,
-      "market": "TOTAL",
+      "fair_am": -205,
       "confidence": "play",
-      "game": "Venados Mazatlan @ Tomateros Culiacan",
-      "proj_total": 10.2,
-      "book_am": -111,
-      "proj_away": 3.5,
       "public_tier": "Play",
-      "facts": [
-        "Park: Tomateros Culiacan",
-        "Barrel heat (totals)",
-        "Miss/wild heat (totals)",
-        "HR-prone SP",
-        "HR-suppress SP",
-        "Thin-IP SP",
-        "Both SPs confirmed",
-        "Staff split",
-        "A ERA 5.32 · 30.0 IP",
-        "H ERA 3.47 · FIP 3.8 · 23.3 IP · K9 5.0 · BB9 3.1 · HR9 0.39 · WHIP 1.2"
-      ],
-      "sp_away_micro": {
-        "era": 5.32,
+      "blurb": "Mayos Navojoa +1.5 Fair 67.1¢ · away–home µ 4.4–4.5. Live soft of fair (-135 / fair -205); SP Dalton Rodríguez vs Luis Miguel Romero. Park: Caneros Los Mochis | FIP gap | Both SPs confirmed | Pythag lean | Standings/metrics | Staff - | Matchup efficiency | Dog ticket.",
+      "dog_wp_note": "Dog Fair 67.1¢",
+      "sp_home_micro": {
+        "era": 4.3,
         "ip": 30.0
       },
-      "line": 8.5,
-      "league": "LMP",
-      "game_time": "01:05",
-      "sp_home_micro": {
-        "era": 3.47,
-        "fip": 3.8,
-        "ip": 23.3,
-        "k9": 5.0,
-        "bb9": 3.1,
-        "hr9": 0.39,
-        "whip": 1.2
+      "facts": [
+        "Park: Caneros Los Mochis",
+        "FIP gap",
+        "Both SPs confirmed",
+        "Pythag lean",
+        "Standings/metrics",
+        "Staff -",
+        "Matchup efficiency",
+        "Dog ticket",
+        "A ERA 3.08 · 30.0 IP",
+        "H ERA 4.3 · 30.0 IP"
+      ],
+      "side": "Mayos Navojoa +1.5",
+      "model_wp_pct": 67.1,
+      "sp_home": "Luis Miguel Romero",
+      "proj_home": 4.5,
+      "sp_away": "Dalton Rodríguez",
+      "game": "Mayos Navojoa @ Caneros Los Mochis",
+      "sp_away_micro": {
+        "era": 3.08,
+        "ip": 30.0
       },
-      "signal_date": "2026-11-15",
-      "bet_type": "TOTAL",
-      "sp_home": "Ricardo Estrada"
+      "proj_away": 4.4,
+      "book_am": -135,
+      "proj_total": 8.9,
+      "cover_pct": 67.1,
+      "signal_date": "2026-11-14",
+      "line": 1.5,
+      "is_pod": 1,
+      "league": "LMP",
+      "market": "SPREAD",
+      "bet_type": "SPREAD"
     },
     {
-      "sp_away": "Valente Bellozo",
-      "side": "Over 9",
-      "fair_am": 155,
-      "is_pod": 0,
-      "proj_home": 4.4,
-      "blurb": "away–home µ 5.4–4.4 (total 8.1) vs 9 — Over, Fair 39.5¢. Away SP ERA<<FIP (lucky — expect more runs). Live firm vs fair (-106 / fair +155); SP Valente Bellozo vs Roque Gutiérrez.",
-      "model_wp_pct": 39.5,
-      "market": "TOTAL",
+      "fair_am": 105,
       "confidence": "play",
-      "game": "Aguilas Mexicali @ Algodoneros Guasave",
-      "proj_total": 8.1,
-      "book_am": -106,
-      "proj_away": 5.4,
       "public_tier": "Play",
-      "facts": [
-        "Park: Algodoneros Guasave",
-        "Away SP ERA<<FIP (lucky — expect more runs)",
-        "SP ERA↔FIP regression",
-        "Miss/wild heat (totals)",
-        "Thin-IP SP",
-        "Both SPs confirmed",
-        "Staff +",
-        "Matchup efficiency",
-        "A ERA 2.42 · FIP 3.32 · 26.0 IP · K9 8.7 · BB9 3.1 · HR9 0.69 · WHIP 1.0",
-        "H ERA 4.5 · FIP 2.83 · 24.0 IP · K9 10.1 · BB9 0.0 · HR9 1.12 · WHIP 1.17"
-      ],
-      "sp_away_micro": {
-        "era": 2.42,
-        "fip": 3.32,
-        "ip": 26.0,
-        "k9": 8.7,
-        "bb9": 3.1,
-        "hr9": 0.69,
-        "whip": 1.0
+      "blurb": "Mayos Navojoa Fair 48.6¢ · away–home µ 4.4–4.5. Live soft of fair (+135 / fair +105); SP Dalton Rodríguez vs Luis Miguel Romero. Park: Caneros Los Mochis | FIP gap | Both SPs confirmed.",
+      "sp_home_micro": {
+        "era": 4.3,
+        "ip": 30.0
       },
-      "line": 9.0,
+      "facts": [
+        "Park: Caneros Los Mochis",
+        "FIP gap",
+        "Both SPs confirmed",
+        "Pythag lean",
+        "Standings/metrics",
+        "Staff -",
+        "Matchup efficiency",
+        "Dog ticket",
+        "A ERA 3.08 · 30.0 IP",
+        "H ERA 4.3 · 30.0 IP"
+      ],
+      "side": "Mayos Navojoa ML",
+      "model_wp_pct": 48.6,
+      "sp_home": "Luis Miguel Romero",
+      "proj_home": 4.5,
+      "sp_away": "Dalton Rodríguez",
+      "game": "Mayos Navojoa @ Caneros Los Mochis",
+      "sp_away_micro": {
+        "era": 3.08,
+        "ip": 30.0
+      },
+      "proj_away": 4.4,
+      "book_am": 135,
+      "proj_total": 8.9,
+      "signal_date": "2026-11-14",
+      "is_pod": 0,
       "league": "LMP",
-      "game_time": "01:00",
+      "market": "ML",
+      "bet_type": "ML"
+    },
+    {
+      "fair_am": -110,
+      "confidence": "play",
+      "public_tier": "Play",
+      "blurb": "Aguilas Mexicali Fair 52.9¢ · away–home µ 4.2–3.9. Live soft of fair (+100 / fair -110); SP Humberto Castellanos vs Ross Carver. Park: Algodoneros Guasave | Away SP ERA<<FIP (lucky — expect more runs) | Home SP ERA>>FIP (unlucky — expect fewer runs).",
+      "dog_wp_note": "Dog Fair 52.9¢",
       "sp_home_micro": {
         "era": 4.5,
         "fip": 2.83,
@@ -107,61 +110,170 @@
         "hr9": 1.12,
         "whip": 1.17
       },
-      "signal_date": "2026-11-15",
-      "bet_type": "TOTAL",
-      "sp_home": "Roque Gutiérrez"
+      "facts": [
+        "Park: Algodoneros Guasave",
+        "Away SP ERA<<FIP (lucky — expect more runs)",
+        "Home SP ERA>>FIP (unlucky — expect fewer runs)",
+        "SP ERA↔FIP regression",
+        "Barrel heat",
+        "HR-prone SP",
+        "Both SPs confirmed",
+        "Pythag lean",
+        "A ERA 2.42 · FIP 3.32 · 26.0 IP · K9 8.7 · BB9 3.1 · HR9 0.69 · WHIP 1.0",
+        "H ERA 4.5 · FIP 2.83 · 24.0 IP · K9 10.1 · BB9 0.0 · HR9 1.12 · WHIP 1.17"
+      ],
+      "side": "Aguilas Mexicali ML",
+      "model_wp_pct": 52.9,
+      "sp_home": "Ross Carver",
+      "proj_home": 3.9,
+      "sp_away": "Humberto Castellanos",
+      "game": "Aguilas Mexicali @ Algodoneros Guasave",
+      "sp_away_micro": {
+        "era": 2.42,
+        "fip": 3.32,
+        "ip": 26.0,
+        "k9": 8.7,
+        "bb9": 3.1,
+        "hr9": 0.69,
+        "whip": 1.0
+      },
+      "proj_away": 4.2,
+      "book_am": 100,
+      "proj_total": 8.1,
+      "signal_date": "2026-11-14",
+      "is_pod": 0,
+      "league": "LMP",
+      "market": "ML",
+      "bet_type": "ML"
     }
   ],
   "pod": [
     {
-      "sp_away": "Ernesto Borges",
-      "side": "Over 8.5",
-      "fair_am": -215,
-      "is_pod": 1,
-      "proj_home": 7.3,
-      "blurb": "away–home µ 3.5–7.3 (total 10.2) vs 8.5 (1.7 over) — Over, Fair 68.1¢. Live soft of fair (-111 / fair -215); SP Ernesto Borges vs Ricardo Estrada. Park: Tomateros Culiacan | Barrel heat (totals) | Miss/wild heat (totals) | HR-prone SP | HR-suppress SP | Thin-IP SP | Both SPs confirmed | Staff split.",
-      "model_wp_pct": 68.1,
-      "market": "TOTAL",
+      "fair_am": -205,
       "confidence": "play",
-      "game": "Venados Mazatlan @ Tomateros Culiacan",
-      "proj_total": 10.2,
-      "book_am": -111,
-      "proj_away": 3.5,
       "public_tier": "Play",
-      "facts": [
-        "Park: Tomateros Culiacan",
-        "Barrel heat (totals)",
-        "Miss/wild heat (totals)",
-        "HR-prone SP",
-        "HR-suppress SP",
-        "Thin-IP SP",
-        "Both SPs confirmed",
-        "Staff split",
-        "A ERA 5.32 · 30.0 IP",
-        "H ERA 3.47 · FIP 3.8 · 23.3 IP · K9 5.0 · BB9 3.1 · HR9 0.39 · WHIP 1.2"
-      ],
-      "sp_away_micro": {
-        "era": 5.32,
+      "blurb": "Mayos Navojoa +1.5 Fair 67.1¢ · away–home µ 4.4–4.5. Live soft of fair (-135 / fair -205); SP Dalton Rodríguez vs Luis Miguel Romero. Park: Caneros Los Mochis | FIP gap | Both SPs confirmed | Pythag lean | Standings/metrics | Staff - | Matchup efficiency | Dog ticket.",
+      "dog_wp_note": "Dog Fair 67.1¢",
+      "sp_home_micro": {
+        "era": 4.3,
         "ip": 30.0
       },
-      "line": 8.5,
-      "league": "LMP",
-      "game_time": "01:05",
-      "sp_home_micro": {
-        "era": 3.47,
-        "fip": 3.8,
-        "ip": 23.3,
-        "k9": 5.0,
-        "bb9": 3.1,
-        "hr9": 0.39,
-        "whip": 1.2
+      "facts": [
+        "Park: Caneros Los Mochis",
+        "FIP gap",
+        "Both SPs confirmed",
+        "Pythag lean",
+        "Standings/metrics",
+        "Staff -",
+        "Matchup efficiency",
+        "Dog ticket",
+        "A ERA 3.08 · 30.0 IP",
+        "H ERA 4.3 · 30.0 IP"
+      ],
+      "side": "Mayos Navojoa +1.5",
+      "model_wp_pct": 67.1,
+      "sp_home": "Luis Miguel Romero",
+      "proj_home": 4.5,
+      "sp_away": "Dalton Rodríguez",
+      "game": "Mayos Navojoa @ Caneros Los Mochis",
+      "sp_away_micro": {
+        "era": 3.08,
+        "ip": 30.0
       },
-      "signal_date": "2026-11-15",
-      "bet_type": "TOTAL",
-      "sp_home": "Ricardo Estrada"
+      "proj_away": 4.4,
+      "book_am": -135,
+      "proj_total": 8.9,
+      "cover_pct": 67.1,
+      "signal_date": "2026-11-14",
+      "line": 1.5,
+      "is_pod": 1,
+      "league": "LMP",
+      "market": "SPREAD",
+      "bet_type": "SPREAD"
     }
   ],
-  "teaser": [],
-  "teaser_label": null,
-  "offsite_tracked_n": 14
+  "teaser": [
+    {
+      "fair_am": -145,
+      "confidence": "lower",
+      "public_tier": "Watchlist",
+      "blurb": "Charros Jalisco +1.5 Fair 59.2¢ · away–home µ 4.2–5.0. Live soft of fair (-105 / fair -145); SP Luis Ángel Rodríguez vs Wilmer Ríos. SP confirmed | Dog ticket.",
+      "dog_wp_note": "Dog Fair 59.2¢",
+      "sp_home_micro": {
+        "era": 3.75,
+        "ip": 30.0
+      },
+      "facts": [
+        "SP confirmed",
+        "Dog ticket",
+        "A ERA 3.57 · 30.0 IP",
+        "H ERA 3.75 · 30.0 IP"
+      ],
+      "side": "Charros Jalisco +1.5",
+      "model_wp_pct": 59.2,
+      "sp_home": "Wilmer Ríos",
+      "proj_home": 5.0,
+      "sp_away": "Luis Ángel Rodríguez",
+      "game": "Charros Jalisco @ Naranjeros Hermosillo",
+      "sp_away_micro": {
+        "era": 3.57,
+        "ip": 30.0
+      },
+      "proj_away": 4.2,
+      "book_am": -105,
+      "proj_total": 9.3,
+      "cover_pct": 59.2,
+      "signal_date": "2026-11-14",
+      "line": 1.5,
+      "is_pod": 0,
+      "league": "LMP",
+      "market": "SPREAD",
+      "bet_type": "SPREAD"
+    },
+    {
+      "fair_am": -180,
+      "confidence": "lower",
+      "public_tier": "Watchlist",
+      "blurb": "Jaguares Nayarit +1.5 Fair 64.1¢ · away–home µ 5.4–5.8. Live soft of fair (-165 / fair -180); SP Randall Wynne vs Finn Del Bonta-Smith. Park: Yaquis Obregon | FIP gap | Both SPs confirmed.",
+      "dog_wp_note": "Dog Fair 64.1¢",
+      "sp_home_micro": {
+        "era": 5.79,
+        "ip": 30.0
+      },
+      "facts": [
+        "Park: Yaquis Obregon",
+        "FIP gap",
+        "Both SPs confirmed",
+        "Pythag lean",
+        "Standings/metrics",
+        "Staff split",
+        "Matchup efficiency",
+        "Dog ticket",
+        "A ERA 5.0 · 30.0 IP",
+        "H ERA 5.79 · 30.0 IP"
+      ],
+      "side": "Jaguares Nayarit +1.5",
+      "model_wp_pct": 64.1,
+      "sp_home": "Finn Del Bonta-Smith",
+      "proj_home": 5.8,
+      "sp_away": "Randall Wynne",
+      "game": "Jaguares Nayarit @ Yaquis Obregon",
+      "sp_away_micro": {
+        "era": 5.0,
+        "ip": 30.0
+      },
+      "proj_away": 5.4,
+      "book_am": -165,
+      "proj_total": 11.2,
+      "cover_pct": 64.1,
+      "signal_date": "2026-11-14",
+      "line": 1.5,
+      "is_pod": 0,
+      "league": "LMP",
+      "market": "SPREAD",
+      "bet_type": "SPREAD"
+    }
+  ],
+  "teaser_label": "Watchlist",
+  "offsite_tracked_n": 25
 }
