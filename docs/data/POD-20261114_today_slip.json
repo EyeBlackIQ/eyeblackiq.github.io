@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-14",
+  "generated": "2026-11-14T17:51:08.658802+00:00",
+  "empty": true,
+  "empty_message": "No Picks Today",
+  "policy": {
+    "picks": "PLAY_ONLY",
+    "watchlist": "PLUS_tracked",
+    "public_tier_word": "Play",
+    "edge_public": false,
+    "edge_floor_pp": 4.0,
+    "sports": "baseball_leagues_only"
+  },
+  "recommended": [],
+  "pod": [],
+  "teaser": [],
+  "teaser_label": null,
+  "offsite_tracked_n": 17
+}
