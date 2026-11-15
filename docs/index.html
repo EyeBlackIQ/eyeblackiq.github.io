@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://eyeblackiq.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css?v=20261115-proj">
+<link rel="stylesheet" href="style.css?v=20261115-slate">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -61,6 +61,11 @@
   <span class="date-sublabel" id="slip-meta">Verify lines before acting · informational only</span>
 </div>
 
+<div class="slate-bar" role="tablist" aria-label="Slate">
+  <button type="button" class="slate-chip active" role="tab" aria-selected="true" data-slate="today" id="slate-today">Today</button>
+  <button type="button" class="slate-chip" role="tab" aria-selected="false" data-slate="later" id="slate-later">Later</button>
+</div>
+
 <main id="main">
 
   <section id="picks-panel" role="tabpanel" aria-labelledby="nav-picks">
@@ -83,7 +88,7 @@
 
     <section class="picks-section teaser-section" id="teaser-section" hidden aria-hidden="true">
       <h2 class="section-title">Watchlist <span class="count-badge" id="teaser-count">0</span></h2>
-      <p class="section-note">Tracked · not Plays · not POD</p>
+      <p class="section-note" id="teaser-note">Tracked · not Plays · not POD</p>
       <div class="picks-list picks-list--watch" id="teaser-grid"></div>
     </section>
   </section>
@@ -336,11 +341,10 @@ function metaStack(p) {
 function priceStrip(pick) {
   const fair = fmtAm(pick.fair_am);
   const live = fmtAm(pick.book_am);
-  if (!fair && !live) return '';
+  // Always show both Live + Fair (— when missing)
   const bits = [];
-  // Live first (action price); Fair American secondary; Kalshi note on Fair ¢ in meta
-  if (live) bits.push(`<span class="price-live"><span class="price-k">Live</span> ${live}</span>`);
-  if (fair) bits.push(`<span class="price-fair"><span class="price-k">Fair</span> ${fair}</span>`);
+  bits.push(`<span class="price-live"><span class="price-k">Live</span> ${live || '—'}</span>`);
+  bits.push(`<span class="price-fair"><span class="price-k">Fair</span> ${fair || '—'}</span>`);
   return `<div class="pick-prices" aria-label="Live and fair odds">${bits.join('<span class="price-sep" aria-hidden="true">·</span>')}<span class="price-caption">Fair ¢ = Kalshi-style</span></div>`;
 }
 
@@ -352,7 +356,7 @@ function factsRow(pick, { skip = false } = {}) {
 }
 
 function fmtWhen(pick) {
-  // Viewer-local date/time when UTC stamp exists; else date + book HH:MM + league tz.
+  // Viewer-local single line when UTC exists; else date · TBD (never invent a clock).
   if (pick.game_time_utc) {
     const d = new Date(pick.game_time_utc);
     if (!Number.isNaN(d.getTime())) {
@@ -372,12 +376,8 @@ function fmtWhen(pick) {
       dateBit = gd;
     }
   }
-  const t = String(pick.game_time || pick.first_pitch || '').trim();
-  const tz = String(pick.first_pitch_tz || '').trim();
-  if (t && dateBit) return `${dateBit} · ${t}${tz ? ' ' + tz : ''}`;
-  if (t) return `${t}${tz ? ' ' + tz : ''}`;
-  if (dateBit) return dateBit;
-  return '';
+  if (dateBit) return `${dateBit} · TBD`;
+  return 'TBD';
 }
 
 function pickCard(pick, { hero = false } = {}) {
@@ -412,7 +412,7 @@ function pickCard(pick, { hero = false } = {}) {
 }
 
 /** Plays + Watchlist = lean list + click-to-expand Specs (POD stays hero card). */
-function leanListItem(pick, { watch = false } = {}) {
+function leanListItem(pick, { watch = false, later = false } = {}) {
   const live = fmtAm(pick.book_am);
   const fair = fmtAm(pick.fair_am);
   const league = pick.league ? String(pick.league) : '';
@@ -433,18 +433,25 @@ function leanListItem(pick, { watch = false } = {}) {
   }
   const ctx = shortBlurb(pick.blurb);
   const specs = specsPanel(pick);
+  const noLive = !live;
   return `
-  <li class="watch-item${tone ? ' pick--' + tone : ''}${watch ? ' watch-item--teaser' : ''}">
+  <li class="watch-item${tone ? ' pick--' + tone : ''}${watch ? ' watch-item--teaser' : ''}${later ? ' watch-item--later' : ''}${noLive ? ' watch-item--nolive' : ''}">
     <div class="watch-main">
       <span class="watch-side">${esc(pick.side) || '—'}</span>
-      <span class="watch-odds" aria-label="American odds">${live ? `<span class="watch-live">${live}</span>` : '—'}${fair ? `<span class="watch-fair">Fair ${fair}</span>` : ''}</span>
+      <span class="watch-odds" aria-label="American odds"><span class="watch-live">${live || '—'}</span><span class="watch-fair">Fair ${fair || '—'}</span></span>
     </div>
     ${bits.length ? `<div class="watch-sub">${bits.join('<span class="watch-dot" aria-hidden="true">·</span>')}</div>` : ''}
     ${ctx ? `<p class="watch-ctx">${esc(ctx)}</p>` : ''}
     ${specs ? `<details class="spec-drop"><summary>Specs</summary>${specs}</details>` : ''}
   </li>`;
 }
-function watchListItem(pick) { return leanListItem(pick, { watch: true }); }
+function watchListItem(pick, { later = false } = {}) { return leanListItem(pick, { watch: true, later }); }
+
+let slateMode = 'today'; // today | later
+function isLaterPick(p, today) {
+  const sd = String(p.signal_date || p.game_date || '').slice(0, 10);
+  return !!(sd && today && sd > today);
+}
 
 function resultsListItem(r, key) {
   const pv = Number(r[key] != null ? r[key] : r.pnl_u || 0);
@@ -513,36 +520,40 @@ function isPlay(p) {
 
 function renderPicks() {
   const today = slipData?.date || '';
-  const fwdHeld = String((slipData?.policy || {}).forward_slate || 'held') === 'held';
-  const all = (slipData?.recommended || []).filter(isPlay).filter(p => {
-    if (!p.signal_date) return true;
-    if (p.signal_date === today) return true;
-    // D+1: hold off public Plays until stamp day (policy.forward_slate=held)
-    if (fwdHeld) return false;
-    try {
-      const d0 = new Date(today + 'T12:00:00Z');
-      const d1 = new Date(d0.getTime() + 86400000).toISOString().slice(0, 10);
-      return p.signal_date === d1;
-    } catch (e) { return p.signal_date === today; }
+  const laterMode = slateMode === 'later';
+  const allPlays = (slipData?.recommended || []).filter(isPlay);
+  // Today slate: Plays for stamp day only. Later: D+1+ plays if any (usually empty).
+  const all = allPlays.filter(p => {
+    const sd = String(p.signal_date || '').slice(0, 10);
+    if (!sd || !today) return !laterMode;
+    return laterMode ? sd > today : sd === today;
   });
   const podsRaw = Array.isArray(slipData?.pod)
     ? slipData.pod
     : (slipData?.pod ? [slipData.pod] : []);
-  const pods = (podsRaw.length ? podsRaw : all.filter(p => p.is_pod)).filter(isPlay);
+  const podsToday = (podsRaw.length ? podsRaw : allPlays.filter(p => p.is_pod))
+    .filter(isPlay)
+    .filter(p => {
+      const sd = String(p.signal_date || '').slice(0, 10);
+      return !sd || !today || sd === today;
+    });
+  const pods = laterMode ? [] : podsToday;
   const podKeys = new Set(pods.map(p => `${p.side}|${p.game}|${p.signal_date || ''}`));
-  // POD exclusivity: do not re-list POD under Plays
   const rest = all.filter(p => !podKeys.has(`${p.side}|${p.game}|${p.signal_date || ''}`));
-  const emptyDay = !!slipData?.empty || (!all.length && !pods.length);
+  const emptyDay = !laterMode && (!!slipData?.empty || (!all.length && !pods.length));
 
   const podEl = document.getElementById('pod-row');
+  const podsSec = document.getElementById('pods-section');
   const grid = document.getElementById('picks-grid');
   const count = document.getElementById('rec-count');
   const playsSec = document.getElementById('plays-section');
 
-  if (podEl) {
+  if (podsSec) podsSec.hidden = laterMode;
+  if (podEl && !laterMode) {
+    const emptyPod = String(slipData?.pod_empty_message || 'No POD today — see Plays and Watchlist.');
     podEl.innerHTML = pods.length
       ? pods.map(p => pickCard(p, { hero: true })).join('')
-      : '<p class="empty-state">No POD today</p>';
+      : `<p class="empty-state">${esc(emptyPod)}</p>`;
   }
 
   if (count) count.textContent = String(rest.length);
@@ -551,34 +562,50 @@ function renderPicks() {
       playsSec.hidden = false;
       if (count) count.textContent = '0';
       grid.innerHTML = '<div class="empty-panel"><strong>No Picks Today</strong><span>No Play cleared.</span></div>';
-      if (podEl) podEl.innerHTML = '<p class="empty-state">No POD today</p>';
     } else if (!rest.length) {
-      playsSec.hidden = true;
-      grid.innerHTML = '';
+      playsSec.hidden = laterMode ? false : true;
+      grid.innerHTML = laterMode
+        ? '<div class="empty-panel"><strong>No later Plays</strong><span>Forward Plays appear here when stamped.</span></div>'
+        : '';
+      if (!laterMode) playsSec.hidden = true;
     } else {
       playsSec.hidden = false;
-      // List-leaner Plays (POD remains hero card above)
-      grid.innerHTML = `<ul class="watch-list watch-list--plays" role="list">${rest.map(p => leanListItem(p)).join('')}</ul>`;
+      grid.innerHTML = `<ul class="watch-list watch-list--plays" role="list">${rest.map(p => leanListItem(p, { later: laterMode })).join('')}</ul>`;
     }
   }
 
   const teaserSec = document.getElementById('teaser-section');
   const teaserGrid = document.getElementById('teaser-grid');
   const teaserCount = document.getElementById('teaser-count');
-  // Watchlist always when tracked PLUS exists (even on Play days) — list UX, not cards
-  const watch = (slipData?.teaser || []).filter(p =>
+  const teaserNote = document.getElementById('teaser-note');
+  const watchAll = (slipData?.teaser || []).filter(p =>
     String(p.confidence || '') === 'lower' || String(p.public_tier || '') === 'Watchlist'
   );
+  const watch = watchAll.filter(p => laterMode ? isLaterPick(p, today) : !isLaterPick(p, today));
+  const laterN = watchAll.filter(p => isLaterPick(p, today)).length;
+  const laterBtn = document.getElementById('slate-later');
+  if (laterBtn) {
+    laterBtn.textContent = laterN ? `Later (${laterN})` : 'Later';
+    laterBtn.hidden = false;
+  }
+  if (teaserNote) {
+    teaserNote.textContent = laterMode
+      ? 'Forward slate · not Plays · not POD'
+      : 'Tracked · not Plays · not POD';
+  }
   if (teaserSec && teaserGrid) {
     if (watch.length) {
       teaserSec.hidden = false;
       teaserSec.setAttribute('aria-hidden', 'false');
       if (teaserCount) teaserCount.textContent = String(watch.length);
-      teaserGrid.innerHTML = `<ul class="watch-list" role="list">${watch.map(watchListItem).join('')}</ul>`;
+      teaserGrid.innerHTML = `<ul class="watch-list" role="list">${watch.map(p => watchListItem(p, { later: laterMode })).join('')}</ul>`;
     } else {
-      teaserSec.hidden = true;
-      teaserSec.setAttribute('aria-hidden', 'true');
-      teaserGrid.innerHTML = '';
+      teaserSec.hidden = false;
+      teaserSec.setAttribute('aria-hidden', 'false');
+      if (teaserCount) teaserCount.textContent = '0';
+      teaserGrid.innerHTML = laterMode
+        ? '<div class="empty-panel"><strong>No later Watchlist</strong><span>D+1 signals land here when held.</span></div>'
+        : '<div class="empty-panel"><strong>Watchlist clear</strong><span>No tracked leans for today.</span></div>';
     }
   }
 }
@@ -1216,11 +1243,25 @@ document.getElementById('results-regions')?.addEventListener('click', e => {
   if (btn) selectResultsSport(btn);
 });
 
+document.querySelectorAll('.slate-chip[data-slate]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    slateMode = btn.dataset.slate === 'later' ? 'later' : 'today';
+    document.querySelectorAll('.slate-chip[data-slate]').forEach(b => {
+      const on = b.dataset.slate === slateMode;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    renderPicks();
+  });
+});
+
 Promise.all([
   fetch('data/today_slip.json?t=' + Date.now()).then(r => r.ok ? r.json() : { date: '', recommended: [], pod: [] }).catch(() => ({ date: '', recommended: [], pod: [] })),
   fetch('data/record.json?t=' + Date.now()).then(r => r.ok ? r.json() : {}).catch(() => ({})),
-]).then(([slip, record]) => {
+  fetch('data/day1_results_latest.json?t=' + Date.now()).then(r => r.ok ? r.json() : null).catch(() => null),
+]).then(([slip, record, day1]) => {
   slipData = slip;
+  if (day1) day1Data = day1;
   updateDateBar(slip);
   updateRecordBar(record);
   // Cold load = Picks. Methodology may set sessionStorage eb_tab=RESULTS once.

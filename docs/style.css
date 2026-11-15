@@ -113,6 +113,23 @@ header {
   max-width: var(--max); margin: 0 auto; padding: 16px 20px 4px;
   display: flex; flex-direction: column; gap: 2px;
 }
+.slate-bar {
+  max-width: var(--max); margin: 0 auto; padding: 8px 20px 0;
+  display: flex; gap: 8px; align-items: center;
+}
+.slate-chip {
+  font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 13px;
+  letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--muted); background: transparent;
+  border: 1px solid var(--border); padding: 7px 14px; cursor: pointer;
+  min-height: 36px;
+}
+.slate-chip:hover { color: var(--text); border-color: var(--muted); }
+.slate-chip.active {
+  color: var(--text); border-color: var(--red);
+  background: rgba(225, 29, 72, 0.08);
+}
+.slate-chip:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
 .date-label {
   color: var(--text); font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
   font-size: 15px; letter-spacing: 1.5px; text-transform: uppercase;
@@ -179,9 +196,21 @@ main { max-width: var(--max); margin: 0 auto; padding: 10px 20px 64px; }
 .watch-time, .watch-hit, .watch-proj, .watch-sp { color: var(--faint); }
 .watch-dot { color: #3a3a3a; }
 .watch-list--plays { margin-top: 2px; }
+.watch-list--plays .watch-side { font-size: 18px; font-weight: 700; letter-spacing: 0.2px; }
+.watch-list--plays .watch-live { font-size: 16px; }
+.watch-list--plays .watch-sub { font-size: 13.5px; }
 .watch-item.pick--over { border-left: 3px solid var(--over); }
 .watch-item.pick--under { border-left: 3px solid var(--under); }
-.watch-item--teaser { opacity: 0.92; }
+.watch-item--teaser {
+  opacity: 0.72;
+  filter: saturate(0.82);
+}
+.watch-item--later {
+  opacity: 0.58;
+  font-size: 0.94em;
+  filter: saturate(0.7);
+}
+.watch-item--nolive .watch-live { color: var(--faint); }
 .watch-ctx {
   margin: 6px 0 0; font-size: 13px; line-height: 1.45; color: #c8c3b8;
   max-width: 68ch; font-weight: 400;
@@ -317,7 +346,10 @@ main { max-width: var(--max); margin: 0 auto; padding: 10px 20px 64px; }
 .pick-game {
   color: var(--muted); font-size: 13.5px; margin-bottom: 3px; font-weight: 500;
 }
-.pick-time { color: var(--faint); font-weight: 400; }
+.pick-time {
+  color: var(--text); font-weight: 600; font-size: 0.95em;
+  letter-spacing: 0.2px;
+}
 .pick-sp {
   font-size: 12.5px; color: var(--faint); margin-top: 2px;
   font-variant-numeric: lining-nums;
