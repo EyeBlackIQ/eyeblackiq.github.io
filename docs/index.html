@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://eyeblackiq.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css?v=20261115-topline">
+<link rel="stylesheet" href="style.css?v=20261115-proj">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -423,9 +423,9 @@ function leanListItem(pick, { watch = false } = {}) {
   if (pick.game) bits.push(`<span class="watch-game">${esc(pick.game)}</span>`);
   if (when) bits.push(`<span class="watch-time">${esc(when)}</span>`);
   if (pick.proj_away != null && pick.proj_home != null) {
-    bits.push(`<span class="watch-proj">${Number(pick.proj_away).toFixed(1)}–${Number(pick.proj_home).toFixed(1)}</span>`);
+    bits.push(`<span class="watch-proj">Proj ${Number(pick.proj_away).toFixed(1)}–${Number(pick.proj_home).toFixed(1)}</span>`);
   } else if (pick.proj_total != null) {
-    bits.push(`<span class="watch-proj">μ ${Number(pick.proj_total).toFixed(1)}</span>`);
+    bits.push(`<span class="watch-proj">Proj μ ${Number(pick.proj_total).toFixed(1)}</span>`);
   }
   const leanWp = pick.model_wp_pct != null ? pick.model_wp_pct : pick.cover_pct;
   if (leanWp != null) {
@@ -497,6 +497,7 @@ function resultsListItem(r, key) {
 }
 
 function isPlay(p) {
+  if (!p || typeof p !== 'object') return false;
   if (String(p.confidence || '') === 'lower') return false;
   const tier = String(p.public_tier || p.tier || '').toUpperCase();
   const tab = String(p.tab || '').toUpperCase();
@@ -504,6 +505,9 @@ function isPlay(p) {
   if (tier === 'PLAY' || tier === 'CORE' || tier === 'FINAL') return true;
   if (tab === 'FINAL') return true;
   if (src.includes('FINAL_CORE')) return true;
+  // Engine often stamps is_pod / Play confidence without public_tier
+  if (p.is_pod) return true;
+  if (String(p.confidence || '').toLowerCase() === 'play') return true;
   return false;
 }
 
@@ -521,7 +525,9 @@ function renderPicks() {
       return p.signal_date === d1;
     } catch (e) { return p.signal_date === today; }
   });
-  const podsRaw = slipData?.pod || [];
+  const podsRaw = Array.isArray(slipData?.pod)
+    ? slipData.pod
+    : (slipData?.pod ? [slipData.pod] : []);
   const pods = (podsRaw.length ? podsRaw : all.filter(p => p.is_pod)).filter(isPlay);
   const podKeys = new Set(pods.map(p => `${p.side}|${p.game}|${p.signal_date || ''}`));
   // POD exclusivity: do not re-list POD under Plays
