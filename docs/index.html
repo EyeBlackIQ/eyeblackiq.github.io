@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://eyeblackiq.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css?v=20261115-hybrid">
+<link rel="stylesheet" href="style.css?v=20261115-flat">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -91,7 +91,7 @@
   <section id="results-section" class="results-section" role="tabpanel" aria-labelledby="nav-results" hidden>
     <div class="results-head">
       <h2 class="section-title">Day-1 · L50 <span class="pod-badge" id="results-pod-badge">POD</span></h2>
-      <p class="section-note" id="results-sub">Global = INTL + Domestic · click a league to filter · Flat / Kelly</p>
+      <p class="section-note" id="results-sub">Global = INTL + Domestic · click a league to filter · Flat 1u</p>
     </div>
 
     <div class="chip-row" id="results-sport-tabs" role="group" aria-label="Results region">
@@ -99,12 +99,6 @@
       <button type="button" class="chip" data-rsport="intl" title="Non-American leagues">INTL</button>
       <button type="button" class="chip" data-rsport="domestic" title="MLB + NCAA + MiLB">Domestic</button>
       <button type="button" class="chip chip-advanced" id="results-advanced-toggle" aria-expanded="false" aria-controls="results-advanced">Advanced</button>
-    </div>
-    <div class="chip-row" id="results-unit-tabs" role="group" aria-label="Unit mode">
-      <button type="button" class="chip active" data-unit="flat">Flat</button>
-      <button type="button" class="chip" data-unit="kelly_full">Full Kelly</button>
-      <button type="button" class="chip" data-unit="kelly_half">Half Kelly</button>
-      <button type="button" class="chip" data-unit="kelly_quarter">Quarter Kelly</button>
     </div>
     <div id="results-advanced" hidden>
       <div class="chip-row" id="results-book-tabs" role="group" aria-label="Book drill-down">
@@ -114,7 +108,7 @@
         <button type="button" class="chip chip-archive" data-rsport="ncaa" title="NCAA · Domestic">NCAA · Archive</button>
         <button type="button" class="chip chip-archive" data-rsport="milb" title="MiLB · Domestic">MiLB · Archive</button>
       </div>
-      <p class="section-note">Archive books · Kelly = research modes on L50</p>
+      <p class="section-note">Archive books · Flat 1u Record only</p>
     </div>
 
     <!-- A · Scoreboard -->
@@ -188,9 +182,9 @@ document.title = 'EyeBlackIQ';
 let slipData = null;
 let day1Data = null;
 let activeTab = 'PICKS';
-let resultsUnit = 'flat';
 let resultsSport = 'global';
 let resultsLeague = null; // clickable league filter (null = all in region)
+const PNL_FLAT_KEY = 'pnl_flat_u';
 
 function fmtAm(v) {
   if (v == null || v === '') return null;
@@ -632,12 +626,6 @@ async function loadDay1() {
   return null;
 }
 
-function pnlKey(mode) {
-  if (mode === 'flat') return 'pnl_flat_u';
-  if (mode === 'kelly_full') return 'pnl_kelly_full_u';
-  if (mode === 'kelly_half') return 'pnl_kelly_half_u';
-  return 'pnl_kelly_quarter_u';
-}
 function fmtU(v) {
   const n = Number(v || 0);
   return (n >= 0 ? '+' : '') + n.toFixed(2) + 'u';
@@ -906,8 +894,8 @@ function renderEquityCurve(curve) {
   if (!curve || !curve.length) { wrap.hidden = true; host.innerHTML = ''; return; }
   wrap.hidden = false;
   if (title) title.textContent = resultsLeague
-    ? `Running PnL · ${resultsLeague} (${resultsUnit.replace(/_/g,' ')})`
-    : `Running PnL · ${resultsSport} (${resultsUnit.replace(/_/g,' ')})`;
+    ? `Running PnL · ${resultsLeague} (Flat)`
+    : `Running PnL · ${resultsSport} (Flat)`;
   const vals = curve.map(p => Number(p.cum_u || 0));
   const minV = Math.min(0, ...vals);
   const maxV = Math.max(0, ...vals);
@@ -946,12 +934,12 @@ function renderResults() {
     return;
   }
   if (badge) badge.textContent = d.pod_day || 'POD';
-  const key = pnlKey(resultsUnit);
+  const key = PNL_FLAT_KEY;
   const rows = rowsForSport(d, resultsSport, resultsLeague);
   const tally = tallyRows(rows, key);
   const season = seasonForSport(d, resultsSport);
-  // Flat + no league filter → prefer season SoT for region/global; else L50/filter tally
-  const useSeason = resultsUnit === 'flat' && !resultsLeague && season && season.n;
+  // Flat Record SoT when no league filter; else L50/filter tally
+  const useSeason = !resultsLeague && season && season.n;
   const show = useSeason ? {
     correct: season.correct || 0,
     wrong: season.wrong || 0,
@@ -977,10 +965,7 @@ function renderResults() {
   const pnlEl = document.getElementById('rc-pnl');
   if (pnlEl) pnlEl.className = 'rv ' + ((show.pnl_u || 0) >= 0 ? 'positive' : 'negative');
   const pnlLab = document.getElementById('rc-pnl-label');
-  if (pnlLab) {
-    const mode = resultsUnit === 'flat' ? 'Flat' : resultsUnit.replace('kelly_', '').replace(/^./, c => c.toUpperCase()) + ' Kelly';
-    pnlLab.textContent = (resultsLeague || resultsSport) + ' PnL (' + mode + ')';
-  }
+  if (pnlLab) pnlLab.textContent = (resultsLeague || resultsSport) + ' PnL (Flat)';
 
   if (note) {
     const arch = (d[resultsSport] && d[resultsSport].status === 'ARCHIVE') ? 'ARCHIVE' : '';
@@ -1057,13 +1042,6 @@ document.getElementById('results-advanced-toggle')?.addEventListener('click', ()
   const open = panel.hidden;
   panel.hidden = !open;
   btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-});
-document.getElementById('results-unit-tabs')?.addEventListener('click', e => {
-  const btn = e.target.closest('[data-unit]');
-  if (!btn) return;
-  document.querySelectorAll('#results-unit-tabs .chip').forEach(b => b.classList.toggle('active', b === btn));
-  resultsUnit = btn.dataset.unit;
-  renderResults();
 });
 function selectResultsSport(btn) {
   if (!btn || !btn.dataset.rsport) return;
