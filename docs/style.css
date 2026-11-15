@@ -479,6 +479,59 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
   main { padding: 8px 14px 56px; }
 }
 
+/* Results — topline Global/league record + recent form */
+.res-topline {
+  margin: 10px 0 14px;
+  padding: 14px 14px 12px;
+  background: linear-gradient(180deg, #16120c, #0e0e0e);
+  border: 1px solid #3a2a12;
+  display: grid;
+  gap: 12px;
+}
+.res-topline-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px 16px;
+}
+.res-topline-scope {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 2px;
+  font-size: 22px;
+  color: var(--gold);
+}
+.res-topline-record {
+  font-family: 'IBM Plex Mono', 'Barlow Condensed', monospace;
+  font-size: 28px;
+  font-weight: 600;
+}
+.res-topline-pnl {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+}
+.res-topline-pnl.pos { color: var(--win); }
+.res-topline-pnl.neg { color: var(--loss); }
+.res-topline-recent {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  border-top: 1px dashed #3a2a12;
+  padding-top: 10px;
+}
+.res-recent-stat {
+  text-align: center;
+  background: #0a0a0a;
+  border: 1px solid #2a2214;
+  padding: 8px 6px;
+}
+.res-recent-stat .rk { margin-bottom: 2px; }
+.res-recent-stat .rv { font-size: 15px; }
+@media (max-width: 600px) {
+  .res-topline-recent { grid-template-columns: 1fr 1fr; }
+  .res-topline-record { font-size: 22px; }
+}
+
 /* Results — A scoreboard + B wheel/statsheet hybrid */
 .res-board {
   background: linear-gradient(180deg, #1a1208, #0e0e0e);

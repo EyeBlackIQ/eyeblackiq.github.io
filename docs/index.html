@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://eyeblackiq.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css?v=20261115-flat">
+<link rel="stylesheet" href="style.css?v=20261115-topline">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -90,8 +90,22 @@
 
   <section id="results-section" class="results-section" role="tabpanel" aria-labelledby="nav-results" hidden>
     <div class="results-head">
-      <h2 class="section-title">Day-1 · L50 <span class="pod-badge" id="results-pod-badge">POD</span></h2>
-      <p class="section-note" id="results-sub">Global = INTL + Domestic · click a league to filter · Flat 1u</p>
+      <h2 class="section-title">Results <span class="pod-badge" id="results-pod-badge">POD</span></h2>
+      <p class="section-note" id="results-sub">Global = INTL + Domestic · Flat 1u · click a league to filter</p>
+    </div>
+
+    <div class="res-topline" id="results-topline" aria-label="Total record">
+      <div class="res-topline-main">
+        <div class="res-topline-scope" id="rc-topline-scope">GLOBAL</div>
+        <div class="res-topline-record" id="rc-topline-record">—</div>
+        <div class="res-topline-pnl" id="rc-topline-pnl">—</div>
+      </div>
+      <div class="res-topline-recent" id="rc-topline-recent" aria-label="Recent performance">
+        <div class="res-recent-stat"><span class="rk">L10</span><span class="rv" id="rc-recent-l10">—</span></div>
+        <div class="res-recent-stat"><span class="rk">Last 7d</span><span class="rv" id="rc-recent-7d">—</span></div>
+        <div class="res-recent-stat"><span class="rk">Streak</span><span class="rv" id="rc-recent-streak">—</span></div>
+        <div class="res-recent-stat"><span class="rk">Hit%</span><span class="rv" id="rc-recent-hr">—</span></div>
+      </div>
     </div>
 
     <div class="chip-row" id="results-sport-tabs" role="group" aria-label="Results region">
@@ -924,6 +938,97 @@ function renderGauge(tally) {
     : (resultsSport === 'global' ? 'Global hit rate' : `${String(resultsSport).toUpperCase()} hit rate`);
 }
 
+function resultsScopeLabel() {
+  if (resultsLeague) return String(resultsLeague).toUpperCase();
+  if (resultsSport === 'global') return 'GLOBAL';
+  if (resultsSport === 'intl') return 'INTL';
+  if (resultsSport === 'domestic') return 'DOMESTIC';
+  return String(resultsSport || 'GLOBAL').toUpperCase();
+}
+
+function streakFromRows(rowsNewestFirst) {
+  let n = 0;
+  let kind = null;
+  for (const r of rowsNewestFirst) {
+    const res = String(r.result || '').toLowerCase();
+    if (res === 'push') continue;
+    if (res !== 'correct' && res !== 'wrong') continue;
+    const k = res === 'correct' ? 'W' : 'L';
+    if (!kind) kind = k;
+    if (k !== kind) break;
+    n += 1;
+  }
+  return kind && n ? `${kind}${n}` : '—';
+}
+
+function recentForm(rows, key) {
+  const graded = (rows || []).filter(r =>
+    ['correct', 'wrong', 'push'].includes(String(r.result || '').toLowerCase())
+  );
+  // rowsForSport is newest-first
+  const l10 = graded.slice(0, 10);
+  const t10 = tallyRows(l10, key);
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - 7);
+  const cut = cutoff.toISOString().slice(0, 10);
+  const last7 = graded.filter(r => String(r.date || '') >= cut);
+  const t7 = tallyRows(last7, key);
+  return {
+    l10: t10,
+    d7: t7,
+    streak: streakFromRows(graded),
+  };
+}
+
+function syncTopRecordBar(show, recent, scopeLabel) {
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  const net = Number(show.pnl_u || 0);
+  const hrPct = show.hr != null ? (Number(show.hr) * 100) : null;
+  const roi = show.n ? (net / Math.max(1, Number(show.n))) * 100 : 0;
+  set('bar-record', show.record || '—');
+  set('bar-units', fmtU(net).replace('u', '') + 'u');
+  set('bar-roi', `${roi >= 0 ? '+' : ''}${roi.toFixed(1)}%`);
+  set('bar-pod', recent.streak || '—');
+  set('bar-streak', recent.l10.record || '—');
+  const uel = document.getElementById('bar-units');
+  const rel = document.getElementById('bar-roi');
+  if (uel) uel.className = 'stat-value ' + (net >= 0 ? 'positive' : 'negative');
+  if (rel) rel.className = 'stat-value ' + (roi >= 0 ? 'positive' : 'negative');
+  // Re-label bar when on Results: Season→Record, POD→Streak, Streak→L10
+  const labels = document.querySelectorAll('#record-bar-content .record-stat .stat-label');
+  if (labels && labels.length >= 5 && activeTab === 'RESULTS') {
+    labels[0].textContent = 'Record';
+    labels[1].textContent = 'Net';
+    labels[2].textContent = 'u/bet';
+    labels[3].textContent = 'Streak';
+    labels[4].textContent = 'L10';
+  }
+  const scope = document.getElementById('record-scope');
+  if (scope) {
+    scope.textContent = `Results · ${scopeLabel} · Flat 1u` +
+      (hrPct != null ? ` · ${hrPct.toFixed(1)}%` : '');
+  }
+}
+
+function renderTopline(show, recent, scopeLabel) {
+  const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  set('rc-topline-scope', scopeLabel);
+  set('rc-topline-record', show.record || '—');
+  const pnlEl = document.getElementById('rc-topline-pnl');
+  if (pnlEl) {
+    pnlEl.textContent = fmtU(show.pnl_u);
+    pnlEl.className = 'res-topline-pnl ' + ((show.pnl_u || 0) >= 0 ? 'pos' : 'neg');
+  }
+  const l10 = recent.l10;
+  set('rc-recent-l10', l10.record || '—');
+  const d7 = recent.d7;
+  set('rc-recent-7d', d7.n ? (d7.record + ' · ' + fmtU(d7.pnl_u)) : '—');
+  set('rc-recent-streak', recent.streak || '—');
+  set('rc-recent-hr', show.hr != null ? ((show.hr) * 100).toFixed(1) + '%' : '—');
+  const boardTitle = document.querySelector('#results-board .res-board-title');
+  if (boardTitle) boardTitle.textContent = scopeLabel + ' RECORD';
+}
+
 function renderResults() {
   const d = day1Data;
   const list = document.getElementById('results-list');
@@ -940,16 +1045,36 @@ function renderResults() {
   const season = seasonForSport(d, resultsSport);
   // Flat Record SoT when no league filter; else L50/filter tally
   const useSeason = !resultsLeague && season && season.n;
-  const show = useSeason ? {
+  let show = useSeason ? {
     correct: season.correct || 0,
     wrong: season.wrong || 0,
     push: season.push || 0,
     hr: season.hr,
     pnl_u: season.pnl_u,
     record: `${season.correct || 0}-${season.wrong || 0}` + ((season.push || 0) ? `-${season.push}` : ''),
-    n: rows.length
+    n: season.n || rows.length
   } : tally;
+  // League tile click: prefer by_league season row when available (full book, not only L50)
+  if (resultsLeague) {
+    const lgRows = leagueRowsForSport(d, resultsSport) || [];
+    const hit = lgRows.find(r => String(r.league || '').toUpperCase() === String(resultsLeague).toUpperCase());
+    if (hit && (Number(hit.n || 0) > 0 || Number(hit.wins || 0) + Number(hit.losses || 0) > 0)) {
+      const w = Number(hit.wins || 0), l = Number(hit.losses || 0), p = Number(hit.pushes || 0);
+      const den = w + l;
+      show = {
+        correct: w, wrong: l, push: p,
+        hr: hit.hr != null ? Number(hit.hr) : (den ? w / den : null),
+        pnl_u: Number(hit.pnl_u || 0),
+        record: hit.record || `${w}-${l}` + (p ? `-${p}` : ''),
+        n: Number(hit.n || (w + l + p))
+      };
+    }
+  }
+  const recent = recentForm(rows, key);
+  const scopeLabel = resultsScopeLabel();
 
+  renderTopline(show, recent, scopeLabel);
+  syncTopRecordBar(show, recent, scopeLabel);
   renderHrChart(d);
   renderResultsChart(d);
   renderBoardAndTiles(d, resultsSport, resultsLeague, key);
@@ -965,7 +1090,7 @@ function renderResults() {
   const pnlEl = document.getElementById('rc-pnl');
   if (pnlEl) pnlEl.className = 'rv ' + ((show.pnl_u || 0) >= 0 ? 'positive' : 'negative');
   const pnlLab = document.getElementById('rc-pnl-label');
-  if (pnlLab) pnlLab.textContent = (resultsLeague || resultsSport) + ' PnL (Flat)';
+  if (pnlLab) pnlLab.textContent = scopeLabel + ' PnL (Flat)';
 
   if (note) {
     const arch = (d[resultsSport] && d[resultsSport].status === 'ARCHIVE') ? 'ARCHIVE' : '';
@@ -1017,6 +1142,15 @@ function showTab(tab, { fromUser = false } = {}) {
   } else {
     if (picks) picks.hidden = false;
     if (results) results.hidden = true;
+    // Restore Picks-mode record bar labels
+    const labels = document.querySelectorAll('#record-bar-content .record-stat .stat-label');
+    if (labels && labels.length >= 5) {
+      labels[0].textContent = 'Season';
+      labels[1].textContent = 'Net';
+      labels[2].textContent = 'ROI';
+      labels[3].textContent = 'POD';
+      labels[4].textContent = 'Streak';
+    }
     renderPicks();
   }
 }
