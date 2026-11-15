@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://eyeblackiq.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css?v=20261115-slate">
+<link rel="stylesheet" href="style.css?v=20261115-markets">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,6 +33,7 @@
     </a>
     <nav class="primary-nav" aria-label="Primary" role="tablist">
       <button type="button" class="nav-tab active" role="tab" aria-selected="true" id="nav-picks" data-tab="PICKS">Picks</button>
+      <button type="button" class="nav-tab" role="tab" aria-selected="false" id="nav-markets" data-tab="MARKETS">Markets</button>
       <button type="button" class="nav-tab" role="tab" aria-selected="false" id="nav-results" data-tab="RESULTS">Results</button>
     </nav>
     <div class="social-links">
@@ -90,6 +91,16 @@
       <h2 class="section-title">Watchlist <span class="count-badge" id="teaser-count">0</span></h2>
       <p class="section-note" id="teaser-note">Tracked · not Plays · not POD</p>
       <div class="picks-list picks-list--watch" id="teaser-grid"></div>
+    </section>
+  </section>
+
+  <section id="markets-panel" role="tabpanel" aria-labelledby="nav-markets" hidden>
+    <section class="picks-section" aria-labelledby="markets-heading">
+      <h2 class="section-title" id="markets-heading">Market odds</h2>
+      <p class="section-note" id="markets-note">Model fair probability vs book implied vs Kalshi prediction-market price. Educational comparison — informational only.</p>
+      <div class="markets-list" id="markets-grid">
+        <p class="empty-state">Loading…</p>
+      </div>
     </section>
   </section>
 
@@ -187,6 +198,7 @@
     </div>
     <div class="footer-links">
       <button type="button" class="footer-link" id="footer-picks">Picks</button>
+      <button type="button" class="footer-link" id="footer-markets">Markets</button>
       <button type="button" class="footer-link" id="footer-results">Results</button>
       <a href="methodology.html">How we pick</a>
       <a href="https://x.com/EyeBlackIQ" target="_blank" rel="noopener">X</a>
@@ -1154,26 +1166,80 @@ function cleanLandingUrl() {
   history.replaceState(null, '', u.pathname + (u.search || '') || '/');
 }
 
+function fmtPct(v) {
+  if (v == null || v === '') return '—';
+  const n = Number(v);
+  if (Number.isNaN(n)) return '—';
+  return `${n.toFixed(1)}%`;
+}
+
+function marketOddsCard(row) {
+  const gap = row.live_fair_gap_pp;
+  const gapCls = gap == null ? '' : (Number(gap) >= 0 ? 'pos' : 'neg');
+  const gapTxt = gap == null ? '—' : `${Number(gap) >= 0 ? '+' : ''}${Number(gap).toFixed(1)} pp`;
+  const when = fmtWhen(row);
+  return `<article class="market-row">
+    <div class="market-head">
+      <span class="market-lg">${esc(row.league || '')}</span>
+      <span class="market-game">${esc(row.game || '')}</span>
+      <span class="market-side">${esc(row.side || row.market || '')}</span>
+    </div>
+    ${when ? `<div class="market-when">${esc(when)}</div>` : ''}
+    <div class="market-grid" aria-label="Implied probabilities">
+      <div class="market-cell"><span class="mk">Model fair</span><span class="mv">${fmtPct(row.model_fair_pct)}</span></div>
+      <div class="market-cell"><span class="mk">Book implied</span><span class="mv">${fmtPct(row.book_implied_pct)}</span></div>
+      <div class="market-cell"><span class="mk">Kalshi</span><span class="mv">${fmtPct(row.kalshi_implied_pct)}</span></div>
+      <div class="market-cell"><span class="mk">Live−Fair</span><span class="mv ${gapCls}">${esc(gapTxt)}</span></div>
+    </div>
+    <div class="market-src muted">Source · ${esc(row.price_source || 'book')}</div>
+  </article>`;
+}
+
+function renderMarkets() {
+  const host = document.getElementById('markets-grid');
+  const note = document.getElementById('markets-note');
+  if (!host) return;
+  const rows = (slipData && Array.isArray(slipData.market_odds)) ? slipData.market_odds : [];
+  if (note && slipData && slipData.market_odds_note) {
+    note.textContent = slipData.market_odds_note;
+  }
+  if (!rows.length) {
+    host.innerHTML = '<p class="empty-state">No market-odds rows today. Kalshi GAME ML posts when listed for LMP · LIDOM · LVBP · LBPRC.</p>';
+    return;
+  }
+  host.innerHTML = rows.map(marketOddsCard).join('');
+}
+
 function showTab(tab, { fromUser = false } = {}) {
-  activeTab = tab === 'RESULTS' ? 'RESULTS' : 'PICKS';
+  if (tab === 'RESULTS') activeTab = 'RESULTS';
+  else if (tab === 'MARKETS') activeTab = 'MARKETS';
+  else activeTab = 'PICKS';
   document.querySelectorAll('.nav-tab').forEach(b => {
     const on = b.dataset.tab === activeTab;
     b.classList.toggle('active', on);
     b.setAttribute('aria-selected', on ? 'true' : 'false');
   });
   const picks = document.getElementById('picks-panel');
+  const markets = document.getElementById('markets-panel');
   const results = document.getElementById('results-section');
   if (!fromUser) cleanLandingUrl();
   else if (location.hash || new URL(location.href).searchParams.has('tab')) cleanLandingUrl();
   if (activeTab === 'RESULTS') {
     if (picks) picks.hidden = true;
+    if (markets) markets.hidden = true;
     if (results) results.hidden = false;
     loadDay1().then(renderResults).catch(() => {
       const el = document.getElementById('results-list');
       if (el) el.innerHTML = '<li class="empty-state">Results load error</li>';
     });
+  } else if (activeTab === 'MARKETS') {
+    if (picks) picks.hidden = true;
+    if (results) results.hidden = true;
+    if (markets) markets.hidden = false;
+    renderMarkets();
   } else {
     if (picks) picks.hidden = false;
+    if (markets) markets.hidden = true;
     if (results) results.hidden = true;
     // Restore Picks-mode record bar labels
     const labels = document.querySelectorAll('#record-bar-content .record-stat .stat-label');
@@ -1192,6 +1258,7 @@ document.querySelectorAll('.nav-tab').forEach(btn => {
   btn.addEventListener('click', () => showTab(btn.dataset.tab, { fromUser: true }));
 });
 document.getElementById('footer-picks')?.addEventListener('click', () => showTab('PICKS', { fromUser: true }));
+document.getElementById('footer-markets')?.addEventListener('click', () => showTab('MARKETS', { fromUser: true }));
 document.getElementById('footer-results')?.addEventListener('click', () => showTab('RESULTS', { fromUser: true }));
 document.querySelector('.logo-block')?.addEventListener('click', (e) => {
   // Logo always returns to Picks (same-page SPA)
