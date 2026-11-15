@@ -95,11 +95,11 @@
     </div>
 
     <div class="chip-row" id="results-sport-tabs" role="group" aria-label="League book">
-      <button type="button" class="chip active" data-rsport="global">Global</button>
-      <button type="button" class="chip" data-rsport="mlb">MLB</button>
-      <button type="button" class="chip" data-rsport="asia">Asia</button>
-      <button type="button" class="chip" data-rsport="winter">Winter</button>
-      <button type="button" class="chip" data-rsport="ncaa">NCAA</button>
+      <button type="button" class="chip" data-rsport="global">Global</button>
+      <button type="button" class="chip active" data-rsport="winter">Winter</button>
+      <button type="button" class="chip chip-archive" data-rsport="mlb" title="Season finished — archive L50">MLB · Archive</button>
+      <button type="button" class="chip chip-archive" data-rsport="asia" title="Season finished — archive L50">Asia · Archive</button>
+      <button type="button" class="chip chip-archive" data-rsport="ncaa" title="Season finished — archive L50">NCAA · Archive</button>
       <button type="button" class="chip chip-advanced" id="results-advanced-toggle" aria-expanded="false" aria-controls="results-advanced">Advanced</button>
     </div>
     <div id="results-advanced" hidden>
@@ -167,7 +167,7 @@ let slipData = null;
 let day1Data = null;
 let activeTab = 'PICKS';
 let resultsUnit = 'flat';
-let resultsSport = 'global';
+let resultsSport = 'winter';
 
 function fmtAm(v) {
   if (v == null || v === '') return null;
@@ -423,8 +423,10 @@ function resultsListItem(r, key) {
   const odds = fmtAm(r.odds) || (r.odds != null && r.odds !== '' ? esc(r.odds) : '—');
   const note = String(r.note || '').trim();
   const ctx = shortBlurb(note, 100);
+  const when = fmtWhen(r);
   const bits = [];
-  if (r.date) bits.push(`<span class="watch-time">${esc(r.date)}</span>`);
+  if (when) bits.push(`<span class="watch-time">${esc(when)}</span>`);
+  else if (r.date) bits.push(`<span class="watch-time">${esc(r.date)}</span>`);
   if (r.league) bits.push(`<span class="watch-lg">${esc(r.league)}</span>`);
   if (r.market) bits.push(`<span class="watch-hit">${esc(r.market)}</span>`);
   if (r.actual != null && r.actual !== '') bits.push(`<span class="watch-proj">${esc(r.actual)}</span>`);
@@ -467,10 +469,12 @@ function isPlay(p) {
 
 function renderPicks() {
   const today = slipData?.date || '';
+  const fwdHeld = String((slipData?.policy || {}).forward_slate || 'held') === 'held';
   const all = (slipData?.recommended || []).filter(isPlay).filter(p => {
     if (!p.signal_date) return true;
-    // Stamp day + next calendar day (winter late slate on same deploy)
     if (p.signal_date === today) return true;
+    // D+1: hold off public Plays until stamp day (policy.forward_slate=held)
+    if (fwdHeld) return false;
     try {
       const d0 = new Date(today + 'T12:00:00Z');
       const d1 = new Date(d0.getTime() + 86400000).toISOString().slice(0, 10);
@@ -572,7 +576,9 @@ function updateDateBar(slip) {
         gen = `Published ${g.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })} · `;
       } catch (e) { /* ignore */ }
     }
-    metaEl.textContent = `${gen}verify lines before acting · informational only`;
+    const floor = (slip.policy && (slip.policy.edge_floor_label || (slip.policy.edge_floor_pp != null ? `${slip.policy.edge_floor_pp}pp` : ''))) || '3.5pp';
+    const fwd = (slip.policy && slip.policy.forward_slate === 'published') ? 'D+1 on' : 'D+1 held';
+    metaEl.textContent = `${gen}edge floor ${floor} · ${fwd} · verify lines · informational only`;
   }
   // Dynamic OG title hint for shares
   if (slip.pod && slip.pod[0] && slip.pod[0].side) {
@@ -684,7 +690,8 @@ function seasonForSport(d, sport) {
   if (sport === 'asia') return d.asia && d.asia.slip_summary;
   if (sport === 'winter') return d.winter && d.winter.slip_summary;
   if (sport === 'ncaa') return d.ncaa && d.ncaa.slip_summary;
-  if (sport === 'mlb' || sport === 'global') return d.mlb && d.mlb.slip_summary;
+  if (sport === 'mlb') return d.mlb && d.mlb.slip_summary;
+  if (sport === 'global') return d.winter && d.winter.slip_summary; // live book default
   return null;
 }
 
@@ -729,7 +736,13 @@ function renderResults() {
     if (pnlLab2) pnlLab2.textContent = 'L50 PnL (' + resultsUnit.replace('_', ' ') + ')';
   }
   set('rc-l50n', String(rows.length));
-  if (note) note.textContent = [d.units_policy, d.sp_policy, 'slip≠LOG'].filter(Boolean).join(' · ');
+  if (note) {
+    const arch = (d[resultsSport] && d[resultsSport].status === 'ARCHIVE') ? 'ARCHIVE' : '';
+    const fresh = (d.results_freshness && d.results_freshness.stale) ? (d.results_freshness.note || 'stale') : '';
+    const floor = d.edge_floor_label || '';
+    const graded = (d.results_freshness && d.results_freshness.winter_graded_max) || '';
+    note.textContent = [d.units_policy, d.sp_policy, floor ? `floor ${floor}` : '', graded ? `graded→${graded}` : '', arch, fresh, 'slip≠LOG'].filter(Boolean).join(' · ');
+  }
   if (!list) return;
   if (!rows.length) {
     list.innerHTML = '<li class="empty-state">No L50 rows for this tab.</li>';

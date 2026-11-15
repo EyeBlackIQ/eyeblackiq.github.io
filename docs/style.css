@@ -366,6 +366,8 @@ main { max-width: var(--max); margin: 0 auto; padding: 10px 20px 64px; }
   border-style: dashed; color: var(--faint);
 }
 .chip-advanced[aria-expanded="true"] { color: var(--text); border-style: solid; }
+.chip-archive { opacity: 0.55; font-size: 0.85em; }
+.chip-archive.active { opacity: 0.9; }
 
 .results-cards {
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 14px 0 16px;

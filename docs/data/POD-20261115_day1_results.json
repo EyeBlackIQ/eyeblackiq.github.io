@@ -1,6 +1,6 @@
 {
   "pod_day": "POD-20261115",
-  "generated_at": "2026-11-15T02:26:39.459392+00:00",
+  "generated_at": "2026-11-15T02:47:16.028789+00:00",
   "source": "lean_site_publish",
   "not_live_kalshi": true,
   "slip_ne_log": true,
@@ -15,19 +15,23 @@
   "public_tabs": {
     "mlb": {
       "on": true,
-      "reason": "out of season - Results L50"
+      "default": false,
+      "reason": "ARCHIVE \u2014 MLB season finished"
     },
     "asia": {
       "on": true,
-      "reason": "out of season - KBO/NPB Results L50"
+      "default": false,
+      "reason": "ARCHIVE \u2014 KBO/NPB finished"
     },
     "winter": {
       "on": true,
-      "reason": "live winter LMP+LIDOM+LVBP"
+      "default": true,
+      "reason": "LIVE winter LMP+LIDOM+LVBP (+CUBA/LBPRC/ABL when booked)"
     },
     "ncaa": {
       "on": true,
-      "reason": "out of season - Results L50"
+      "default": false,
+      "reason": "ARCHIVE \u2014 NCAA finished"
     }
   },
   "mlb": {
@@ -48,6 +52,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "G.Jax (Brewers @ Rays) Over 11.5 outs",
+        "game": "",
         "odds": "+107",
         "result": "correct",
         "pnl_u": 1.07,
@@ -59,7 +64,12 @@
         "pnl_kelly_full_u": 25.8958,
         "pnl_kelly_half_u": 12.9426,
         "pnl_kelly_quarter_u": 6.4766,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-27"
       },
       {
         "date": "2026-10-26",
@@ -67,6 +77,7 @@
         "tier": "PLUS",
         "market": "FG_TOTAL",
         "bet": "Brewers @ Rays FG Over 7",
+        "game": "",
         "odds": "+102",
         "result": "correct",
         "pnl_u": 1.02,
@@ -78,7 +89,12 @@
         "pnl_kelly_full_u": 20.402,
         "pnl_kelly_half_u": 10.201,
         "pnl_kelly_quarter_u": 5.1005,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-26"
       },
       {
         "date": "2026-10-26",
@@ -86,6 +102,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "D.Hamilton (Brewers @ Rays) Over 0.5 H",
+        "game": "",
         "odds": "+105",
         "result": "correct",
         "pnl_u": 1.05,
@@ -97,7 +114,12 @@
         "pnl_kelly_full_u": 1.6848,
         "pnl_kelly_half_u": 0.8424,
         "pnl_kelly_quarter_u": 0.416,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-26"
       },
       {
         "date": "2026-10-26",
@@ -105,6 +127,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "R.Gasser (Brewers @ Rays) Over 12.5 outs",
+        "game": "",
         "odds": "+110",
         "result": "correct",
         "pnl_u": 1.1,
@@ -116,7 +139,12 @@
         "pnl_kelly_full_u": 38.0628,
         "pnl_kelly_half_u": 19.0314,
         "pnl_kelly_quarter_u": 9.5157,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-26"
       },
       {
         "date": "2026-10-24",
@@ -124,6 +152,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "D.Rasmussen (Rays @ Brewers) Under 1.5 ER",
+        "game": "",
         "odds": "+110",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -135,7 +164,12 @@
         "pnl_kelly_full_u": -0.0535,
         "pnl_kelly_half_u": -0.0267,
         "pnl_kelly_quarter_u": -0.0134,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-24"
       },
       {
         "date": "2026-10-24",
@@ -143,6 +177,7 @@
         "tier": "CORE",
         "market": "PROP",
         "bet": "J.DeLuca (Rays @ Brewers) Under 0.5 H",
+        "game": "",
         "odds": "+138",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -154,7 +189,12 @@
         "pnl_kelly_full_u": -0.0212,
         "pnl_kelly_half_u": -0.0106,
         "pnl_kelly_quarter_u": -0.0053,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-24"
       },
       {
         "date": "2026-10-24",
@@ -162,6 +202,7 @@
         "tier": "PLUS",
         "market": "F5_TOTAL",
         "bet": "Rays @ Brewers F5 Over 3.5",
+        "game": "",
         "odds": "-100",
         "result": "correct",
         "pnl_u": 1.0,
@@ -173,7 +214,12 @@
         "pnl_kelly_full_u": 0.196,
         "pnl_kelly_half_u": 0.098,
         "pnl_kelly_quarter_u": 0.049,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-24"
       },
       {
         "date": "2026-10-23",
@@ -181,6 +227,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "Ben Williamson (Rays @ Brewers) Under 0.5 H",
+        "game": "",
         "odds": "+110",
         "result": "correct",
         "pnl_u": 1.1,
@@ -192,7 +239,12 @@
         "pnl_kelly_full_u": 3.7387,
         "pnl_kelly_half_u": 1.8639,
         "pnl_kelly_quarter_u": 0.9374,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-23"
       },
       {
         "date": "2026-10-23",
@@ -200,6 +252,7 @@
         "tier": "CORE",
         "market": "F5_TOTAL",
         "bet": "Rays @ Brewers F5 Over 3.5",
+        "game": "",
         "odds": "+104",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -211,7 +264,12 @@
         "pnl_kelly_full_u": -0.1171,
         "pnl_kelly_half_u": -0.0585,
         "pnl_kelly_quarter_u": -0.0293,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-23"
       },
       {
         "date": "2026-10-23",
@@ -219,6 +277,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "W.Contreras (Rays @ Brewers) Under 0.5 batter K",
+        "game": "",
         "odds": "+110",
         "result": "correct",
         "pnl_u": 1.1,
@@ -230,7 +289,12 @@
         "pnl_kelly_full_u": 11.99,
         "pnl_kelly_half_u": 5.995,
         "pnl_kelly_quarter_u": 2.9975,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-23"
       },
       {
         "date": "2026-10-19",
@@ -238,6 +302,7 @@
         "tier": "PLUS",
         "market": "F5_TOTAL",
         "bet": "Guardians @ Rays F5 Over 3.5",
+        "game": "",
         "odds": "-118",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -249,7 +314,12 @@
         "pnl_kelly_full_u": -0.2202,
         "pnl_kelly_half_u": -0.1101,
         "pnl_kelly_quarter_u": -0.0551,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-19"
       },
       {
         "date": "2026-10-19",
@@ -257,6 +327,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "J.Caminero (Guardians @ Rays) Over 1.5 HRR",
+        "game": "",
         "odds": "-110",
         "result": "correct",
         "pnl_u": 0.9091,
@@ -268,7 +339,12 @@
         "pnl_kelly_full_u": 0.294,
         "pnl_kelly_half_u": 0.147,
         "pnl_kelly_quarter_u": 0.0735,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-19"
       },
       {
         "date": "2026-10-19",
@@ -276,6 +352,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "J.Ramirez (Guardians @ Rays) Over 1.5 HRR",
+        "game": "",
         "odds": "+110",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -287,7 +364,12 @@
         "pnl_kelly_full_u": -0.0969,
         "pnl_kelly_half_u": -0.0485,
         "pnl_kelly_quarter_u": -0.0242,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-19"
       },
       {
         "date": "2026-10-18",
@@ -295,6 +377,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "Jonathan Deluca (Rays @ Guardians) Under 0.5 H",
+        "game": "",
         "odds": "+148",
         "result": "correct",
         "pnl_u": 1.48,
@@ -306,7 +389,12 @@
         "pnl_kelly_full_u": 6.3651,
         "pnl_kelly_half_u": 3.1752,
         "pnl_kelly_quarter_u": 1.5876,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-18"
       },
       {
         "date": "2026-10-18",
@@ -314,6 +402,7 @@
         "tier": "PLUS",
         "market": "F5_TOTAL",
         "bet": "Rays @ Guardians F5 Over 3.5",
+        "game": "",
         "odds": "+112",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -325,7 +414,12 @@
         "pnl_kelly_full_u": -0.1423,
         "pnl_kelly_half_u": -0.0712,
         "pnl_kelly_quarter_u": -0.0356,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-18"
       },
       {
         "date": "2026-10-17",
@@ -333,6 +427,7 @@
         "tier": "PLUS",
         "market": "F5_TOTAL",
         "bet": "Rays @ Guardians F5 Over 3.5",
+        "game": "",
         "odds": "-110",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -344,7 +439,12 @@
         "pnl_kelly_full_u": -0.1932,
         "pnl_kelly_half_u": -0.0966,
         "pnl_kelly_quarter_u": -0.0483,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-17"
       },
       {
         "date": "2026-10-15",
@@ -352,6 +452,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "Sal Frelick (Brewers @ Dodgers) Under 0.5 H",
+        "game": "",
         "odds": "+120",
         "result": "correct",
         "pnl_u": 1.2,
@@ -363,7 +464,12 @@
         "pnl_kelly_full_u": 6.9615,
         "pnl_kelly_half_u": 3.4867,
         "pnl_kelly_quarter_u": 1.7374,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-15"
       },
       {
         "date": "2026-10-14",
@@ -371,6 +477,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "A.Pages (Brewers @ Dodgers) Under 2 TB",
+        "game": "",
         "odds": "+155",
         "result": "correct",
         "pnl_u": 1.55,
@@ -382,7 +489,12 @@
         "pnl_kelly_full_u": 54.1002,
         "pnl_kelly_half_u": 27.0578,
         "pnl_kelly_quarter_u": 13.5212,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-14"
       },
       {
         "date": "2026-10-14",
@@ -390,6 +502,7 @@
         "tier": "PLUS",
         "market": "F5_TOTAL",
         "bet": "Brewers @ Dodgers F5 Over 3.5",
+        "game": "",
         "odds": "-144",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -401,7 +514,12 @@
         "pnl_kelly_full_u": -0.4319,
         "pnl_kelly_half_u": -0.216,
         "pnl_kelly_quarter_u": -0.108,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-14"
       },
       {
         "date": "2026-10-14",
@@ -409,6 +527,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "Joseph Ortiz (Brewers @ Dodgers) Under 0.5 H",
+        "game": "",
         "odds": "+100",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -420,7 +539,12 @@
         "pnl_kelly_full_u": -0.0091,
         "pnl_kelly_half_u": -0.0046,
         "pnl_kelly_quarter_u": -0.0023,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-14"
       },
       {
         "date": "2026-10-14",
@@ -428,6 +552,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "M.Betts (Brewers @ Dodgers) Over 1.5 HRR",
+        "game": "",
         "odds": "-120",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -439,7 +564,12 @@
         "pnl_kelly_full_u": -0.2288,
         "pnl_kelly_half_u": -0.1144,
         "pnl_kelly_quarter_u": -0.0572,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-14"
       },
       {
         "date": "2026-10-14",
@@ -447,6 +577,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "R.Gasser (Brewers @ Dodgers) Over 11.5 outs",
+        "game": "",
         "odds": "-120",
         "result": "correct",
         "pnl_u": 0.8333,
@@ -458,7 +589,12 @@
         "pnl_kelly_full_u": 0.6252,
         "pnl_kelly_half_u": 0.3126,
         "pnl_kelly_quarter_u": 0.1563,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-14"
       },
       {
         "date": "2026-10-14",
@@ -466,6 +602,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "S.Ohtani (Brewers @ Dodgers) Over 1.5 HRR",
+        "game": "",
         "odds": "+111",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -477,7 +614,12 @@
         "pnl_kelly_full_u": -0.1968,
         "pnl_kelly_half_u": -0.0984,
         "pnl_kelly_quarter_u": -0.0492,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-14"
       },
       {
         "date": "2026-10-13",
@@ -485,6 +627,7 @@
         "tier": "PLUS",
         "market": "FG_TOTAL",
         "bet": "Guardians @ Rays FG Over 6.5",
+        "game": "",
         "odds": "-120",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -496,7 +639,12 @@
         "pnl_kelly_full_u": -0.4972,
         "pnl_kelly_half_u": -0.2486,
         "pnl_kelly_quarter_u": -0.1243,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-13"
       },
       {
         "date": "2026-10-13",
@@ -504,6 +652,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "T.Walls (Guardians @ Rays) Under 0.5 H",
+        "game": "",
         "odds": "+102",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -515,7 +664,12 @@
         "pnl_kelly_full_u": -0.0424,
         "pnl_kelly_half_u": -0.0212,
         "pnl_kelly_quarter_u": -0.0106,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-13"
       },
       {
         "date": "2026-10-12",
@@ -523,6 +677,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "Chase DeLauter (Guardians @ Rays) Under 1.5 TB",
+        "game": "",
         "odds": "+141",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -534,7 +689,12 @@
         "pnl_kelly_full_u": -0.1017,
         "pnl_kelly_half_u": -0.0508,
         "pnl_kelly_quarter_u": -0.0254,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-12"
       },
       {
         "date": "2026-10-12",
@@ -542,6 +702,7 @@
         "tier": "PLUS",
         "market": "F5_TOTAL",
         "bet": "Dodgers @ Brewers F5 Over 3.5",
+        "game": "",
         "odds": "-115",
         "result": "correct",
         "pnl_u": 0.8696,
@@ -553,7 +714,12 @@
         "pnl_kelly_full_u": 0.4243,
         "pnl_kelly_half_u": 0.2122,
         "pnl_kelly_quarter_u": 0.1061,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-12"
       },
       {
         "date": "2026-10-12",
@@ -561,6 +727,7 @@
         "tier": "PLUS",
         "market": "F5_TOTAL",
         "bet": "Guardians @ Rays F5 Over 3.5",
+        "game": "",
         "odds": "-114",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -572,7 +739,12 @@
         "pnl_kelly_full_u": -0.4045,
         "pnl_kelly_half_u": -0.2023,
         "pnl_kelly_quarter_u": -0.1011,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-12"
       },
       {
         "date": "2026-10-12",
@@ -580,6 +752,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "J.Chourio (Dodgers @ Brewers) Under 1.5 TB",
+        "game": "",
         "odds": "+140",
         "result": "correct",
         "pnl_u": 1.4,
@@ -591,7 +764,12 @@
         "pnl_kelly_full_u": 0.834,
         "pnl_kelly_half_u": 0.417,
         "pnl_kelly_quarter_u": 0.2085,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-12"
       },
       {
         "date": "2026-10-12",
@@ -599,6 +777,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "Jos\u00e9 Ram\u00edrez (Guardians @ Rays) Under 1.5 TB",
+        "game": "",
         "odds": "+140",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -610,7 +789,12 @@
         "pnl_kelly_full_u": -0.1853,
         "pnl_kelly_half_u": -0.0926,
         "pnl_kelly_quarter_u": -0.0463,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-12"
       },
       {
         "date": "2026-10-11",
@@ -618,6 +802,7 @@
         "tier": "PLUS",
         "market": "F5_TOTAL",
         "bet": "Dodgers @ Brewers F5 Over 2.5",
+        "game": "",
         "odds": "-160",
         "result": "correct",
         "pnl_u": 0.625,
@@ -629,7 +814,12 @@
         "pnl_kelly_full_u": 0.3055,
         "pnl_kelly_half_u": 0.1527,
         "pnl_kelly_quarter_u": 0.0764,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-11"
       },
       {
         "date": "2026-10-11",
@@ -637,6 +827,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "Joseph Ortiz (Dodgers @ Brewers) Under 0.5 H",
+        "game": "",
         "odds": "+100",
         "result": "correct",
         "pnl_u": 1.0,
@@ -648,7 +839,12 @@
         "pnl_kelly_full_u": 0.297,
         "pnl_kelly_half_u": 0.1485,
         "pnl_kelly_quarter_u": 0.0792,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-11"
       },
       {
         "date": "2026-10-11",
@@ -656,6 +852,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "William Contreras (Dodgers @ Brewers) Under 1.5 TB",
+        "game": "",
         "odds": "+144",
         "result": "correct",
         "pnl_u": 1.44,
@@ -667,7 +864,12 @@
         "pnl_kelly_full_u": 20.02,
         "pnl_kelly_half_u": 10.01,
         "pnl_kelly_quarter_u": 5.005,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-11"
       },
       {
         "date": "2026-10-10",
@@ -675,6 +877,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "Jo Adell (White Sox @ Guardians) Under 1.5 TB",
+        "game": "",
         "odds": "+130",
         "result": "correct",
         "pnl_u": 1.3,
@@ -686,7 +889,12 @@
         "pnl_kelly_full_u": 15.4671,
         "pnl_kelly_half_u": 7.74,
         "pnl_kelly_quarter_u": 3.87,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-10"
       },
       {
         "date": "2026-10-10",
@@ -694,6 +902,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "Patrick Bailey (White Sox @ Guardians) Under 0.5 H",
+        "game": "",
         "odds": "+120",
         "result": "correct",
         "pnl_u": 1.2,
@@ -705,7 +914,12 @@
         "pnl_kelly_full_u": 12.6021,
         "pnl_kelly_half_u": 6.2951,
         "pnl_kelly_quarter_u": 3.1535,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-10"
       },
       {
         "date": "2026-10-10",
@@ -713,6 +927,7 @@
         "tier": "PLUS",
         "market": "F5_TOTAL",
         "bet": "White Sox @ Guardians F5 Over 3.5",
+        "game": "",
         "odds": "-125",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -724,7 +939,12 @@
         "pnl_kelly_full_u": -0.3443,
         "pnl_kelly_half_u": -0.1721,
         "pnl_kelly_quarter_u": -0.0861,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-10"
       },
       {
         "date": "2026-10-08",
@@ -732,6 +952,7 @@
         "tier": "PLUS",
         "market": "F5_TOTAL",
         "bet": "Guardians @ White Sox F5 Over 3.5",
+        "game": "",
         "odds": "-125",
         "result": "correct",
         "pnl_u": 0.8,
@@ -743,7 +964,12 @@
         "pnl_kelly_full_u": 0.2484,
         "pnl_kelly_half_u": 0.1242,
         "pnl_kelly_quarter_u": 0.0621,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-08"
       },
       {
         "date": "2026-10-08",
@@ -751,6 +977,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "T.Pham (Guardians @ White Sox) Under 0.5 HRR",
+        "game": "",
         "odds": "+120",
         "result": "correct",
         "pnl_u": 1.2,
@@ -762,7 +989,12 @@
         "pnl_kelly_full_u": 8.0444,
         "pnl_kelly_half_u": 4.0222,
         "pnl_kelly_quarter_u": 2.0111,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-08"
       },
       {
         "date": "2026-10-07",
@@ -770,6 +1002,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "Braden Montgomery (Guardians @ White Sox) Under 0.5 H",
+        "game": "",
         "odds": "+125",
         "result": "correct",
         "pnl_u": 1.25,
@@ -781,7 +1014,12 @@
         "pnl_kelly_full_u": 5.2452,
         "pnl_kelly_half_u": 2.6164,
         "pnl_kelly_quarter_u": 1.3144,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-07"
       },
       {
         "date": "2026-10-07",
@@ -789,6 +1027,7 @@
         "tier": "PLUS",
         "market": "FG_TOTAL",
         "bet": "Guardians @ White Sox FG Over 7.5",
+        "game": "",
         "odds": "-118",
         "result": "correct",
         "pnl_u": 0.8475,
@@ -800,7 +1039,12 @@
         "pnl_kelly_full_u": 0.1995,
         "pnl_kelly_half_u": 0.0997,
         "pnl_kelly_quarter_u": 0.0498,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-07"
       },
       {
         "date": "2026-10-07",
@@ -808,6 +1052,7 @@
         "tier": "PLUS",
         "market": "F5_TOTAL",
         "bet": "Rays @ Yankees F5 Over 3.5",
+        "game": "",
         "odds": "-140",
         "result": "correct",
         "pnl_u": 0.7143,
@@ -819,7 +1064,12 @@
         "pnl_kelly_full_u": 0.2297,
         "pnl_kelly_half_u": 0.1149,
         "pnl_kelly_quarter_u": 0.0574,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-07"
       },
       {
         "date": "2026-10-06",
@@ -827,6 +1077,7 @@
         "tier": "PLUS",
         "market": "FG_TOTAL",
         "bet": "Brewers @ Padres FG Over 7.5",
+        "game": "",
         "odds": "+102",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -838,7 +1089,12 @@
         "pnl_kelly_full_u": -0.1575,
         "pnl_kelly_half_u": -0.0788,
         "pnl_kelly_quarter_u": -0.0394,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-06"
       },
       {
         "date": "2026-10-06",
@@ -846,6 +1102,7 @@
         "tier": "PLUS",
         "market": "F5_TOTAL",
         "bet": "Dodgers @ Braves F5 Over 3.5",
+        "game": "",
         "odds": "+116",
         "result": "correct",
         "pnl_u": 1.16,
@@ -857,7 +1114,12 @@
         "pnl_kelly_full_u": 43.8495,
         "pnl_kelly_half_u": 21.919,
         "pnl_kelly_quarter_u": 10.9595,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-06"
       },
       {
         "date": "2026-10-06",
@@ -865,6 +1127,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "Drake Baldwin (Dodgers @ Braves) Under 1.5 TB",
+        "game": "",
         "odds": "+151",
         "result": "correct",
         "pnl_u": 1.51,
@@ -876,7 +1139,12 @@
         "pnl_kelly_full_u": 8.91,
         "pnl_kelly_half_u": 4.455,
         "pnl_kelly_quarter_u": 2.235,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-06"
       },
       {
         "date": "2026-10-06",
@@ -884,6 +1152,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "K.Tucker (Dodgers @ Braves) Under 2 TB",
+        "game": "",
         "odds": "+190",
         "result": "correct",
         "pnl_u": 1.9,
@@ -895,7 +1164,12 @@
         "pnl_kelly_full_u": 98.8092,
         "pnl_kelly_half_u": 49.4046,
         "pnl_kelly_quarter_u": 24.7023,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-06"
       },
       {
         "date": "2026-10-06",
@@ -903,6 +1177,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "R.Acuna (Dodgers @ Braves) Under 2 TB",
+        "game": "",
         "odds": "+159",
         "result": "correct",
         "pnl_u": 1.59,
@@ -914,7 +1189,12 @@
         "pnl_kelly_full_u": 58.0334,
         "pnl_kelly_half_u": 29.0246,
         "pnl_kelly_quarter_u": 14.5044,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-06"
       },
       {
         "date": "2026-10-06",
@@ -922,6 +1202,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "W.Smith (Dodgers @ Braves) Under 2 TB",
+        "game": "",
         "odds": "+178",
         "result": "correct",
         "pnl_u": 1.78,
@@ -933,7 +1214,12 @@
         "pnl_kelly_full_u": 85.4379,
         "pnl_kelly_half_u": 42.7278,
         "pnl_kelly_quarter_u": 21.3639,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-06"
       },
       {
         "date": "2026-10-05",
@@ -941,6 +1227,7 @@
         "tier": "CORE",
         "market": "FG_TOTAL",
         "bet": "White Sox @ Guardians FG Over 6.5",
+        "game": "",
         "odds": "-120",
         "result": "correct",
         "pnl_u": 0.8333,
@@ -952,7 +1239,12 @@
         "pnl_kelly_full_u": 0.2677,
         "pnl_kelly_half_u": 0.1338,
         "pnl_kelly_quarter_u": 0.0669,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-05"
       },
       {
         "date": "2026-10-04",
@@ -960,6 +1252,7 @@
         "tier": "PLUS",
         "market": "FG_TOTAL",
         "bet": "Padres @ Brewers FG Over 7",
+        "game": "",
         "odds": "-108",
         "result": "push",
         "pnl_u": 0.0,
@@ -971,7 +1264,12 @@
         "pnl_kelly_full_u": 0.0,
         "pnl_kelly_half_u": 0.0,
         "pnl_kelly_quarter_u": 0.0,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-04"
       },
       {
         "date": "2026-10-03",
@@ -979,6 +1277,7 @@
         "tier": "PLUS",
         "market": "PROP",
         "bet": "M.Vargas (White Sox @ Guardians) Under 1.5 TB",
+        "game": "",
         "odds": "+155",
         "result": "correct",
         "pnl_u": 1.55,
@@ -990,7 +1289,12 @@
         "pnl_kelly_full_u": 14.5684,
         "pnl_kelly_half_u": 7.2842,
         "pnl_kelly_quarter_u": 3.6498,
-        "book": "SLIP"
+        "book": "SLIP",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-03"
       }
     ],
     "rolling": {
@@ -1685,8 +1989,8 @@
         "n_days": 52
       }
     },
-    "status": "OFFSEASON",
-    "note": "Out of season - Results only"
+    "status": "ARCHIVE",
+    "note": "Season finished \u2014 archive L50 only"
   },
   "asia": {
     "slip_summary": {
@@ -1811,6 +2115,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Nippon-Ham Fighters ML",
+        "game": "Nippon-Ham Fighters @ SoftBank Hawks",
         "odds": "+175",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -1822,7 +2127,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "Bovada"
+        "book": "Bovada",
+        "first_pitch": "18:00 JST",
+        "first_pitch_tz": "",
+        "game_time": "18:00 JST",
+        "game_time_utc": "",
+        "signal_date": "2026-10-16"
       },
       {
         "date": "2026-10-15",
@@ -1830,6 +2140,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Nippon-Ham Fighters ML",
+        "game": "Nippon-Ham Fighters @ SoftBank Hawks",
         "odds": "+145",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -1841,7 +2152,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "Bovada"
+        "book": "Bovada",
+        "first_pitch": "18:00 JST",
+        "first_pitch_tz": "",
+        "game_time": "18:00 JST",
+        "game_time_utc": "",
+        "signal_date": "2026-10-15"
       },
       {
         "date": "2026-10-15",
@@ -1849,6 +2165,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Yokohama DeNA BayStars ML",
+        "game": "Yokohama DeNA BayStars @ Hanshin Tigers",
         "odds": "+165",
         "result": "correct",
         "pnl_u": 1.65,
@@ -1860,7 +2177,12 @@
         "pnl_kelly_full_u": 1.65,
         "pnl_kelly_half_u": 1.65,
         "pnl_kelly_quarter_u": 1.65,
-        "book": "Pinnacle"
+        "book": "Pinnacle",
+        "first_pitch": "18:00 JST",
+        "first_pitch_tz": "",
+        "game_time": "18:00 JST",
+        "game_time_utc": "",
+        "signal_date": "2026-10-15"
       },
       {
         "date": "2026-10-14",
@@ -1868,6 +2190,7 @@
         "tier": "CORE",
         "market": "TOTAL",
         "bet": "Under 7.5",
+        "game": "Doosan Bears @ LG Twins",
         "odds": "-125",
         "result": "correct",
         "pnl_u": 0.8,
@@ -1879,7 +2202,12 @@
         "pnl_kelly_full_u": 0.8,
         "pnl_kelly_half_u": 0.8,
         "pnl_kelly_quarter_u": 0.8,
-        "book": "Pinnacle"
+        "book": "Pinnacle",
+        "first_pitch": "09:30 KST",
+        "first_pitch_tz": "",
+        "game_time": "09:30 KST",
+        "game_time_utc": "",
+        "signal_date": "2026-10-14"
       },
       {
         "date": "2026-10-14",
@@ -1887,6 +2215,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "LG Twins ML",
+        "game": "Doosan Bears @ LG Twins",
         "odds": "+105",
         "result": "correct",
         "pnl_u": 1.05,
@@ -1898,7 +2227,12 @@
         "pnl_kelly_full_u": 1.05,
         "pnl_kelly_half_u": 1.05,
         "pnl_kelly_quarter_u": 1.05,
-        "book": "Pinnacle"
+        "book": "Pinnacle",
+        "first_pitch": "09:30 KST",
+        "first_pitch_tz": "",
+        "game_time": "09:30 KST",
+        "game_time_utc": "",
+        "signal_date": "2026-10-14"
       },
       {
         "date": "2026-10-14",
@@ -1906,6 +2240,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Nippon-Ham Fighters ML",
+        "game": "Nippon-Ham Fighters @ SoftBank Hawks",
         "odds": "+250",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -1917,7 +2252,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "Bovada"
+        "book": "Bovada",
+        "first_pitch": "18:00 JST",
+        "first_pitch_tz": "",
+        "game_time": "18:00 JST",
+        "game_time_utc": "",
+        "signal_date": "2026-10-14"
       },
       {
         "date": "2026-10-12",
@@ -1925,6 +2265,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "KIA Tigers ML",
+        "game": "LG Twins @ KIA Tigers",
         "odds": "-107",
         "result": "correct",
         "pnl_u": 0.935,
@@ -1936,7 +2277,12 @@
         "pnl_kelly_full_u": 0.935,
         "pnl_kelly_half_u": 0.935,
         "pnl_kelly_quarter_u": 0.935,
-        "book": "Pinnacle"
+        "book": "Pinnacle",
+        "first_pitch": "09:30 KST",
+        "first_pitch_tz": "",
+        "game_time": "09:30 KST",
+        "game_time_utc": "",
+        "signal_date": "2026-10-12"
       },
       {
         "date": "2026-10-10",
@@ -1944,6 +2290,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Nippon-Ham Fighters ML",
+        "game": "Nippon-Ham Fighters @ Seibu Lions",
         "odds": "+126",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -1955,18 +2302,26 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "BetExAvg(16)"
+        "book": "BetExAvg(16)",
+        "first_pitch": "18:00 JST",
+        "first_pitch_tz": "",
+        "game_time": "18:00 JST",
+        "game_time_utc": "",
+        "signal_date": "2026-10-10"
       }
     ],
-    "status": "OFFSEASON",
-    "note": "Out of season - Results only until Asia live scrape gated on"
+    "status": "ARCHIVE",
+    "note": "Season finished \u2014 archive L50 only"
   },
   "winter": {
     "status": "LIVE",
     "combined_leagues": [
       "LMP",
       "LIDOM",
-      "LVBP"
+      "LVBP",
+      "LBPRC",
+      "CUBA",
+      "ABL"
     ],
     "slip_summary": {
       "correct": 25,
@@ -1984,6 +2339,7 @@
         "tier": "CORE",
         "market": "SPREAD",
         "bet": "Mayos Navojoa +1.5",
+        "game": "Mayos Navojoa @ Caneros Los Mochis",
         "odds": "-135",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -1995,7 +2351,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "BET365"
+        "book": "BET365",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-11-14"
       },
       {
         "date": "2026-11-14",
@@ -2003,6 +2364,7 @@
         "tier": "CORE",
         "market": "TOTAL",
         "bet": "Under 10",
+        "game": "Mayos Navojoa @ Caneros Los Mochis",
         "odds": "-122",
         "result": "correct",
         "pnl_u": 0.82,
@@ -2014,7 +2376,12 @@
         "pnl_kelly_full_u": 0.82,
         "pnl_kelly_half_u": 0.82,
         "pnl_kelly_quarter_u": 0.82,
-        "book": "Pinnacle"
+        "book": "Pinnacle",
+        "first_pitch": "02:30 MST",
+        "first_pitch_tz": "",
+        "game_time": "02:30 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-14"
       },
       {
         "date": "2026-11-14",
@@ -2022,6 +2389,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Mayos Navojoa ML",
+        "game": "Mayos Navojoa @ Caneros Los Mochis",
         "odds": "+134",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -2033,7 +2401,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "Pinnacle"
+        "book": "Pinnacle",
+        "first_pitch": "02:30 MST",
+        "first_pitch_tz": "",
+        "game_time": "02:30 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-14"
       },
       {
         "date": "2026-11-14",
@@ -2041,6 +2414,7 @@
         "tier": "CORE",
         "market": "TOTAL",
         "bet": "Under 8.5",
+        "game": "Aguilas Mexicali @ Algodoneros Guasave",
         "odds": "-105",
         "result": "correct",
         "pnl_u": 0.9524,
@@ -2052,7 +2426,12 @@
         "pnl_kelly_full_u": 0.9524,
         "pnl_kelly_half_u": 0.9524,
         "pnl_kelly_quarter_u": 0.9524,
-        "book": "BET365"
+        "book": "BET365",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-11-14"
       },
       {
         "date": "2026-11-14",
@@ -2060,6 +2439,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Aguilas Mexicali ML",
+        "game": "Aguilas Mexicali @ Algodoneros Guasave",
         "odds": "+100",
         "result": "correct",
         "pnl_u": 1.0,
@@ -2071,7 +2451,12 @@
         "pnl_kelly_full_u": 1.0,
         "pnl_kelly_half_u": 1.0,
         "pnl_kelly_quarter_u": 1.0,
-        "book": "BET365"
+        "book": "BET365",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-11-14"
       },
       {
         "date": "2026-11-14",
@@ -2079,6 +2464,7 @@
         "tier": "CORE",
         "market": "SPREAD",
         "bet": "Leones del Escogido +1.5",
+        "game": "Estrellas Orientales @ Leones del Escogido",
         "odds": "+270",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -2090,7 +2476,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "BET365"
+        "book": "BET365",
+        "first_pitch": "21:00 AST",
+        "first_pitch_tz": "",
+        "game_time": "21:00 AST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-14"
       },
       {
         "date": "2026-11-14",
@@ -2098,6 +2489,7 @@
         "tier": "CORE",
         "market": "TOTAL",
         "bet": "Over 8.5",
+        "game": "Venados Mazatlan @ Tomateros Culiacan",
         "odds": "-117",
         "result": "correct",
         "pnl_u": 0.855,
@@ -2109,7 +2501,12 @@
         "pnl_kelly_full_u": 0.855,
         "pnl_kelly_half_u": 0.855,
         "pnl_kelly_quarter_u": 0.855,
-        "book": "Pinnacle"
+        "book": "Pinnacle",
+        "first_pitch": "02:05 MST",
+        "first_pitch_tz": "",
+        "game_time": "02:05 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-14"
       },
       {
         "date": "2026-11-13",
@@ -2117,6 +2514,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Venados Mazatlan ML",
+        "game": "Venados Mazatlan @ Tomateros Culiacan",
         "odds": "+140",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -2128,7 +2526,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "BET365"
+        "book": "BET365",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-11-13"
       },
       {
         "date": "2026-11-13",
@@ -2136,6 +2539,7 @@
         "tier": "CORE",
         "market": "TOTAL",
         "bet": "Under 12.5",
+        "game": "Mayos Navojoa @ Charros Jalisco",
         "odds": "-124",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -2147,7 +2551,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "Pinnacle"
+        "book": "Pinnacle",
+        "first_pitch": "01:30 MST",
+        "first_pitch_tz": "",
+        "game_time": "01:30 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-13"
       },
       {
         "date": "2026-11-12",
@@ -2155,6 +2564,7 @@
         "tier": "CORE",
         "market": "TOTAL",
         "bet": "Under 9.5",
+        "game": "Tomateros Culiacan @ Aguilas Mexicali",
         "odds": "-112",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -2166,7 +2576,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "Pinnacle"
+        "book": "Pinnacle",
+        "first_pitch": "03:30 MST",
+        "first_pitch_tz": "",
+        "game_time": "03:30 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-12"
       },
       {
         "date": "2026-11-12",
@@ -2174,6 +2589,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Aguilas Mexicali ML",
+        "game": "Tomateros Culiacan @ Aguilas Mexicali",
         "odds": "-136",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -2185,7 +2601,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "Pinnacle"
+        "book": "Pinnacle",
+        "first_pitch": "03:30 MST",
+        "first_pitch_tz": "",
+        "game_time": "03:30 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-12"
       },
       {
         "date": "2026-11-11",
@@ -2193,6 +2614,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Charros Jalisco ML",
+        "game": "Mayos Navojoa @ Charros Jalisco",
         "odds": "-150",
         "result": "correct",
         "pnl_u": 0.6667,
@@ -2204,7 +2626,12 @@
         "pnl_kelly_full_u": 0.6667,
         "pnl_kelly_half_u": 0.6667,
         "pnl_kelly_quarter_u": 0.6667,
-        "book": "BET365"
+        "book": "BET365",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-11-11"
       },
       {
         "date": "2026-11-11",
@@ -2212,6 +2639,7 @@
         "tier": "CORE",
         "market": "TOTAL",
         "bet": "Under 10.5",
+        "game": "Algodoneros Guasave @ Jaguares Nayarit",
         "odds": "-120",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -2223,7 +2651,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "BET365"
+        "book": "BET365",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-11-11"
       },
       {
         "date": "2026-11-11",
@@ -2231,6 +2664,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Algodoneros Guasave ML",
+        "game": "Algodoneros Guasave @ Jaguares Nayarit",
         "odds": "-125",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -2242,7 +2676,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "BET365"
+        "book": "BET365",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-11-11"
       },
       {
         "date": "2026-11-11",
@@ -2250,6 +2689,7 @@
         "tier": "CORE",
         "market": "TOTAL",
         "bet": "Under 9.5",
+        "game": "Yaquis Obregon @ Naranjeros Hermosillo",
         "odds": "-120",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -2261,7 +2701,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "BET365"
+        "book": "BET365",
+        "first_pitch": "23:30 MST",
+        "first_pitch_tz": "",
+        "game_time": "23:30 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-11"
       },
       {
         "date": "2026-11-11",
@@ -2269,6 +2714,7 @@
         "tier": "CORE",
         "market": "TOTAL",
         "bet": "Under 9.5",
+        "game": "Caneros Los Mochis @ Venados Mazatlan",
         "odds": "-140",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -2280,7 +2726,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "BET365"
+        "book": "BET365",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-11-11"
       },
       {
         "date": "2026-11-09",
@@ -2288,6 +2739,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Mayos Navojoa ML",
+        "game": "Venados Mazatlan @ Mayos Navojoa",
         "odds": "+110",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -2299,7 +2751,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "Pinnacle"
+        "book": "Pinnacle",
+        "first_pitch": "00:00 MST",
+        "first_pitch_tz": "",
+        "game_time": "00:00 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-09"
       },
       {
         "date": "2026-11-09",
@@ -2307,6 +2764,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Aguilas Mexicali ML",
+        "game": "Aguilas Mexicali @ Caneros Los Mochis",
         "odds": "-129",
         "result": "correct",
         "pnl_u": 0.775,
@@ -2318,7 +2776,12 @@
         "pnl_kelly_full_u": 0.775,
         "pnl_kelly_half_u": 0.775,
         "pnl_kelly_quarter_u": 0.775,
-        "book": "Pinnacle"
+        "book": "Pinnacle",
+        "first_pitch": "00:00 MST",
+        "first_pitch_tz": "",
+        "game_time": "00:00 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-09"
       },
       {
         "date": "2026-11-08",
@@ -2326,6 +2789,7 @@
         "tier": "CORE",
         "market": "TOTAL",
         "bet": "Under 10.5",
+        "game": "Naranjeros Hermosillo @ Algodoneros Guasave",
         "odds": "-204",
         "result": "correct",
         "pnl_u": 0.49,
@@ -2337,7 +2801,12 @@
         "pnl_kelly_full_u": 0.49,
         "pnl_kelly_half_u": 0.49,
         "pnl_kelly_quarter_u": 0.49,
-        "book": "API_SPORTS"
+        "book": "API_SPORTS",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-11-08"
       },
       {
         "date": "2026-11-08",
@@ -2345,6 +2814,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Algodoneros Guasave ML",
+        "game": "Naranjeros Hermosillo @ Algodoneros Guasave",
         "odds": "-150",
         "result": "correct",
         "pnl_u": 0.6667,
@@ -2356,7 +2826,12 @@
         "pnl_kelly_full_u": 0.6667,
         "pnl_kelly_half_u": 0.6667,
         "pnl_kelly_quarter_u": 0.6667,
-        "book": "API_SPORTS"
+        "book": "API_SPORTS",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-11-08"
       },
       {
         "date": "2026-11-08",
@@ -2364,6 +2839,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Mayos Navojoa ML",
+        "game": "Venados Mazatlan @ Mayos Navojoa",
         "odds": "+110",
         "result": "correct",
         "pnl_u": 1.1,
@@ -2375,7 +2851,12 @@
         "pnl_kelly_full_u": 1.1,
         "pnl_kelly_half_u": 1.1,
         "pnl_kelly_quarter_u": 1.1,
-        "book": "BET365"
+        "book": "BET365",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-11-08"
       },
       {
         "date": "2026-11-05",
@@ -2383,6 +2864,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Aguilas Mexicali ML",
+        "game": "Venados Mazatlan @ Aguilas Mexicali",
         "odds": "-160",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -2394,7 +2876,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "Pinnacle"
+        "book": "Pinnacle",
+        "first_pitch": "03:30 MST",
+        "first_pitch_tz": "",
+        "game_time": "03:30 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-05"
       },
       {
         "date": "2026-11-05",
@@ -2402,6 +2889,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Algodoneros Guasave ML",
+        "game": "Algodoneros Guasave @ Charros Jalisco",
         "odds": "-125",
         "result": "correct",
         "pnl_u": 0.8,
@@ -2413,7 +2901,12 @@
         "pnl_kelly_full_u": 0.8,
         "pnl_kelly_half_u": 0.8,
         "pnl_kelly_quarter_u": 0.8,
-        "book": "BET365"
+        "book": "BET365",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-11-05"
       },
       {
         "date": "2026-11-04",
@@ -2421,6 +2914,7 @@
         "tier": "CORE",
         "market": "SPREAD",
         "bet": "Tomateros Culiacan +1.5",
+        "game": "Tomateros Culiacan @ Naranjeros Hermosillo",
         "odds": "+159",
         "result": "correct",
         "pnl_u": 1.59,
@@ -2432,7 +2926,12 @@
         "pnl_kelly_full_u": 1.59,
         "pnl_kelly_half_u": 1.59,
         "pnl_kelly_quarter_u": 1.59,
-        "book": "Pinnacle"
+        "book": "Pinnacle",
+        "first_pitch": "02:30 MST",
+        "first_pitch_tz": "",
+        "game_time": "02:30 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-04"
       },
       {
         "date": "2026-11-04",
@@ -2440,6 +2939,7 @@
         "tier": "CORE",
         "market": "TOTAL",
         "bet": "Under 10.5",
+        "game": "Tomateros Culiacan @ Naranjeros Hermosillo",
         "odds": "-160",
         "result": "correct",
         "pnl_u": 0.625,
@@ -2451,7 +2951,12 @@
         "pnl_kelly_full_u": 0.625,
         "pnl_kelly_half_u": 0.625,
         "pnl_kelly_quarter_u": 0.625,
-        "book": "API_SPORTS"
+        "book": "API_SPORTS",
+        "first_pitch": "03:30 MST",
+        "first_pitch_tz": "",
+        "game_time": "03:30 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-04"
       },
       {
         "date": "2026-11-04",
@@ -2459,6 +2964,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Naranjeros Hermosillo ML",
+        "game": "Tomateros Culiacan @ Naranjeros Hermosillo",
         "odds": "-154",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -2470,7 +2976,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "Pinnacle"
+        "book": "Pinnacle",
+        "first_pitch": "02:30 MST",
+        "first_pitch_tz": "",
+        "game_time": "02:30 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-04"
       },
       {
         "date": "2026-11-04",
@@ -2478,6 +2989,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Aguilas Mexicali ML",
+        "game": "Venados Mazatlan @ Aguilas Mexicali",
         "odds": "-160",
         "result": "correct",
         "pnl_u": 0.625,
@@ -2489,7 +3001,12 @@
         "pnl_kelly_full_u": 0.625,
         "pnl_kelly_half_u": 0.625,
         "pnl_kelly_quarter_u": 0.625,
-        "book": "API_SPORTS"
+        "book": "API_SPORTS",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-11-04"
       },
       {
         "date": "2026-11-04",
@@ -2497,6 +3014,7 @@
         "tier": "CORE",
         "market": "SPREAD",
         "bet": "Algodoneros Guasave +1.5",
+        "game": "Algodoneros Guasave @ Charros Jalisco",
         "odds": "-210",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -2508,7 +3026,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "API_SPORTS"
+        "book": "API_SPORTS",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-11-04"
       },
       {
         "date": "2026-11-04",
@@ -2516,6 +3039,7 @@
         "tier": "CORE",
         "market": "TOTAL",
         "bet": "Under 10.5",
+        "game": "Algodoneros Guasave @ Charros Jalisco",
         "odds": "-109",
         "result": "correct",
         "pnl_u": 0.915,
@@ -2527,7 +3051,12 @@
         "pnl_kelly_full_u": 0.915,
         "pnl_kelly_half_u": 0.915,
         "pnl_kelly_quarter_u": 0.915,
-        "book": "API_SPORTS"
+        "book": "API_SPORTS",
+        "first_pitch": "02:30 MST",
+        "first_pitch_tz": "",
+        "game_time": "02:30 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-04"
       },
       {
         "date": "2026-11-04",
@@ -2535,6 +3064,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Algodoneros Guasave ML",
+        "game": "Algodoneros Guasave @ Charros Jalisco",
         "odds": "-137",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -2546,7 +3076,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "API_SPORTS"
+        "book": "API_SPORTS",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-11-04"
       },
       {
         "date": "2026-10-31",
@@ -2554,6 +3089,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Naranjeros Hermosillo ML",
+        "game": "Naranjeros Hermosillo @ Caneros Los Mochis",
         "odds": "-141",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -2565,7 +3101,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "BETEX"
+        "book": "BETEX",
+        "first_pitch": "02:30 MST",
+        "first_pitch_tz": "",
+        "game_time": "02:30 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-10-31"
       },
       {
         "date": "2026-10-31",
@@ -2573,6 +3114,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Venados Mazatlan ML",
+        "game": "Jaguares Nayarit @ Venados Mazatlan",
         "odds": "-115",
         "result": "correct",
         "pnl_u": 0.8696,
@@ -2584,7 +3126,12 @@
         "pnl_kelly_full_u": 0.8696,
         "pnl_kelly_half_u": 0.8696,
         "pnl_kelly_quarter_u": 0.8696,
-        "book": "API_SPORTS"
+        "book": "API_SPORTS",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-31"
       },
       {
         "date": "2026-10-26",
@@ -2592,6 +3139,7 @@
         "tier": "CORE",
         "market": "SPREAD",
         "bet": "Algodoneros Guasave +1.5",
+        "game": "Algodoneros Guasave @ Tomateros Culiacan",
         "odds": "-177",
         "result": "correct",
         "pnl_u": 0.565,
@@ -2603,7 +3151,12 @@
         "pnl_kelly_full_u": 0.565,
         "pnl_kelly_half_u": 0.565,
         "pnl_kelly_quarter_u": 0.565,
-        "book": "Pinnacle"
+        "book": "Pinnacle",
+        "first_pitch": "00:05 MST",
+        "first_pitch_tz": "",
+        "game_time": "00:05 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-10-26"
       },
       {
         "date": "2026-10-26",
@@ -2611,6 +3164,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Algodoneros Guasave ML",
+        "game": "Algodoneros Guasave @ Tomateros Culiacan",
         "odds": "+114",
         "result": "correct",
         "pnl_u": 1.14,
@@ -2622,7 +3176,12 @@
         "pnl_kelly_full_u": 1.14,
         "pnl_kelly_half_u": 1.14,
         "pnl_kelly_quarter_u": 1.14,
-        "book": "Pinnacle"
+        "book": "Pinnacle",
+        "first_pitch": "00:05 MST",
+        "first_pitch_tz": "",
+        "game_time": "00:05 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-10-26"
       },
       {
         "date": "2026-10-26",
@@ -2630,6 +3189,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Navegantes del Magallanes ML",
+        "game": "Leones del Caracas @ Navegantes del Magallanes",
         "odds": "-101",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -2641,7 +3201,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "BetExAvg(10)"
+        "book": "BetExAvg(10)",
+        "first_pitch": "00:00 VET",
+        "first_pitch_tz": "",
+        "game_time": "00:00 VET",
+        "game_time_utc": "",
+        "signal_date": "2026-10-26"
       },
       {
         "date": "2026-10-25",
@@ -2649,6 +3214,7 @@
         "tier": "CORE",
         "market": "SPREAD",
         "bet": "Algodoneros Guasave +1.5",
+        "game": "Algodoneros Guasave @ Tomateros Culiacan",
         "odds": "-162",
         "result": "correct",
         "pnl_u": 0.617,
@@ -2660,7 +3226,12 @@
         "pnl_kelly_full_u": 0.617,
         "pnl_kelly_half_u": 0.617,
         "pnl_kelly_quarter_u": 0.617,
-        "book": "Pinnacle"
+        "book": "Pinnacle",
+        "first_pitch": "00:05 MST",
+        "first_pitch_tz": "",
+        "game_time": "00:05 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-10-25"
       },
       {
         "date": "2026-10-25",
@@ -2668,6 +3239,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Algodoneros Guasave ML",
+        "game": "Algodoneros Guasave @ Tomateros Culiacan",
         "odds": "+119",
         "result": "correct",
         "pnl_u": 1.19,
@@ -2679,7 +3251,12 @@
         "pnl_kelly_full_u": 1.19,
         "pnl_kelly_half_u": 1.19,
         "pnl_kelly_quarter_u": 1.19,
-        "book": "Pinnacle"
+        "book": "Pinnacle",
+        "first_pitch": "00:05 MST",
+        "first_pitch_tz": "",
+        "game_time": "00:05 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-10-25"
       },
       {
         "date": "2026-10-25",
@@ -2687,6 +3264,7 @@
         "tier": "CORE",
         "market": "SPREAD",
         "bet": "Aguilas Mexicali +1.5",
+        "game": "Naranjeros Hermosillo @ Aguilas Mexicali",
         "odds": "-110",
         "result": "correct",
         "pnl_u": 0.909,
@@ -2698,7 +3276,12 @@
         "pnl_kelly_full_u": 0.909,
         "pnl_kelly_half_u": 0.909,
         "pnl_kelly_quarter_u": 0.909,
-        "book": "Pinnacle"
+        "book": "Pinnacle",
+        "first_pitch": "00:00 MST",
+        "first_pitch_tz": "",
+        "game_time": "00:00 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-10-25"
       },
       {
         "date": "2026-10-25",
@@ -2706,6 +3289,7 @@
         "tier": "CORE",
         "market": "TOTAL",
         "bet": "Under 10.5",
+        "game": "Naranjeros Hermosillo @ Aguilas Mexicali",
         "odds": "-112",
         "result": "correct",
         "pnl_u": 0.893,
@@ -2717,7 +3301,12 @@
         "pnl_kelly_full_u": 0.893,
         "pnl_kelly_half_u": 0.893,
         "pnl_kelly_quarter_u": 0.893,
-        "book": "Pinnacle"
+        "book": "Pinnacle",
+        "first_pitch": "00:00 MST",
+        "first_pitch_tz": "",
+        "game_time": "00:00 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-10-25"
       },
       {
         "date": "2026-10-25",
@@ -2725,6 +3314,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Naranjeros Hermosillo ML",
+        "game": "Naranjeros Hermosillo @ Aguilas Mexicali",
         "odds": "-125",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -2736,7 +3326,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "API_SPORTS"
+        "book": "API_SPORTS",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-25"
       },
       {
         "date": "2026-10-25",
@@ -2744,6 +3339,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Navegantes del Magallanes ML",
+        "game": "Leones del Caracas @ Navegantes del Magallanes",
         "odds": "+105",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -2755,7 +3351,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "Bovada"
+        "book": "Bovada",
+        "first_pitch": "19:00 VET",
+        "first_pitch_tz": "",
+        "game_time": "19:00 VET",
+        "game_time_utc": "",
+        "signal_date": "2026-10-25"
       },
       {
         "date": "2026-10-24",
@@ -2763,6 +3364,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Yaquis Obregon ML",
+        "game": "Caneros Los Mochis @ Yaquis Obregon",
         "odds": "-118",
         "result": "correct",
         "pnl_u": 0.847,
@@ -2774,7 +3376,12 @@
         "pnl_kelly_full_u": 0.847,
         "pnl_kelly_half_u": 0.847,
         "pnl_kelly_quarter_u": 0.847,
-        "book": "Pinnacle"
+        "book": "Pinnacle",
+        "first_pitch": "02:10 MST",
+        "first_pitch_tz": "",
+        "game_time": "02:10 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-10-24"
       },
       {
         "date": "2026-10-24",
@@ -2782,6 +3389,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Algodoneros Guasave ML",
+        "game": "Algodoneros Guasave @ Tomateros Culiacan",
         "odds": "+130",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -2793,7 +3401,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "API_SPORTS"
+        "book": "API_SPORTS",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-24"
       },
       {
         "date": "2026-10-19",
@@ -2801,6 +3414,7 @@
         "tier": "CORE",
         "market": "TOTAL",
         "bet": "Under 9.5",
+        "game": "Naranjeros Hermosillo @ Mayos Navojoa",
         "odds": "-126",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -2812,7 +3426,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "Pinnacle"
+        "book": "Pinnacle",
+        "first_pitch": "00:00 MST",
+        "first_pitch_tz": "",
+        "game_time": "00:00 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-10-19"
       },
       {
         "date": "2026-10-18",
@@ -2820,6 +3439,7 @@
         "tier": "CORE",
         "market": "SPREAD",
         "bet": "Naranjeros Hermosillo +1.5",
+        "game": "Naranjeros Hermosillo @ Mayos Navojoa",
         "odds": "-115",
         "result": "wrong",
         "pnl_u": -1.0,
@@ -2831,7 +3451,12 @@
         "pnl_kelly_full_u": -1.0,
         "pnl_kelly_half_u": -1.0,
         "pnl_kelly_quarter_u": -1.0,
-        "book": "API_SPORTS"
+        "book": "API_SPORTS",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-18"
       },
       {
         "date": "2026-10-18",
@@ -2839,6 +3464,7 @@
         "tier": "CORE",
         "market": "TOTAL",
         "bet": "Under 11.5",
+        "game": "Yaquis Obregon @ Aguilas Mexicali",
         "odds": "-179",
         "result": "correct",
         "pnl_u": 0.56,
@@ -2850,7 +3476,12 @@
         "pnl_kelly_full_u": 0.56,
         "pnl_kelly_half_u": 0.56,
         "pnl_kelly_quarter_u": 0.56,
-        "book": "API_SPORTS"
+        "book": "API_SPORTS",
+        "first_pitch": "20:00 MST",
+        "first_pitch_tz": "",
+        "game_time": "20:00 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-10-18"
       },
       {
         "date": "2026-10-18",
@@ -2858,6 +3489,7 @@
         "tier": "CORE",
         "market": "ML",
         "bet": "Aguilas Mexicali ML",
+        "game": "Yaquis Obregon @ Aguilas Mexicali",
         "odds": "+150",
         "result": "correct",
         "pnl_u": 1.5,
@@ -2869,7 +3501,12 @@
         "pnl_kelly_full_u": 1.5,
         "pnl_kelly_half_u": 1.5,
         "pnl_kelly_quarter_u": 1.5,
-        "book": "API_SPORTS"
+        "book": "API_SPORTS",
+        "first_pitch": "20:00 MST",
+        "first_pitch_tz": "",
+        "game_time": "20:00 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-10-18"
       },
       {
         "date": "2026-10-18",
@@ -2877,6 +3514,7 @@
         "tier": "CORE",
         "market": "TOTAL",
         "bet": "Under 11.5",
+        "game": "Charros Jalisco @ Jaguares Nayarit",
         "odds": "-120",
         "result": "correct",
         "pnl_u": 0.8333,
@@ -2888,18 +3526,26 @@
         "pnl_kelly_full_u": 0.8333,
         "pnl_kelly_half_u": 0.8333,
         "pnl_kelly_quarter_u": 0.8333,
-        "book": "API_SPORTS"
+        "book": "API_SPORTS",
+        "first_pitch": "",
+        "first_pitch_tz": "",
+        "game_time": "",
+        "game_time_utc": "",
+        "signal_date": "2026-10-18"
       }
     ],
     "meta": {
       "slip_ne_log": true,
       "core_only": true,
-      "sp_missing_excluded": true
+      "sp_missing_excluded": true,
+      "graded_max_date": "2026-11-14",
+      "stale": false,
+      "stale_note": null
     }
   },
   "ncaa": {
-    "status": "OFFSEASON",
-    "note": "Out of season \u2014 Results L50 only (same as MLB/Asia idle)",
+    "status": "ARCHIVE",
+    "note": "Season finished \u2014 archive L50 only",
     "slip_summary": {
       "correct": 32,
       "wrong": 18,
@@ -3825,6 +4471,7 @@
       "tier": "CORE",
       "market": "SPREAD",
       "bet": "Mayos Navojoa +1.5",
+      "game": "Mayos Navojoa @ Caneros Los Mochis",
       "odds": "-135",
       "result": "wrong",
       "pnl_u": -1.0,
@@ -3836,7 +4483,12 @@
       "pnl_kelly_full_u": -1.0,
       "pnl_kelly_half_u": -1.0,
       "pnl_kelly_quarter_u": -1.0,
-      "book": "BET365"
+      "book": "BET365",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-11-14"
     },
     {
       "date": "2026-11-14",
@@ -3844,6 +4496,7 @@
       "tier": "CORE",
       "market": "TOTAL",
       "bet": "Under 10",
+      "game": "Mayos Navojoa @ Caneros Los Mochis",
       "odds": "-122",
       "result": "correct",
       "pnl_u": 0.82,
@@ -3855,7 +4508,12 @@
       "pnl_kelly_full_u": 0.82,
       "pnl_kelly_half_u": 0.82,
       "pnl_kelly_quarter_u": 0.82,
-      "book": "Pinnacle"
+      "book": "Pinnacle",
+      "first_pitch": "02:30 MST",
+      "first_pitch_tz": "",
+      "game_time": "02:30 MST",
+      "game_time_utc": "",
+      "signal_date": "2026-11-14"
     },
     {
       "date": "2026-11-14",
@@ -3863,6 +4521,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Mayos Navojoa ML",
+      "game": "Mayos Navojoa @ Caneros Los Mochis",
       "odds": "+134",
       "result": "wrong",
       "pnl_u": -1.0,
@@ -3874,7 +4533,12 @@
       "pnl_kelly_full_u": -1.0,
       "pnl_kelly_half_u": -1.0,
       "pnl_kelly_quarter_u": -1.0,
-      "book": "Pinnacle"
+      "book": "Pinnacle",
+      "first_pitch": "02:30 MST",
+      "first_pitch_tz": "",
+      "game_time": "02:30 MST",
+      "game_time_utc": "",
+      "signal_date": "2026-11-14"
     },
     {
       "date": "2026-11-14",
@@ -3882,6 +4546,7 @@
       "tier": "CORE",
       "market": "TOTAL",
       "bet": "Under 8.5",
+      "game": "Aguilas Mexicali @ Algodoneros Guasave",
       "odds": "-105",
       "result": "correct",
       "pnl_u": 0.9524,
@@ -3893,7 +4558,12 @@
       "pnl_kelly_full_u": 0.9524,
       "pnl_kelly_half_u": 0.9524,
       "pnl_kelly_quarter_u": 0.9524,
-      "book": "BET365"
+      "book": "BET365",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-11-14"
     },
     {
       "date": "2026-11-14",
@@ -3901,6 +4571,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Aguilas Mexicali ML",
+      "game": "Aguilas Mexicali @ Algodoneros Guasave",
       "odds": "+100",
       "result": "correct",
       "pnl_u": 1.0,
@@ -3912,7 +4583,12 @@
       "pnl_kelly_full_u": 1.0,
       "pnl_kelly_half_u": 1.0,
       "pnl_kelly_quarter_u": 1.0,
-      "book": "BET365"
+      "book": "BET365",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-11-14"
     },
     {
       "date": "2026-11-14",
@@ -3920,6 +4596,7 @@
       "tier": "CORE",
       "market": "SPREAD",
       "bet": "Leones del Escogido +1.5",
+      "game": "Estrellas Orientales @ Leones del Escogido",
       "odds": "+270",
       "result": "wrong",
       "pnl_u": -1.0,
@@ -3931,7 +4608,12 @@
       "pnl_kelly_full_u": -1.0,
       "pnl_kelly_half_u": -1.0,
       "pnl_kelly_quarter_u": -1.0,
-      "book": "BET365"
+      "book": "BET365",
+      "first_pitch": "21:00 AST",
+      "first_pitch_tz": "",
+      "game_time": "21:00 AST",
+      "game_time_utc": "",
+      "signal_date": "2026-11-14"
     },
     {
       "date": "2026-11-14",
@@ -3939,6 +4621,7 @@
       "tier": "CORE",
       "market": "TOTAL",
       "bet": "Over 8.5",
+      "game": "Venados Mazatlan @ Tomateros Culiacan",
       "odds": "-117",
       "result": "correct",
       "pnl_u": 0.855,
@@ -3950,7 +4633,12 @@
       "pnl_kelly_full_u": 0.855,
       "pnl_kelly_half_u": 0.855,
       "pnl_kelly_quarter_u": 0.855,
-      "book": "Pinnacle"
+      "book": "Pinnacle",
+      "first_pitch": "02:05 MST",
+      "first_pitch_tz": "",
+      "game_time": "02:05 MST",
+      "game_time_utc": "",
+      "signal_date": "2026-11-14"
     },
     {
       "date": "2026-11-13",
@@ -3958,6 +4646,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Venados Mazatlan ML",
+      "game": "Venados Mazatlan @ Tomateros Culiacan",
       "odds": "+140",
       "result": "wrong",
       "pnl_u": -1.0,
@@ -3969,7 +4658,12 @@
       "pnl_kelly_full_u": -1.0,
       "pnl_kelly_half_u": -1.0,
       "pnl_kelly_quarter_u": -1.0,
-      "book": "BET365"
+      "book": "BET365",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-11-13"
     },
     {
       "date": "2026-11-13",
@@ -3977,6 +4671,7 @@
       "tier": "CORE",
       "market": "TOTAL",
       "bet": "Under 12.5",
+      "game": "Mayos Navojoa @ Charros Jalisco",
       "odds": "-124",
       "result": "wrong",
       "pnl_u": -1.0,
@@ -3988,7 +4683,12 @@
       "pnl_kelly_full_u": -1.0,
       "pnl_kelly_half_u": -1.0,
       "pnl_kelly_quarter_u": -1.0,
-      "book": "Pinnacle"
+      "book": "Pinnacle",
+      "first_pitch": "01:30 MST",
+      "first_pitch_tz": "",
+      "game_time": "01:30 MST",
+      "game_time_utc": "",
+      "signal_date": "2026-11-13"
     },
     {
       "date": "2026-11-12",
@@ -3996,6 +4696,7 @@
       "tier": "CORE",
       "market": "TOTAL",
       "bet": "Under 9.5",
+      "game": "Tomateros Culiacan @ Aguilas Mexicali",
       "odds": "-112",
       "result": "wrong",
       "pnl_u": -1.0,
@@ -4007,7 +4708,12 @@
       "pnl_kelly_full_u": -1.0,
       "pnl_kelly_half_u": -1.0,
       "pnl_kelly_quarter_u": -1.0,
-      "book": "Pinnacle"
+      "book": "Pinnacle",
+      "first_pitch": "03:30 MST",
+      "first_pitch_tz": "",
+      "game_time": "03:30 MST",
+      "game_time_utc": "",
+      "signal_date": "2026-11-12"
     },
     {
       "date": "2026-11-12",
@@ -4015,6 +4721,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Aguilas Mexicali ML",
+      "game": "Tomateros Culiacan @ Aguilas Mexicali",
       "odds": "-136",
       "result": "wrong",
       "pnl_u": -1.0,
@@ -4026,7 +4733,12 @@
       "pnl_kelly_full_u": -1.0,
       "pnl_kelly_half_u": -1.0,
       "pnl_kelly_quarter_u": -1.0,
-      "book": "Pinnacle"
+      "book": "Pinnacle",
+      "first_pitch": "03:30 MST",
+      "first_pitch_tz": "",
+      "game_time": "03:30 MST",
+      "game_time_utc": "",
+      "signal_date": "2026-11-12"
     },
     {
       "date": "2026-11-11",
@@ -4034,6 +4746,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Charros Jalisco ML",
+      "game": "Mayos Navojoa @ Charros Jalisco",
       "odds": "-150",
       "result": "correct",
       "pnl_u": 0.6667,
@@ -4045,7 +4758,12 @@
       "pnl_kelly_full_u": 0.6667,
       "pnl_kelly_half_u": 0.6667,
       "pnl_kelly_quarter_u": 0.6667,
-      "book": "BET365"
+      "book": "BET365",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-11-11"
     },
     {
       "date": "2026-11-11",
@@ -4053,6 +4771,7 @@
       "tier": "CORE",
       "market": "TOTAL",
       "bet": "Under 10.5",
+      "game": "Algodoneros Guasave @ Jaguares Nayarit",
       "odds": "-120",
       "result": "wrong",
       "pnl_u": -1.0,
@@ -4064,7 +4783,12 @@
       "pnl_kelly_full_u": -1.0,
       "pnl_kelly_half_u": -1.0,
       "pnl_kelly_quarter_u": -1.0,
-      "book": "BET365"
+      "book": "BET365",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-11-11"
     },
     {
       "date": "2026-11-11",
@@ -4072,6 +4796,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Algodoneros Guasave ML",
+      "game": "Algodoneros Guasave @ Jaguares Nayarit",
       "odds": "-125",
       "result": "wrong",
       "pnl_u": -1.0,
@@ -4083,7 +4808,12 @@
       "pnl_kelly_full_u": -1.0,
       "pnl_kelly_half_u": -1.0,
       "pnl_kelly_quarter_u": -1.0,
-      "book": "BET365"
+      "book": "BET365",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-11-11"
     },
     {
       "date": "2026-11-11",
@@ -4091,6 +4821,7 @@
       "tier": "CORE",
       "market": "TOTAL",
       "bet": "Under 9.5",
+      "game": "Yaquis Obregon @ Naranjeros Hermosillo",
       "odds": "-120",
       "result": "wrong",
       "pnl_u": -1.0,
@@ -4102,7 +4833,12 @@
       "pnl_kelly_full_u": -1.0,
       "pnl_kelly_half_u": -1.0,
       "pnl_kelly_quarter_u": -1.0,
-      "book": "BET365"
+      "book": "BET365",
+      "first_pitch": "23:30 MST",
+      "first_pitch_tz": "",
+      "game_time": "23:30 MST",
+      "game_time_utc": "",
+      "signal_date": "2026-11-11"
     },
     {
       "date": "2026-11-11",
@@ -4110,6 +4846,7 @@
       "tier": "CORE",
       "market": "TOTAL",
       "bet": "Under 9.5",
+      "game": "Caneros Los Mochis @ Venados Mazatlan",
       "odds": "-140",
       "result": "wrong",
       "pnl_u": -1.0,
@@ -4121,7 +4858,12 @@
       "pnl_kelly_full_u": -1.0,
       "pnl_kelly_half_u": -1.0,
       "pnl_kelly_quarter_u": -1.0,
-      "book": "BET365"
+      "book": "BET365",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-11-11"
     },
     {
       "date": "2026-11-09",
@@ -4129,6 +4871,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Mayos Navojoa ML",
+      "game": "Venados Mazatlan @ Mayos Navojoa",
       "odds": "+110",
       "result": "wrong",
       "pnl_u": -1.0,
@@ -4140,7 +4883,12 @@
       "pnl_kelly_full_u": -1.0,
       "pnl_kelly_half_u": -1.0,
       "pnl_kelly_quarter_u": -1.0,
-      "book": "Pinnacle"
+      "book": "Pinnacle",
+      "first_pitch": "00:00 MST",
+      "first_pitch_tz": "",
+      "game_time": "00:00 MST",
+      "game_time_utc": "",
+      "signal_date": "2026-11-09"
     },
     {
       "date": "2026-11-09",
@@ -4148,6 +4896,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Aguilas Mexicali ML",
+      "game": "Aguilas Mexicali @ Caneros Los Mochis",
       "odds": "-129",
       "result": "correct",
       "pnl_u": 0.775,
@@ -4159,7 +4908,12 @@
       "pnl_kelly_full_u": 0.775,
       "pnl_kelly_half_u": 0.775,
       "pnl_kelly_quarter_u": 0.775,
-      "book": "Pinnacle"
+      "book": "Pinnacle",
+      "first_pitch": "00:00 MST",
+      "first_pitch_tz": "",
+      "game_time": "00:00 MST",
+      "game_time_utc": "",
+      "signal_date": "2026-11-09"
     },
     {
       "date": "2026-11-08",
@@ -4167,6 +4921,7 @@
       "tier": "CORE",
       "market": "TOTAL",
       "bet": "Under 10.5",
+      "game": "Naranjeros Hermosillo @ Algodoneros Guasave",
       "odds": "-204",
       "result": "correct",
       "pnl_u": 0.49,
@@ -4178,7 +4933,12 @@
       "pnl_kelly_full_u": 0.49,
       "pnl_kelly_half_u": 0.49,
       "pnl_kelly_quarter_u": 0.49,
-      "book": "API_SPORTS"
+      "book": "API_SPORTS",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-11-08"
     },
     {
       "date": "2026-11-08",
@@ -4186,6 +4946,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Algodoneros Guasave ML",
+      "game": "Naranjeros Hermosillo @ Algodoneros Guasave",
       "odds": "-150",
       "result": "correct",
       "pnl_u": 0.6667,
@@ -4197,7 +4958,12 @@
       "pnl_kelly_full_u": 0.6667,
       "pnl_kelly_half_u": 0.6667,
       "pnl_kelly_quarter_u": 0.6667,
-      "book": "API_SPORTS"
+      "book": "API_SPORTS",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-11-08"
     },
     {
       "date": "2026-11-08",
@@ -4205,6 +4971,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Mayos Navojoa ML",
+      "game": "Venados Mazatlan @ Mayos Navojoa",
       "odds": "+110",
       "result": "correct",
       "pnl_u": 1.1,
@@ -4216,7 +4983,12 @@
       "pnl_kelly_full_u": 1.1,
       "pnl_kelly_half_u": 1.1,
       "pnl_kelly_quarter_u": 1.1,
-      "book": "BET365"
+      "book": "BET365",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-11-08"
     },
     {
       "date": "2026-11-05",
@@ -4224,6 +4996,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Aguilas Mexicali ML",
+      "game": "Venados Mazatlan @ Aguilas Mexicali",
       "odds": "-160",
       "result": "wrong",
       "pnl_u": -1.0,
@@ -4235,7 +5008,12 @@
       "pnl_kelly_full_u": -1.0,
       "pnl_kelly_half_u": -1.0,
       "pnl_kelly_quarter_u": -1.0,
-      "book": "Pinnacle"
+      "book": "Pinnacle",
+      "first_pitch": "03:30 MST",
+      "first_pitch_tz": "",
+      "game_time": "03:30 MST",
+      "game_time_utc": "",
+      "signal_date": "2026-11-05"
     },
     {
       "date": "2026-11-05",
@@ -4243,6 +5021,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Algodoneros Guasave ML",
+      "game": "Algodoneros Guasave @ Charros Jalisco",
       "odds": "-125",
       "result": "correct",
       "pnl_u": 0.8,
@@ -4254,7 +5033,12 @@
       "pnl_kelly_full_u": 0.8,
       "pnl_kelly_half_u": 0.8,
       "pnl_kelly_quarter_u": 0.8,
-      "book": "BET365"
+      "book": "BET365",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-11-05"
     },
     {
       "date": "2026-11-04",
@@ -4262,6 +5046,7 @@
       "tier": "CORE",
       "market": "SPREAD",
       "bet": "Tomateros Culiacan +1.5",
+      "game": "Tomateros Culiacan @ Naranjeros Hermosillo",
       "odds": "+159",
       "result": "correct",
       "pnl_u": 1.59,
@@ -4273,7 +5058,12 @@
       "pnl_kelly_full_u": 1.59,
       "pnl_kelly_half_u": 1.59,
       "pnl_kelly_quarter_u": 1.59,
-      "book": "Pinnacle"
+      "book": "Pinnacle",
+      "first_pitch": "02:30 MST",
+      "first_pitch_tz": "",
+      "game_time": "02:30 MST",
+      "game_time_utc": "",
+      "signal_date": "2026-11-04"
     },
     {
       "date": "2026-11-04",
@@ -4281,6 +5071,7 @@
       "tier": "CORE",
       "market": "TOTAL",
       "bet": "Under 10.5",
+      "game": "Tomateros Culiacan @ Naranjeros Hermosillo",
       "odds": "-160",
       "result": "correct",
       "pnl_u": 0.625,
@@ -4292,7 +5083,12 @@
       "pnl_kelly_full_u": 0.625,
       "pnl_kelly_half_u": 0.625,
       "pnl_kelly_quarter_u": 0.625,
-      "book": "API_SPORTS"
+      "book": "API_SPORTS",
+      "first_pitch": "03:30 MST",
+      "first_pitch_tz": "",
+      "game_time": "03:30 MST",
+      "game_time_utc": "",
+      "signal_date": "2026-11-04"
     },
     {
       "date": "2026-11-04",
@@ -4300,6 +5096,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Naranjeros Hermosillo ML",
+      "game": "Tomateros Culiacan @ Naranjeros Hermosillo",
       "odds": "-154",
       "result": "wrong",
       "pnl_u": -1.0,
@@ -4311,7 +5108,12 @@
       "pnl_kelly_full_u": -1.0,
       "pnl_kelly_half_u": -1.0,
       "pnl_kelly_quarter_u": -1.0,
-      "book": "Pinnacle"
+      "book": "Pinnacle",
+      "first_pitch": "02:30 MST",
+      "first_pitch_tz": "",
+      "game_time": "02:30 MST",
+      "game_time_utc": "",
+      "signal_date": "2026-11-04"
     },
     {
       "date": "2026-11-04",
@@ -4319,6 +5121,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Aguilas Mexicali ML",
+      "game": "Venados Mazatlan @ Aguilas Mexicali",
       "odds": "-160",
       "result": "correct",
       "pnl_u": 0.625,
@@ -4330,7 +5133,12 @@
       "pnl_kelly_full_u": 0.625,
       "pnl_kelly_half_u": 0.625,
       "pnl_kelly_quarter_u": 0.625,
-      "book": "API_SPORTS"
+      "book": "API_SPORTS",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-11-04"
     },
     {
       "date": "2026-11-04",
@@ -4338,6 +5146,7 @@
       "tier": "CORE",
       "market": "SPREAD",
       "bet": "Algodoneros Guasave +1.5",
+      "game": "Algodoneros Guasave @ Charros Jalisco",
       "odds": "-210",
       "result": "wrong",
       "pnl_u": -1.0,
@@ -4349,7 +5158,12 @@
       "pnl_kelly_full_u": -1.0,
       "pnl_kelly_half_u": -1.0,
       "pnl_kelly_quarter_u": -1.0,
-      "book": "API_SPORTS"
+      "book": "API_SPORTS",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-11-04"
     },
     {
       "date": "2026-11-04",
@@ -4357,6 +5171,7 @@
       "tier": "CORE",
       "market": "TOTAL",
       "bet": "Under 10.5",
+      "game": "Algodoneros Guasave @ Charros Jalisco",
       "odds": "-109",
       "result": "correct",
       "pnl_u": 0.915,
@@ -4368,7 +5183,12 @@
       "pnl_kelly_full_u": 0.915,
       "pnl_kelly_half_u": 0.915,
       "pnl_kelly_quarter_u": 0.915,
-      "book": "API_SPORTS"
+      "book": "API_SPORTS",
+      "first_pitch": "02:30 MST",
+      "first_pitch_tz": "",
+      "game_time": "02:30 MST",
+      "game_time_utc": "",
+      "signal_date": "2026-11-04"
     },
     {
       "date": "2026-11-04",
@@ -4376,6 +5196,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Algodoneros Guasave ML",
+      "game": "Algodoneros Guasave @ Charros Jalisco",
       "odds": "-137",
       "result": "wrong",
       "pnl_u": -1.0,
@@ -4387,7 +5208,12 @@
       "pnl_kelly_full_u": -1.0,
       "pnl_kelly_half_u": -1.0,
       "pnl_kelly_quarter_u": -1.0,
-      "book": "API_SPORTS"
+      "book": "API_SPORTS",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-11-04"
     },
     {
       "date": "2026-10-31",
@@ -4395,6 +5221,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Naranjeros Hermosillo ML",
+      "game": "Naranjeros Hermosillo @ Caneros Los Mochis",
       "odds": "-141",
       "result": "wrong",
       "pnl_u": -1.0,
@@ -4406,7 +5233,12 @@
       "pnl_kelly_full_u": -1.0,
       "pnl_kelly_half_u": -1.0,
       "pnl_kelly_quarter_u": -1.0,
-      "book": "BETEX"
+      "book": "BETEX",
+      "first_pitch": "02:30 MST",
+      "first_pitch_tz": "",
+      "game_time": "02:30 MST",
+      "game_time_utc": "",
+      "signal_date": "2026-10-31"
     },
     {
       "date": "2026-10-31",
@@ -4414,6 +5246,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Venados Mazatlan ML",
+      "game": "Jaguares Nayarit @ Venados Mazatlan",
       "odds": "-115",
       "result": "correct",
       "pnl_u": 0.8696,
@@ -4425,7 +5258,12 @@
       "pnl_kelly_full_u": 0.8696,
       "pnl_kelly_half_u": 0.8696,
       "pnl_kelly_quarter_u": 0.8696,
-      "book": "API_SPORTS"
+      "book": "API_SPORTS",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-10-31"
     },
     {
       "date": "2026-10-27",
@@ -4433,6 +5271,7 @@
       "tier": "PLUS",
       "market": "PROP",
       "bet": "G.Jax (Brewers @ Rays) Over 11.5 outs",
+      "game": "",
       "odds": "+107",
       "result": "correct",
       "pnl_u": 1.07,
@@ -4444,7 +5283,12 @@
       "pnl_kelly_full_u": 25.8958,
       "pnl_kelly_half_u": 12.9426,
       "pnl_kelly_quarter_u": 6.4766,
-      "book": "SLIP"
+      "book": "SLIP",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-10-27"
     },
     {
       "date": "2026-10-26",
@@ -4452,6 +5296,7 @@
       "tier": "CORE",
       "market": "SPREAD",
       "bet": "Algodoneros Guasave +1.5",
+      "game": "Algodoneros Guasave @ Tomateros Culiacan",
       "odds": "-177",
       "result": "correct",
       "pnl_u": 0.565,
@@ -4463,7 +5308,12 @@
       "pnl_kelly_full_u": 0.565,
       "pnl_kelly_half_u": 0.565,
       "pnl_kelly_quarter_u": 0.565,
-      "book": "Pinnacle"
+      "book": "Pinnacle",
+      "first_pitch": "00:05 MST",
+      "first_pitch_tz": "",
+      "game_time": "00:05 MST",
+      "game_time_utc": "",
+      "signal_date": "2026-10-26"
     },
     {
       "date": "2026-10-26",
@@ -4471,6 +5321,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Algodoneros Guasave ML",
+      "game": "Algodoneros Guasave @ Tomateros Culiacan",
       "odds": "+114",
       "result": "correct",
       "pnl_u": 1.14,
@@ -4482,7 +5333,12 @@
       "pnl_kelly_full_u": 1.14,
       "pnl_kelly_half_u": 1.14,
       "pnl_kelly_quarter_u": 1.14,
-      "book": "Pinnacle"
+      "book": "Pinnacle",
+      "first_pitch": "00:05 MST",
+      "first_pitch_tz": "",
+      "game_time": "00:05 MST",
+      "game_time_utc": "",
+      "signal_date": "2026-10-26"
     },
     {
       "date": "2026-10-26",
@@ -4490,6 +5346,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Navegantes del Magallanes ML",
+      "game": "Leones del Caracas @ Navegantes del Magallanes",
       "odds": "-101",
       "result": "wrong",
       "pnl_u": -1.0,
@@ -4501,7 +5358,12 @@
       "pnl_kelly_full_u": -1.0,
       "pnl_kelly_half_u": -1.0,
       "pnl_kelly_quarter_u": -1.0,
-      "book": "BetExAvg(10)"
+      "book": "BetExAvg(10)",
+      "first_pitch": "00:00 VET",
+      "first_pitch_tz": "",
+      "game_time": "00:00 VET",
+      "game_time_utc": "",
+      "signal_date": "2026-10-26"
     },
     {
       "date": "2026-10-26",
@@ -4509,6 +5371,7 @@
       "tier": "PLUS",
       "market": "FG_TOTAL",
       "bet": "Brewers @ Rays FG Over 7",
+      "game": "",
       "odds": "+102",
       "result": "correct",
       "pnl_u": 1.02,
@@ -4520,7 +5383,12 @@
       "pnl_kelly_full_u": 20.402,
       "pnl_kelly_half_u": 10.201,
       "pnl_kelly_quarter_u": 5.1005,
-      "book": "SLIP"
+      "book": "SLIP",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-10-26"
     },
     {
       "date": "2026-10-26",
@@ -4528,6 +5396,7 @@
       "tier": "PLUS",
       "market": "PROP",
       "bet": "D.Hamilton (Brewers @ Rays) Over 0.5 H",
+      "game": "",
       "odds": "+105",
       "result": "correct",
       "pnl_u": 1.05,
@@ -4539,7 +5408,12 @@
       "pnl_kelly_full_u": 1.6848,
       "pnl_kelly_half_u": 0.8424,
       "pnl_kelly_quarter_u": 0.416,
-      "book": "SLIP"
+      "book": "SLIP",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-10-26"
     },
     {
       "date": "2026-10-26",
@@ -4547,6 +5421,7 @@
       "tier": "PLUS",
       "market": "PROP",
       "bet": "R.Gasser (Brewers @ Rays) Over 12.5 outs",
+      "game": "",
       "odds": "+110",
       "result": "correct",
       "pnl_u": 1.1,
@@ -4558,7 +5433,12 @@
       "pnl_kelly_full_u": 38.0628,
       "pnl_kelly_half_u": 19.0314,
       "pnl_kelly_quarter_u": 9.5157,
-      "book": "SLIP"
+      "book": "SLIP",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-10-26"
     },
     {
       "date": "2026-10-25",
@@ -4566,6 +5446,7 @@
       "tier": "CORE",
       "market": "SPREAD",
       "bet": "Algodoneros Guasave +1.5",
+      "game": "Algodoneros Guasave @ Tomateros Culiacan",
       "odds": "-162",
       "result": "correct",
       "pnl_u": 0.617,
@@ -4577,7 +5458,12 @@
       "pnl_kelly_full_u": 0.617,
       "pnl_kelly_half_u": 0.617,
       "pnl_kelly_quarter_u": 0.617,
-      "book": "Pinnacle"
+      "book": "Pinnacle",
+      "first_pitch": "00:05 MST",
+      "first_pitch_tz": "",
+      "game_time": "00:05 MST",
+      "game_time_utc": "",
+      "signal_date": "2026-10-25"
     },
     {
       "date": "2026-10-25",
@@ -4585,6 +5471,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Algodoneros Guasave ML",
+      "game": "Algodoneros Guasave @ Tomateros Culiacan",
       "odds": "+119",
       "result": "correct",
       "pnl_u": 1.19,
@@ -4596,7 +5483,12 @@
       "pnl_kelly_full_u": 1.19,
       "pnl_kelly_half_u": 1.19,
       "pnl_kelly_quarter_u": 1.19,
-      "book": "Pinnacle"
+      "book": "Pinnacle",
+      "first_pitch": "00:05 MST",
+      "first_pitch_tz": "",
+      "game_time": "00:05 MST",
+      "game_time_utc": "",
+      "signal_date": "2026-10-25"
     },
     {
       "date": "2026-10-25",
@@ -4604,6 +5496,7 @@
       "tier": "CORE",
       "market": "SPREAD",
       "bet": "Aguilas Mexicali +1.5",
+      "game": "Naranjeros Hermosillo @ Aguilas Mexicali",
       "odds": "-110",
       "result": "correct",
       "pnl_u": 0.909,
@@ -4615,7 +5508,12 @@
       "pnl_kelly_full_u": 0.909,
       "pnl_kelly_half_u": 0.909,
       "pnl_kelly_quarter_u": 0.909,
-      "book": "Pinnacle"
+      "book": "Pinnacle",
+      "first_pitch": "00:00 MST",
+      "first_pitch_tz": "",
+      "game_time": "00:00 MST",
+      "game_time_utc": "",
+      "signal_date": "2026-10-25"
     },
     {
       "date": "2026-10-25",
@@ -4623,6 +5521,7 @@
       "tier": "CORE",
       "market": "TOTAL",
       "bet": "Under 10.5",
+      "game": "Naranjeros Hermosillo @ Aguilas Mexicali",
       "odds": "-112",
       "result": "correct",
       "pnl_u": 0.893,
@@ -4634,7 +5533,12 @@
       "pnl_kelly_full_u": 0.893,
       "pnl_kelly_half_u": 0.893,
       "pnl_kelly_quarter_u": 0.893,
-      "book": "Pinnacle"
+      "book": "Pinnacle",
+      "first_pitch": "00:00 MST",
+      "first_pitch_tz": "",
+      "game_time": "00:00 MST",
+      "game_time_utc": "",
+      "signal_date": "2026-10-25"
     },
     {
       "date": "2026-10-25",
@@ -4642,6 +5546,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Naranjeros Hermosillo ML",
+      "game": "Naranjeros Hermosillo @ Aguilas Mexicali",
       "odds": "-125",
       "result": "wrong",
       "pnl_u": -1.0,
@@ -4653,7 +5558,12 @@
       "pnl_kelly_full_u": -1.0,
       "pnl_kelly_half_u": -1.0,
       "pnl_kelly_quarter_u": -1.0,
-      "book": "API_SPORTS"
+      "book": "API_SPORTS",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-10-25"
     },
     {
       "date": "2026-10-25",
@@ -4661,6 +5571,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Navegantes del Magallanes ML",
+      "game": "Leones del Caracas @ Navegantes del Magallanes",
       "odds": "+105",
       "result": "wrong",
       "pnl_u": -1.0,
@@ -4672,7 +5583,12 @@
       "pnl_kelly_full_u": -1.0,
       "pnl_kelly_half_u": -1.0,
       "pnl_kelly_quarter_u": -1.0,
-      "book": "Bovada"
+      "book": "Bovada",
+      "first_pitch": "19:00 VET",
+      "first_pitch_tz": "",
+      "game_time": "19:00 VET",
+      "game_time_utc": "",
+      "signal_date": "2026-10-25"
     },
     {
       "date": "2026-10-24",
@@ -4680,6 +5596,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Yaquis Obregon ML",
+      "game": "Caneros Los Mochis @ Yaquis Obregon",
       "odds": "-118",
       "result": "correct",
       "pnl_u": 0.847,
@@ -4691,7 +5608,12 @@
       "pnl_kelly_full_u": 0.847,
       "pnl_kelly_half_u": 0.847,
       "pnl_kelly_quarter_u": 0.847,
-      "book": "Pinnacle"
+      "book": "Pinnacle",
+      "first_pitch": "02:10 MST",
+      "first_pitch_tz": "",
+      "game_time": "02:10 MST",
+      "game_time_utc": "",
+      "signal_date": "2026-10-24"
     },
     {
       "date": "2026-10-24",
@@ -4699,6 +5621,7 @@
       "tier": "CORE",
       "market": "ML",
       "bet": "Algodoneros Guasave ML",
+      "game": "Algodoneros Guasave @ Tomateros Culiacan",
       "odds": "+130",
       "result": "wrong",
       "pnl_u": -1.0,
@@ -4710,7 +5633,12 @@
       "pnl_kelly_full_u": -1.0,
       "pnl_kelly_half_u": -1.0,
       "pnl_kelly_quarter_u": -1.0,
-      "book": "API_SPORTS"
+      "book": "API_SPORTS",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-10-24"
     },
     {
       "date": "2026-10-24",
@@ -4718,6 +5646,7 @@
       "tier": "PLUS",
       "market": "PROP",
       "bet": "D.Rasmussen (Rays @ Brewers) Under 1.5 ER",
+      "game": "",
       "odds": "+110",
       "result": "wrong",
       "pnl_u": -1.0,
@@ -4729,7 +5658,12 @@
       "pnl_kelly_full_u": -0.0535,
       "pnl_kelly_half_u": -0.0267,
       "pnl_kelly_quarter_u": -0.0134,
-      "book": "SLIP"
+      "book": "SLIP",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-10-24"
     },
     {
       "date": "2026-10-24",
@@ -4737,6 +5671,7 @@
       "tier": "CORE",
       "market": "PROP",
       "bet": "J.DeLuca (Rays @ Brewers) Under 0.5 H",
+      "game": "",
       "odds": "+138",
       "result": "wrong",
       "pnl_u": -1.0,
@@ -4748,7 +5683,12 @@
       "pnl_kelly_full_u": -0.0212,
       "pnl_kelly_half_u": -0.0106,
       "pnl_kelly_quarter_u": -0.0053,
-      "book": "SLIP"
+      "book": "SLIP",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-10-24"
     },
     {
       "date": "2026-10-24",
@@ -4756,6 +5696,7 @@
       "tier": "PLUS",
       "market": "F5_TOTAL",
       "bet": "Rays @ Brewers F5 Over 3.5",
+      "game": "",
       "odds": "-100",
       "result": "correct",
       "pnl_u": 1.0,
@@ -4767,7 +5708,12 @@
       "pnl_kelly_full_u": 0.196,
       "pnl_kelly_half_u": 0.098,
       "pnl_kelly_quarter_u": 0.049,
-      "book": "SLIP"
+      "book": "SLIP",
+      "first_pitch": "",
+      "first_pitch_tz": "",
+      "game_time": "",
+      "game_time_utc": "",
+      "signal_date": "2026-10-24"
     }
   ],
   "chart": {
@@ -4824,5 +5770,12 @@
         "n": 50
       }
     ]
-  }
+  },
+  "results_freshness": {
+    "stale": false,
+    "note": "ok",
+    "winter_graded_max": "2026-11-14",
+    "limit_days": 2
+  },
+  "edge_floor_label": "3.5pp"
 }
