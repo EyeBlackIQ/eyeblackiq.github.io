@@ -1,6 +1,6 @@
 {
   "date": "2026-11-15",
-  "generated": "2026-11-15T03:45:25.908156+00:00",
+  "generated": "2026-11-15T14:52:46.535131+00:00",
   "empty": true,
   "empty_message": "No Picks Today",
   "policy": {
@@ -9,123 +9,19 @@
     "public_tier_word": "Play",
     "edge_public": false,
     "edge_floor_pp": 4.0,
-    "edge_floor_label": "4pp",
+    "edge_floor_label": "base4 · ML5 · SPREAD6 · TOTAL5",
+    "edge_floors_by_market": {
+      "ML": 5.0,
+      "SPREAD": 6.0,
+      "TOTAL": 5.0
+    },
     "forward_slate": "held",
     "sports": "baseball_leagues_only",
     "mlb_asia": "ARCHIVE_OFFSEASON"
   },
   "recommended": [],
   "pod": [],
-  "teaser": [
-    {
-      "side": "Aguilas Mexicali ML",
-      "game": "Aguilas Mexicali @ Algodoneros Guasave",
-      "proj_total": 9.8,
-      "sp_home_micro": {
-        "era": 4.5,
-        "fip": 2.83,
-        "ip": 24.0,
-        "k9": 10.1,
-        "bb9": 0.0,
-        "hr9": 1.12,
-        "whip": 1.17
-      },
-      "is_pod": 0,
-      "confidence": "lower",
-      "bet_type": "ML",
-      "blurb": "Aguilas Mexicali · Model WP 63.2¢ · proj 5.4–4.4. SP Valente Bellozo vs Roque Gutiérrez. Park: Algodoneros Guasave | Away SP ERA<<FIP (lucky — expect more runs) | Home SP ERA>>FIP (unlucky — expect fewer runs).",
-      "model_wp_pct": 63.2,
-      "game_time": "01:00",
-      "sp_away": "Valente Bellozo",
-      "proj_home": 4.4,
-      "first_pitch_tz": "MST",
-      "signal_date": "2026-11-15",
-      "first_pitch": "01:00",
-      "sp_home": "Roque Gutiérrez",
-      "public_tier": "Watchlist",
-      "proj_away": 5.4,
-      "game_time_utc": "2026-11-15T08:00:00Z",
-      "sp_away_micro": {
-        "era": 2.42,
-        "fip": 3.32,
-        "ip": 26.0,
-        "k9": 8.7,
-        "bb9": 3.1,
-        "hr9": 0.69,
-        "whip": 1.0
-      },
-      "facts": [
-        "Park: Algodoneros Guasave",
-        "Away SP ERA<<FIP (lucky — expect more runs)",
-        "Home SP ERA>>FIP (unlucky — expect fewer runs)",
-        "SP ERA↔FIP regression",
-        "Thin-IP SP",
-        "Both SPs confirmed",
-        "Pythag lean",
-        "Standings/metrics",
-        "A ERA 2.42 · FIP 3.32 · 26.0 IP · K9 8.7 · BB9 3.1 · HR9 0.69 · WHIP 1.0",
-        "H ERA 4.5 · FIP 2.83 · 24.0 IP · K9 10.1 · BB9 0.0 · HR9 1.12 · WHIP 1.17"
-      ],
-      "fair_am": -170,
-      "dog_wp_note": "Dog Fair 63.2¢",
-      "league": "LMP",
-      "market": "ML"
-    },
-    {
-      "side": "Over 8.5",
-      "game": "Venados Mazatlan @ Tomateros Culiacan",
-      "proj_total": 10.7,
-      "sp_home_micro": {
-        "era": 3.47,
-        "fip": 3.8,
-        "ip": 23.3,
-        "k9": 5.0,
-        "bb9": 3.1,
-        "hr9": 0.39,
-        "whip": 1.2
-      },
-      "is_pod": 0,
-      "confidence": "lower",
-      "bet_type": "TOTAL",
-      "blurb": "away–home µ 3.5–7.3 (total 10.7) vs 8.5 (2.2 over) — Over, Fair 73.5¢. Away SP ERA<<FIP (lucky — expect more runs). SP Ernesto Borges vs Ricardo Estrada.",
-      "model_wp_pct": 73.5,
-      "game_time": "01:05",
-      "sp_away": "Ernesto Borges",
-      "proj_home": 7.3,
-      "first_pitch_tz": "MST",
-      "signal_date": "2026-11-15",
-      "first_pitch": "01:05",
-      "sp_home": "Ricardo Estrada",
-      "public_tier": "Watchlist",
-      "proj_away": 3.5,
-      "game_time_utc": "2026-11-15T08:05:00Z",
-      "sp_away_micro": {
-        "era": 5.32,
-        "fip": 6.15,
-        "ip": 22.0,
-        "k9": 6.1,
-        "bb9": 3.7,
-        "hr9": 2.05,
-        "whip": 1.95
-      },
-      "facts": [
-        "Park: Tomateros Culiacan",
-        "Away SP ERA<<FIP (lucky — expect more runs)",
-        "Barrel heat (totals)",
-        "Miss/wild heat (totals)",
-        "HR-prone SP",
-        "HR-suppress SP",
-        "Thin-IP SP",
-        "Both SPs confirmed",
-        "A ERA 5.32 · FIP 6.15 · 22.0 IP · K9 6.1 · BB9 3.7 · HR9 2.05 · WHIP 1.95",
-        "H ERA 3.47 · FIP 3.8 · 23.3 IP · K9 5.0 · BB9 3.1 · HR9 0.39 · WHIP 1.2"
-      ],
-      "fair_am": -275,
-      "league": "LMP",
-      "line": 8.5,
-      "market": "TOTAL"
-    }
-  ],
-  "teaser_label": "Watchlist",
-  "offsite_tracked_n": 4
+  "teaser": [],
+  "teaser_label": null,
+  "offsite_tracked_n": 1
 }

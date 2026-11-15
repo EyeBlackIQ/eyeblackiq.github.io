@@ -12,11 +12,11 @@
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://eyeblackiq.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css?v=20261112-p012">
+<link rel="stylesheet" href="style.css?v=20261115-hybrid">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -91,38 +91,60 @@
   <section id="results-section" class="results-section" role="tabpanel" aria-labelledby="nav-results" hidden>
     <div class="results-head">
       <h2 class="section-title">Day-1 · L50 <span class="pod-badge" id="results-pod-badge">POD</span></h2>
-      <p class="section-note" id="results-sub">Day-1 L50 · Flat 1u · SP-missing never on slip</p>
+      <p class="section-note" id="results-sub">Global = INTL + Domestic · click a league to filter · Flat / Kelly</p>
     </div>
 
-    <div class="chip-row" id="results-sport-tabs" role="group" aria-label="League book">
-      <button type="button" class="chip" data-rsport="global">Global</button>
-      <button type="button" class="chip active" data-rsport="winter">Winter</button>
-      <button type="button" class="chip chip-archive" data-rsport="mlb" title="Season finished — archive L50">MLB · Archive</button>
-      <button type="button" class="chip chip-archive" data-rsport="asia" title="Season finished — archive L50">Asia · Archive</button>
-      <button type="button" class="chip chip-archive" data-rsport="ncaa" title="Season finished — archive L50">NCAA · Archive</button>
+    <div class="chip-row" id="results-sport-tabs" role="group" aria-label="Results region">
+      <button type="button" class="chip active" data-rsport="global" title="All-inclusive = INTL + Domestic">Global</button>
+      <button type="button" class="chip" data-rsport="intl" title="Non-American leagues">INTL</button>
+      <button type="button" class="chip" data-rsport="domestic" title="MLB + NCAA + MiLB">Domestic</button>
       <button type="button" class="chip chip-advanced" id="results-advanced-toggle" aria-expanded="false" aria-controls="results-advanced">Advanced</button>
     </div>
+    <div class="chip-row" id="results-unit-tabs" role="group" aria-label="Unit mode">
+      <button type="button" class="chip active" data-unit="flat">Flat</button>
+      <button type="button" class="chip" data-unit="kelly_full">Full Kelly</button>
+      <button type="button" class="chip" data-unit="kelly_half">Half Kelly</button>
+      <button type="button" class="chip" data-unit="kelly_quarter">Quarter Kelly</button>
+    </div>
     <div id="results-advanced" hidden>
-      <div class="chip-row" id="results-unit-tabs" role="group" aria-label="Unit mode">
-        <button type="button" class="chip active" data-unit="flat">Flat</button>
-        <button type="button" class="chip" data-unit="kelly_full">Full Kelly</button>
-        <button type="button" class="chip" data-unit="kelly_half">Half Kelly</button>
-        <button type="button" class="chip" data-unit="kelly_quarter">Quarter Kelly</button>
+      <div class="chip-row" id="results-book-tabs" role="group" aria-label="Book drill-down">
+        <button type="button" class="chip" data-rsport="winter" title="Winter subset of INTL">Winter</button>
+        <button type="button" class="chip chip-archive" data-rsport="asia" title="Asia subset of INTL">Asia · Archive</button>
+        <button type="button" class="chip chip-archive" data-rsport="mlb" title="MLB · Domestic">MLB · Archive</button>
+        <button type="button" class="chip chip-archive" data-rsport="ncaa" title="NCAA · Domestic">NCAA · Archive</button>
+        <button type="button" class="chip chip-archive" data-rsport="milb" title="MiLB · Domestic">MiLB · Archive</button>
       </div>
-      <p class="section-note">Kelly = research modes</p>
+      <p class="section-note">Archive books · Kelly = research modes on L50</p>
     </div>
 
-    <div class="results-cards" id="results-cards">
-      <div class="results-card"><div class="rk">Record</div><div class="rv" id="rc-record">—</div></div>
-      <div class="results-card"><div class="rk">Hit rate</div><div class="rv" id="rc-hr">—</div></div>
-      <div class="results-card"><div class="rk">L50 n</div><div class="rv" id="rc-l50n">—</div></div>
-      <details class="results-card results-card--pnl">
-        <summary><span class="rk" id="rc-pnl-label">PnL (Flat)</span> <span class="rv" id="rc-pnl">—</span></summary>
-        <p class="pnl-note">Secondary · flat $10 = 1u</p>
-      </details>
+    <!-- A · Scoreboard -->
+    <div class="res-board" id="results-board" aria-label="Global scoreboard">
+      <div class="res-board-title">GLOBAL RECORD</div>
+      <div class="res-board-global" id="rc-board-global">—</div>
+      <div class="res-regions" id="results-regions"></div>
+      <div class="res-tiles" id="results-tiles" role="group" aria-label="Leagues"></div>
+      <div class="res-board-sum"><span id="rc-filter-label">All leagues</span><span id="rc-board-check">—</span></div>
     </div>
 
-    <div class="results-chart-wrap" id="results-hr-wrap" aria-label="Hit rate by book">
+    <!-- B · Wheel + statsheet -->
+    <div class="res-desk" id="results-desk">
+      <div class="res-gauge" aria-label="Hit rate wheel">
+        <div class="res-gauge-ring" id="rc-gauge-ring" style="--hr:50"><span id="rc-gauge-hr">—</span></div>
+        <div class="res-gauge-meta">
+          <div class="rk" id="rc-gauge-scope">Hit rate</div>
+          <div class="rv" id="rc-record">—</div>
+          <div class="res-gauge-pnl"><span class="rk" id="rc-pnl-label">PnL (Flat)</span> <span class="rv" id="rc-pnl">—</span></div>
+          <div class="muted" id="rc-l50n-label">L50 n <span id="rc-l50n">—</span> · HR <span id="rc-hr">—</span></div>
+        </div>
+      </div>
+      <div class="res-sheet" id="results-league-standings" aria-label="League statsheet"></div>
+    </div>
+
+    <div class="results-chart-wrap" id="results-equity-wrap" aria-label="Equity curve">
+      <div class="results-chart-title" id="results-equity-title">Running PnL</div>
+      <div class="equity-chart" id="results-equity-chart"></div>
+    </div>
+    <div class="results-chart-wrap" id="results-hr-wrap" aria-label="Hit rate by book" hidden>
       <div class="results-chart-title" id="results-hr-title">Hit rate by book</div>
       <div class="results-chart" id="results-hr-chart"></div>
     </div>
@@ -167,7 +189,8 @@ let slipData = null;
 let day1Data = null;
 let activeTab = 'PICKS';
 let resultsUnit = 'flat';
-let resultsSport = 'winter';
+let resultsSport = 'global';
+let resultsLeague = null; // clickable league filter (null = all in region)
 
 function fmtAm(v) {
   if (v == null || v === '') return null;
@@ -422,7 +445,10 @@ function resultsListItem(r, key) {
   const tone = ouTone(bet);
   const odds = fmtAm(r.odds) || (r.odds != null && r.odds !== '' ? esc(r.odds) : '—');
   const note = String(r.note || '').trim();
-  const ctx = shortBlurb(note, 100);
+  const tag = String(r.outcome_tag || '').trim();
+  const closeLoss = !!r.close_loss || /CLOSE LOSS/i.test(tag) || /CLOSE LOSS/i.test(note);
+  const closeWin = !!r.close_win || /CLOSE WIN/i.test(tag);
+  const ctx = shortBlurb(note, 140);
   const when = fmtWhen(r);
   const bits = [];
   if (when) bits.push(`<span class="watch-time">${esc(when)}</span>`);
@@ -430,16 +456,22 @@ function resultsListItem(r, key) {
   if (r.league) bits.push(`<span class="watch-lg">${esc(r.league)}</span>`);
   if (r.market) bits.push(`<span class="watch-hit">${esc(r.market)}</span>`);
   if (r.actual != null && r.actual !== '') bits.push(`<span class="watch-proj">${esc(r.actual)}</span>`);
+  if (closeLoss) bits.push(`<span class="outcome-tag outcome-tag--close-loss">CLOSE LOSS</span>`);
+  else if (closeWin) bits.push(`<span class="outcome-tag outcome-tag--close-win">CLOSE WIN</span>`);
+  else if (tag) bits.push(`<span class="outcome-tag">${esc(tag)}</span>`);
   const specRows = [];
   specRows.push(`<div class="spec-row"><span class="spec-k">Odds</span><span class="spec-v">${odds}</span></div>`);
   if (r.book) specRows.push(`<div class="spec-row"><span class="spec-k">Book</span><span class="spec-v">${esc(r.book)}</span></div>`);
   if (r.actual != null && r.actual !== '') {
     specRows.push(`<div class="spec-row"><span class="spec-k">Score</span><span class="spec-v">${esc(r.actual)}</span></div>`);
   }
+  if (r.cover_margin_runs != null && r.cover_margin_runs !== '') {
+    specRows.push(`<div class="spec-row"><span class="spec-k">Cover</span><span class="spec-v">${esc(Number(r.cover_margin_runs).toFixed(1))}</span></div>`);
+  }
   specRows.push(`<div class="spec-row"><span class="spec-k">PnL</span><span class="spec-v ${cls}">${fmtU(pv)}</span></div>`);
   if (note) specRows.push(`<p class="spec-blurb">${esc(note)}</p>`);
   return `
-  <li class="watch-item results-item ${cls}${tone ? ' pick--' + tone : ''}">
+  <li class="watch-item results-item ${cls}${tone ? ' pick--' + tone : ''}${closeLoss ? ' results-item--close-loss' : ''}">
     <div class="watch-main">
       <span class="watch-side">${esc(bet) || '—'}</span>
       <span class="watch-odds" aria-label="American odds">
@@ -551,9 +583,9 @@ function updateRecordBar(rec) {
   if (rel) rel.className = 'stat-value ' + ((rec.roi || 0) >= 0 ? 'positive' : 'negative');
   const scope = document.getElementById('record-scope');
   if (scope) {
-    const src = rec.source || 'Winter CORE';
+    const src = rec.source || 'INTL CORE';
     const units = rec.units_policy || 'Flat 1u';
-    scope.textContent = `${src} · ${units}`;
+    scope.textContent = `${src} · ${units} · Results Global = INTL + Domestic`;
   }
 }
 
@@ -617,28 +649,93 @@ function resultClass(res) {
   if (r === 'push') return 'res-push';
   return 'res-void';
 }
-function rowsForSport(d, sport) {
+function rowsForSport(d, sport, leagueFilter) {
   if (!d) return [];
   function blockRows(b) {
     if (!b) return [];
-    if (b.l50 && b.l50.length) return b.l50;
+    if (b.l50 && b.l50.length) return b.l50.slice();
     const raw = b.slip_rows || [];
     return raw
       .filter(r => ['correct', 'wrong', 'push'].includes(String(r.result || '').toLowerCase()))
       .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))
       .slice(0, 50);
   }
+  let rows = [];
   if (sport === 'global') {
-    if (d.global_l50 && d.global_l50.length) return d.global_l50;
-    return []
-      .concat(blockRows(d.mlb), blockRows(d.asia), blockRows(d.winter), blockRows(d.ncaa))
+    if (d.global && d.global.l50 && d.global.l50.length) rows = d.global.l50.slice();
+    else if (d.global_l50 && d.global_l50.length) rows = d.global_l50.slice();
+    else rows = []
+      .concat(blockRows(d.mlb), blockRows(d.ncaa), blockRows(d.milb), blockRows(d.asia), blockRows(d.winter))
       .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))
       .slice(0, 50);
+  } else if (sport === 'intl') {
+    rows = blockRows(d.intl);
+    if (!rows.length) rows = []
+      .concat(blockRows(d.winter), blockRows(d.asia))
+      .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))
+      .slice(0, 50);
+  } else if (sport === 'domestic') {
+    rows = blockRows(d.domestic);
+    if (!rows.length) rows = []
+      .concat(blockRows(d.mlb), blockRows(d.ncaa), blockRows(d.milb))
+      .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))
+      .slice(0, 50);
+  } else if (sport === 'mlb') rows = blockRows(d.mlb);
+  else if (sport === 'asia') rows = blockRows(d.asia);
+  else if (sport === 'winter') rows = blockRows(d.winter);
+  else if (sport === 'ncaa') rows = blockRows(d.ncaa);
+  else if (sport === 'milb') rows = blockRows(d.milb);
+  if (leagueFilter) {
+    const lf = String(leagueFilter).toUpperCase();
+    rows = rows.filter(r => String(r.league || '').toUpperCase() === lf);
   }
-  if (sport === 'mlb') return blockRows(d.mlb);
-  if (sport === 'asia') return blockRows(d.asia);
-  if (sport === 'winter') return blockRows(d.winter);
-  if (sport === 'ncaa') return blockRows(d.ncaa);
+  return rows;
+}
+
+function tallyRows(rows, key) {
+  let w = 0, l = 0, p = 0, pnl = 0;
+  rows.forEach(r => {
+    const res = (r.result || '').toLowerCase();
+    if (res === 'correct') w++;
+    else if (res === 'wrong') l++;
+    else if (res === 'push') p++;
+    pnl += Number(r[key] != null ? r[key] : r.pnl_u || 0);
+  });
+  const den = w + l;
+  return {
+    correct: w, wrong: l, push: p, n: rows.length,
+    hr: den ? w / den : null, pnl_u: pnl,
+    record: `${w}-${l}` + (p ? `-${p}` : '')
+  };
+}
+
+function equityFromRows(rows, key) {
+  const chron = rows.slice().sort((a, b) => String(a.date || '').localeCompare(String(b.date || '')));
+  let cum = 0;
+  return chron.map(r => {
+    cum += Number(r[key] != null ? r[key] : r.pnl_u || 0);
+    return { date: r.date, cum_u: cum };
+  });
+}
+
+function leagueRowsForSport(d, sport) {
+  if (!d) return [];
+  if (sport === 'global' && d.global && d.global.by_league) return d.global.by_league;
+  if (sport === 'intl' && d.intl && d.intl.by_league) return d.intl.by_league;
+  if (sport === 'domestic' && d.domestic && d.domestic.by_league) return d.domestic.by_league;
+  if (sport === 'winter' && d.winter && d.winter.by_league) return d.winter.by_league;
+  if (sport === 'asia' && d.asia && d.asia.by_league) {
+    const bl = d.asia.by_league;
+    if (Array.isArray(bl)) return bl;
+    return Object.keys(bl).map(lg => {
+      const s = bl[lg] || {};
+      return {
+        league: lg, region: 'INTL',
+        wins: s.correct || 0, losses: s.wrong || 0, pushes: s.push || 0,
+        n: s.graded || s.n || 0, hr: s.hr, pnl_u: s.pnl_u, record: s.record
+      };
+    });
+  }
   return [];
 }
 
@@ -691,8 +788,152 @@ function seasonForSport(d, sport) {
   if (sport === 'winter') return d.winter && d.winter.slip_summary;
   if (sport === 'ncaa') return d.ncaa && d.ncaa.slip_summary;
   if (sport === 'mlb') return d.mlb && d.mlb.slip_summary;
-  if (sport === 'global') return d.winter && d.winter.slip_summary; // live book default
+  if (sport === 'milb') return d.milb && d.milb.slip_summary;
+  if (sport === 'intl') return d.intl && d.intl.slip_summary;
+  if (sport === 'domestic') return d.domestic && d.domestic.slip_summary;
+  // Global = all-inclusive INTL + Domestic (never Winter-only)
+  if (sport === 'global') {
+    if (d.global && d.global.slip_summary) return d.global.slip_summary;
+    if (d.global && d.global.by_league && d.global.by_league.length) {
+      const rows = d.global.by_league;
+      const c = rows.reduce((a, r) => a + Number(r.wins || 0), 0);
+      const w = rows.reduce((a, r) => a + Number(r.losses || 0), 0);
+      const p = rows.reduce((a, r) => a + Number(r.pushes || 0), 0);
+      const pnl = rows.reduce((a, r) => a + Number(r.pnl_u || 0), 0);
+      const den = c + w;
+      return { correct: c, wrong: w, push: p, n: c + w + p, hr: den ? c / den : null, pnl_u: pnl,
+        note: 'Global = sum of leagues' };
+    }
+  }
   return null;
+}
+
+function renderBoardAndTiles(d, sport, leagueFilter, unitKey) {
+  const tilesHost = document.getElementById('results-tiles');
+  const regionsHost = document.getElementById('results-regions');
+  const boardGlobal = document.getElementById('rc-board-global');
+  const boardCheck = document.getElementById('rc-board-check');
+  const filterLab = document.getElementById('rc-filter-label');
+  const leagues = leagueRowsForSport(d, sport) || [];
+  const season = seasonForSport(d, sport);
+  if (boardGlobal) {
+    if (leagueFilter) {
+      const lg = leagues.find(x => String(x.league).toUpperCase() === String(leagueFilter).toUpperCase());
+      boardGlobal.textContent = lg
+        ? `${lg.league} ${lg.record || ((lg.wins||0)+'-'+(lg.losses||0))} · ${fmtU(lg.pnl_u)}`
+        : String(leagueFilter);
+    } else if (season) {
+      const rec = `${season.correct || 0}-${season.wrong || 0}` + ((season.push || 0) ? `-${season.push}` : '');
+      boardGlobal.innerHTML = `<span>${esc(rec)}</span> <span class="${(season.pnl_u||0)>=0?'pos':'neg'}">${fmtU(season.pnl_u)}</span>`;
+    } else boardGlobal.textContent = '—';
+  }
+  if (regionsHost && d.global && d.global.by_region) {
+    const intl = d.global.by_region.INTL || d.intl && d.intl.slip_summary || {};
+    const dom = d.global.by_region.DOMESTIC || d.domestic && d.domestic.slip_summary || {};
+    regionsHost.innerHTML = `
+      <button type="button" class="res-region ${sport==='intl'?'active':''}" data-rsport="intl">
+        <div class="lab">INTL</div>
+        <div class="wl">${esc((intl.record) || ((intl.correct||0)+'-'+(intl.wrong||0)))}</div>
+        <div class="${(intl.pnl_u||0)>=0?'pos':'neg'}">${fmtU(intl.pnl_u)}</div>
+      </button>
+      <button type="button" class="res-region ${sport==='domestic'?'active':''}" data-rsport="domestic">
+        <div class="lab">Domestic</div>
+        <div class="wl">${esc((dom.record) || ((dom.correct||0)+'-'+(dom.wrong||0)))}</div>
+        <div class="${(dom.pnl_u||0)>=0?'pos':'neg'}">${fmtU(dom.pnl_u)}</div>
+      </button>`;
+  } else if (regionsHost) regionsHost.innerHTML = '';
+  if (tilesHost) {
+    if (!leagues.length) { tilesHost.innerHTML = ''; }
+    else {
+      tilesHost.innerHTML = leagues.map(r => {
+        const lg = String(r.league || '');
+        const on = leagueFilter && String(leagueFilter).toUpperCase() === lg.toUpperCase();
+        const cls = Number(r.pnl_u || 0) >= 0 ? 'pos' : 'neg';
+        return `<button type="button" class="res-tile ${on?'active':''}" data-league="${esc(lg)}" aria-pressed="${on?'true':'false'}">
+          <div class="lg">${esc(lg)}</div>
+          <div class="wl">${esc(r.record || ((r.wins||0)+'-'+(r.losses||0)))}</div>
+          <div class="${cls}">${fmtU(r.pnl_u)}</div>
+        </button>`;
+      }).join('');
+    }
+  }
+  if (filterLab) filterLab.textContent = leagueFilter ? `Filter · ${leagueFilter}` : 'All leagues in view';
+  if (boardCheck && leagues.length) {
+    const sw = leagues.reduce((a, r) => a + Number(r.wins || 0), 0);
+    const sl = leagues.reduce((a, r) => a + Number(r.losses || 0), 0);
+    const su = leagues.reduce((a, r) => a + Number(r.pnl_u || 0), 0);
+    boardCheck.textContent = `sum ${sw}-${sl} · ${fmtU(su)}`;
+  } else if (boardCheck) boardCheck.textContent = '—';
+}
+
+function renderLeagueStandings(d, sport, leagueFilter) {
+  const host = document.getElementById('results-league-standings');
+  if (!host) return;
+  let rows = leagueRowsForSport(d, sport) || [];
+  let head = sport === 'global' ? 'Statsheet · Global' : `Statsheet · ${String(sport).toUpperCase()}`;
+  if (!rows.length) { host.innerHTML = ''; return; }
+  if (leagueFilter) {
+    rows = rows.filter(r => String(r.league || '').toUpperCase() === String(leagueFilter).toUpperCase());
+    head += ` · ${leagueFilter}`;
+  }
+  const sumW = rows.reduce((a, r) => a + Number(r.wins || 0), 0);
+  const sumL = rows.reduce((a, r) => a + Number(r.losses || 0), 0);
+  const sumP = rows.reduce((a, r) => a + Number(r.pushes || 0), 0);
+  const sumU = rows.reduce((a, r) => a + Number(r.pnl_u || 0), 0);
+  host.innerHTML =
+    `<div class="lg-head">${head} <span class="lg-sum">${sumW}-${sumL}${sumP ? '-' + sumP : ''} · ${fmtU(sumU)}</span></div>` +
+    `<div class="lg-row lg-row--head"><span>League</span><span>Region</span><span>W-L</span><span>Hit%</span><span>PnL</span></div>` +
+    rows.map(r => {
+      const hr = r.hr != null ? (Number(r.hr) * 100).toFixed(0) + '%' : '—';
+      const cls = Number(r.pnl_u || 0) >= 0 ? 'pos' : 'neg';
+      const on = leagueFilter && String(leagueFilter).toUpperCase() === String(r.league || '').toUpperCase();
+      return `<button type="button" class="lg-row lg-row--btn ${on?'active':''}" data-league="${esc(r.league || '')}">
+        <span class="lg-name">${esc(r.league || '')}</span>
+        <span class="muted">${esc(r.region || '')}</span>
+        <span>${esc(r.record || ((r.wins||0)+'-'+(r.losses||0)))}</span>
+        <span>${hr}</span>
+        <span class="${cls}">${fmtU(r.pnl_u)}</span>
+      </button>`;
+    }).join('') +
+    `<div class="lg-row lg-row--total"><span>TOTAL</span><span></span><span>${sumW}-${sumL}${sumP?'-'+sumP:''}</span><span></span><span class="${sumU>=0?'pos':'neg'}">${fmtU(sumU)}</span></div>`;
+}
+
+function renderEquityCurve(curve) {
+  const wrap = document.getElementById('results-equity-wrap');
+  const host = document.getElementById('results-equity-chart');
+  const title = document.getElementById('results-equity-title');
+  if (!wrap || !host) return;
+  if (!curve || !curve.length) { wrap.hidden = true; host.innerHTML = ''; return; }
+  wrap.hidden = false;
+  if (title) title.textContent = resultsLeague
+    ? `Running PnL · ${resultsLeague} (${resultsUnit.replace(/_/g,' ')})`
+    : `Running PnL · ${resultsSport} (${resultsUnit.replace(/_/g,' ')})`;
+  const vals = curve.map(p => Number(p.cum_u || 0));
+  const minV = Math.min(0, ...vals);
+  const maxV = Math.max(0, ...vals);
+  const span = Math.max(0.01, maxV - minV);
+  const w = 320, h = 72, pad = 4;
+  const pts = curve.map((p, i) => {
+    const x = pad + (i / Math.max(1, curve.length - 1)) * (w - pad * 2);
+    const y = h - pad - ((Number(p.cum_u || 0) - minV) / span) * (h - pad * 2);
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(' ');
+  const last = vals[vals.length - 1] || 0;
+  const zeroY = h - pad - ((0 - minV) / span) * (h - pad * 2);
+  const cls = last >= 0 ? 'pos' : 'neg';
+  host.innerHTML = `<svg viewBox="0 0 ${w} ${h}" class="equity-svg" role="img" aria-label="Running PnL"><line x1="${pad}" x2="${w-pad}" y1="${zeroY}" y2="${zeroY}" class="equity-zero"/><polyline points="${pts}" class="equity-line ${cls}" fill="none"/></svg><div class="equity-end ${cls}">${fmtU(last)}</div>`;
+}
+
+function renderGauge(tally) {
+  const ring = document.getElementById('rc-gauge-ring');
+  const hrEl = document.getElementById('rc-gauge-hr');
+  const scope = document.getElementById('rc-gauge-scope');
+  const hrPct = tally.hr != null ? Math.round(tally.hr * 1000) / 10 : null;
+  if (ring) ring.style.setProperty('--hr', hrPct != null ? String(hrPct) : '0');
+  if (hrEl) hrEl.textContent = hrPct != null ? hrPct.toFixed(1) + '%' : '—';
+  if (scope) scope.textContent = resultsLeague
+    ? `${resultsLeague} hit rate`
+    : (resultsSport === 'global' ? 'Global hit rate' : `${String(resultsSport).toUpperCase()} hit rate`);
 }
 
 function renderResults() {
@@ -705,47 +946,56 @@ function renderResults() {
     return;
   }
   if (badge) badge.textContent = d.pod_day || 'POD';
+  const key = pnlKey(resultsUnit);
+  const rows = rowsForSport(d, resultsSport, resultsLeague);
+  const tally = tallyRows(rows, key);
+  const season = seasonForSport(d, resultsSport);
+  // Flat + no league filter → prefer season SoT for region/global; else L50/filter tally
+  const useSeason = resultsUnit === 'flat' && !resultsLeague && season && season.n;
+  const show = useSeason ? {
+    correct: season.correct || 0,
+    wrong: season.wrong || 0,
+    push: season.push || 0,
+    hr: season.hr,
+    pnl_u: season.pnl_u,
+    record: `${season.correct || 0}-${season.wrong || 0}` + ((season.push || 0) ? `-${season.push}` : ''),
+    n: rows.length
+  } : tally;
+
   renderHrChart(d);
   renderResultsChart(d);
-  const rows = rowsForSport(d, resultsSport);
-  const key = pnlKey(resultsUnit);
-  let w = 0, l = 0, p = 0, pnl = 0;
-  rows.forEach(r => {
-    const res = (r.result || '').toLowerCase();
-    if (res === 'correct') w++; else if (res === 'wrong') l++; else if (res === 'push') p++;
-    pnl += Number(r[key] != null ? r[key] : r.pnl_u || 0);
-  });
-  const season = seasonForSport(d, resultsSport);
+  renderBoardAndTiles(d, resultsSport, resultsLeague, key);
+  renderLeagueStandings(d, resultsSport, resultsLeague);
+  renderEquityCurve(equityFromRows(rows, key));
+  renderGauge(show);
+
   const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-  if (resultsUnit === 'flat' && season) {
-    set('rc-record', `${season.correct || 0}-${season.wrong || 0}` + ((season.push || 0) ? `-${season.push}` : ''));
-    set('rc-hr', ((season.hr || 0) * 100).toFixed(1) + '%');
-    set('rc-pnl', fmtU(season.pnl_u));
-    const pnlEl = document.getElementById('rc-pnl');
-    if (pnlEl) pnlEl.className = 'rv ' + ((season.pnl_u || 0) >= 0 ? 'positive' : 'negative');
-    const pnlLab = document.getElementById('rc-pnl-label');
-    if (pnlLab) pnlLab.textContent = 'Season PnL (Flat)';
-  } else {
-    set('rc-record', `${w}-${l}` + (p ? `-${p}` : ''));
-    const den = w + l;
-    set('rc-hr', den ? ((w / den) * 100).toFixed(1) + '%' : '—');
-    set('rc-pnl', fmtU(pnl));
-    const pnlEl2 = document.getElementById('rc-pnl');
-    if (pnlEl2) pnlEl2.className = 'rv ' + (pnl >= 0 ? 'positive' : 'negative');
-    const pnlLab2 = document.getElementById('rc-pnl-label');
-    if (pnlLab2) pnlLab2.textContent = 'L50 PnL (' + resultsUnit.replace('_', ' ') + ')';
-  }
+  set('rc-record', show.record);
+  set('rc-hr', show.hr != null ? ((show.hr) * 100).toFixed(1) + '%' : '—');
+  set('rc-pnl', fmtU(show.pnl_u));
   set('rc-l50n', String(rows.length));
+  const pnlEl = document.getElementById('rc-pnl');
+  if (pnlEl) pnlEl.className = 'rv ' + ((show.pnl_u || 0) >= 0 ? 'positive' : 'negative');
+  const pnlLab = document.getElementById('rc-pnl-label');
+  if (pnlLab) {
+    const mode = resultsUnit === 'flat' ? 'Flat' : resultsUnit.replace('kelly_', '').replace(/^./, c => c.toUpperCase()) + ' Kelly';
+    pnlLab.textContent = (resultsLeague || resultsSport) + ' PnL (' + mode + ')';
+  }
+
   if (note) {
     const arch = (d[resultsSport] && d[resultsSport].status === 'ARCHIVE') ? 'ARCHIVE' : '';
     const fresh = (d.results_freshness && d.results_freshness.stale) ? (d.results_freshness.note || 'stale') : '';
     const floor = d.edge_floor_label || '';
     const graded = (d.results_freshness && d.results_freshness.winter_graded_max) || '';
-    note.textContent = [d.units_policy, d.sp_policy, floor ? `floor ${floor}` : '', graded ? `graded→${graded}` : '', arch, fresh, 'slip≠LOG'].filter(Boolean).join(' · ');
+    const align = resultsSport === 'global' ? 'Global=INTL+Domestic'
+      : (resultsSport === 'intl' ? 'INTL=non-American'
+        : (resultsSport === 'domestic' ? 'Domestic=MLB+NCAA+MiLB' : ''));
+    const filt = resultsLeague ? `league=${resultsLeague}` : '';
+    note.textContent = [d.units_policy, d.sp_policy, floor ? `floor ${floor}` : '', graded ? `graded→${graded}` : '', align, filt, arch, fresh, 'slip≠LOG'].filter(Boolean).join(' · ');
   }
   if (!list) return;
   if (!rows.length) {
-    list.innerHTML = '<li class="empty-state">No L50 rows for this tab.</li>';
+    list.innerHTML = '<li class="empty-state">No L50 rows for this filter.</li>';
     return;
   }
   list.innerHTML = rows.map(r => resultsListItem(r, key)).join('');
@@ -815,12 +1065,37 @@ document.getElementById('results-unit-tabs')?.addEventListener('click', e => {
   resultsUnit = btn.dataset.unit;
   renderResults();
 });
-document.getElementById('results-sport-tabs')?.addEventListener('click', e => {
-  const btn = e.target.closest('[data-rsport]');
-  if (!btn) return;
-  document.querySelectorAll('#results-sport-tabs .chip[data-rsport]').forEach(b => b.classList.toggle('active', b === btn));
+function selectResultsSport(btn) {
+  if (!btn || !btn.dataset.rsport) return;
+  document.querySelectorAll('#results-sport-tabs .chip[data-rsport], #results-book-tabs .chip[data-rsport]')
+    .forEach(b => b.classList.toggle('active', b === btn));
   resultsSport = btn.dataset.rsport;
+  resultsLeague = null;
   renderResults();
+}
+function selectResultsLeague(lg) {
+  if (!lg) return;
+  const next = String(lg).toUpperCase();
+  resultsLeague = (resultsLeague && resultsLeague.toUpperCase() === next) ? null : next;
+  renderResults();
+}
+document.getElementById('results-sport-tabs')?.addEventListener('click', e => {
+  selectResultsSport(e.target.closest('[data-rsport]'));
+});
+document.getElementById('results-book-tabs')?.addEventListener('click', e => {
+  selectResultsSport(e.target.closest('[data-rsport]'));
+});
+document.getElementById('results-tiles')?.addEventListener('click', e => {
+  const btn = e.target.closest('[data-league]');
+  if (btn) selectResultsLeague(btn.dataset.league);
+});
+document.getElementById('results-league-standings')?.addEventListener('click', e => {
+  const btn = e.target.closest('[data-league]');
+  if (btn) selectResultsLeague(btn.dataset.league);
+});
+document.getElementById('results-regions')?.addEventListener('click', e => {
+  const btn = e.target.closest('[data-rsport]');
+  if (btn) selectResultsSport(btn);
 });
 
 Promise.all([
