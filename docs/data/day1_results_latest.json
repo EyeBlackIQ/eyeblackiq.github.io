@@ -1,6 +1,6 @@
 {
   "pod_day": "POD-20261115",
-  "generated_at": "2026-11-15T02:47:16.028789+00:00",
+  "generated_at": "2026-11-15T03:45:25.914446+00:00",
   "source": "lean_site_publish",
   "not_live_kalshi": true,
   "slip_ne_log": true,
@@ -5777,5 +5777,5 @@
     "winter_graded_max": "2026-11-14",
     "limit_days": 2
   },
-  "edge_floor_label": "3.5pp"
+  "edge_floor_label": "4pp"
 }
