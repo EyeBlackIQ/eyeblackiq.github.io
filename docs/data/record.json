@@ -1,12 +1,12 @@
 {
-  "wins": 20,
-  "losses": 14,
+  "wins": 29,
+  "losses": 27,
   "pushes": 0,
-  "net_units": 4.91,
-  "roi": 14.45,
+  "net_units": -0.76,
+  "roi": -1.36,
   "clv_pct": 0,
-  "pod_wins": 20,
-  "pod_losses": 14,
+  "pod_wins": 29,
+  "pod_losses": 27,
   "streak": "L1",
   "pod_streak": "L1",
   "day_streak": "-",
@@ -14,7 +14,7 @@
     "INTL": "L1"
   },
   "type_streaks": {},
-  "last_updated": "2026-11-14",
+  "last_updated": "2026-11-15",
   "source": "grade_ledger_primary CORE/FINAL",
   "units_policy": "flat $10 = 1u"
 }
