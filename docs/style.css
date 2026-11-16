@@ -797,6 +797,39 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
 }
 .market-grid--2 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .market-row--kalshi-only .market-cell--live .mk { color: #6aa8e8; }
+
+/* Futures tab */
+.fut-section {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 15px; font-weight: 700;
+  letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted);
+  margin: 18px 0 8px;
+}
+.fut-wrap { overflow-x: auto; border: 1px solid var(--border); margin-bottom: 12px; }
+.fut-table {
+  width: 100%; border-collapse: collapse; font-size: 14px;
+  font-family: 'Barlow', system-ui, sans-serif;
+}
+.fut-table th {
+  text-align: left; font-family: 'Barlow Condensed', sans-serif; font-size: 11px;
+  letter-spacing: 1.2px; text-transform: uppercase; color: var(--faint);
+  padding: 8px 10px; border-bottom: 1px solid var(--border); background: var(--surface2);
+}
+.fut-table td {
+  padding: 9px 10px; border-bottom: 1px solid var(--border); vertical-align: baseline;
+}
+.fut-table tr:last-child td { border-bottom: none; }
+.fut-pos { color: var(--faint); font-family: 'IBM Plex Mono', monospace; width: 2.5rem; }
+.fut-team { font-weight: 600; color: var(--text); }
+.fut-abbr { color: var(--faint); font-size: 12px; font-weight: 600; margin-left: 4px; }
+.fut-div { color: var(--muted); font-size: 13px; }
+.fut-fair { font-family: 'IBM Plex Mono', monospace; font-weight: 600; white-space: nowrap; }
+.fut-live { font-family: 'IBM Plex Mono', monospace; white-space: nowrap; color: #9ecbff; }
+.fut-sub { display: block; font-size: 11px; color: var(--muted); font-weight: 500; }
+.fut-gap { font-family: 'IBM Plex Mono', monospace; font-size: 13px; }
+.fut-gap.pos { color: var(--win); }
+.fut-gap.neg { color: var(--loss); }
+.fut-wins { font-family: 'IBM Plex Mono', monospace; color: var(--muted); }
+.fut-unlisted { color: var(--faint); font-size: 12px; font-style: italic; }
 .market-cell {
   background: var(--surface2); border: 1px solid var(--border); padding: 8px 10px;
 }

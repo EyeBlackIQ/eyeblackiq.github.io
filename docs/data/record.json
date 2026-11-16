@@ -73,7 +73,7 @@
   ],
   "region": "INTL",
   "intl_equals_sum_leagues": true,
-  "last_updated": "2026-11-15",
+  "last_updated": "2026-11-16",
   "source": "INTL CORE = sum of non-American leagues",
   "units_policy": "flat $10 = 1u",
   "note": "Header bar = live INTL. Results Global = INTL + Domestic (MLB/NCAA/MiLB)."

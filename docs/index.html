@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://eyeblackiq.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css?v=20261116-live-fair">
+<link rel="stylesheet" href="style.css?v=20261116-futures">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,6 +34,7 @@
     <nav class="primary-nav" aria-label="Primary" role="tablist">
       <button type="button" class="nav-tab active" role="tab" aria-selected="true" id="nav-picks" data-tab="PICKS">Picks</button>
       <button type="button" class="nav-tab" role="tab" aria-selected="false" id="nav-markets" data-tab="MARKETS">Markets</button>
+      <button type="button" class="nav-tab" role="tab" aria-selected="false" id="nav-futures" data-tab="FUTURES">Futures</button>
       <button type="button" class="nav-tab" role="tab" aria-selected="false" id="nav-results" data-tab="RESULTS">Results</button>
     </nav>
     <div class="social-links">
@@ -101,6 +102,19 @@
       <div class="markets-list" id="markets-grid">
         <p class="empty-state">Loading…</p>
       </div>
+    </section>
+  </section>
+
+  <section id="futures-panel" role="tabpanel" aria-labelledby="nav-futures" hidden>
+    <section class="picks-section" aria-labelledby="futures-heading">
+      <h2 class="section-title" id="futures-heading">MLB Futures</h2>
+      <p class="section-note" id="futures-note">Fair = simulation share · Live = Kalshi YES mid when listed · American primary · informational only</p>
+      <div class="chip-row" id="futures-board-tabs" role="group" aria-label="Futures board">
+        <button type="button" class="chip active" data-fboard="ws">World Series</button>
+        <button type="button" class="chip" data-fboard="division">Division</button>
+        <button type="button" class="chip" data-fboard="pennant">Pennant</button>
+      </div>
+      <div id="futures-grid"><p class="empty-state">Loading…</p></div>
     </section>
   </section>
 
@@ -199,6 +213,7 @@
     <div class="footer-links">
       <button type="button" class="footer-link" id="footer-picks">Picks</button>
       <button type="button" class="footer-link" id="footer-markets">Markets</button>
+      <button type="button" class="footer-link" id="footer-futures">Futures</button>
       <button type="button" class="footer-link" id="footer-results">Results</button>
       <a href="methodology.html">How we pick</a>
       <a href="https://x.com/EyeBlackIQ" target="_blank" rel="noopener">X</a>
@@ -212,6 +227,8 @@ document.title = 'EyeBlackIQ';
 
 let slipData = null;
 let day1Data = null;
+let futuresData = null;
+let futuresBoard = 'ws'; // ws | division | pennant
 let activeTab = 'PICKS';
 let resultsSport = 'global';
 let resultsLeague = null; // clickable league filter (null = all in region)
@@ -1299,9 +1316,106 @@ function renderMarkets() {
   host.innerHTML = rows.map(marketOddsCard).join('');
 }
 
+function loadFutures() {
+  if (futuresData) return Promise.resolve(futuresData);
+  return fetch('data/futures_board.json?t=' + Date.now())
+    .then(r => r.ok ? r.json() : null)
+    .then(d => { futuresData = d; return d; })
+    .catch(() => null);
+}
+
+function futCents(v) {
+  if (v == null || v === '') return '—';
+  const n = Number(v);
+  if (Number.isNaN(n)) return '—';
+  return `${n.toFixed(1)}¢`;
+}
+function futAm(row) {
+  if (row.fair_am_text) return row.fair_am_text;
+  return fmtAm(row.fair_am) || '—';
+}
+function futLiveAm(row) {
+  if (row.live_am_text) return row.live_am_text;
+  return fmtAm(row.live_am) || '—';
+}
+function futGap(row) {
+  const g = row.fair_minus_live_mid_cents != null ? row.fair_minus_live_mid_cents : row.fair_minus_live_ask_cents;
+  if (g == null) return '—';
+  const n = Number(g);
+  if (Number.isNaN(n)) return '—';
+  return `${n >= 0 ? '+' : ''}${n.toFixed(1)}¢`;
+}
+
+function futuresTable(rows, { showDivision = false } = {}) {
+  if (!rows || !rows.length) return '<p class="empty-state">No rows.</p>';
+  const head = `<thead><tr>
+    <th>Pos</th><th>Team</th>${showDivision ? '<th>Division</th>' : ''}
+    <th>Fair</th><th>Live</th><th>Fair−Live</th><th>Wins</th>
+  </tr></thead>`;
+  const body = rows.map((r, i) => {
+    const fair = `${futAm(r)} <span class="fut-sub">${futCents(r.fair_cents)}</span>`;
+    const live = r.quoted
+      ? `${futLiveAm(r)} <span class="fut-sub">${futCents(r.live_mid_cents)}</span>`
+      : '<span class="fut-unlisted">not listed</span>';
+    const gapCls = r.fair_minus_live_mid_cents == null ? '' : (Number(r.fair_minus_live_mid_cents) >= 0 ? 'pos' : 'neg');
+    return `<tr>
+      <td class="fut-pos">${i + 1}</td>
+      <td class="fut-team">${esc(r.name)}${r.abbr ? ` <span class="fut-abbr">${esc(r.abbr)}</span>` : ''}</td>
+      ${showDivision ? `<td class="fut-div">${esc(r.division || '')}</td>` : ''}
+      <td class="fut-fair">${fair}</td>
+      <td class="fut-live">${live}</td>
+      <td class="fut-gap ${gapCls}">${futGap(r)}</td>
+      <td class="fut-wins">${r.wins_p50 != null ? Number(r.wins_p50).toFixed(0) : '—'}</td>
+    </tr>`;
+  }).join('');
+  return `<div class="fut-wrap"><table class="fut-table">${head}<tbody>${body}</tbody></table></div>`;
+}
+
+function renderFutures() {
+  const host = document.getElementById('futures-grid');
+  const note = document.getElementById('futures-note');
+  if (!host) return;
+  loadFutures().then(d => {
+    if (!d) {
+      host.innerHTML = '<p class="empty-state">Futures board unavailable.</p>';
+      return;
+    }
+    if (note) {
+      const bits = [
+        d.note || '',
+        d.as_of ? `as of ${d.as_of}` : '',
+        d.n_paths ? `${d.n_paths.toLocaleString()} paths` : '',
+        d.checks && d.checks.live_ws_quoted != null ? `WS quotes ${d.checks.live_ws_quoted}` : '',
+      ].filter(Boolean);
+      note.textContent = bits.join(' · ');
+    }
+    document.querySelectorAll('#futures-board-tabs .chip').forEach(b => {
+      b.classList.toggle('active', b.dataset.fboard === futuresBoard);
+    });
+    if (futuresBoard === 'division') {
+      const divisions = d.divisions || {};
+      const order = Object.keys(divisions).sort();
+      host.innerHTML = order.map(div => {
+        return `<h3 class="fut-section">${esc(div)}</h3>${futuresTable(divisions[div])}`;
+      }).join('') || '<p class="empty-state">No division board.</p>';
+      return;
+    }
+    if (futuresBoard === 'pennant') {
+      const pennants = d.pennants || {};
+      const order = Object.keys(pennants).sort();
+      host.innerHTML = order.map(lg => {
+        return `<h3 class="fut-section">${esc(lg)}</h3>${futuresTable(pennants[lg], { showDivision: true })}`;
+      }).join('') || '<p class="empty-state">No pennant board.</p>';
+      return;
+    }
+    host.innerHTML = futuresTable(d.world_series || [], { showDivision: true });
+  });
+}
+
 function showTab(tab, { fromUser = false } = {}) {
   if (tab === 'RESULTS') activeTab = 'RESULTS';
   else if (tab === 'MARKETS') activeTab = 'MARKETS';
+  else if (tab === 'FUTURES') activeTab = 'FUTURES';
   else activeTab = 'PICKS';
   document.querySelectorAll('.nav-tab').forEach(b => {
     const on = b.dataset.tab === activeTab;
@@ -1310,12 +1424,16 @@ function showTab(tab, { fromUser = false } = {}) {
   });
   const picks = document.getElementById('picks-panel');
   const markets = document.getElementById('markets-panel');
+  const futures = document.getElementById('futures-panel');
   const results = document.getElementById('results-section');
+  const slate = document.querySelector('.slate-bar');
   if (!fromUser) cleanLandingUrl();
   else if (location.hash || new URL(location.href).searchParams.has('tab')) cleanLandingUrl();
+  if (slate) slate.hidden = activeTab !== 'PICKS';
   if (activeTab === 'RESULTS') {
     if (picks) picks.hidden = true;
     if (markets) markets.hidden = true;
+    if (futures) futures.hidden = true;
     if (results) results.hidden = false;
     loadDay1().then(renderResults).catch(() => {
       const el = document.getElementById('results-list');
@@ -1324,11 +1442,19 @@ function showTab(tab, { fromUser = false } = {}) {
   } else if (activeTab === 'MARKETS') {
     if (picks) picks.hidden = true;
     if (results) results.hidden = true;
+    if (futures) futures.hidden = true;
     if (markets) markets.hidden = false;
     renderMarkets();
+  } else if (activeTab === 'FUTURES') {
+    if (picks) picks.hidden = true;
+    if (results) results.hidden = true;
+    if (markets) markets.hidden = true;
+    if (futures) futures.hidden = false;
+    renderFutures();
   } else {
     if (picks) picks.hidden = false;
     if (markets) markets.hidden = true;
+    if (futures) futures.hidden = true;
     if (results) results.hidden = true;
     // Restore Picks-mode record bar labels
     const labels = document.querySelectorAll('#record-bar-content .record-stat .stat-label');
@@ -1348,7 +1474,14 @@ document.querySelectorAll('.nav-tab').forEach(btn => {
 });
 document.getElementById('footer-picks')?.addEventListener('click', () => showTab('PICKS', { fromUser: true }));
 document.getElementById('footer-markets')?.addEventListener('click', () => showTab('MARKETS', { fromUser: true }));
+document.getElementById('footer-futures')?.addEventListener('click', () => showTab('FUTURES', { fromUser: true }));
 document.getElementById('footer-results')?.addEventListener('click', () => showTab('RESULTS', { fromUser: true }));
+document.querySelectorAll('#futures-board-tabs .chip').forEach(btn => {
+  btn.addEventListener('click', () => {
+    futuresBoard = btn.dataset.fboard || 'ws';
+    renderFutures();
+  });
+});
 document.querySelector('.logo-block')?.addEventListener('click', (e) => {
   // Logo always returns to Picks (same-page SPA)
   if (location.pathname === '/' || /index\.html$/i.test(location.pathname)) {
