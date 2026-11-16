@@ -185,6 +185,10 @@ main { max-width: var(--max); margin: 0 auto; padding: 10px 20px 64px; }
 .watch-live { color: #fff; }
 .watch-fair { color: #d8d2c6; font-size: 15px; font-weight: 700; }
 .watch-kalshi { color: #9ecbff; font-size: 14px; font-weight: 700; }
+.watch-pct {
+  margin-left: 5px; font-size: 11px; font-weight: 600; color: var(--muted);
+  font-family: 'IBM Plex Mono', monospace;
+}
 .watch-odds-k {
   font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
   color: var(--faint); margin-right: 4px;
@@ -331,6 +335,10 @@ main { max-width: var(--max); margin: 0 auto; padding: 10px 20px 64px; }
 .price-fair .price-k { color: #b0aaa0; margin-right: 4px; }
 .price-kalshi { color: #9ecbff; font-weight: 700; }
 .price-kalshi .price-k { color: #6aa8e8; margin-right: 4px; }
+.price-pct {
+  margin-left: 6px; font-size: 0.62em; font-weight: 600; color: var(--muted);
+  font-family: 'IBM Plex Mono', monospace; letter-spacing: 0;
+}
 .price-sep { color: var(--faint); font-weight: 400; font-size: 0.75em; opacity: 0.7; }
 .price-caption {
   flex-basis: 100%; font-size: 10px; color: var(--faint);
@@ -787,6 +795,8 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
   display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px;
   margin-top: 10px;
 }
+.market-grid--2 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.market-row--kalshi-only .market-cell--live .mk { color: #6aa8e8; }
 .market-cell {
   background: var(--surface2); border: 1px solid var(--border); padding: 8px 10px;
 }

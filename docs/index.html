@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://eyeblackiq.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css?v=20261115-live-kalshi">
+<link rel="stylesheet" href="style.css?v=20261116-live-fair">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,7 +97,7 @@
   <section id="markets-panel" role="tabpanel" aria-labelledby="nav-markets" hidden>
     <section class="picks-section" aria-labelledby="markets-heading">
       <h2 class="section-title" id="markets-heading">Market odds</h2>
-      <p class="section-note" id="markets-note">Live book odds vs model fair vs Kalshi GAME moneyline. Educational — informational only.</p>
+      <p class="section-note" id="markets-note">Live vs Fair — American primary, % secondary. Kalshi-only leagues use Kalshi mid as Live.</p>
       <div class="markets-list" id="markets-grid">
         <p class="empty-state">Loading…</p>
       </div>
@@ -253,9 +253,26 @@ function shortBlurb(text, max = 140) {
   return cut.slice(0, max - 1).trimEnd() + '…';
 }
 
+function liveAmOf(pick) {
+  return fmtAm(pick.live_am != null ? pick.live_am : pick.book_am)
+    || (pick.price_source === 'kalshi_ml' ? fmtAm(pick.kalshi_am) : null);
+}
+function livePctOf(pick) {
+  if (pick.live_pct != null && pick.live_pct !== '') return Number(pick.live_pct);
+  if (pick.price_source === 'kalshi_ml' && pick.kalshi_implied_pct != null) return Number(pick.kalshi_implied_pct);
+  return null;
+}
+function fairPctOf(pick) {
+  if (pick.fair_pct != null && pick.fair_pct !== '') return Number(pick.fair_pct);
+  const wp = pick.model_wp_pct != null ? pick.model_wp_pct : pick.cover_pct;
+  return wp != null ? Number(wp) : null;
+}
+
 function specsPanel(pick) {
-  const live = fmtAm(pick.book_am);
+  const live = liveAmOf(pick);
   const fair = fmtAm(pick.fair_am);
+  const livePct = livePctOf(pick);
+  const fairPct = fairPctOf(pick);
   const wp = pick.model_wp_pct != null ? pick.model_wp_pct : pick.cover_pct;
   const meta = metaStack(pick);
   const facts = Array.isArray(pick.facts) ? pick.facts.filter(Boolean) : [];
@@ -266,11 +283,12 @@ function specsPanel(pick) {
   if (whenSpec) {
     rows.push(`<div class="spec-row"><span class="spec-k">When</span><span class="spec-v">${esc(whenSpec)}</span></div>`);
   }
-  const kalshi = fmtAm(pick.kalshi_am);
+  const kalshiOnly = pick.price_source === 'kalshi_ml';
+  const kalshi = (!kalshiOnly) ? fmtAm(pick.kalshi_am) : null;
   if (live || fair || kalshi) {
     const oddsBits = [];
-    if (live) oddsBits.push(`Live ${live}`);
-    if (fair) oddsBits.push(`Fair ${fair}`);
+    if (live) oddsBits.push(`Live ${live}${livePct != null && !Number.isNaN(livePct) ? ` (${livePct.toFixed(1)}%)` : ''}${kalshiOnly ? ' · Kalshi mid' : ''}`);
+    if (fair) oddsBits.push(`Fair ${fair}${fairPct != null && !Number.isNaN(fairPct) ? ` (${fairPct.toFixed(1)}%)` : ''}`);
     if (kalshi) oddsBits.push(`Kalshi ${kalshi}`);
     rows.push(`<div class="spec-row"><span class="spec-k">Odds</span><span class="spec-v">${oddsBits.join(' · ')}</span></div>`);
   }
@@ -348,7 +366,7 @@ function metaStack(p) {
   if (wp != null) {
     items.push({
       k: 'WP',
-      v: `${Number(wp).toFixed(1)}¢`,
+      v: `${Number(wp).toFixed(1)}%`,
       primary: !(isTotal || hasSides),
     });
   }
@@ -357,16 +375,21 @@ function metaStack(p) {
 
 function priceStrip(pick) {
   const fair = fmtAm(pick.fair_am);
-  const live = fmtAm(pick.book_am);
-  const kalshi = fmtAm(pick.kalshi_am);
-  // Always show Live + Fair (— when missing); Kalshi when stamped
+  const live = liveAmOf(pick);
+  const livePct = livePctOf(pick);
+  const fairPct = fairPctOf(pick);
+  const kalshiOnly = pick.price_source === 'kalshi_ml';
+  const kalshi = (!kalshiOnly) ? fmtAm(pick.kalshi_am) : null;
+  // AM primary · % secondary. Kalshi-only: Live is Kalshi mid (no duplicate column).
   const bits = [];
-  bits.push(`<span class="price-live"><span class="price-k">Live</span> ${live || '—'}</span>`);
-  bits.push(`<span class="price-fair"><span class="price-k">Fair</span> ${fair || '—'}</span>`);
+  const liveSub = livePct != null && !Number.isNaN(livePct) ? `<span class="price-pct">${livePct.toFixed(1)}%</span>` : '';
+  const fairSub = fairPct != null && !Number.isNaN(fairPct) ? `<span class="price-pct">${fairPct.toFixed(1)}%</span>` : '';
+  bits.push(`<span class="price-live"><span class="price-k">Live${kalshiOnly ? ' · Kalshi' : ''}</span> ${live || '—'}${liveSub}</span>`);
+  bits.push(`<span class="price-fair"><span class="price-k">Fair</span> ${fair || '—'}${fairSub}</span>`);
   if (kalshi) {
     bits.push(`<span class="price-kalshi"><span class="price-k">Kalshi</span> ${kalshi}</span>`);
   }
-  return `<div class="pick-prices" aria-label="Live, fair, and Kalshi odds">${bits.join('<span class="price-sep" aria-hidden="true">·</span>')}</div>`;
+  return `<div class="pick-prices" aria-label="Live and fair odds">${bits.join('<span class="price-sep" aria-hidden="true">·</span>')}</div>`;
 }
 
 function factsRow(pick, { skip = false } = {}) {
@@ -376,16 +399,38 @@ function factsRow(pick, { skip = false } = {}) {
   return `<div class="pick-facts">${facts.map(f => `<span class="fact-chip">${esc(f)}</span>`).join('')}</div>`;
 }
 
+function parseUtcDate(iso) {
+  if (!iso) return null;
+  let s = String(iso).trim();
+  // Ensure Z / offset so JS does not treat as local wall time
+  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(s) && !/[zZ]|[+-]\d{2}:?\d{2}$/.test(s)) {
+    s += 'Z';
+  }
+  const d = new Date(s);
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
+function viewerYmd(d) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+function pickViewerDate(pick) {
+  const d = parseUtcDate(pick.game_time_utc);
+  if (d) return viewerYmd(d);
+  return String(pick.signal_date || pick.game_date || '').slice(0, 10);
+}
+
 function fmtWhen(pick) {
   // Viewer-local single line when UTC exists; else date · TBD (never invent a clock).
-  if (pick.game_time_utc) {
-    const d = new Date(pick.game_time_utc);
-    if (!Number.isNaN(d.getTime())) {
-      return d.toLocaleString(undefined, {
-        weekday: 'short', month: 'short', day: 'numeric',
-        hour: 'numeric', minute: '2-digit',
-      });
-    }
+  const d = parseUtcDate(pick.game_time_utc);
+  if (d) {
+    return d.toLocaleString(undefined, {
+      weekday: 'short', month: 'short', day: 'numeric',
+      hour: 'numeric', minute: '2-digit',
+    });
   }
   const gd = String(pick.signal_date || pick.game_date || '').slice(0, 10);
   let dateBit = '';
@@ -434,8 +479,11 @@ function pickCard(pick, { hero = false } = {}) {
 
 /** Plays + Watchlist = lean list + click-to-expand Specs (POD stays hero card). */
 function leanListItem(pick, { watch = false, later = false } = {}) {
-  const live = fmtAm(pick.book_am);
+  const live = liveAmOf(pick);
   const fair = fmtAm(pick.fair_am);
+  const livePct = livePctOf(pick);
+  const fairPct = fairPctOf(pick);
+  const kalshiOnly = pick.price_source === 'kalshi_ml';
   const league = pick.league ? String(pick.league) : '';
   const when = fmtWhen(pick);
   const tone = ouTone(pick.side);
@@ -448,19 +496,22 @@ function leanListItem(pick, { watch = false, later = false } = {}) {
   } else if (pick.proj_total != null) {
     bits.push(`<span class="watch-proj">Proj μ ${Number(pick.proj_total).toFixed(1)}</span>`);
   }
-  const leanWp = pick.model_wp_pct != null ? pick.model_wp_pct : pick.cover_pct;
-  if (leanWp != null) {
-    bits.push(`<span class="watch-wp">WP ${Number(leanWp).toFixed(1)}%</span>`);
+  const leanWp = fairPctOf(pick);
+  if (leanWp != null && !Number.isNaN(leanWp)) {
+    bits.push(`<span class="watch-wp">Fair ${leanWp.toFixed(1)}%</span>`);
   }
-  const kalshi = fmtAm(pick.kalshi_am);
+  const kalshi = (!kalshiOnly) ? fmtAm(pick.kalshi_am) : null;
   const ctx = shortBlurb(pick.blurb);
   const specs = specsPanel(pick);
   const noLive = !live;
+  const liveLabel = kalshiOnly ? 'Live · Kalshi' : 'Live';
+  const livePctBit = livePct != null && !Number.isNaN(livePct) ? `<span class="watch-pct">${livePct.toFixed(1)}%</span>` : '';
+  const fairPctBit = fairPct != null && !Number.isNaN(fairPct) ? `<span class="watch-pct">${fairPct.toFixed(1)}%</span>` : '';
   return `
   <li class="watch-item${tone ? ' pick--' + tone : ''}${watch ? ' watch-item--teaser' : ''}${later ? ' watch-item--later' : ''}${noLive ? ' watch-item--nolive' : ''}">
     <div class="watch-main">
       <span class="watch-side">${esc(pick.side) || '—'}</span>
-      <span class="watch-odds" aria-label="Live and fair American odds"><span class="watch-live"><span class="watch-odds-k">Live</span> ${live || '—'}</span><span class="watch-fair"><span class="watch-odds-k">Fair</span> ${fair || '—'}</span>${kalshi ? `<span class="watch-kalshi"><span class="watch-odds-k">Kalshi</span> ${kalshi}</span>` : ''}</span>
+      <span class="watch-odds" aria-label="Live and fair American odds"><span class="watch-live"><span class="watch-odds-k">${liveLabel}</span> ${live || '—'}${livePctBit}</span><span class="watch-fair"><span class="watch-odds-k">Fair</span> ${fair || '—'}${fairPctBit}</span>${kalshi ? `<span class="watch-kalshi"><span class="watch-odds-k">Kalshi</span> ${kalshi}</span>` : ''}</span>
     </div>
     ${bits.length ? `<div class="watch-sub">${bits.join('<span class="watch-dot" aria-hidden="true">·</span>')}</div>` : ''}
     ${ctx ? `<p class="watch-ctx">${esc(ctx)}</p>` : ''}
@@ -471,8 +522,9 @@ function watchListItem(pick, { later = false } = {}) { return leanListItem(pick,
 
 let slateMode = 'today'; // today | later
 function isLaterPick(p, today) {
-  const sd = String(p.signal_date || p.game_date || '').slice(0, 10);
-  return !!(sd && today && sd > today);
+  // Viewer-local calendar date of first pitch when UTC known; else signal_date
+  const vd = pickViewerDate(p);
+  return !!(vd && today && vd > today);
 }
 
 function resultsListItem(r, key) {
@@ -541,14 +593,14 @@ function isPlay(p) {
 }
 
 function renderPicks() {
-  const today = slipData?.date || '';
+  // Slip stamp day anchors Today/Later; first-pitch viewer-local date when UTC exists.
+  const today = slipData?.date || viewerYmd(new Date());
   const laterMode = slateMode === 'later';
   const allPlays = (slipData?.recommended || []).filter(isPlay);
-  // Today slate: Plays for stamp day only. Later: D+1+ plays if any (usually empty).
   const all = allPlays.filter(p => {
-    const sd = String(p.signal_date || '').slice(0, 10);
-    if (!sd || !today) return !laterMode;
-    return laterMode ? sd > today : sd === today;
+    const vd = pickViewerDate(p);
+    if (!vd || !today) return !laterMode;
+    return laterMode ? vd > today : vd <= today;
   });
   const podsRaw = Array.isArray(slipData?.pod)
     ? slipData.pod
@@ -556,8 +608,8 @@ function renderPicks() {
   const podsToday = (podsRaw.length ? podsRaw : allPlays.filter(p => p.is_pod))
     .filter(isPlay)
     .filter(p => {
-      const sd = String(p.signal_date || '').slice(0, 10);
-      return !sd || !today || sd === today;
+      const vd = pickViewerDate(p);
+      return !vd || !today || vd <= today;
     });
   const pods = laterMode ? [] : podsToday;
   const podKeys = new Set(pods.map(p => `${p.side}|${p.game}|${p.signal_date || ''}`));
@@ -1188,13 +1240,32 @@ function marketOddsCard(row) {
   const gapCls = gap == null ? '' : (Number(gap) >= 0 ? 'pos' : 'neg');
   const gapTxt = gap == null ? '—' : `${Number(gap) >= 0 ? '+' : ''}${Number(gap).toFixed(1)} pp`;
   const when = fmtWhen(row);
+  const kalshiOnly = row.price_source === 'kalshi_ml';
   const liveAm = fmtAm(row.live_am != null ? row.live_am : row.book_am) || '—';
   const fairAm = fmtAm(row.fair_am) || '—';
-  const kalshiAm = fmtAm(row.kalshi_am) || '—';
+  const livePct = row.live_pct != null ? row.live_pct
+    : (kalshiOnly ? row.kalshi_implied_pct : row.book_implied_pct);
+  const fairPct = row.fair_pct != null ? row.fair_pct : row.model_fair_pct;
   const mkt = String(row.market || '').toUpperCase();
-  const kalshiSub = row.kalshi_implied_pct != null
-    ? fmtPct(row.kalshi_implied_pct)
-    : (mkt && mkt !== 'ML' ? 'ML only' : '—');
+  // Kalshi-only: Live already is Kalshi mid — 2-col Live/Fair (cleaner)
+  if (kalshiOnly) {
+    return `<article class="market-row market-row--kalshi-only">
+      <div class="market-head">
+        <span class="market-lg">${esc(row.league || '')}</span>
+        <span class="market-game">${esc(row.game || '')}</span>
+        <span class="market-side">${esc(row.side || row.market || '')}</span>
+      </div>
+      ${when ? `<div class="market-when">${esc(when)}</div>` : ''}
+      <div class="market-grid market-grid--2" aria-label="Live Kalshi mid vs Fair">
+        <div class="market-cell market-cell--live"><span class="mk">Live · Kalshi</span><span class="mv">${liveAm}</span><span class="ms">${fmtPct(livePct)}</span></div>
+        <div class="market-cell market-cell--fair"><span class="mk">Fair</span><span class="mv">${fairAm}</span><span class="ms">${fmtPct(fairPct)}</span></div>
+        <div class="market-cell"><span class="mk">Fair−Live</span><span class="mv ${gapCls}">${esc(gapTxt)}</span><span class="ms">edge pp</span></div>
+      </div>
+      ${row.kalshi_note ? `<div class="market-src muted">${esc(row.kalshi_note)}</div>` : ''}
+      <div class="market-src muted">Source · Kalshi mid${row.kalshi_ticker ? ` · ${esc(row.kalshi_ticker)}` : ''}</div>
+    </article>`;
+  }
+  const showKalshi = mkt === 'ML' && (row.kalshi_am != null || row.kalshi_implied_pct != null);
   return `<article class="market-row">
     <div class="market-head">
       <span class="market-lg">${esc(row.league || '')}</span>
@@ -1202,10 +1273,10 @@ function marketOddsCard(row) {
       <span class="market-side">${esc(row.side || row.market || '')}</span>
     </div>
     ${when ? `<div class="market-when">${esc(when)}</div>` : ''}
-    <div class="market-grid" aria-label="Live vs Fair vs Kalshi odds">
-      <div class="market-cell market-cell--live"><span class="mk">Live</span><span class="mv">${liveAm}</span><span class="ms">${fmtPct(row.book_implied_pct)}</span></div>
-      <div class="market-cell market-cell--fair"><span class="mk">Fair</span><span class="mv">${fairAm}</span><span class="ms">${fmtPct(row.model_fair_pct)}</span></div>
-      <div class="market-cell market-cell--kalshi"><span class="mk">Kalshi</span><span class="mv">${kalshiAm}</span><span class="ms">${esc(kalshiSub)}</span></div>
+    <div class="market-grid${showKalshi ? '' : ' market-grid--2'}" aria-label="Live vs Fair odds">
+      <div class="market-cell market-cell--live"><span class="mk">Live</span><span class="mv">${liveAm}</span><span class="ms">${fmtPct(livePct)}</span></div>
+      <div class="market-cell market-cell--fair"><span class="mk">Fair</span><span class="mv">${fairAm}</span><span class="ms">${fmtPct(fairPct)}</span></div>
+      ${showKalshi ? `<div class="market-cell market-cell--kalshi"><span class="mk">Kalshi</span><span class="mv">${fmtAm(row.kalshi_am) || '—'}</span><span class="ms">${fmtPct(row.kalshi_implied_pct)}</span></div>` : ''}
       <div class="market-cell"><span class="mk">Fair−Live</span><span class="mv ${gapCls}">${esc(gapTxt)}</span><span class="ms">edge pp</span></div>
     </div>
     ${row.kalshi_note ? `<div class="market-src muted">${esc(row.kalshi_note)}</div>` : ''}
