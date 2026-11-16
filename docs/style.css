@@ -183,7 +183,15 @@ main { max-width: var(--max); margin: 0 auto; padding: 10px 20px 64px; }
   font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 16px;
 }
 .watch-live { color: #fff; }
-.watch-fair { color: var(--faint); font-size: 12px; font-weight: 600; }
+.watch-fair { color: #d8d2c6; font-size: 15px; font-weight: 700; }
+.watch-kalshi { color: #9ecbff; font-size: 14px; font-weight: 700; }
+.watch-odds-k {
+  font-size: 10px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
+  color: var(--faint); margin-right: 4px;
+}
+.watch-live .watch-odds-k { color: var(--red); }
+.watch-fair .watch-odds-k { color: #b0aaa0; }
+.watch-kalshi .watch-odds-k { color: #6aa8e8; }
 .watch-sub {
   display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px;
   margin-top: 4px; font-size: 12px; color: var(--faint);
@@ -316,13 +324,13 @@ main { max-width: var(--max); margin: 0 auto; padding: 10px 20px 64px; }
   font-size: 10px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
   color: var(--faint); margin-right: 5px;
 }
-/* Live = action price (primary); Fair = reference (secondary) */
+/* Live = action price; Fair = model; Kalshi = prediction market */
 .price-live { color: #fff; }
 .price-live .price-k { color: var(--red); }
-.price-fair {
-  color: var(--faint); font-size: 0.78em; font-weight: 600; opacity: 0.85;
-}
-.price-fair .price-k { color: var(--faint); margin-right: 4px; }
+.price-fair { color: #e6e0d4; font-weight: 700; }
+.price-fair .price-k { color: #b0aaa0; margin-right: 4px; }
+.price-kalshi { color: #9ecbff; font-weight: 700; }
+.price-kalshi .price-k { color: #6aa8e8; margin-right: 4px; }
 .price-sep { color: var(--faint); font-weight: 400; font-size: 0.75em; opacity: 0.7; }
 .price-caption {
   flex-basis: 100%; font-size: 10px; color: var(--faint);
@@ -788,8 +796,16 @@ footer { background: var(--surface); border-top: 1px solid var(--border); paddin
 }
 .market-cell .mv {
   display: block; margin-top: 4px; font-family: 'IBM Plex Mono', monospace;
-  font-size: 15px; font-weight: 600; color: var(--text);
+  font-size: 17px; font-weight: 600; color: var(--text);
 }
+.market-cell .ms {
+  display: block; margin-top: 2px; font-size: 11px; color: var(--muted);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.market-cell--live .mk { color: var(--red); }
+.market-cell--fair .mv { color: #e6e0d4; }
+.market-cell--kalshi .mk { color: #6aa8e8; }
+.market-cell--kalshi .mv { color: #9ecbff; }
 .market-cell .mv.pos { color: var(--win); }
 .market-cell .mv.neg { color: var(--loss); }
 .market-src { margin-top: 8px; font-size: 11px; letter-spacing: 0.4px; }

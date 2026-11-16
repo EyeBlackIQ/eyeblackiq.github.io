@@ -12,7 +12,7 @@
 <meta name="twitter:card" content="summary">
 <link rel="canonical" href="https://eyeblackiq.com/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="style.css?v=20261115-markets">
+<link rel="stylesheet" href="style.css?v=20261115-live-kalshi">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -97,7 +97,7 @@
   <section id="markets-panel" role="tabpanel" aria-labelledby="nav-markets" hidden>
     <section class="picks-section" aria-labelledby="markets-heading">
       <h2 class="section-title" id="markets-heading">Market odds</h2>
-      <p class="section-note" id="markets-note">Model fair probability vs book implied vs Kalshi prediction-market price. Educational comparison — informational only.</p>
+      <p class="section-note" id="markets-note">Live book odds vs model fair vs Kalshi GAME moneyline. Educational — informational only.</p>
       <div class="markets-list" id="markets-grid">
         <p class="empty-state">Loading…</p>
       </div>
@@ -266,11 +266,16 @@ function specsPanel(pick) {
   if (whenSpec) {
     rows.push(`<div class="spec-row"><span class="spec-k">When</span><span class="spec-v">${esc(whenSpec)}</span></div>`);
   }
-  if (live || fair) {
-    rows.push(`<div class="spec-row"><span class="spec-k">Odds</span><span class="spec-v">${live ? `Live ${live}` : ''}${live && fair ? ' · ' : ''}${fair ? `Fair ${fair}` : ''}</span></div>`);
+  const kalshi = fmtAm(pick.kalshi_am);
+  if (live || fair || kalshi) {
+    const oddsBits = [];
+    if (live) oddsBits.push(`Live ${live}`);
+    if (fair) oddsBits.push(`Fair ${fair}`);
+    if (kalshi) oddsBits.push(`Kalshi ${kalshi}`);
+    rows.push(`<div class="spec-row"><span class="spec-k">Odds</span><span class="spec-v">${oddsBits.join(' · ')}</span></div>`);
   }
   if (wp != null) {
-    rows.push(`<div class="spec-row"><span class="spec-k">Model WP</span><span class="spec-v">${Number(wp).toFixed(1)}¢ <span class="spec-hint">Kalshi-style Fair ¢</span></span></div>`);
+    rows.push(`<div class="spec-row"><span class="spec-k">Model WP</span><span class="spec-v">${Number(wp).toFixed(1)}%</span></div>`);
   }
   meta.forEach(m => {
     rows.push(`<div class="spec-row"><span class="spec-k">${esc(m.k)}</span><span class="spec-v">${esc(m.v)}</span></div>`);
@@ -353,11 +358,15 @@ function metaStack(p) {
 function priceStrip(pick) {
   const fair = fmtAm(pick.fair_am);
   const live = fmtAm(pick.book_am);
-  // Always show both Live + Fair (— when missing)
+  const kalshi = fmtAm(pick.kalshi_am);
+  // Always show Live + Fair (— when missing); Kalshi when stamped
   const bits = [];
   bits.push(`<span class="price-live"><span class="price-k">Live</span> ${live || '—'}</span>`);
   bits.push(`<span class="price-fair"><span class="price-k">Fair</span> ${fair || '—'}</span>`);
-  return `<div class="pick-prices" aria-label="Live and fair odds">${bits.join('<span class="price-sep" aria-hidden="true">·</span>')}<span class="price-caption">Fair ¢ = Kalshi-style</span></div>`;
+  if (kalshi) {
+    bits.push(`<span class="price-kalshi"><span class="price-k">Kalshi</span> ${kalshi}</span>`);
+  }
+  return `<div class="pick-prices" aria-label="Live, fair, and Kalshi odds">${bits.join('<span class="price-sep" aria-hidden="true">·</span>')}</div>`;
 }
 
 function factsRow(pick, { skip = false } = {}) {
@@ -441,8 +450,9 @@ function leanListItem(pick, { watch = false, later = false } = {}) {
   }
   const leanWp = pick.model_wp_pct != null ? pick.model_wp_pct : pick.cover_pct;
   if (leanWp != null) {
-    bits.push(`<span class="watch-wp">WP ${Number(leanWp).toFixed(1)}¢</span>`);
+    bits.push(`<span class="watch-wp">WP ${Number(leanWp).toFixed(1)}%</span>`);
   }
+  const kalshi = fmtAm(pick.kalshi_am);
   const ctx = shortBlurb(pick.blurb);
   const specs = specsPanel(pick);
   const noLive = !live;
@@ -450,7 +460,7 @@ function leanListItem(pick, { watch = false, later = false } = {}) {
   <li class="watch-item${tone ? ' pick--' + tone : ''}${watch ? ' watch-item--teaser' : ''}${later ? ' watch-item--later' : ''}${noLive ? ' watch-item--nolive' : ''}">
     <div class="watch-main">
       <span class="watch-side">${esc(pick.side) || '—'}</span>
-      <span class="watch-odds" aria-label="American odds"><span class="watch-live">${live || '—'}</span><span class="watch-fair">Fair ${fair || '—'}</span></span>
+      <span class="watch-odds" aria-label="Live and fair American odds"><span class="watch-live"><span class="watch-odds-k">Live</span> ${live || '—'}</span><span class="watch-fair"><span class="watch-odds-k">Fair</span> ${fair || '—'}</span>${kalshi ? `<span class="watch-kalshi"><span class="watch-odds-k">Kalshi</span> ${kalshi}</span>` : ''}</span>
     </div>
     ${bits.length ? `<div class="watch-sub">${bits.join('<span class="watch-dot" aria-hidden="true">·</span>')}</div>` : ''}
     ${ctx ? `<p class="watch-ctx">${esc(ctx)}</p>` : ''}
@@ -1178,6 +1188,13 @@ function marketOddsCard(row) {
   const gapCls = gap == null ? '' : (Number(gap) >= 0 ? 'pos' : 'neg');
   const gapTxt = gap == null ? '—' : `${Number(gap) >= 0 ? '+' : ''}${Number(gap).toFixed(1)} pp`;
   const when = fmtWhen(row);
+  const liveAm = fmtAm(row.live_am != null ? row.live_am : row.book_am) || '—';
+  const fairAm = fmtAm(row.fair_am) || '—';
+  const kalshiAm = fmtAm(row.kalshi_am) || '—';
+  const mkt = String(row.market || '').toUpperCase();
+  const kalshiSub = row.kalshi_implied_pct != null
+    ? fmtPct(row.kalshi_implied_pct)
+    : (mkt && mkt !== 'ML' ? 'ML only' : '—');
   return `<article class="market-row">
     <div class="market-head">
       <span class="market-lg">${esc(row.league || '')}</span>
@@ -1185,13 +1202,14 @@ function marketOddsCard(row) {
       <span class="market-side">${esc(row.side || row.market || '')}</span>
     </div>
     ${when ? `<div class="market-when">${esc(when)}</div>` : ''}
-    <div class="market-grid" aria-label="Implied probabilities">
-      <div class="market-cell"><span class="mk">Model fair</span><span class="mv">${fmtPct(row.model_fair_pct)}</span></div>
-      <div class="market-cell"><span class="mk">Book implied</span><span class="mv">${fmtPct(row.book_implied_pct)}</span></div>
-      <div class="market-cell"><span class="mk">Kalshi</span><span class="mv">${fmtPct(row.kalshi_implied_pct)}</span></div>
-      <div class="market-cell"><span class="mk">Live−Fair</span><span class="mv ${gapCls}">${esc(gapTxt)}</span></div>
+    <div class="market-grid" aria-label="Live vs Fair vs Kalshi odds">
+      <div class="market-cell market-cell--live"><span class="mk">Live</span><span class="mv">${liveAm}</span><span class="ms">${fmtPct(row.book_implied_pct)}</span></div>
+      <div class="market-cell market-cell--fair"><span class="mk">Fair</span><span class="mv">${fairAm}</span><span class="ms">${fmtPct(row.model_fair_pct)}</span></div>
+      <div class="market-cell market-cell--kalshi"><span class="mk">Kalshi</span><span class="mv">${kalshiAm}</span><span class="ms">${esc(kalshiSub)}</span></div>
+      <div class="market-cell"><span class="mk">Fair−Live</span><span class="mv ${gapCls}">${esc(gapTxt)}</span><span class="ms">edge pp</span></div>
     </div>
-    <div class="market-src muted">Source · ${esc(row.price_source || 'book')}</div>
+    ${row.kalshi_note ? `<div class="market-src muted">${esc(row.kalshi_note)}</div>` : ''}
+    <div class="market-src muted">Source · ${esc(row.price_source || 'book')}${row.kalshi_ticker ? ` · ${esc(row.kalshi_ticker)}` : ''}</div>
   </article>`;
 }
 
