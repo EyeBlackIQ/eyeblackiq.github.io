@@ -1,6 +1,6 @@
 {
   "date": "2026-11-16",
-  "generated": "2026-11-16T20:17:09.054040+00:00",
+  "generated": "2026-11-17T00:04:15.996138+00:00",
   "empty": true,
   "empty_message": "No Picks Today",
   "pod_empty_message": "No POD today",
@@ -35,5 +35,5 @@
   "teaser_label": null,
   "market_odds": [],
   "market_odds_note": "Live vs Fair — American primary, implied % secondary. Live = sportsbook when listed; Kalshi-only leagues use Kalshi GAME mid as Live. Fair = model WP. Totals/spreads have no winter Kalshi contract. Informational only.",
-  "offsite_tracked_n": 0
+  "offsite_tracked_n": 2
 }
