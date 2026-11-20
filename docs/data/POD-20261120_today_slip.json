@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-20",
+  "generated": "2026-11-20T15:47:25.700060+00:00",
+  "empty": true,
+  "empty_message": "No Picks Today",
+  "pod_empty_message": "No POD today",
+  "policy": {
+    "picks": "PLAY_ONLY",
+    "watchlist": "PLUS_tracked",
+    "public_tier_word": "Play",
+    "edge_public": false,
+    "edge_floor_pp": 4.0,
+    "edge_floor_label": "base4 · ML5 · SPREAD6 · TOTAL5 · LIDOM ML6/SP7/TOT6",
+    "edge_floors_by_market": {
+      "ML": 5.0,
+      "SPREAD": 6.0,
+      "TOTAL": 5.0,
+      "LIDOM_ML": 6.0,
+      "LIDOM_SPREAD": 7.0,
+      "LIDOM_TOTAL": 6.0
+    },
+    "forward_slate": "held",
+    "sports": "baseball_leagues_only",
+    "mlb_asia": "ARCHIVE_OFFSEASON",
+    "lbprc_live_cleared": false,
+    "abl_live_cleared": true,
+    "market_odds": "live_vs_fair_am_primary_pct_secondary",
+    "champion_futures": "removed_until_math",
+    "kalshi_only_live": "kalshi_mid",
+    "polymarket": "skipped"
+  },
+  "recommended": [],
+  "pod": [],
+  "teaser": [],
+  "teaser_label": null,
+  "market_odds": [],
+  "market_odds_note": "Live vs Fair — American primary, implied % secondary. Live = sportsbook when listed; Kalshi-only leagues use Kalshi GAME mid as Live. Fair = model WP. Totals/spreads have no winter Kalshi contract. Informational only.",
+  "offsite_tracked_n": 0
+}
