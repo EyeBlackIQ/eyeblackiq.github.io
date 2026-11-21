@@ -1,20 +1,31 @@
 {
-  "wins": 37,
-  "losses": 42,
+  "wins": 40,
+  "losses": 43,
   "pushes": 1,
-  "net_units": -9.15,
-  "roi": -11.59,
+  "net_units": -7.48,
+  "roi": -9.01,
   "clv_pct": 0,
-  "pod_wins": 37,
-  "pod_losses": 42,
-  "streak": "L2",
-  "pod_streak": "L2",
+  "pod_wins": 40,
+  "pod_losses": 43,
+  "streak": "W1",
+  "pod_streak": "W1",
   "day_streak": "-",
   "sport_streaks": {
-    "INTL": "L2"
+    "INTL": "W1"
   },
   "type_streaks": {},
   "by_league": [
+    {
+      "league": "ABL",
+      "region": "INTL",
+      "wins": 2,
+      "losses": 0,
+      "pushes": 0,
+      "n": 2,
+      "hr": 1.0,
+      "pnl_u": 1.9,
+      "record": "2-0"
+    },
     {
       "league": "KBO",
       "region": "INTL",
@@ -40,24 +51,24 @@
     {
       "league": "LMP",
       "region": "INTL",
-      "wins": 28,
+      "wins": 29,
       "losses": 31,
       "pushes": 0,
-      "n": 59,
-      "hr": 0.4746,
-      "pnl_u": -7.2118,
-      "record": "28-31"
+      "n": 60,
+      "hr": 0.4833,
+      "pnl_u": -6.4368,
+      "record": "29-31"
     },
     {
       "league": "LVBP",
       "region": "INTL",
       "wins": 3,
-      "losses": 5,
+      "losses": 6,
       "pushes": 1,
-      "n": 9,
-      "hr": 0.375,
-      "pnl_u": -2.01,
-      "record": "3-5-1"
+      "n": 10,
+      "hr": 0.3333,
+      "pnl_u": -3.01,
+      "record": "3-6-1"
     },
     {
       "league": "NPB",
