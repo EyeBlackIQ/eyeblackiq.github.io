@@ -1310,7 +1310,7 @@ function renderMarkets() {
     note.textContent = slipData.market_odds_note;
   }
   if (!rows.length) {
-    host.innerHTML = '<p class="empty-state">No market-odds rows today. Kalshi GAME ML posts when listed for LMP · LIDOM · LVBP · LBPRC.</p>';
+    host.innerHTML = '<p class="empty-state">No market-odds rows today. Winter GAME + ABL post Live vs Fair when book or Kalshi mid is listed (LMP · LIDOM · LVBP · LBPRC · ABL).</p>';
     return;
   }
   host.innerHTML = rows.map(marketOddsCard).join('');

@@ -1,17 +1,17 @@
 {
-  "wins": 34,
-  "losses": 34,
+  "wins": 37,
+  "losses": 42,
   "pushes": 1,
-  "net_units": -3.95,
-  "roi": -5.81,
+  "net_units": -9.15,
+  "roi": -11.59,
   "clv_pct": 0,
-  "pod_wins": 34,
-  "pod_losses": 34,
-  "streak": "W1",
-  "pod_streak": "W1",
+  "pod_wins": 37,
+  "pod_losses": 42,
+  "streak": "L2",
+  "pod_streak": "L2",
   "day_streak": "-",
   "sport_streaks": {
-    "INTL": "W1"
+    "INTL": "L2"
   },
   "type_streaks": {},
   "by_league": [
@@ -40,13 +40,13 @@
     {
       "league": "LMP",
       "region": "INTL",
-      "wins": 25,
-      "losses": 23,
+      "wins": 28,
+      "losses": 31,
       "pushes": 0,
-      "n": 48,
-      "hr": 0.5208,
-      "pnl_u": -2.008,
-      "record": "25-23"
+      "n": 59,
+      "hr": 0.4746,
+      "pnl_u": -7.2118,
+      "record": "28-31"
     },
     {
       "league": "LVBP",
@@ -73,7 +73,7 @@
   ],
   "region": "INTL",
   "intl_equals_sum_leagues": true,
-  "last_updated": "2026-11-20",
+  "last_updated": "2026-11-21",
   "source": "INTL CORE = sum of non-American leagues",
   "units_policy": "flat $10 = 1u",
   "note": "Header bar = live INTL. Results Global = INTL + Domestic (MLB/NCAA/MiLB)."
