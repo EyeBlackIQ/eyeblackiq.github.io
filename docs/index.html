@@ -98,7 +98,7 @@
   <section id="markets-panel" role="tabpanel" aria-labelledby="nav-markets" hidden>
     <section class="picks-section" aria-labelledby="markets-heading">
       <h2 class="section-title" id="markets-heading">Market odds</h2>
-      <p class="section-note" id="markets-note">Live vs Fair — American primary, % secondary. Kalshi-only leagues use Kalshi mid as Live.</p>
+      <p class="section-note" id="markets-note">Kalshi / Polymarket exchanges — Live = mid, Fair = model WP. Unparsed games omitted.</p>
       <div class="markets-list" id="markets-grid">
         <p class="empty-state">Loading…</p>
       </div>
@@ -1305,12 +1305,24 @@ function renderMarkets() {
   const host = document.getElementById('markets-grid');
   const note = document.getElementById('markets-note');
   if (!host) return;
-  const rows = (slipData && Array.isArray(slipData.market_odds)) ? slipData.market_odds : [];
+  const allowed = new Set(['kalshi', 'polymarket']);
+  const raw = (slipData && Array.isArray(slipData.market_odds)) ? slipData.market_odds : [];
+  // Exchange platforms only — drop sportsbook / unparsed leftovers
+  const rows = raw.filter((r) => {
+    const ex = String((r && r.exchange) || '').toLowerCase();
+    const src = String((r && r.price_source) || '').toLowerCase();
+    const game = String((r && r.game) || '');
+    const hasLive = r && (r.live_am != null || r.live_pct != null);
+    const hasFair = r && (r.fair_am != null || r.fair_pct != null);
+    const parsed = game.includes(' @ ');
+    return (allowed.has(ex) || src === 'kalshi_ml' || src === 'polymarket')
+      && parsed && hasLive && hasFair;
+  });
   if (note && slipData && slipData.market_odds_note) {
     note.textContent = slipData.market_odds_note;
   }
   if (!rows.length) {
-    host.innerHTML = '<p class="empty-state">No market-odds rows today. Winter GAME + ABL post Live vs Fair when book or Kalshi mid is listed (LMP · LIDOM · LVBP · LBPRC · ABL).</p>';
+    host.innerHTML = '<p class="empty-state">No exchange markets today. Kalshi / Polymarket GAME ML posts when Live mid and Fair WP both parse.</p>';
     return;
   }
   host.innerHTML = rows.map(marketOddsCard).join('');
