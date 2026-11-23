@@ -1,30 +1,30 @@
 {
-  "wins": 45,
-  "losses": 49,
+  "wins": 52,
+  "losses": 48,
   "pushes": 1,
-  "net_units": -8.88,
-  "roi": -9.44,
+  "net_units": -1.17,
+  "roi": -1.17,
   "clv_pct": 0,
-  "pod_wins": 45,
-  "pod_losses": 49,
-  "streak": "L1",
-  "pod_streak": "L1",
+  "pod_wins": 52,
+  "pod_losses": 48,
+  "streak": "L2",
+  "pod_streak": "L2",
   "day_streak": "-",
   "sport_streaks": {
-    "INTL": "L1"
+    "INTL": "L2"
   },
   "type_streaks": {},
   "by_league": [
     {
       "league": "ABL",
       "region": "INTL",
-      "wins": 2,
+      "wins": 4,
       "losses": 0,
       "pushes": 0,
-      "n": 2,
+      "n": 4,
       "hr": 1.0,
-      "pnl_u": 1.9,
-      "record": "2-0"
+      "pnl_u": 4.05,
+      "record": "4-0"
     },
     {
       "league": "KBO",
@@ -51,13 +51,13 @@
     {
       "league": "LMP",
       "region": "INTL",
-      "wins": 31,
-      "losses": 34,
+      "wins": 36,
+      "losses": 33,
       "pushes": 0,
-      "n": 65,
-      "hr": 0.4769,
-      "pnl_u": -7.6388,
-      "record": "31-34"
+      "n": 69,
+      "hr": 0.5217,
+      "pnl_u": -2.0781,
+      "record": "36-33"
     },
     {
       "league": "LVBP",
@@ -84,7 +84,7 @@
   ],
   "region": "INTL",
   "intl_equals_sum_leagues": true,
-  "last_updated": "2026-11-22",
+  "last_updated": "2026-11-23",
   "source": "INTL CORE = sum of non-American leagues",
   "units_policy": "flat $10 = 1u",
   "note": "Header bar = live INTL. Results Global = INTL + Domestic (MLB/NCAA/MiLB)."
