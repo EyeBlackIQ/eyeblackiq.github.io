@@ -1,0 +1,43 @@
+{
+  "date": "2026-11-24",
+  "generated": "2026-11-24T11:23:48.874627+00:00",
+  "empty": true,
+  "empty_message": "No Picks Today",
+  "pod_empty_message": "No POD today",
+  "policy": {
+    "picks": "PLAY_ONLY",
+    "watchlist": "PLUS_tracked",
+    "public_tier_word": "Play",
+    "edge_public": false,
+    "edge_floor_pp": 4.0,
+    "edge_floor_label": "base4 · ML5 · SPREAD6 · TOTAL5 · LIDOM ML6/SP7/TOT6",
+    "edge_floors_by_market": {
+      "ML": 5.0,
+      "SPREAD": 6.0,
+      "TOTAL": 5.0,
+      "LIDOM_ML": 6.0,
+      "LIDOM_SPREAD": 7.0,
+      "LIDOM_TOTAL": 6.0
+    },
+    "forward_slate": "held",
+    "sports": "baseball_leagues_only",
+    "mlb_asia": "ARCHIVE_OFFSEASON",
+    "lbprc_live_cleared": false,
+    "abl_live_cleared": true,
+    "market_odds": "exchange_live_vs_fair_only",
+    "champion_futures": "removed_until_math",
+    "kalshi_only_live": "kalshi_mid",
+    "polymarket": "skipped_until_wired",
+    "markets_exchanges": [
+      "kalshi",
+      "polymarket"
+    ]
+  },
+  "recommended": [],
+  "pod": [],
+  "teaser": [],
+  "teaser_label": null,
+  "market_odds": [],
+  "market_odds_note": "Markets = Kalshi / Polymarket-style exchanges only. Live = exchange mid; Fair = model WP. Unparsed games (no Away @ Home, no Live, or no Fair) are omitted. Sportsbook juice stays on Plays — not Markets.",
+  "offsite_tracked_n": 0
+}

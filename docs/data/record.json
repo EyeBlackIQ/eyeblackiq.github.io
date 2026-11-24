@@ -1,11 +1,11 @@
 {
-  "wins": 52,
+  "wins": 53,
   "losses": 48,
   "pushes": 1,
-  "net_units": -1.17,
-  "roi": -1.17,
+  "net_units": -0.5,
+  "roi": -0.49,
   "clv_pct": 0,
-  "pod_wins": 52,
+  "pod_wins": 53,
   "pod_losses": 48,
   "streak": "L2",
   "pod_streak": "L2",
@@ -62,13 +62,13 @@
     {
       "league": "LVBP",
       "region": "INTL",
-      "wins": 6,
+      "wins": 7,
       "losses": 9,
       "pushes": 1,
-      "n": 16,
-      "hr": 0.4,
-      "pnl_u": -3.2067,
-      "record": "6-9-1"
+      "n": 17,
+      "hr": 0.4375,
+      "pnl_u": -2.54,
+      "record": "7-9-1"
     },
     {
       "league": "NPB",
@@ -84,7 +84,7 @@
   ],
   "region": "INTL",
   "intl_equals_sum_leagues": true,
-  "last_updated": "2026-11-23",
+  "last_updated": "2026-11-24",
   "source": "INTL CORE = sum of non-American leagues",
   "units_policy": "flat $10 = 1u",
   "note": "Header bar = live INTL. Results Global = INTL + Domestic (MLB/NCAA/MiLB)."

@@ -1,6 +1,6 @@
 {
-  "pod_day": "POD-20261123",
-  "generated_at": "2026-11-23T21:24:47.960046+00:00",
+  "pod_day": "POD-20261124",
+  "generated_at": "2026-11-24T11:23:48.893740+00:00",
   "source": "lean_site_publish",
   "not_live_kalshi": true,
   "slip_ne_log": true,
@@ -2690,13 +2690,13 @@
       "ABL"
     ],
     "slip_summary": {
-      "correct": 48,
+      "correct": 49,
       "wrong": 44,
       "push": 1,
-      "n": 93,
-      "hr": 0.5217,
-      "pnl_u": -1.6015,
-      "roi": -0.0174
+      "n": 94,
+      "hr": 0.5269,
+      "pnl_u": -0.9348,
+      "roi": -0.0101
     },
     "by_league": [
       {
@@ -2735,20 +2735,20 @@
       {
         "league": "LVBP",
         "region": "INTL",
-        "wins": 6,
+        "wins": 7,
         "losses": 9,
         "pushes": 1,
-        "n": 16,
-        "hr": 0.4,
-        "pnl_u": -3.2067,
-        "record": "6-9-1"
+        "n": 17,
+        "hr": 0.4375,
+        "pnl_u": -2.54,
+        "record": "7-9-1"
       }
     ],
     "by_league_sum": {
-      "wins": 48,
+      "wins": 49,
       "losses": 44,
       "pushes": 1,
-      "pnl_u": -1.6015
+      "pnl_u": -0.9348
     },
     "l50": [
       {
@@ -2800,6 +2800,32 @@
         "first_pitch": "00:10 MST",
         "first_pitch_tz": "",
         "game_time": "00:10 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-23"
+      },
+      {
+        "date": "2026-11-23",
+        "league": "LVBP",
+        "tier": "CORE",
+        "market": "SPREAD",
+        "bet": "Tiburones de La Guaira +1.5",
+        "game": "Cardenales de Lara @ Tiburones de La Guaira",
+        "odds": "-150",
+        "result": "correct",
+        "pnl_u": 0.6667,
+        "actual": "7-11",
+        "note": "Final 7-11 \u00b7 margin -4 \u00b7 line +1.5 \u00b7 cover +5.5 \u00b7 covered",
+        "outcome_tag": null,
+        "close_loss": false,
+        "close_win": false,
+        "cover_margin_runs": 5.5,
+        "unit": "flat",
+        "pnl_flat_u": 0.6667,
+        "stake_flat_u": 1.0,
+        "book": "Bovada",
+        "first_pitch": "19:00 VET",
+        "first_pitch_tz": "",
+        "game_time": "19:00 VET",
         "game_time_utc": "",
         "signal_date": "2026-11-23"
       },
@@ -4017,32 +4043,6 @@
         "cover_margin_runs": 2.0,
         "unit": "flat",
         "pnl_flat_u": 0.82,
-        "stake_flat_u": 1.0,
-        "book": "Pinnacle",
-        "first_pitch": "02:30 MST",
-        "first_pitch_tz": "",
-        "game_time": "02:30 MST",
-        "game_time_utc": "",
-        "signal_date": "2026-11-14"
-      },
-      {
-        "date": "2026-11-14",
-        "league": "LMP",
-        "tier": "CORE",
-        "market": "ML",
-        "bet": "Mayos Navojoa ML",
-        "game": "Mayos Navojoa @ Caneros Los Mochis",
-        "odds": "+134",
-        "result": "wrong",
-        "pnl_u": -1.0,
-        "actual": "3-5",
-        "note": "Final 3-5 \u00b7 home by 2 \u00b7 missed ML",
-        "outcome_tag": null,
-        "close_loss": false,
-        "close_win": false,
-        "cover_margin_runs": null,
-        "unit": "flat",
-        "pnl_flat_u": -1.0,
         "stake_flat_u": 1.0,
         "book": "Pinnacle",
         "first_pitch": "02:30 MST",
@@ -4866,14 +4866,14 @@
       "NPB"
     ],
     "slip_summary": {
-      "correct": 56,
+      "correct": 57,
       "wrong": 53,
       "push": 1,
-      "n": 110,
-      "hr": 0.5138,
-      "pnl_u": -0.7315,
-      "roi": -0.0067,
-      "record": "56-53-1",
+      "n": 111,
+      "hr": 0.5182,
+      "pnl_u": -0.0648,
+      "roi": -0.0006,
+      "record": "57-53-1",
       "note": "Global = sum of league/book records"
     },
     "by_league": [
@@ -4924,13 +4924,13 @@
       {
         "league": "LVBP",
         "region": "INTL",
-        "wins": 6,
+        "wins": 7,
         "losses": 9,
         "pushes": 1,
-        "n": 16,
-        "hr": 0.4,
-        "pnl_u": -3.2067,
-        "record": "6-9-1"
+        "n": 17,
+        "hr": 0.4375,
+        "pnl_u": -2.54,
+        "record": "7-9-1"
       },
       {
         "league": "NPB",
@@ -4945,10 +4945,10 @@
       }
     ],
     "by_league_sum": {
-      "wins": 56,
+      "wins": 57,
       "losses": 53,
       "pushes": 1,
-      "pnl_u": -0.7315
+      "pnl_u": -0.0648
     },
     "l50": [
       {
@@ -5000,6 +5000,32 @@
         "first_pitch": "00:10 MST",
         "first_pitch_tz": "",
         "game_time": "00:10 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-23"
+      },
+      {
+        "date": "2026-11-23",
+        "league": "LVBP",
+        "tier": "CORE",
+        "market": "SPREAD",
+        "bet": "Tiburones de La Guaira +1.5",
+        "game": "Cardenales de Lara @ Tiburones de La Guaira",
+        "odds": "-150",
+        "result": "correct",
+        "pnl_u": 0.6667,
+        "actual": "7-11",
+        "note": "Final 7-11 \u00b7 margin -4 \u00b7 line +1.5 \u00b7 cover +5.5 \u00b7 covered",
+        "outcome_tag": null,
+        "close_loss": false,
+        "close_win": false,
+        "cover_margin_runs": 5.5,
+        "unit": "flat",
+        "pnl_flat_u": 0.6667,
+        "stake_flat_u": 1.0,
+        "book": "Bovada",
+        "first_pitch": "19:00 VET",
+        "first_pitch_tz": "",
+        "game_time": "19:00 VET",
         "game_time_utc": "",
         "signal_date": "2026-11-23"
       },
@@ -6224,43 +6250,17 @@
         "game_time": "02:30 MST",
         "game_time_utc": "",
         "signal_date": "2026-11-14"
-      },
-      {
-        "date": "2026-11-14",
-        "league": "LMP",
-        "tier": "CORE",
-        "market": "ML",
-        "bet": "Mayos Navojoa ML",
-        "game": "Mayos Navojoa @ Caneros Los Mochis",
-        "odds": "+134",
-        "result": "wrong",
-        "pnl_u": -1.0,
-        "actual": "3-5",
-        "note": "Final 3-5 \u00b7 home by 2 \u00b7 missed ML",
-        "outcome_tag": null,
-        "close_loss": false,
-        "close_win": false,
-        "cover_margin_runs": null,
-        "unit": "flat",
-        "pnl_flat_u": -1.0,
-        "stake_flat_u": 1.0,
-        "book": "Pinnacle",
-        "first_pitch": "02:30 MST",
-        "first_pitch_tz": "",
-        "game_time": "02:30 MST",
-        "game_time_utc": "",
-        "signal_date": "2026-11-14"
       }
     ],
     "books": {
       "winter": {
-        "correct": 48,
+        "correct": 49,
         "wrong": 44,
         "push": 1,
-        "n": 93,
-        "hr": 0.5217,
-        "pnl_u": -1.6015,
-        "roi": -0.0174
+        "n": 94,
+        "hr": 0.5269,
+        "pnl_u": -0.9348,
+        "roi": -0.0101
       },
       "asia": {
         "correct": 8,
@@ -7680,14 +7680,14 @@
     "status": "LIVE",
     "note": "Global = INTL + Domestic (all-inclusive)",
     "slip_summary": {
-      "correct": 303,
+      "correct": 304,
       "wrong": 233,
       "push": 5,
-      "n": 553,
-      "hr": 0.5653,
-      "pnl_u": 44.0309,
-      "roi": 0.0821,
-      "record": "303-233-5",
+      "n": 554,
+      "hr": 0.5661,
+      "pnl_u": 44.6976,
+      "roi": 0.0832,
+      "record": "304-233-5",
       "note": "Global = sum of league/book records"
     },
     "by_league": [
@@ -7771,13 +7771,13 @@
       {
         "league": "LVBP",
         "region": "INTL",
-        "wins": 6,
+        "wins": 7,
         "losses": 9,
         "pushes": 1,
-        "n": 16,
-        "hr": 0.4,
-        "pnl_u": -3.2067,
-        "record": "6-9-1"
+        "n": 17,
+        "hr": 0.4375,
+        "pnl_u": -2.54,
+        "record": "7-9-1"
       },
       {
         "league": "NPB",
@@ -7792,21 +7792,21 @@
       }
     ],
     "by_league_sum": {
-      "wins": 303,
+      "wins": 304,
       "losses": 233,
       "pushes": 5,
-      "pnl_u": 44.0309
+      "pnl_u": 44.6976
     },
     "by_region": {
       "INTL": {
-        "correct": 56,
+        "correct": 57,
         "wrong": 53,
         "push": 1,
-        "n": 110,
-        "hr": 0.5138,
-        "pnl_u": -0.7315,
-        "roi": -0.0067,
-        "record": "56-53-1",
+        "n": 111,
+        "hr": 0.5182,
+        "pnl_u": -0.0648,
+        "roi": -0.0006,
+        "record": "57-53-1",
         "note": "Global = sum of league/book records"
       },
       "DOMESTIC": {
@@ -7873,6 +7873,32 @@
         "first_pitch": "00:10 MST",
         "first_pitch_tz": "",
         "game_time": "00:10 MST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-23"
+      },
+      {
+        "date": "2026-11-23",
+        "league": "LVBP",
+        "tier": "CORE",
+        "market": "SPREAD",
+        "bet": "Tiburones de La Guaira +1.5",
+        "game": "Cardenales de Lara @ Tiburones de La Guaira",
+        "odds": "-150",
+        "result": "correct",
+        "pnl_u": 0.6667,
+        "actual": "7-11",
+        "note": "Final 7-11 \u00b7 margin -4 \u00b7 line +1.5 \u00b7 cover +5.5 \u00b7 covered",
+        "outcome_tag": null,
+        "close_loss": false,
+        "close_win": false,
+        "cover_margin_runs": 5.5,
+        "unit": "flat",
+        "pnl_flat_u": 0.6667,
+        "stake_flat_u": 1.0,
+        "book": "Bovada",
+        "first_pitch": "19:00 VET",
+        "first_pitch_tz": "",
+        "game_time": "19:00 VET",
         "game_time_utc": "",
         "signal_date": "2026-11-23"
       },
@@ -9097,453 +9123,427 @@
         "game_time": "02:30 MST",
         "game_time_utc": "",
         "signal_date": "2026-11-14"
-      },
-      {
-        "date": "2026-11-14",
-        "league": "LMP",
-        "tier": "CORE",
-        "market": "ML",
-        "bet": "Mayos Navojoa ML",
-        "game": "Mayos Navojoa @ Caneros Los Mochis",
-        "odds": "+134",
-        "result": "wrong",
-        "pnl_u": -1.0,
-        "actual": "3-5",
-        "note": "Final 3-5 \u00b7 home by 2 \u00b7 missed ML",
-        "outcome_tag": null,
-        "close_loss": false,
-        "close_win": false,
-        "cover_margin_runs": null,
-        "unit": "flat",
-        "pnl_flat_u": -1.0,
-        "stake_flat_u": 1.0,
-        "book": "Pinnacle",
-        "first_pitch": "02:30 MST",
-        "first_pitch_tz": "",
-        "game_time": "02:30 MST",
-        "game_time_utc": "",
-        "signal_date": "2026-11-14"
       }
     ],
     "equity_curve": [
       {
         "date": "2026-11-11",
         "league": "LMP",
-        "pnl_u": 0.8333,
-        "cum_u": 0.8333,
-        "result": "correct"
-      },
-      {
-        "date": "2026-11-11",
-        "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -0.1667,
+        "cum_u": -1.0,
         "result": "wrong"
       },
       {
         "date": "2026-11-12",
         "league": "LMP",
         "pnl_u": 0.893,
-        "cum_u": 0.7263,
+        "cum_u": -0.107,
         "result": "correct"
       },
       {
         "date": "2026-11-12",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -0.2737,
+        "cum_u": -1.107,
         "result": "wrong"
       },
       {
         "date": "2026-11-13",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -1.2737,
+        "cum_u": -2.107,
         "result": "wrong"
       },
       {
         "date": "2026-11-13",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -2.2737,
+        "cum_u": -3.107,
         "result": "wrong"
       },
       {
         "date": "2026-11-14",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -3.2737,
+        "cum_u": -4.107,
         "result": "wrong"
       },
       {
         "date": "2026-11-14",
         "league": "LMP",
         "pnl_u": 0.82,
-        "cum_u": -2.4537,
+        "cum_u": -3.287,
         "result": "correct"
       },
       {
         "date": "2026-11-14",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -3.4537,
+        "cum_u": -4.287,
         "result": "wrong"
       },
       {
         "date": "2026-11-14",
         "league": "LMP",
         "pnl_u": 0.9524,
-        "cum_u": -2.5013,
+        "cum_u": -3.3346,
         "result": "correct"
       },
       {
         "date": "2026-11-14",
         "league": "LMP",
         "pnl_u": 1.0,
-        "cum_u": -1.5013,
+        "cum_u": -2.3346,
         "result": "correct"
       },
       {
         "date": "2026-11-14",
         "league": "LIDOM",
         "pnl_u": -1.0,
-        "cum_u": -2.5013,
+        "cum_u": -3.3346,
         "result": "wrong"
       },
       {
         "date": "2026-11-14",
         "league": "LMP",
         "pnl_u": 0.855,
-        "cum_u": -1.6463,
+        "cum_u": -2.4796,
         "result": "correct"
       },
       {
         "date": "2026-11-15",
         "league": "LMP",
         "pnl_u": 0.7143,
-        "cum_u": -0.932,
+        "cum_u": -1.7653,
         "result": "correct"
       },
       {
         "date": "2026-11-15",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -1.932,
+        "cum_u": -2.7653,
         "result": "wrong"
       },
       {
         "date": "2026-11-15",
         "league": "LIDOM",
         "pnl_u": 0.8,
+        "cum_u": -1.9653,
+        "result": "correct"
+      },
+      {
+        "date": "2026-11-15",
+        "league": "LIDOM",
+        "pnl_u": 0.8333,
         "cum_u": -1.132,
         "result": "correct"
       },
       {
         "date": "2026-11-15",
         "league": "LIDOM",
-        "pnl_u": 0.8333,
-        "cum_u": -0.2987,
-        "result": "correct"
-      },
-      {
-        "date": "2026-11-15",
-        "league": "LIDOM",
         "pnl_u": -1.0,
-        "cum_u": -1.2987,
+        "cum_u": -2.132,
         "result": "wrong"
       },
       {
         "date": "2026-11-15",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -2.2987,
+        "cum_u": -3.132,
         "result": "wrong"
       },
       {
         "date": "2026-11-15",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -3.2987,
+        "cum_u": -4.132,
         "result": "wrong"
       },
       {
         "date": "2026-11-15",
         "league": "LMP",
         "pnl_u": 0.8,
-        "cum_u": -2.4987,
+        "cum_u": -3.332,
         "result": "correct"
       },
       {
         "date": "2026-11-15",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -3.4987,
+        "cum_u": -4.332,
         "result": "wrong"
       },
       {
         "date": "2026-11-15",
         "league": "LVBP",
         "pnl_u": -1.0,
-        "cum_u": -4.4987,
+        "cum_u": -5.332,
         "result": "wrong"
       },
       {
         "date": "2026-11-16",
         "league": "LMP",
         "pnl_u": 0.73,
-        "cum_u": -3.7687,
+        "cum_u": -4.602,
         "result": "correct"
       },
       {
         "date": "2026-11-16",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -4.7687,
+        "cum_u": -5.602,
         "result": "wrong"
       },
       {
         "date": "2026-11-16",
         "league": "LMP",
         "pnl_u": 0.943,
-        "cum_u": -3.8257,
+        "cum_u": -4.659,
         "result": "correct"
       },
       {
         "date": "2026-11-17",
         "league": "LVBP",
         "pnl_u": -1.0,
-        "cum_u": -4.8257,
+        "cum_u": -5.659,
         "result": "wrong"
       },
       {
         "date": "2026-11-17",
         "league": "LVBP",
         "pnl_u": 0.87,
-        "cum_u": -3.9557,
+        "cum_u": -4.789,
         "result": "correct"
       },
       {
         "date": "2026-11-18",
         "league": "LVBP",
         "pnl_u": 0.0,
-        "cum_u": -3.9557,
+        "cum_u": -4.789,
         "result": "push"
       },
       {
         "date": "2026-11-18",
         "league": "LVBP",
         "pnl_u": 0.87,
-        "cum_u": -3.0857,
+        "cum_u": -3.919,
         "result": "correct"
       },
       {
         "date": "2026-11-18",
         "league": "LMP",
         "pnl_u": 0.935,
-        "cum_u": -2.1507,
+        "cum_u": -2.984,
         "result": "correct"
       },
       {
         "date": "2026-11-19",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -3.1507,
+        "cum_u": -3.984,
         "result": "wrong"
       },
       {
         "date": "2026-11-19",
         "league": "LMP",
         "pnl_u": 0.877,
-        "cum_u": -2.2737,
+        "cum_u": -3.107,
         "result": "correct"
       },
       {
         "date": "2026-11-19",
         "league": "LVBP",
         "pnl_u": -1.0,
-        "cum_u": -3.2737,
+        "cum_u": -4.107,
         "result": "wrong"
       },
       {
         "date": "2026-11-19",
         "league": "LVBP",
         "pnl_u": 1.25,
-        "cum_u": -2.0237,
+        "cum_u": -2.857,
         "result": "correct"
       },
       {
         "date": "2026-11-20",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -3.0237,
+        "cum_u": -3.857,
         "result": "wrong"
       },
       {
         "date": "2026-11-20",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -4.0237,
+        "cum_u": -4.857,
         "result": "wrong"
       },
       {
         "date": "2026-11-20",
         "league": "LVBP",
         "pnl_u": -1.0,
-        "cum_u": -5.0237,
+        "cum_u": -5.857,
         "result": "wrong"
       },
       {
         "date": "2026-11-20",
         "league": "ABL",
         "pnl_u": 0.75,
-        "cum_u": -4.2737,
+        "cum_u": -5.107,
         "result": "correct"
       },
       {
         "date": "2026-11-20",
         "league": "ABL",
         "pnl_u": 1.15,
-        "cum_u": -3.1237,
+        "cum_u": -3.957,
         "result": "correct"
       },
       {
         "date": "2026-11-21",
         "league": "LMP",
         "pnl_u": 0.775,
-        "cum_u": -2.3487,
+        "cum_u": -3.182,
         "result": "correct"
       },
       {
         "date": "2026-11-21",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -3.3487,
+        "cum_u": -4.182,
         "result": "wrong"
       },
       {
         "date": "2026-11-21",
         "league": "LMP",
         "pnl_u": 0.833,
-        "cum_u": -2.5157,
+        "cum_u": -3.349,
         "result": "correct"
       },
       {
         "date": "2026-11-21",
         "league": "LVBP",
         "pnl_u": 1.1,
-        "cum_u": -1.4157,
+        "cum_u": -2.249,
         "result": "correct"
       },
       {
         "date": "2026-11-21",
         "league": "LVBP",
         "pnl_u": 0.87,
-        "cum_u": -0.5457,
+        "cum_u": -1.379,
         "result": "correct"
       },
       {
         "date": "2026-11-21",
         "league": "LVBP",
         "pnl_u": -1.0,
-        "cum_u": -1.5457,
+        "cum_u": -2.379,
         "result": "wrong"
       },
       {
         "date": "2026-11-21",
         "league": "LVBP",
         "pnl_u": -1.0,
-        "cum_u": -2.5457,
+        "cum_u": -3.379,
         "result": "wrong"
       },
       {
         "date": "2026-11-21",
         "league": "LVBP",
         "pnl_u": -1.0,
-        "cum_u": -3.5457,
+        "cum_u": -4.379,
         "result": "wrong"
       },
       {
         "date": "2026-11-21",
         "league": "LVBP",
         "pnl_u": 0.8333,
-        "cum_u": -2.7124,
+        "cum_u": -3.5457,
         "result": "correct"
       },
       {
         "date": "2026-11-22",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -3.7124,
+        "cum_u": -4.5457,
         "result": "wrong"
       },
       {
         "date": "2026-11-22",
         "league": "LMP",
         "pnl_u": 0.87,
-        "cum_u": -2.8424,
+        "cum_u": -3.6757,
         "result": "correct"
       },
       {
         "date": "2026-11-22",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -3.8424,
+        "cum_u": -4.6757,
         "result": "wrong"
       },
       {
         "date": "2026-11-22",
         "league": "ABL",
         "pnl_u": 1.15,
-        "cum_u": -2.6924,
+        "cum_u": -3.5257,
         "result": "correct"
       },
       {
         "date": "2026-11-22",
         "league": "ABL",
         "pnl_u": 1.0,
-        "cum_u": -1.6924,
+        "cum_u": -2.5257,
         "result": "correct"
       },
       {
         "date": "2026-11-22",
         "league": "LVBP",
         "pnl_u": -1.0,
-        "cum_u": -2.6924,
+        "cum_u": -3.5257,
         "result": "wrong"
       },
       {
         "date": "2026-11-22",
         "league": "LMP",
         "pnl_u": 0.87,
-        "cum_u": -1.8224,
+        "cum_u": -2.6557,
         "result": "correct"
       },
       {
         "date": "2026-11-23",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -2.8224,
+        "cum_u": -3.6557,
         "result": "wrong"
       },
       {
         "date": "2026-11-23",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -3.8224,
+        "cum_u": -4.6557,
         "result": "wrong"
+      },
+      {
+        "date": "2026-11-23",
+        "league": "LVBP",
+        "pnl_u": 0.6667,
+        "cum_u": -3.989,
+        "result": "correct"
       },
       {
         "date": "2026-11-23",
         "league": "LMP",
         "pnl_u": 0.87,
-        "cum_u": -2.9524,
+        "cum_u": -3.119,
         "result": "correct"
       },
       {
         "date": "2026-11-23",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -3.9524,
+        "cum_u": -4.119,
         "result": "wrong"
       }
     ],
@@ -9601,6 +9601,32 @@
       "first_pitch": "00:10 MST",
       "first_pitch_tz": "",
       "game_time": "00:10 MST",
+      "game_time_utc": "",
+      "signal_date": "2026-11-23"
+    },
+    {
+      "date": "2026-11-23",
+      "league": "LVBP",
+      "tier": "CORE",
+      "market": "SPREAD",
+      "bet": "Tiburones de La Guaira +1.5",
+      "game": "Cardenales de Lara @ Tiburones de La Guaira",
+      "odds": "-150",
+      "result": "correct",
+      "pnl_u": 0.6667,
+      "actual": "7-11",
+      "note": "Final 7-11 \u00b7 margin -4 \u00b7 line +1.5 \u00b7 cover +5.5 \u00b7 covered",
+      "outcome_tag": null,
+      "close_loss": false,
+      "close_win": false,
+      "cover_margin_runs": 5.5,
+      "unit": "flat",
+      "pnl_flat_u": 0.6667,
+      "stake_flat_u": 1.0,
+      "book": "Bovada",
+      "first_pitch": "19:00 VET",
+      "first_pitch_tz": "",
+      "game_time": "19:00 VET",
       "game_time_utc": "",
       "signal_date": "2026-11-23"
     },
@@ -10825,32 +10851,6 @@
       "game_time": "02:30 MST",
       "game_time_utc": "",
       "signal_date": "2026-11-14"
-    },
-    {
-      "date": "2026-11-14",
-      "league": "LMP",
-      "tier": "CORE",
-      "market": "ML",
-      "bet": "Mayos Navojoa ML",
-      "game": "Mayos Navojoa @ Caneros Los Mochis",
-      "odds": "+134",
-      "result": "wrong",
-      "pnl_u": -1.0,
-      "actual": "3-5",
-      "note": "Final 3-5 \u00b7 home by 2 \u00b7 missed ML",
-      "outcome_tag": null,
-      "close_loss": false,
-      "close_win": false,
-      "cover_margin_runs": null,
-      "unit": "flat",
-      "pnl_flat_u": -1.0,
-      "stake_flat_u": 1.0,
-      "book": "Pinnacle",
-      "first_pitch": "02:30 MST",
-      "first_pitch_tz": "",
-      "game_time": "02:30 MST",
-      "game_time_utc": "",
-      "signal_date": "2026-11-14"
     }
   ],
   "chart": {
@@ -10858,13 +10858,13 @@
     "bars": [
       {
         "label": "Global",
-        "pnl_u": 44.0309,
-        "n": 553
+        "pnl_u": 44.6976,
+        "n": 554
       },
       {
         "label": "INTL",
-        "pnl_u": -0.7315,
-        "n": 110
+        "pnl_u": -0.0648,
+        "n": 111
       },
       {
         "label": "Domestic",
@@ -10883,8 +10883,8 @@
       },
       {
         "label": "Winter",
-        "pnl_u": -1.6015,
-        "n": 93
+        "pnl_u": -0.9348,
+        "n": 94
       },
       {
         "label": "Asia",
@@ -10948,9 +10948,9 @@
       {
         "label": "LVBP",
         "region": "INTL",
-        "pnl_u": -3.2067,
-        "n": 16,
-        "record": "6-9-1"
+        "pnl_u": -2.54,
+        "n": 17,
+        "record": "7-9-1"
       },
       {
         "label": "NPB",
@@ -10966,13 +10966,13 @@
     "bars": [
       {
         "label": "Global",
-        "hr": 0.5653,
-        "n": 553
+        "hr": 0.5661,
+        "n": 554
       },
       {
         "label": "INTL",
-        "hr": 0.5138,
-        "n": 110
+        "hr": 0.5182,
+        "n": 111
       },
       {
         "label": "Domestic",
@@ -10991,8 +10991,8 @@
       },
       {
         "label": "Winter",
-        "hr": 0.5217,
-        "n": 93
+        "hr": 0.5269,
+        "n": 94
       },
       {
         "label": "Asia",
