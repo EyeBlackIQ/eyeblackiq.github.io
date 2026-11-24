@@ -1,6 +1,6 @@
 {
   "date": "2026-11-24",
-  "generated": "2026-11-24T11:23:48.874627+00:00",
+  "generated": "2026-11-24T11:37:05.496511+00:00",
   "empty": true,
   "empty_message": "No Picks Today",
   "pod_empty_message": "No POD today",
@@ -22,7 +22,7 @@
     "forward_slate": "held",
     "sports": "baseball_leagues_only",
     "mlb_asia": "ARCHIVE_OFFSEASON",
-    "lbprc_live_cleared": false,
+    "lbprc_live_cleared": true,
     "abl_live_cleared": true,
     "market_odds": "exchange_live_vs_fair_only",
     "champion_futures": "removed_until_math",
