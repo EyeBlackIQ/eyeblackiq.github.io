@@ -1,14 +1,16 @@
 {
-  "wins": 44,
-  "losses": 38,
+  "wins": 38,
+  "losses": 34,
   "pushes": 1,
-  "net_units": 0.05,
-  "roi": 0.06,
-  "clv_pct": 0,
-  "pod_wins": 44,
-  "pod_losses": 38,
+  "net_units": -2.17,
+  "roi": -3.01,
+  "clv_pct": 0.0,
+  "clv_n": 0,
+  "clv_note": "CLV ledger armed \u2014 awaiting closing lines",
+  "pod_wins": 0,
+  "pod_losses": 0,
   "streak": "L2",
-  "pod_streak": "L2",
+  "pod_streak": "-",
   "day_streak": "-",
   "sport_streaks": {
     "INTL": "L2"
@@ -18,24 +20,13 @@
     {
       "league": "ABL",
       "region": "INTL",
-      "wins": 3,
+      "wins": 2,
       "losses": 0,
       "pushes": 0,
-      "n": 3,
+      "n": 2,
       "hr": 1.0,
-      "pnl_u": 2.9,
-      "record": "3-0"
-    },
-    {
-      "league": "KBO",
-      "region": "INTL",
-      "wins": 3,
-      "losses": 0,
-      "pushes": 0,
-      "n": 3,
-      "hr": 1.0,
-      "pnl_u": 2.785,
-      "record": "3-0"
+      "pnl_u": 1.9,
+      "record": "2-0"
     },
     {
       "league": "LIDOM",
@@ -51,13 +42,13 @@
     {
       "league": "LMP",
       "region": "INTL",
-      "wins": 31,
-      "losses": 27,
+      "wins": 30,
+      "losses": 25,
       "pushes": 0,
-      "n": 58,
-      "hr": 0.5345,
-      "pnl_u": -1.8751,
-      "record": "31-27"
+      "n": 55,
+      "hr": 0.5455,
+      "pnl_u": -0.6605,
+      "record": "30-25"
     },
     {
       "league": "LVBP",
@@ -69,23 +60,12 @@
       "hr": 0.4167,
       "pnl_u": -2.2433,
       "record": "5-7-1"
-    },
-    {
-      "league": "NPB",
-      "region": "INTL",
-      "wins": 1,
-      "losses": 2,
-      "pushes": 0,
-      "n": 3,
-      "hr": 0.3333,
-      "pnl_u": -0.35,
-      "record": "1-2"
     }
   ],
-  "region": "INTL",
+  "region": "INTL_WINTER",
   "intl_equals_sum_leagues": true,
   "last_updated": "2026-11-25",
-  "source": "INTL CORE = sum of non-American leagues",
+  "source": "winter CORE only (LMP/LIDOM/LVBP/LBPRC/CUBA/ABL)",
   "units_policy": "flat $10 = 1u",
-  "note": "Header bar = live INTL. Results Global = INTL + Domestic (MLB/NCAA/MiLB)."
+  "note": "Header = winter CORE. Asia/KBO/NPB off bar. Results Global adds Domestic."
 }
