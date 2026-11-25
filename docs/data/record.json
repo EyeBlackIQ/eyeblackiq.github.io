@@ -1,12 +1,12 @@
 {
-  "wins": 55,
-  "losses": 50,
+  "wins": 44,
+  "losses": 38,
   "pushes": 1,
-  "net_units": -0.92,
-  "roi": -0.88,
+  "net_units": 0.05,
+  "roi": 0.06,
   "clv_pct": 0,
-  "pod_wins": 55,
-  "pod_losses": 50,
+  "pod_wins": 44,
+  "pod_losses": 38,
   "streak": "L2",
   "pod_streak": "L2",
   "day_streak": "-",
@@ -18,13 +18,13 @@
     {
       "league": "ABL",
       "region": "INTL",
-      "wins": 4,
+      "wins": 3,
       "losses": 0,
       "pushes": 0,
-      "n": 4,
+      "n": 3,
       "hr": 1.0,
-      "pnl_u": 4.05,
-      "record": "4-0"
+      "pnl_u": 2.9,
+      "record": "3-0"
     },
     {
       "league": "KBO",
@@ -40,46 +40,46 @@
     {
       "league": "LIDOM",
       "region": "INTL",
-      "wins": 3,
+      "wins": 1,
       "losses": 2,
       "pushes": 0,
-      "n": 5,
-      "hr": 0.6,
-      "pnl_u": 0.5033,
-      "record": "3-2"
+      "n": 3,
+      "hr": 0.3333,
+      "pnl_u": -1.1667,
+      "record": "1-2"
     },
     {
       "league": "LMP",
       "region": "INTL",
-      "wins": 37,
-      "losses": 35,
+      "wins": 31,
+      "losses": 27,
       "pushes": 0,
-      "n": 72,
-      "hr": 0.5139,
-      "pnl_u": -3.3681,
-      "record": "37-35"
+      "n": 58,
+      "hr": 0.5345,
+      "pnl_u": -1.8751,
+      "record": "31-27"
     },
     {
       "league": "LVBP",
       "region": "INTL",
-      "wins": 7,
-      "losses": 9,
+      "wins": 5,
+      "losses": 7,
       "pushes": 1,
-      "n": 17,
-      "hr": 0.4375,
-      "pnl_u": -2.54,
-      "record": "7-9-1"
+      "n": 13,
+      "hr": 0.4167,
+      "pnl_u": -2.2433,
+      "record": "5-7-1"
     },
     {
       "league": "NPB",
       "region": "INTL",
       "wins": 1,
-      "losses": 4,
+      "losses": 2,
       "pushes": 0,
-      "n": 5,
-      "hr": 0.2,
-      "pnl_u": -2.35,
-      "record": "1-4"
+      "n": 3,
+      "hr": 0.3333,
+      "pnl_u": -0.35,
+      "record": "1-2"
     }
   ],
   "region": "INTL",
