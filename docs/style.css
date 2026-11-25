@@ -214,19 +214,38 @@ main { max-width: var(--max); margin: 0 auto; padding: 10px 20px 64px; }
 .watch-item.pick--over { border-left: 3px solid var(--over); }
 .watch-item.pick--under { border-left: 3px solid var(--under); }
 .watch-item--teaser {
-  opacity: 0.72;
-  filter: saturate(0.82);
+  opacity: 0.92;
+  filter: saturate(0.94);
+  background: #161616;
+  border-left: 2px solid #4a5568;
 }
 .watch-item--later {
-  opacity: 0.58;
-  font-size: 0.94em;
-  filter: saturate(0.7);
+  opacity: 0.78;
+  font-size: 0.96em;
+  filter: saturate(0.88);
+  background: #141414;
 }
+.watch-item--teaser .watch-side { color: #e8e4dc; }
+.watch-item--teaser .watch-game { color: #b8b3a8; }
+.watch-item--teaser .watch-lg { color: #aea89c; }
+.watch-item--teaser .watch-ctx { color: #d0cbc0; }
 .watch-item--nolive .watch-live { color: var(--faint); }
 .watch-ctx {
   margin: 6px 0 0; font-size: 13px; line-height: 1.45; color: #c8c3b8;
   max-width: 68ch; font-weight: 400;
 }
+.outcome-tag {
+  font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.8px; text-transform: uppercase; padding: 1px 6px;
+  border: 1px solid var(--border); border-radius: 2px; color: var(--muted);
+}
+.outcome-tag--close-loss {
+  color: #f0c9a0; border-color: #8a6a40; background: rgba(138, 106, 64, 0.18);
+}
+.outcome-tag--close-win {
+  color: #a8d4b0; border-color: #3d6a48; background: rgba(61, 106, 72, 0.18);
+}
+.results-item--close-loss { border-left: 3px solid #c4924a; }
 .watch-result {
   font-size: 12px; font-weight: 700; letter-spacing: 0.6px;
   text-transform: uppercase; margin-left: 4px;
