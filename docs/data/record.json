@@ -1,9 +1,9 @@
 {
-  "wins": 39,
-  "losses": 35,
+  "wins": 41,
+  "losses": 37,
   "pushes": 1,
-  "net_units": -2.24,
-  "roi": -3.03,
+  "net_units": -2.12,
+  "roi": -2.72,
   "clv_pct": 0.0,
   "clv_n": 0,
   "clv_note": "CLV ledger armed \u2014 awaiting closing lines",
@@ -20,13 +20,13 @@
     {
       "league": "ABL",
       "region": "INTL",
-      "wins": 2,
-      "losses": 0,
+      "wins": 4,
+      "losses": 2,
       "pushes": 0,
-      "n": 2,
-      "hr": 1.0,
-      "pnl_u": 1.9,
-      "record": "2-0"
+      "n": 6,
+      "hr": 0.6667,
+      "pnl_u": 2.02,
+      "record": "4-2"
     },
     {
       "league": "LIDOM",
