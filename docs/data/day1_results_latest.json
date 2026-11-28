@@ -1,6 +1,6 @@
 {
-  "pod_day": "POD-20261127",
-  "generated_at": "2026-11-27T22:59:25.004402+00:00",
+  "pod_day": "POD-20261128",
+  "generated_at": "2026-11-28T00:38:51.124831+00:00",
   "source": "lean_site_publish",
   "not_live_kalshi": true,
   "slip_ne_log": true,
@@ -2690,13 +2690,13 @@
       "ABL"
     ],
     "slip_summary": {
-      "correct": 41,
+      "correct": 43,
       "wrong": 37,
       "push": 1,
-      "n": 79,
-      "hr": 0.5256,
-      "pnl_u": -2.1245,
-      "roi": -0.0272
+      "n": 81,
+      "hr": 0.5375,
+      "pnl_u": -0.3821,
+      "roi": -0.0048
     },
     "by_league": [
       {
@@ -2709,6 +2709,17 @@
         "hr": 0.6667,
         "pnl_u": 2.02,
         "record": "4-2"
+      },
+      {
+        "league": "LBPRC",
+        "region": "INTL",
+        "wins": 2,
+        "losses": 0,
+        "pushes": 0,
+        "n": 2,
+        "hr": 1.0,
+        "pnl_u": 1.7424,
+        "record": "2-0"
       },
       {
         "league": "LIDOM",
@@ -2745,12 +2756,64 @@
       }
     ],
     "by_league_sum": {
-      "wins": 41,
+      "wins": 43,
       "losses": 37,
       "pushes": 1,
-      "pnl_u": -2.1245
+      "pnl_u": -0.3821
     },
     "l50": [
+      {
+        "date": "2026-11-27",
+        "league": "LBPRC",
+        "tier": "CORE",
+        "market": "TOTAL",
+        "bet": "Over 9.5",
+        "game": "Criollos de Caguas @ Gigantes de Carolina",
+        "odds": "-120",
+        "result": "correct",
+        "pnl_u": 0.8333,
+        "actual": "6-5",
+        "note": "Final 6-5 \u00b7 combined 11 \u00b7 vs 9.5 (+1.5) \u00b7 cleared over",
+        "outcome_tag": null,
+        "close_loss": false,
+        "close_win": false,
+        "cover_margin_runs": 1.5,
+        "unit": "flat",
+        "pnl_flat_u": 0.8333,
+        "stake_flat_u": 1.0,
+        "book": "Bovada",
+        "first_pitch": "19:00 AST",
+        "first_pitch_tz": "",
+        "game_time": "19:00 AST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-27"
+      },
+      {
+        "date": "2026-11-27",
+        "league": "LBPRC",
+        "tier": "CORE",
+        "market": "TOTAL",
+        "bet": "Over 9.5",
+        "game": "Cangrejeros de Santurce @ Senadores de San Juan",
+        "odds": "-110",
+        "result": "correct",
+        "pnl_u": 0.9091,
+        "actual": "3-7",
+        "note": "Final 3-7 \u00b7 combined 10 \u00b7 vs 9.5 (+0.5) \u00b7 cleared over \u00b7 CLOSE WIN \u2014 cashed on the number",
+        "outcome_tag": "CLOSE WIN",
+        "close_loss": false,
+        "close_win": true,
+        "cover_margin_runs": 0.5,
+        "unit": "flat",
+        "pnl_flat_u": 0.9091,
+        "stake_flat_u": 1.0,
+        "book": "Bovada",
+        "first_pitch": "19:00 AST",
+        "first_pitch_tz": "",
+        "game_time": "19:00 AST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-27"
+      },
       {
         "date": "2026-11-26",
         "league": "LMP",
@@ -3998,65 +4061,13 @@
         "game_time": "",
         "game_time_utc": "",
         "signal_date": "2026-11-14"
-      },
-      {
-        "date": "2026-11-14",
-        "league": "LMP",
-        "tier": "CORE",
-        "market": "ML",
-        "bet": "Mayos Navojoa ML",
-        "game": "Mayos Navojoa @ Caneros Los Mochis",
-        "odds": "+134",
-        "result": "wrong",
-        "pnl_u": -1.0,
-        "actual": "3-5",
-        "note": "Final 3-5 \u00b7 home by 2 \u00b7 missed ML",
-        "outcome_tag": null,
-        "close_loss": false,
-        "close_win": false,
-        "cover_margin_runs": null,
-        "unit": "flat",
-        "pnl_flat_u": -1.0,
-        "stake_flat_u": 1.0,
-        "book": "Pinnacle",
-        "first_pitch": "02:30 MST",
-        "first_pitch_tz": "",
-        "game_time": "02:30 MST",
-        "game_time_utc": "",
-        "signal_date": "2026-11-14"
-      },
-      {
-        "date": "2026-11-13",
-        "league": "LMP",
-        "tier": "CORE",
-        "market": "TOTAL",
-        "bet": "Under 12.5",
-        "game": "Mayos Navojoa @ Charros Jalisco",
-        "odds": "-124",
-        "result": "wrong",
-        "pnl_u": -1.0,
-        "actual": "13-5",
-        "note": "Final 13-5 \u00b7 combined 18 \u00b7 vs 12.5 (+5.5) \u00b7 ran over \u00b7 pace broke \u2014 not a near-miss",
-        "outcome_tag": "BLOWOUT",
-        "close_loss": false,
-        "close_win": false,
-        "cover_margin_runs": -5.5,
-        "unit": "flat",
-        "pnl_flat_u": -1.0,
-        "stake_flat_u": 1.0,
-        "book": "Pinnacle",
-        "first_pitch": "01:30 MST",
-        "first_pitch_tz": "",
-        "game_time": "01:30 MST",
-        "game_time_utc": "",
-        "signal_date": "2026-11-13"
       }
     ],
     "meta": {
       "slip_ne_log": true,
       "core_only": true,
       "sp_missing_excluded": true,
-      "graded_max_date": "2026-11-26",
+      "graded_max_date": "2026-11-27",
       "stale": false,
       "stale_note": null,
       "winter_equals_sum_leagues": true
@@ -4866,14 +4877,14 @@
       "NPB"
     ],
     "slip_summary": {
-      "correct": 49,
+      "correct": 51,
       "wrong": 46,
       "push": 1,
-      "n": 96,
-      "hr": 0.5158,
-      "pnl_u": -1.2545,
-      "roi": -0.0132,
-      "record": "49-46-1",
+      "n": 98,
+      "hr": 0.5258,
+      "pnl_u": 0.4879,
+      "roi": 0.005,
+      "record": "51-46-1",
       "note": "Global = sum of league/book records"
     },
     "by_league": [
@@ -4898,6 +4909,17 @@
         "hr": 1.0,
         "pnl_u": 5.57,
         "record": "6-0"
+      },
+      {
+        "league": "LBPRC",
+        "region": "INTL",
+        "wins": 2,
+        "losses": 0,
+        "pushes": 0,
+        "n": 2,
+        "hr": 1.0,
+        "pnl_u": 1.7424,
+        "record": "2-0"
       },
       {
         "league": "LIDOM",
@@ -4945,12 +4967,64 @@
       }
     ],
     "by_league_sum": {
-      "wins": 49,
+      "wins": 51,
       "losses": 46,
       "pushes": 1,
-      "pnl_u": -1.2545
+      "pnl_u": 0.4879
     },
     "l50": [
+      {
+        "date": "2026-11-27",
+        "league": "LBPRC",
+        "tier": "CORE",
+        "market": "TOTAL",
+        "bet": "Over 9.5",
+        "game": "Criollos de Caguas @ Gigantes de Carolina",
+        "odds": "-120",
+        "result": "correct",
+        "pnl_u": 0.8333,
+        "actual": "6-5",
+        "note": "Final 6-5 \u00b7 combined 11 \u00b7 vs 9.5 (+1.5) \u00b7 cleared over",
+        "outcome_tag": null,
+        "close_loss": false,
+        "close_win": false,
+        "cover_margin_runs": 1.5,
+        "unit": "flat",
+        "pnl_flat_u": 0.8333,
+        "stake_flat_u": 1.0,
+        "book": "Bovada",
+        "first_pitch": "19:00 AST",
+        "first_pitch_tz": "",
+        "game_time": "19:00 AST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-27"
+      },
+      {
+        "date": "2026-11-27",
+        "league": "LBPRC",
+        "tier": "CORE",
+        "market": "TOTAL",
+        "bet": "Over 9.5",
+        "game": "Cangrejeros de Santurce @ Senadores de San Juan",
+        "odds": "-110",
+        "result": "correct",
+        "pnl_u": 0.9091,
+        "actual": "3-7",
+        "note": "Final 3-7 \u00b7 combined 10 \u00b7 vs 9.5 (+0.5) \u00b7 cleared over \u00b7 CLOSE WIN \u2014 cashed on the number",
+        "outcome_tag": "CLOSE WIN",
+        "close_loss": false,
+        "close_win": true,
+        "cover_margin_runs": 0.5,
+        "unit": "flat",
+        "pnl_flat_u": 0.9091,
+        "stake_flat_u": 1.0,
+        "book": "Bovada",
+        "first_pitch": "19:00 AST",
+        "first_pitch_tz": "",
+        "game_time": "19:00 AST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-27"
+      },
       {
         "date": "2026-11-26",
         "league": "LMP",
@@ -6198,69 +6272,17 @@
         "game_time": "",
         "game_time_utc": "",
         "signal_date": "2026-11-14"
-      },
-      {
-        "date": "2026-11-14",
-        "league": "LMP",
-        "tier": "CORE",
-        "market": "ML",
-        "bet": "Mayos Navojoa ML",
-        "game": "Mayos Navojoa @ Caneros Los Mochis",
-        "odds": "+134",
-        "result": "wrong",
-        "pnl_u": -1.0,
-        "actual": "3-5",
-        "note": "Final 3-5 \u00b7 home by 2 \u00b7 missed ML",
-        "outcome_tag": null,
-        "close_loss": false,
-        "close_win": false,
-        "cover_margin_runs": null,
-        "unit": "flat",
-        "pnl_flat_u": -1.0,
-        "stake_flat_u": 1.0,
-        "book": "Pinnacle",
-        "first_pitch": "02:30 MST",
-        "first_pitch_tz": "",
-        "game_time": "02:30 MST",
-        "game_time_utc": "",
-        "signal_date": "2026-11-14"
-      },
-      {
-        "date": "2026-11-13",
-        "league": "LMP",
-        "tier": "CORE",
-        "market": "TOTAL",
-        "bet": "Under 12.5",
-        "game": "Mayos Navojoa @ Charros Jalisco",
-        "odds": "-124",
-        "result": "wrong",
-        "pnl_u": -1.0,
-        "actual": "13-5",
-        "note": "Final 13-5 \u00b7 combined 18 \u00b7 vs 12.5 (+5.5) \u00b7 ran over \u00b7 pace broke \u2014 not a near-miss",
-        "outcome_tag": "BLOWOUT",
-        "close_loss": false,
-        "close_win": false,
-        "cover_margin_runs": -5.5,
-        "unit": "flat",
-        "pnl_flat_u": -1.0,
-        "stake_flat_u": 1.0,
-        "book": "Pinnacle",
-        "first_pitch": "01:30 MST",
-        "first_pitch_tz": "",
-        "game_time": "01:30 MST",
-        "game_time_utc": "",
-        "signal_date": "2026-11-13"
       }
     ],
     "books": {
       "winter": {
-        "correct": 41,
+        "correct": 43,
         "wrong": 37,
         "push": 1,
-        "n": 79,
-        "hr": 0.5256,
-        "pnl_u": -2.1245,
-        "roi": -0.0272
+        "n": 81,
+        "hr": 0.5375,
+        "pnl_u": -0.3821,
+        "roi": -0.0048
       },
       "asia": {
         "correct": 8,
@@ -7680,14 +7702,14 @@
     "status": "LIVE",
     "note": "Global = INTL + Domestic (all-inclusive)",
     "slip_summary": {
-      "correct": 296,
+      "correct": 298,
       "wrong": 226,
       "push": 5,
-      "n": 539,
-      "hr": 0.567,
-      "pnl_u": 43.5079,
-      "roi": 0.0833,
-      "record": "296-226-5",
+      "n": 541,
+      "hr": 0.5687,
+      "pnl_u": 45.2503,
+      "roi": 0.0864,
+      "record": "298-226-5",
       "note": "Global = sum of league/book records"
     },
     "by_league": [
@@ -7747,6 +7769,17 @@
         "record": "6-0"
       },
       {
+        "league": "LBPRC",
+        "region": "INTL",
+        "wins": 2,
+        "losses": 0,
+        "pushes": 0,
+        "n": 2,
+        "hr": 1.0,
+        "pnl_u": 1.7424,
+        "record": "2-0"
+      },
+      {
         "league": "LIDOM",
         "region": "INTL",
         "wins": 1,
@@ -7792,21 +7825,21 @@
       }
     ],
     "by_league_sum": {
-      "wins": 296,
+      "wins": 298,
       "losses": 226,
       "pushes": 5,
-      "pnl_u": 43.5079
+      "pnl_u": 45.2503
     },
     "by_region": {
       "INTL": {
-        "correct": 49,
+        "correct": 51,
         "wrong": 46,
         "push": 1,
-        "n": 96,
-        "hr": 0.5158,
-        "pnl_u": -1.2545,
-        "roi": -0.0132,
-        "record": "49-46-1",
+        "n": 98,
+        "hr": 0.5258,
+        "pnl_u": 0.4879,
+        "roi": 0.005,
+        "record": "51-46-1",
         "note": "Global = sum of league/book records"
       },
       "DOMESTIC": {
@@ -7824,6 +7857,58 @@
     "regions_sum_equals_global": true,
     "leagues_sum_equals_global": true,
     "l50": [
+      {
+        "date": "2026-11-27",
+        "league": "LBPRC",
+        "tier": "CORE",
+        "market": "TOTAL",
+        "bet": "Over 9.5",
+        "game": "Criollos de Caguas @ Gigantes de Carolina",
+        "odds": "-120",
+        "result": "correct",
+        "pnl_u": 0.8333,
+        "actual": "6-5",
+        "note": "Final 6-5 \u00b7 combined 11 \u00b7 vs 9.5 (+1.5) \u00b7 cleared over",
+        "outcome_tag": null,
+        "close_loss": false,
+        "close_win": false,
+        "cover_margin_runs": 1.5,
+        "unit": "flat",
+        "pnl_flat_u": 0.8333,
+        "stake_flat_u": 1.0,
+        "book": "Bovada",
+        "first_pitch": "19:00 AST",
+        "first_pitch_tz": "",
+        "game_time": "19:00 AST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-27"
+      },
+      {
+        "date": "2026-11-27",
+        "league": "LBPRC",
+        "tier": "CORE",
+        "market": "TOTAL",
+        "bet": "Over 9.5",
+        "game": "Cangrejeros de Santurce @ Senadores de San Juan",
+        "odds": "-110",
+        "result": "correct",
+        "pnl_u": 0.9091,
+        "actual": "3-7",
+        "note": "Final 3-7 \u00b7 combined 10 \u00b7 vs 9.5 (+0.5) \u00b7 cleared over \u00b7 CLOSE WIN \u2014 cashed on the number",
+        "outcome_tag": "CLOSE WIN",
+        "close_loss": false,
+        "close_win": true,
+        "cover_margin_runs": 0.5,
+        "unit": "flat",
+        "pnl_flat_u": 0.9091,
+        "stake_flat_u": 1.0,
+        "book": "Bovada",
+        "first_pitch": "19:00 AST",
+        "first_pitch_tz": "",
+        "game_time": "19:00 AST",
+        "game_time_utc": "",
+        "signal_date": "2026-11-27"
+      },
       {
         "date": "2026-11-26",
         "league": "LMP",
@@ -9071,479 +9156,427 @@
         "game_time": "",
         "game_time_utc": "",
         "signal_date": "2026-11-14"
-      },
-      {
-        "date": "2026-11-14",
-        "league": "LMP",
-        "tier": "CORE",
-        "market": "ML",
-        "bet": "Mayos Navojoa ML",
-        "game": "Mayos Navojoa @ Caneros Los Mochis",
-        "odds": "+134",
-        "result": "wrong",
-        "pnl_u": -1.0,
-        "actual": "3-5",
-        "note": "Final 3-5 \u00b7 home by 2 \u00b7 missed ML",
-        "outcome_tag": null,
-        "close_loss": false,
-        "close_win": false,
-        "cover_margin_runs": null,
-        "unit": "flat",
-        "pnl_flat_u": -1.0,
-        "stake_flat_u": 1.0,
-        "book": "Pinnacle",
-        "first_pitch": "02:30 MST",
-        "first_pitch_tz": "",
-        "game_time": "02:30 MST",
-        "game_time_utc": "",
-        "signal_date": "2026-11-14"
-      },
-      {
-        "date": "2026-11-13",
-        "league": "LMP",
-        "tier": "CORE",
-        "market": "TOTAL",
-        "bet": "Under 12.5",
-        "game": "Mayos Navojoa @ Charros Jalisco",
-        "odds": "-124",
-        "result": "wrong",
-        "pnl_u": -1.0,
-        "actual": "13-5",
-        "note": "Final 13-5 \u00b7 combined 18 \u00b7 vs 12.5 (+5.5) \u00b7 ran over \u00b7 pace broke \u2014 not a near-miss",
-        "outcome_tag": "BLOWOUT",
-        "close_loss": false,
-        "close_win": false,
-        "cover_margin_runs": -5.5,
-        "unit": "flat",
-        "pnl_flat_u": -1.0,
-        "stake_flat_u": 1.0,
-        "book": "Pinnacle",
-        "first_pitch": "01:30 MST",
-        "first_pitch_tz": "",
-        "game_time": "01:30 MST",
-        "game_time_utc": "",
-        "signal_date": "2026-11-13"
       }
     ],
     "equity_curve": [
       {
-        "date": "2026-11-08",
+        "date": "2026-11-11",
         "league": "LMP",
-        "pnl_u": -1.0,
-        "cum_u": -1.0,
-        "result": "wrong"
-      },
-      {
-        "date": "2026-11-09",
-        "league": "LMP",
-        "pnl_u": 0.775,
-        "cum_u": -0.225,
+        "pnl_u": 0.8333,
+        "cum_u": 0.8333,
         "result": "correct"
       },
       {
         "date": "2026-11-11",
         "league": "LMP",
         "pnl_u": 0.8333,
-        "cum_u": 0.6083,
-        "result": "correct"
-      },
-      {
-        "date": "2026-11-11",
-        "league": "LMP",
-        "pnl_u": 0.8333,
-        "cum_u": 1.4416,
+        "cum_u": 1.6666,
         "result": "correct"
       },
       {
         "date": "2026-11-11",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": 0.4416,
+        "cum_u": 0.6666,
         "result": "wrong"
       },
       {
         "date": "2026-11-11",
         "league": "LMP",
         "pnl_u": 0.6667,
-        "cum_u": 1.1083,
+        "cum_u": 1.3333,
         "result": "correct"
       },
       {
         "date": "2026-11-11",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": 0.1083,
+        "cum_u": 0.3333,
         "result": "wrong"
       },
       {
         "date": "2026-11-12",
         "league": "LMP",
         "pnl_u": 0.893,
-        "cum_u": 1.0013,
+        "cum_u": 1.2263,
         "result": "correct"
       },
       {
         "date": "2026-11-12",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": 0.0013,
+        "cum_u": 0.2263,
         "result": "wrong"
       },
       {
         "date": "2026-11-13",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -0.9987,
+        "cum_u": -0.7737,
         "result": "wrong"
       },
       {
         "date": "2026-11-13",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -1.9987,
+        "cum_u": -1.7737,
         "result": "wrong"
       },
       {
         "date": "2026-11-14",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -2.9987,
+        "cum_u": -2.7737,
         "result": "wrong"
       },
       {
         "date": "2026-11-14",
         "league": "LMP",
         "pnl_u": 0.82,
-        "cum_u": -2.1787,
+        "cum_u": -1.9537,
         "result": "correct"
       },
       {
         "date": "2026-11-14",
         "league": "LMP",
         "pnl_u": 0.9524,
-        "cum_u": -1.2263,
+        "cum_u": -1.0013,
         "result": "correct"
       },
       {
         "date": "2026-11-14",
         "league": "LIDOM",
         "pnl_u": -1.0,
-        "cum_u": -2.2263,
+        "cum_u": -2.0013,
         "result": "wrong"
       },
       {
         "date": "2026-11-14",
         "league": "LMP",
         "pnl_u": 0.8696,
-        "cum_u": -1.3567,
+        "cum_u": -1.1317,
         "result": "correct"
       },
       {
         "date": "2026-11-14",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -2.3567,
+        "cum_u": -2.1317,
         "result": "wrong"
       },
       {
         "date": "2026-11-15",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -3.3567,
+        "cum_u": -3.1317,
         "result": "wrong"
       },
       {
         "date": "2026-11-15",
         "league": "LIDOM",
         "pnl_u": 0.8333,
-        "cum_u": -2.5234,
+        "cum_u": -2.2984,
         "result": "correct"
       },
       {
         "date": "2026-11-15",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -3.5234,
+        "cum_u": -3.2984,
         "result": "wrong"
       },
       {
         "date": "2026-11-15",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -4.5234,
+        "cum_u": -4.2984,
         "result": "wrong"
       },
       {
         "date": "2026-11-15",
         "league": "LVBP",
         "pnl_u": -1.0,
-        "cum_u": -5.5234,
+        "cum_u": -5.2984,
         "result": "wrong"
       },
       {
         "date": "2026-11-15",
         "league": "LMP",
         "pnl_u": 0.7143,
-        "cum_u": -4.8091,
+        "cum_u": -4.5841,
         "result": "correct"
       },
       {
         "date": "2026-11-15",
         "league": "LIDOM",
         "pnl_u": -1.0,
-        "cum_u": -5.8091,
+        "cum_u": -5.5841,
         "result": "wrong"
       },
       {
         "date": "2026-11-15",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -6.8091,
+        "cum_u": -6.5841,
         "result": "wrong"
       },
       {
         "date": "2026-11-16",
         "league": "LMP",
         "pnl_u": 0.73,
-        "cum_u": -6.0791,
+        "cum_u": -5.8541,
         "result": "correct"
       },
       {
         "date": "2026-11-16",
         "league": "LMP",
         "pnl_u": 0.943,
-        "cum_u": -5.1361,
+        "cum_u": -4.9111,
         "result": "correct"
       },
       {
         "date": "2026-11-17",
         "league": "LVBP",
         "pnl_u": 0.87,
-        "cum_u": -4.2661,
+        "cum_u": -4.0411,
         "result": "correct"
       },
       {
         "date": "2026-11-17",
         "league": "LVBP",
         "pnl_u": -1.0,
-        "cum_u": -5.2661,
+        "cum_u": -5.0411,
         "result": "wrong"
       },
       {
         "date": "2026-11-18",
         "league": "LVBP",
         "pnl_u": 0.0,
-        "cum_u": -5.2661,
+        "cum_u": -5.0411,
         "result": "push"
       },
       {
         "date": "2026-11-18",
         "league": "LMP",
         "pnl_u": 0.935,
-        "cum_u": -4.3311,
+        "cum_u": -4.1061,
         "result": "correct"
       },
       {
         "date": "2026-11-19",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -5.3311,
+        "cum_u": -5.1061,
         "result": "wrong"
       },
       {
         "date": "2026-11-19",
         "league": "LVBP",
         "pnl_u": -1.0,
-        "cum_u": -6.3311,
+        "cum_u": -6.1061,
         "result": "wrong"
       },
       {
         "date": "2026-11-19",
         "league": "LVBP",
         "pnl_u": 1.25,
-        "cum_u": -5.0811,
+        "cum_u": -4.8561,
         "result": "correct"
       },
       {
         "date": "2026-11-20",
         "league": "ABL",
         "pnl_u": 0.75,
-        "cum_u": -4.3311,
+        "cum_u": -4.1061,
         "result": "correct"
       },
       {
         "date": "2026-11-20",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -5.3311,
+        "cum_u": -5.1061,
         "result": "wrong"
       },
       {
         "date": "2026-11-20",
         "league": "LVBP",
         "pnl_u": -1.0,
-        "cum_u": -6.3311,
+        "cum_u": -6.1061,
         "result": "wrong"
       },
       {
         "date": "2026-11-21",
         "league": "LMP",
         "pnl_u": 0.833,
-        "cum_u": -5.4981,
+        "cum_u": -5.2731,
         "result": "correct"
       },
       {
         "date": "2026-11-21",
         "league": "LVBP",
         "pnl_u": 0.87,
-        "cum_u": -4.6281,
+        "cum_u": -4.4031,
         "result": "correct"
       },
       {
         "date": "2026-11-21",
         "league": "LVBP",
         "pnl_u": -1.0,
-        "cum_u": -5.6281,
+        "cum_u": -5.4031,
         "result": "wrong"
       },
       {
         "date": "2026-11-21",
         "league": "LVBP",
         "pnl_u": -1.0,
-        "cum_u": -6.6281,
+        "cum_u": -6.4031,
         "result": "wrong"
       },
       {
         "date": "2026-11-21",
         "league": "LVBP",
         "pnl_u": 1.1,
-        "cum_u": -5.5281,
+        "cum_u": -5.3031,
         "result": "correct"
       },
       {
         "date": "2026-11-21",
         "league": "LMP",
         "pnl_u": 0.775,
-        "cum_u": -4.7531,
+        "cum_u": -4.5281,
         "result": "correct"
       },
       {
         "date": "2026-11-22",
         "league": "LMP",
         "pnl_u": 0.87,
-        "cum_u": -3.8831,
+        "cum_u": -3.6581,
         "result": "correct"
       },
       {
         "date": "2026-11-22",
         "league": "LMP",
         "pnl_u": 0.87,
-        "cum_u": -3.0131,
+        "cum_u": -2.7881,
         "result": "correct"
       },
       {
         "date": "2026-11-22",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -4.0131,
+        "cum_u": -3.7881,
         "result": "wrong"
       },
       {
         "date": "2026-11-22",
         "league": "ABL",
         "pnl_u": 1.15,
-        "cum_u": -2.8631,
+        "cum_u": -2.6381,
         "result": "correct"
       },
       {
         "date": "2026-11-22",
         "league": "LVBP",
         "pnl_u": -1.0,
-        "cum_u": -3.8631,
+        "cum_u": -3.6381,
         "result": "wrong"
       },
       {
         "date": "2026-11-23",
         "league": "LVBP",
         "pnl_u": 0.6667,
-        "cum_u": -3.1964,
+        "cum_u": -2.9714,
         "result": "correct"
       },
       {
         "date": "2026-11-23",
         "league": "LMP",
         "pnl_u": 0.87,
-        "cum_u": -2.3264,
+        "cum_u": -2.1014,
         "result": "correct"
       },
       {
         "date": "2026-11-23",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -3.3264,
+        "cum_u": -3.1014,
         "result": "wrong"
       },
       {
         "date": "2026-11-25",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -4.3264,
+        "cum_u": -4.1014,
         "result": "wrong"
       },
       {
         "date": "2026-11-25",
         "league": "LIDOM",
         "pnl_u": -1.0,
-        "cum_u": -5.3264,
+        "cum_u": -5.1014,
         "result": "wrong"
       },
       {
         "date": "2026-11-25",
         "league": "LMP",
         "pnl_u": -1.0,
-        "cum_u": -6.3264,
+        "cum_u": -6.1014,
         "result": "wrong"
       },
       {
         "date": "2026-11-25",
         "league": "LMP",
         "pnl_u": 0.71,
-        "cum_u": -5.6164,
+        "cum_u": -5.3914,
         "result": "correct"
       },
       {
         "date": "2026-11-26",
         "league": "LMP",
         "pnl_u": 0.926,
-        "cum_u": -4.6904,
+        "cum_u": -4.4654,
         "result": "correct"
       },
       {
         "date": "2026-11-26",
         "league": "ABL",
         "pnl_u": -1.0,
-        "cum_u": -5.6904,
+        "cum_u": -5.4654,
         "result": "wrong"
       },
       {
         "date": "2026-11-26",
         "league": "ABL",
         "pnl_u": -1.0,
-        "cum_u": -6.6904,
+        "cum_u": -6.4654,
         "result": "wrong"
       },
       {
         "date": "2026-11-26",
         "league": "ABL",
         "pnl_u": 1.25,
-        "cum_u": -5.4404,
+        "cum_u": -5.2154,
         "result": "correct"
       },
       {
         "date": "2026-11-26",
         "league": "ABL",
         "pnl_u": 0.87,
-        "cum_u": -4.5704,
+        "cum_u": -4.3454,
+        "result": "correct"
+      },
+      {
+        "date": "2026-11-27",
+        "league": "LBPRC",
+        "pnl_u": 0.8333,
+        "cum_u": -3.5121,
+        "result": "correct"
+      },
+      {
+        "date": "2026-11-27",
+        "league": "LBPRC",
+        "pnl_u": 0.9091,
+        "cum_u": -2.603,
         "result": "correct"
       }
     ],
@@ -9552,6 +9585,58 @@
     }
   },
   "global_l50": [
+    {
+      "date": "2026-11-27",
+      "league": "LBPRC",
+      "tier": "CORE",
+      "market": "TOTAL",
+      "bet": "Over 9.5",
+      "game": "Criollos de Caguas @ Gigantes de Carolina",
+      "odds": "-120",
+      "result": "correct",
+      "pnl_u": 0.8333,
+      "actual": "6-5",
+      "note": "Final 6-5 \u00b7 combined 11 \u00b7 vs 9.5 (+1.5) \u00b7 cleared over",
+      "outcome_tag": null,
+      "close_loss": false,
+      "close_win": false,
+      "cover_margin_runs": 1.5,
+      "unit": "flat",
+      "pnl_flat_u": 0.8333,
+      "stake_flat_u": 1.0,
+      "book": "Bovada",
+      "first_pitch": "19:00 AST",
+      "first_pitch_tz": "",
+      "game_time": "19:00 AST",
+      "game_time_utc": "",
+      "signal_date": "2026-11-27"
+    },
+    {
+      "date": "2026-11-27",
+      "league": "LBPRC",
+      "tier": "CORE",
+      "market": "TOTAL",
+      "bet": "Over 9.5",
+      "game": "Cangrejeros de Santurce @ Senadores de San Juan",
+      "odds": "-110",
+      "result": "correct",
+      "pnl_u": 0.9091,
+      "actual": "3-7",
+      "note": "Final 3-7 \u00b7 combined 10 \u00b7 vs 9.5 (+0.5) \u00b7 cleared over \u00b7 CLOSE WIN \u2014 cashed on the number",
+      "outcome_tag": "CLOSE WIN",
+      "close_loss": false,
+      "close_win": true,
+      "cover_margin_runs": 0.5,
+      "unit": "flat",
+      "pnl_flat_u": 0.9091,
+      "stake_flat_u": 1.0,
+      "book": "Bovada",
+      "first_pitch": "19:00 AST",
+      "first_pitch_tz": "",
+      "game_time": "19:00 AST",
+      "game_time_utc": "",
+      "signal_date": "2026-11-27"
+    },
     {
       "date": "2026-11-26",
       "league": "LMP",
@@ -10799,58 +10884,6 @@
       "game_time": "",
       "game_time_utc": "",
       "signal_date": "2026-11-14"
-    },
-    {
-      "date": "2026-11-14",
-      "league": "LMP",
-      "tier": "CORE",
-      "market": "ML",
-      "bet": "Mayos Navojoa ML",
-      "game": "Mayos Navojoa @ Caneros Los Mochis",
-      "odds": "+134",
-      "result": "wrong",
-      "pnl_u": -1.0,
-      "actual": "3-5",
-      "note": "Final 3-5 \u00b7 home by 2 \u00b7 missed ML",
-      "outcome_tag": null,
-      "close_loss": false,
-      "close_win": false,
-      "cover_margin_runs": null,
-      "unit": "flat",
-      "pnl_flat_u": -1.0,
-      "stake_flat_u": 1.0,
-      "book": "Pinnacle",
-      "first_pitch": "02:30 MST",
-      "first_pitch_tz": "",
-      "game_time": "02:30 MST",
-      "game_time_utc": "",
-      "signal_date": "2026-11-14"
-    },
-    {
-      "date": "2026-11-13",
-      "league": "LMP",
-      "tier": "CORE",
-      "market": "TOTAL",
-      "bet": "Under 12.5",
-      "game": "Mayos Navojoa @ Charros Jalisco",
-      "odds": "-124",
-      "result": "wrong",
-      "pnl_u": -1.0,
-      "actual": "13-5",
-      "note": "Final 13-5 \u00b7 combined 18 \u00b7 vs 12.5 (+5.5) \u00b7 ran over \u00b7 pace broke \u2014 not a near-miss",
-      "outcome_tag": "BLOWOUT",
-      "close_loss": false,
-      "close_win": false,
-      "cover_margin_runs": -5.5,
-      "unit": "flat",
-      "pnl_flat_u": -1.0,
-      "stake_flat_u": 1.0,
-      "book": "Pinnacle",
-      "first_pitch": "01:30 MST",
-      "first_pitch_tz": "",
-      "game_time": "01:30 MST",
-      "game_time_utc": "",
-      "signal_date": "2026-11-13"
     }
   ],
   "chart": {
@@ -10858,13 +10891,13 @@
     "bars": [
       {
         "label": "Global",
-        "pnl_u": 43.5079,
-        "n": 539
+        "pnl_u": 45.2503,
+        "n": 541
       },
       {
         "label": "INTL",
-        "pnl_u": -1.2545,
-        "n": 96
+        "pnl_u": 0.4879,
+        "n": 98
       },
       {
         "label": "Domestic",
@@ -10883,8 +10916,8 @@
       },
       {
         "label": "Winter",
-        "pnl_u": -2.1245,
-        "n": 79
+        "pnl_u": -0.3821,
+        "n": 81
       },
       {
         "label": "Asia",
@@ -10932,6 +10965,13 @@
         "record": "6-0"
       },
       {
+        "label": "LBPRC",
+        "region": "INTL",
+        "pnl_u": 1.7424,
+        "n": 2,
+        "record": "2-0"
+      },
+      {
         "label": "LIDOM",
         "region": "INTL",
         "pnl_u": -2.1667,
@@ -10966,13 +11006,13 @@
     "bars": [
       {
         "label": "Global",
-        "hr": 0.567,
-        "n": 539
+        "hr": 0.5687,
+        "n": 541
       },
       {
         "label": "INTL",
-        "hr": 0.5158,
-        "n": 96
+        "hr": 0.5258,
+        "n": 98
       },
       {
         "label": "Domestic",
@@ -10991,8 +11031,8 @@
       },
       {
         "label": "Winter",
-        "hr": 0.5256,
-        "n": 79
+        "hr": 0.5375,
+        "n": 81
       },
       {
         "label": "Asia",
@@ -11004,7 +11044,7 @@
   "results_freshness": {
     "stale": false,
     "note": "ok",
-    "winter_graded_max": "2026-11-26",
+    "winter_graded_max": "2026-11-27",
     "limit_days": 2
   },
   "edge_floor_label": "4pp"

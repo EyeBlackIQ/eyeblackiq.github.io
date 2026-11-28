@@ -1,19 +1,19 @@
 {
-  "wins": 41,
+  "wins": 43,
   "losses": 37,
   "pushes": 1,
-  "net_units": -2.12,
-  "roi": -2.72,
+  "net_units": -0.38,
+  "roi": -0.48,
   "clv_pct": 0.0,
   "clv_n": 0,
   "clv_note": "CLV ledger armed \u2014 awaiting closing lines",
   "pod_wins": 0,
   "pod_losses": 0,
-  "streak": "W1",
+  "streak": "W3",
   "pod_streak": "-",
   "day_streak": "-",
   "sport_streaks": {
-    "INTL": "W1"
+    "INTL": "W3"
   },
   "type_streaks": {},
   "by_league": [
@@ -27,6 +27,17 @@
       "hr": 0.6667,
       "pnl_u": 2.02,
       "record": "4-2"
+    },
+    {
+      "league": "LBPRC",
+      "region": "INTL",
+      "wins": 2,
+      "losses": 0,
+      "pushes": 0,
+      "n": 2,
+      "hr": 1.0,
+      "pnl_u": 1.7424,
+      "record": "2-0"
     },
     {
       "league": "LIDOM",
@@ -64,7 +75,7 @@
   ],
   "region": "INTL_WINTER",
   "intl_equals_sum_leagues": true,
-  "last_updated": "2026-11-27",
+  "last_updated": "2026-11-28",
   "source": "winter CORE only (LMP/LIDOM/LVBP/LBPRC/CUBA/ABL)",
   "units_policy": "flat $10 = 1u",
   "note": "Header = winter CORE. Asia/KBO/NPB off bar. Results Global adds Domestic."
